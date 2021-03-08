@@ -6,7 +6,8 @@
   "module": "dist/index.esm.js",
   "scripts": {
     "build": "rollup -c",
-    "build-watch": "rollup -c -w"
+    "build-watch": "rollup -c -w",
+    "test": "exit 0"
   },
   "devDependencies": {
     "@types/react": "^17.0.3",
