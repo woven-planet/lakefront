@@ -17,5 +17,6 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - name: Branch name
-          run: echo "running on branch ${GITHUB_REF##*/}"
+      - uses: nelonoel/branch-name@v1.0.1
+      # Use branch name for whatever purpose
+      - run: echo ${BRANCH_NAME}
