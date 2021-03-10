@@ -16,7 +16,16 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm test
-      - run: npm run build
+      # Get the branch name
       - uses: nelonoel/branch-name@v1.0.1
-      # Use branch name for whatever purpose
       - run: echo ${BRANCH_NAME}
+      # Bump the version with the branch name as the preid
+      - name: Automated Version Bump
+      uses: 'phips28/gh-action-bump-version@master'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        default: prerelease
+        preid: ${BRANCH_NAME}
+      - run: npm run build
+
