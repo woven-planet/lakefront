@@ -1,5 +1,9 @@
-name: ci-cd
-on: [push]
+name: Main Continuous Deployment
+
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -21,4 +25,4 @@ jobs:
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run build --if-present
+      - run: npm run build
