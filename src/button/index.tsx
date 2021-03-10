@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.div<{ color?: string }>`
+const StyledButton = styled.button<{ color?: string }>`
   color: ${p => p.color || 'blue'};
 `;
 
