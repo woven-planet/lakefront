@@ -21,11 +21,11 @@ jobs:
       - run: echo ${BRANCH_NAME}
       # Bump the version with the branch name as the preid
       - name: Automated Version Bump
-      uses: 'phips28/gh-action-bump-version@master'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        default: prerelease
-        preid: ${BRANCH_NAME}
+      - uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          default: prerelease
+          preid: ${BRANCH_NAME}
       - run: npm run build
 
