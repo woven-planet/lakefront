@@ -1,6 +1,6 @@
 {
-  "name": "@toyotaresearchinstitute/lakefront",
-  "description": "UI Components",
+  "name": "lakefront",
+  "description": "React UI Components",
   "version": "0.0.5",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -26,8 +26,5 @@
   "files": [
     "dist"
   ],
-  "typings": "dist/index.d.ts",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  }
+  "typings": "dist/index.d.ts"
 }
