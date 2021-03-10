@@ -18,4 +18,4 @@ jobs:
       - run: npm test
       - run: npm run build
       - name: Branch name
-          run: echo running on branch ${GITHUB_REF##*/}
+          run: echo "running on branch ${GITHUB_REF##*/}"
