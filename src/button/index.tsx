@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = props => {
     const { color, children, ...rest } = props;
 
     return (
-        <StyledButton color={color} {...rest}>
+        <StyledButton color={color} {...rest} tabIndex={0}>
             {children}
         </StyledButton>
     );
