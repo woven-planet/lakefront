@@ -20,7 +20,6 @@ jobs:
       - uses: nelonoel/branch-name@v1.0.1
       - run: echo ${BRANCH_NAME}
       # Bump the version with the branch name as the preid
-      - name: Automated Version Bump
       - uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
