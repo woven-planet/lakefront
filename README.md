@@ -7,10 +7,10 @@ Lakefront is available as an [npm package](https://www.npmjs.com/package/lakefro
 
 ```sh
 // with npm
-npm install lakefront
+npm install @toyota-research-institute/lakefront
 
 // with yarn
-yarn add lakefront
+yarn add @toyota-research-institute/lakefront
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ Here is a quick example to get you started, **it's all you need**:
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { Button } from 'lakefront';
+import { Button } from '@toyota-research-institute/lakefront';
 
 function App() {
   return <Button>Hello World</Button>;

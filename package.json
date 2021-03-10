@@ -1,9 +1,10 @@
 {
-  "name": "lakefront",
+  "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
   "version": "0.0.6",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
@@ -26,5 +27,17 @@
   "files": [
     "dist"
   ],
-  "typings": "dist/index.d.ts"
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToyotaResearchInstitute/lakefront.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ToyotaResearchInstitute/lakefront/issues"
+  },
+  "keywords": [
+    "components",
+    "ui",
+    "library"
+  ]
 }
