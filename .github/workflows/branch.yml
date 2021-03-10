@@ -18,7 +18,6 @@ jobs:
       - run: npm test
       # Get the branch name
       - uses: nelonoel/branch-name@v1.0.1
-      - run: echo ${BRANCH_NAME}
       # Bump the version with the branch name as the preid
       - uses: 'phips28/gh-action-bump-version@master'
         env:
@@ -27,4 +26,6 @@ jobs:
           default: prerelease
           preid: ${BRANCH_NAME}
       - run: npm run build
-
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
