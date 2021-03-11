@@ -6,5 +6,13 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials"
-  ]
+  ],
+  webpackFinal: (config) => {
+    config.resolve.modules.push(process.cwd() + "/node_modules");
+    config.resolve.modules.push(process.cwd() + "/src");
+
+    // this is needed for working w/ linked folders
+    config.resolve.symlinks = false;
+    return config;
+  }
 }
