@@ -36,16 +36,10 @@ export interface ButtonProps {
     alternate?: boolean;
     as?: ElementType | keyof JSX.IntrinsicElements;
     icon?: boolean;
-}
-
-export interface IconProps {
-    iconName?: string;
     position?: 'left' | 'right';
-    color: 'primary' | 'destructive';
-    icon: boolean;
 }
 
-export type ButtonComponentProps = (ButtonProps | IconProps) & ComponentPropsWithoutRef<'button'>;
+export type ButtonComponentProps = ButtonProps & ComponentPropsWithoutRef<'button'>;
 
 export const shouldUseMappedIcon = (props: ButtonComponentProps): boolean | undefined => {
     return props.icon && !('iconName' in props);

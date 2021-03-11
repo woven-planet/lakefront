@@ -5,7 +5,6 @@ import {
     ButtonComponentProps,
     ButtonProps,
     COLORS,
-    IconProps,
     ICON_BUTTON_COLOR,
     ICON_NAMES,
     InvalidButtonColorError,
