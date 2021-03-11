@@ -14,6 +14,12 @@ export default {
         },
         children: {
             name: 'text (children)'
+        },
+        color: {
+            control: {
+                type: 'select',
+                options: [COLORS.PRIMARY, COLORS.SECONDARY, COLORS.DESTRUCTIVE],
+            },
         }
     }
 } as Meta;
