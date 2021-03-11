@@ -1,6 +1,7 @@
-import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Button from '../Button';
-import { lightenDarkenColor } from 'core/styles/stylesUtil';
+import { lightenDarkenColor } from '../../styles/stylesUtil';
 
 const BUTTON_TEXT = 'buttonText';
 
@@ -52,12 +53,6 @@ describe('Button', () => {
             expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
         });
 
-        it('renders primary variant when color does not exist', () => {
-            const { getByRole } = render(<Button color="non_existing_color">{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
-        });
-
         it('renders primary variant when specified', () => {
             const { getByRole } = render(<Button color="primary">{BUTTON_TEXT}</Button>);
 
@@ -72,6 +67,7 @@ describe('Button', () => {
 
         it('renders desctructive variant when specified', () => {
             const { getByRole } = render(<Button color="destructive">{BUTTON_TEXT}</Button>);
+            screen.debug();
 
             expect(getByRole('button').className.toLowerCase()).toContain('destructivebutton');
         });
