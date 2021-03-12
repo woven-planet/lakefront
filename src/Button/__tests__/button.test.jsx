@@ -1,6 +1,7 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import Button from '../Button';
-import { lightenDarkenColor } from 'core/styles/stylesUtil';
+import { lightenDarkenColor } from '../../styles/stylesUtil';
 
 const BUTTON_TEXT = 'buttonText';
 
@@ -48,12 +49,6 @@ describe('Button', () => {
 
         it('renders primary variant when color is undefined', () => {
             const { getByRole } = render(<Button>{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
-        });
-
-        it('renders primary variant when color does not exist', () => {
-            const { getByRole } = render(<Button color="non_existing_color">{BUTTON_TEXT}</Button>);
 
             expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
         });
