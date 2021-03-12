@@ -26,14 +26,24 @@ import {
  * when hovering over the button. The position, which defaults to 'left', determines if
  * the icon precedes or proceeds the provided children.
  */
-const Button: FC<ButtonComponentProps> = ({ children, ...props }) => {
-    const { alternate, color = COLORS.PRIMARY, ...extraProps } = props as ButtonProps;
-
+const Button: FC<ButtonComponentProps> = ({
+    alternate = false,
+    color = COLORS.PRIMARY,
+    children,
+    icon = false,
+    iconPosition = 'left',
+    ...props
+}) => {
     // Like in the Icon version, we return a styled component based on the color type
     const ButtonComponent = ButtonVariants[color];
 
     return (
-        <ButtonComponent alternate={alternate} {...extraProps}>
+        <ButtonComponent
+            alternate={alternate}
+            icon={icon}
+            iconPosition={iconPosition}
+            {...props}
+        >
             {children}
         </ButtonComponent>
     );

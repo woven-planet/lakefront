@@ -9,8 +9,11 @@ export default {
     title: 'Example/Button',
     component: Button,
     argTypes: {
-        alternate: {
-            description: 'Provides an alternate color theme for use on darker backgrounds'
+        as: {
+            control: {
+                type: 'select',
+                options: ['a', 'button', 'div', 'span']
+            }
         },
         children: {
             name: 'text (children)'

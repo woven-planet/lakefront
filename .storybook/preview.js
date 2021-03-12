@@ -19,5 +19,6 @@ export const parameters = {
         value: theme.colors.gunpowder,
       },
     ],
-  }
+  },
+  controls: { expanded: true }
 }
