@@ -9,7 +9,12 @@ export default {
     title: 'Example/Button',
     component: Button,
     argTypes: {
-        onClick: { action: 'clicked' },
+        onClick: {
+            action: 'clicked',
+            table: {
+                disable: true
+            }
+        },
         as: {
             control: {
                 type: 'select',
