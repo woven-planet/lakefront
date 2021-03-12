@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Button from '../Button';
 import { lightenDarkenColor } from '../../styles/stylesUtil';
 
@@ -67,7 +67,6 @@ describe('Button', () => {
 
         it('renders desctructive variant when specified', () => {
             const { getByRole } = render(<Button color="destructive">{BUTTON_TEXT}</Button>);
-            screen.debug();
 
             expect(getByRole('button').className.toLowerCase()).toContain('destructivebutton');
         });
