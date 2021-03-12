@@ -9,7 +9,7 @@ module.exports = {
   ],
   webpackFinal: (config) => {
     config.resolve.modules.push(process.cwd() + "/node_modules");
-    config.resolve.modules.push(process.cwd() + "/src");
+    config.resolve.modules.push(process.cwd() + "/");
 
     // this is needed for working w/ linked folders
     config.resolve.symlinks = false;
