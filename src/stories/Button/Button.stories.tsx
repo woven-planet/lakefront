@@ -9,6 +9,7 @@ export default {
     title: 'Example/Button',
     component: Button,
     argTypes: {
+        onClick: { action: 'clicked' },
         as: {
             control: {
                 type: 'select',
@@ -16,13 +17,22 @@ export default {
             }
         },
         children: {
-            name: 'text (children)'
+            name: 'text (children)',
+            description: 'Usually text, but can accept other elements. If an icon is needed, use the icon prop.'
         },
         color: {
             control: {
                 type: 'select',
                 options: [COLORS.PRIMARY, COLORS.SECONDARY, COLORS.DESTRUCTIVE],
             },
+        },
+        disabled: {
+            control: 'boolean',
+            table: {
+                defaultValue: { summary: false },
+                type: { summary: 'boolean' }
+            },
+            description: 'HTML button element disabled prop'
         }
     }
 } as Meta;
