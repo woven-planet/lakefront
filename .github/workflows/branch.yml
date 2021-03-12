@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - main
+      - gh-pages
 
 jobs:
   build:
