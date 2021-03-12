@@ -3,7 +3,7 @@ Lakefront is a simple React component library.
 
 ## Installation
 
-Lakefront is available as an [npm package](https://www.npmjs.com/package/lakefront).
+Lakefront is available as an [npm package](https://www.npmjs.com/package/@toyota-research-institute/lakefront).
 
 ```sh
 // with npm
@@ -29,4 +29,5 @@ ReactDOM.render(<App />, document.querySelector('#app'));
 ```
 
 ## Components
-* Button
+We've added storybook pages to show how each component can be used.
+* [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/story/example-button--primary)
