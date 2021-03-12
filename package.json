@@ -1,24 +1,35 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.4.5",
+  "version": "0.4.6-storybook.0",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
-    "test": "exit 0"
+    "test": "exit 0",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/react": "^6.1.21",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.1",
     "@types/styled-components": "^5.1.7",
+    "babel-loader": "^8.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "rollup": "^2.40.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-typescript2": "^0.30.0",
+    "storybook-addon-emotion-theme": "^2.1.1",
     "typescript": "^4.2.3"
   },
   "peerDependencies": {
@@ -41,5 +52,6 @@
   "keywords": [
     "components",
     "library"
-  ]
+  ],
+  "dependencies": {}
 }
