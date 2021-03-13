@@ -46,30 +46,6 @@ describe('Button', () => {
 
             expect(onClick).toHaveBeenCalled();
         });
-
-        it('renders primary variant when color is undefined', () => {
-            const { getByRole } = render(<Button>{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
-        });
-
-        it('renders primary variant when specified', () => {
-            const { getByRole } = render(<Button color="primary">{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
-        });
-
-        it('renders secondary variant when specified', () => {
-            const { getByRole } = render(<Button color="secondary">{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('secondarybutton');
-        });
-
-        it('renders desctructive variant when specified', () => {
-            const { getByRole } = render(<Button color="destructive">{BUTTON_TEXT}</Button>);
-
-            expect(getByRole('button').className.toLowerCase()).toContain('destructivebutton');
-        });
     });
 
     describe('when alternate prop is provided', () => {
