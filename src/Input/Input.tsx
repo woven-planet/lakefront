@@ -1,8 +1,24 @@
-import { FC } from 'react';
+import { ComponentPropsWithoutRef, FC } from 'react';
+import { StyledInput, StyledLabel } from './inputStyles';
 
-const Input: FC = () => {
+interface InputProps {
+    label?: string;
+}
+
+const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, ...props }) => {
     return (
-      <input />
+        <>
+        {
+            label ? (
+                <StyledLabel>
+                    {label}
+                    <StyledInput {...props} />
+                </StyledLabel>
+            ) : (
+                <StyledInput {...props} />
+            )
+        }
+        </>
     );
 };
 

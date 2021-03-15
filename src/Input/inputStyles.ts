@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 
-export const InputLabel = styled.label({
-    
+export const StyledLabel = styled.label({
+    display: 'flex',
+    flexDirection: 'column'
 })
 
-export const Input = styled.input({
+export const StyledInput = styled.input({
     height: 40,
     width: 300,
     ':focus': {
