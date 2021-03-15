@@ -3,7 +3,6 @@ import ButtonVariants from './buttonVariants';
 import IconButton from './IconButton';
 import {
     ButtonComponentProps,
-    ButtonProps,
     COLORS,
     ICON_BUTTON_COLOR,
     ICON_NAMES,

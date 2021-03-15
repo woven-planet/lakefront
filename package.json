@@ -1,35 +1,52 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
-    "test": "exit 0",
+    "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o docs-build"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@emotion/jest": "^11.2.1",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
     "@storybook/react": "^6.1.21",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@types/jest": "^26.0.20",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.1",
     "@types/styled-components": "^5.1.7",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
+    "jest": "^26.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "rollup": "^2.40.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-typescript2": "^0.30.0",
     "storybook-addon-emotion-theme": "^2.1.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   },
   "peerDependencies": {
@@ -52,6 +69,5 @@
   "keywords": [
     "components",
     "library"
-  ],
-  "dependencies": {}
+  ]
 }
