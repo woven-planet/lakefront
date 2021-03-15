@@ -1,3 +1,5 @@
+![main workflow](https://github.com/ToyotaResearchInstitute/lakefront/actions/workflows/main.yml/badge.svg)
+
 # lakefront
 Lakefront is a simple React component library.
 
