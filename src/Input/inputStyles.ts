@@ -14,6 +14,7 @@ export const StyledLabel = styled.label(({ theme }) => ({
 export const StyledInput = styled.input(({ theme }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
+    color: theme?.colors?.cinder,
     fontSize: 16,
     outline: 'none',
     height: 40,
