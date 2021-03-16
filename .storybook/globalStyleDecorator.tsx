@@ -1,4 +1,4 @@
-import GlobalStyles from "../src/styles/GlobalStyles";
+import GlobalStyles from '../src/styles/GlobalStyles';
 
 const GlobalStyleDecorator = (storyFn) => {
     return <GlobalStyles>{ storyFn() }</GlobalStyles>
