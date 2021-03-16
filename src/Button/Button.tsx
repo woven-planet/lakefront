@@ -5,7 +5,7 @@ import {
     ButtonComponentProps,
     COLORS,
     ICON_BUTTON_COLOR,
-    ICON_NAMES,
+    ICON_SVGS,
     InvalidButtonColorError,
     shouldUseMappedIcon
 } from './buttonUtil';
@@ -13,17 +13,14 @@ import {
 /**
  * Button Component
  *
- * The Button component takes a color and an alt prop, as well as all native button props.
+ * The Button component takes in native button props along with color, alternate, icon, and iconPosition props.
  * The color prop, which defaults to primary, determines its overall color scheme.
- * The alt prop inverts the color scheme to look better on dark backgrounds.
+ * The alternate prop inverts the color scheme to look better on dark backgrounds.
  * className will properly apply itself, but the CSS may need to be more specific,
  * such as button.MyClass instead of just .MyClass.
- *
- * The button can also include an icon configuration to include an icon. The icon configuration includes
- * a name, an optional tooltip, and an optional position. The name, which defaults to 'help', determines which icon to display along side any
- * provided children. If provided, the tooltip will cause the provided text to be displayed
- * when hovering over the button. The position, which defaults to 'left', determines if
- * the icon precedes or proceeds the provided children.
+ * The icon prop can be of several types. If it is an svg, that svg will be used. If it
+ * is strictly "true", we will apply the default icon based on the provided color. In the future, if it is a string,
+ * we will attempt to convert it into an icon. When icon is defined, the position can be specified via the iconPosition prop.
  */
 const Button: FC<ButtonComponentProps> = ({
     alternate = false,
@@ -33,19 +30,37 @@ const Button: FC<ButtonComponentProps> = ({
     iconPosition = 'left',
     ...props
 }) => {
-    // Like in the Icon version, we return a styled component based on the color type
-    const ButtonComponent = ButtonVariants[color];
+    // When an icon is supplied we need to render the IconButton component inside the Button
+    if (icon) {
+        // If icon is true, we need to show the icon associated with the button color type, such as add or delete
+        const defaultIcon = shouldUseMappedIcon(icon) ? ICON_SVGS[color ?? COLORS.PRIMARY] : icon;
+        const isIconOnly = !children || !defaultIcon;
 
-    return (
-        <ButtonComponent
-            alternate={alternate}
-            icon={icon}
-            iconPosition={iconPosition}
-            {...props}
-        >
-            {children}
-        </ButtonComponent>
-    );
+        // Icon Buttons have a different color mapping, i.e. there is no secondary, but primary uses the secondary component
+        const ButtonComponent = isIconOnly ? ButtonVariants[ICON_BUTTON_COLOR[color]] : ButtonVariants[color];
+
+        // Show a meaningful error when the color doesn't match our allowed color strings instead of crashing the page
+        if (!ButtonComponent) {
+            throw new InvalidButtonColorError(color);
+        }
+
+        return (
+            <ButtonComponent alternate={alternate} {...props} isIconOnly={isIconOnly}>
+                <IconButton icon={defaultIcon} iconPosition={iconPosition}>
+                    {children}
+                </IconButton>
+            </ButtonComponent>
+        );
+    } else {
+        // Like in the Icon version, we return a styled component based on the color type
+        const ButtonComponent = ButtonVariants[color] || ButtonVariants.primary;
+
+        return (
+            <ButtonComponent alternate={alternate} {...props}>
+                {children}
+            </ButtonComponent>
+        );
+    }
 };
 
 export default Button;

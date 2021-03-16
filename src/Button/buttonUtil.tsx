@@ -1,15 +1,17 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement } from 'react';
 import { SerializedStyles } from '@emotion/react';
+import { ReactComponent as Add } from './assets/add.svg';
+import { ReactComponent as Delete } from './assets/delete.svg';
 
 export interface ComponentStyles {
     [key: string]: SerializedStyles
 }
 
-export enum COLORS {
-    PRIMARY = 'primary',
-    SECONDARY = 'secondary',
-    DESTRUCTIVE = 'destructive'
-}
+export const COLORS = {
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    DESTRUCTIVE: 'destructive'
+};
 
 export const ICON_BUTTON_COLOR: { [key: string]: 'secondary' | 'destructive' } = {
     primary: 'secondary',
@@ -17,10 +19,10 @@ export const ICON_BUTTON_COLOR: { [key: string]: 'secondary' | 'destructive' } =
     destructive: 'destructive'
 };
 
-export const ICON_NAMES = {
-    primary: 'add',
-    secondary: 'add',
-    destructive: 'delete'
+export const ICON_SVGS = {
+    primary: <Add />,
+    secondary: <Add />,
+    destructive: <Delete />
 };
 
 export class InvalidButtonColorError extends Error {
@@ -35,7 +37,7 @@ export interface ButtonProps {
     /**
      * Determines the style of the button: primary, secondary, or destructive.
      */
-    color?: COLORS;
+    color?: 'primary' | 'secondary' | 'destructive';
     /**
      * Provides an alternate color theme for use on darker backgrounds.
      */
@@ -45,19 +47,26 @@ export interface ButtonProps {
      * with an HTML element such as "a", or even a complex component such as a react router Link.
      */
     as?: ElementType | keyof JSX.IntrinsicElements;
+}
+
+export type Icon = ReactElement<SVGElement> | boolean | string | undefined;
+
+export interface IconComponentProps {
     /**
-     * When true, the default icon for a color type will be inserted at the iconPosition prop's location.
+     * When strictly true, the default icon for a color type will be inserted at the iconPosition prop's location.
      * Primary and Secondary colors have a plus/add icon, and destructive has a garbage can/delete icon.
+     * When a svg, the svg will used as the icon.
+     * (Future) When a string, an icon lookup/conversion will be attempted.
      */
-    icon?: boolean;
+    icon?: Icon;
     /**
-     * Where the default icon should be in relation to the text.
+     * When icon is defined, the position can be specified via the iconPosition prop.
      */
     iconPosition?: 'left' | 'right';
 }
 
-export type ButtonComponentProps = ButtonProps & ComponentPropsWithoutRef<'button'>;
+export type ButtonComponentProps = ButtonProps & IconComponentProps & ComponentPropsWithoutRef<'button'>;
 
-export const shouldUseMappedIcon = (props: ButtonComponentProps): boolean | undefined => {
-    return props.icon && !('iconName' in props);
+export const shouldUseMappedIcon = (icon: Icon): boolean => {
+    return icon === true;
 };
