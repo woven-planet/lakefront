@@ -7,12 +7,19 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials"
   ],
-  webpackFinal: (config) => {
+  webpackFinal: async (config) => {
     config.resolve.modules.push(process.cwd() + "/node_modules");
     config.resolve.modules.push(process.cwd() + "/");
 
     // this is needed for working w/ linked folders
     config.resolve.symlinks = false;
+
+    // Add SVGR Loader
+    config.module.rules.unshift({
+      test: /\.svg$/,
+      use: ["@svgr/webpack", "url-loader"]
+    });
+
     return config;
   }
 }

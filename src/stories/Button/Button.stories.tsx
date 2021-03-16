@@ -47,17 +47,24 @@ const Template: Story<ButtonComponentProps> = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
     children: 'Button',
-    color: COLORS.PRIMARY
+    color: 'primary'
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
     children: 'Button',
-    color: COLORS.SECONDARY
+    color: 'secondary'
 };
 
 export const Destructive = Template.bind({});
 Destructive.args = {
     children: 'Button',
-    color: COLORS.DESTRUCTIVE
+    color: 'destructive'
+};
+
+export const PrimaryDefaultIcon = Template.bind({});
+PrimaryDefaultIcon.args = {
+    children: 'Button',
+    color: 'primary',
+    icon: true
 };
