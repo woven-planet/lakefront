@@ -1,9 +1,11 @@
 import { addDecorator } from '@storybook/react';
 import { withThemesProvider } from 'storybook-addon-emotion-theme';
 import theme from 'src/styles/theme';
+import globalStyleDecorator from './globalStyleDecorator';
 
 const themes = [theme];
 addDecorator(withThemesProvider(themes));
+addDecorator(globalStyleDecorator);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -160,7 +160,6 @@ const MainButton = styled.button<ButtonComponentProps>(({ disabled, theme }) => 
     boxSizing: 'border-box',
     color: theme?.colors?.white,
     display: 'inline-flex',
-    fontFamily: '"Source Sans Pro", sans-serif',
     fontSize: 16,
     fontWeight: 400,
     height: 40,
