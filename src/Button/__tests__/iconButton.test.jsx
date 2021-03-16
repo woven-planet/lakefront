@@ -18,7 +18,7 @@ describe('IconButton', () => {
         );
 
         expect(getByText(ICON_NAME)).toBeInTheDocument();
-        expect(getByText(TEXT_ID).parentNode.parentNode.children[1].firstChild.id).toBe(TEXT_ID);
+        expect(getByText(TEXT_ID).parentNode.parentNode).toHaveStyle({ flexDirection: 'row' });
     });
 
     it(`renders the icon and children in the proper order when position is '${POSITIONS.RIGHT}`, () => {
@@ -29,7 +29,7 @@ describe('IconButton', () => {
         );
 
         expect(getByText(ICON_NAME)).toBeInTheDocument();
-        expect(getByText(TEXT_ID).parentNode.parentNode.children[0].firstChild.id).toBe(TEXT_ID);
+        expect(getByText(TEXT_ID).parentNode.parentNode).toHaveStyle({ flexDirection: 'row-reverse' });
     });
 });
 

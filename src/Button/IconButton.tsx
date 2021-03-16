@@ -1,20 +1,22 @@
-import React, { FC, useMemo } from 'react';
-import { v4 as uuid } from 'uuid';
+import React, { FC } from 'react';
 import { IconComponentProps } from './buttonUtil';
 import styled from '@emotion/styled';
 
 interface IconSpanProps {
-    iconPosition: 'left' | 'right' | undefined;
+    iconPosition?: 'left' | 'right';
     isIconOnly: boolean;
 }
 
 const IconSpan = styled.span<IconSpanProps>(({ iconPosition, isIconOnly }) => {
-    const positionalMargin = iconPosition === 'left' ? 'auto 10px auto 15px' : 'auto 15px auto 10px';
+    const iconFirst = iconPosition === 'left';
+    const margin = iconFirst ? 'auto 10px auto 15px' : 'auto 15px auto 10px';
+    const flexDirection = iconFirst ? 'row' : 'row-reverse';
 
     return {
         display: 'inline-flex',
         alignItems: 'center',
-        margin: isIconOnly ? undefined : positionalMargin,
+        margin: isIconOnly ? undefined : margin,
+        flexDirection,
         'span.iconChild': {
             display: 'inline-flex'
         }
@@ -30,19 +32,10 @@ const IconSpan = styled.span<IconSpanProps>(({ iconPosition, isIconOnly }) => {
  *
  */
 const IconButton: FC<IconComponentProps> = ({ icon, children, iconPosition }) => {
-    const iconKey = useMemo(() => uuid(), []);
-    const components = [<span className="iconChild" key={iconKey}>{icon}</span>, children && <span className="iconChild">{children}</span>];
-
-    if (iconPosition === 'right') {
-        components.reverse();
-    }
-
-    const [firstComponent, secondComponent] = components;
-
     return (
         <IconSpan iconPosition={iconPosition} isIconOnly={Boolean(!children)}>
-            {firstComponent}
-            {secondComponent}
+            {<span className="iconChild">{icon}</span>}
+            {children && <span className="iconChild">{children}</span>}
         </IconSpan>
     );
 };
