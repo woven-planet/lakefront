@@ -1,17 +1,27 @@
 import styled from '@emotion/styled';
 
-export const StyledLabel = styled.label({
+export const StyledLabel = styled.label(({ theme }) => ({
+    color: theme?.colors?.cinder,
     display: 'flex',
-    flexDirection: 'column'
-})
+    flexDirection: 'column',
+    fontSize: 12,
+    fontWeight: 600,
+    span: {
+        marginBottom: 4
+    }
+}));
 
-export const StyledInput = styled.input({
+export const StyledInput = styled.input(({ theme }) => ({
+    border: `1px solid ${theme?.colors?.mercury}`,
+    borderRadius: 4,
+    fontSize: 16,
+    outline: 'none',
     height: 40,
     width: 300,
     ':focus': {
-        color: ''
+        border: `1px solid ${theme?.colors?.cinder}`
     },
-    ':placeholder': {
-        color: ''
+    '::placeholder': {
+        color: theme?.colors?.mercury
     }
-});
+}));

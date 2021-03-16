@@ -11,7 +11,7 @@ const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, ...p
         {
             label ? (
                 <StyledLabel>
-                    {label}
+                    <span>{label}</span>
                     <StyledInput {...props} />
                 </StyledLabel>
             ) : (
