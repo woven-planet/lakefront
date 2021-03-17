@@ -4,25 +4,22 @@ describe('InvalidButtonColorError', () => {
     it('throws the correct error', () => {
         const color = 'black';
 
-        expect(() => { throw new InvalidButtonColorError(color) }).toThrowError(
+        expect(() => { throw new InvalidButtonColorError(color); }).toThrowError(
             `Invalid color '${color}' was provided. Valid colors are: ${Object.values(COLORS).join(', ')}.`
         );
     });
 });
+
 describe('shouldUseMappedIcon', () => {
-    const iconName = 'add';
-
-    it('returns true if icon is truthy and iconName does not exist', () => {
-        expect(shouldUseMappedIcon({ icon: true })).toBeTruthy();
+    it('returns true if icon is strictly true', () => {
+        expect(shouldUseMappedIcon(true)).toBe(true);
     });
 
-    it('returns false if icon is truthy and iconName exists', () => {
-        expect(shouldUseMappedIcon({ iconName, icon: true })).toBeFalsy();
-    });
-
-    it('returns false if icon is falsy', () => {
-        expect(shouldUseMappedIcon({ iconName, icon: false })).toBeFalsy();
-        expect(shouldUseMappedIcon({ iconName })).toBeFalsy();
-        expect(shouldUseMappedIcon({ icon: false })).toBeFalsy();
+    it('returns false if icon is not strictly true', () => {
+        expect(shouldUseMappedIcon('add')).toBe(false);
+        expect(shouldUseMappedIcon('true')).toBe(false);
+        expect(shouldUseMappedIcon()).toBe(false);
+        expect(shouldUseMappedIcon({})).toBe(false);
+        expect(shouldUseMappedIcon(false)).toBe(false);
     });
 });

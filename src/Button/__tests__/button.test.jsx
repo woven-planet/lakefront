@@ -46,6 +46,36 @@ describe('Button', () => {
 
             expect(onClick).toHaveBeenCalled();
         });
+
+        it('renders primary variant when color is undefined', () => {
+            const { getByRole } = render(<Button theme={THEME}>{BUTTON_TEXT}</Button>);
+
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
+        });
+
+        it('renders primary variant when color does not exist', () => {
+            const { getByRole } = render(<Button color="non_existing_color" theme={THEME}>{BUTTON_TEXT}</Button>);
+
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
+        });
+
+        it('renders primary variant when specified', () => {
+            const { getByRole } = render(<Button color="primary" theme={THEME}>{BUTTON_TEXT}</Button>);
+
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
+        });
+
+        it('renders secondary variant when specified', () => {
+            const { getByRole } = render(<Button color="secondary" theme={THEME}>{BUTTON_TEXT}</Button>);
+
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: 'transparent' });
+        });
+
+        it('renders desctructive variant when specified', () => {
+            const { getByRole } = render(<Button color="destructive" theme={THEME}>{BUTTON_TEXT}</Button>);
+
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: 'transparent' });
+        });
     });
 
     describe('when alternate prop is provided', () => {

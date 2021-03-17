@@ -1,12 +1,19 @@
 import styled from '@emotion/styled';
 import { lightenDarkenColor } from '../styles/stylesUtil';
-import { ButtonComponentProps, ButtonProps, ComponentStyles } from './buttonUtil';
+import { ButtonComponentProps, ComponentStyles } from './buttonUtil';
 import { css, Theme } from '@emotion/react';
 import { getIconStyles } from './iconButtonVariants';
 
 const DARKEN_MOST = -40;
 const DARKEN = -25;
 const DARKEN_LEAST = -10;
+
+interface ButtonConfigProps {
+    theme?: Theme;
+    isIconOnly?: boolean;
+}
+
+type StyledButtonComponentProps = ButtonComponentProps & ButtonConfigProps;
 
 export const getColor = (theme: Theme | undefined) => {
     return {
@@ -34,7 +41,7 @@ export const getColor = (theme: Theme | undefined) => {
     };
 };
 
-export const getBackgroundColor = (theme: Theme | undefined) => {
+export const getBackgroundColor = (theme?: Theme) => {
     return {
         primary: {
             alternate: theme?.colors?.white,
@@ -54,14 +61,8 @@ export const getBackgroundColor = (theme: Theme | undefined) => {
     };
 };
 
-interface disableProps {
-    alternate?: boolean;
-    icon?: boolean;
-    theme: Theme | undefined;
-}
-
 // Return an object that contains the CSS for each button's disabled styles
-const getDisabledStyles = ({ alternate = false, icon = false, theme }: disableProps): ComponentStyles => {
+const getDisabledStyles = ({ alternate = false, isIconOnly, theme }: StyledButtonComponentProps): ComponentStyles => {
     const primaryBackground = alternate ?
         getBackgroundColor(theme).primary.disabledAlternate :
         getBackgroundColor(theme).primary.disabled;
@@ -82,17 +83,23 @@ const getDisabledStyles = ({ alternate = false, icon = false, theme }: disablePr
                 opacity: 0.4,
                 span: {
                     color: alternate ? getColor(theme).primary.disabledAlternate : getColor(theme).primary.disabled
+                },
+                svg: {
+                    fill: alternate ? getColor(theme).primary.disabledAlternate : getColor(theme).primary.disabled
                 }
             }
         }),
         secondary: css({
             ':disabled': {
-                backgroundColor: icon ? 'transparent' : getBackgroundColor(theme).secondary.default,
+                backgroundColor: isIconOnly ? 'transparent' : getBackgroundColor(theme).secondary.default,
                 color: getColor(theme).secondary.disabled,
                 cursor: 'not-allowed',
                 opacity: alternate ? 0.5 : 0.25,
                 span: {
-                    color: icon ? secondaryIconColor : getColor(theme).secondary.disabled
+                    color: isIconOnly ? secondaryIconColor : getColor(theme).secondary.disabled
+                },
+                svg: {
+                    fill: isIconOnly ? secondaryIconColor : getColor(theme).secondary.disabled
                 }
             }
         }),
@@ -107,6 +114,9 @@ const getDisabledStyles = ({ alternate = false, icon = false, theme }: disablePr
                 opacity: 0.4,
                 span: {
                     color: destructiveColor
+                },
+                svg: {
+                    fill: destructiveColor
                 }
             }
         })
@@ -138,6 +148,9 @@ const getHoverStyles = ({ alternate = false, theme }: hoverProps): ComponentStyl
                 ...(alternate && { color: theme?.colors?.storm }),
                 span: {
                     ...(alternate && { color: theme?.colors?.storm })
+                },
+                svg: {
+                    ...(alternate && { fill: theme?.colors?.storm })
                 }
             }
         }),
@@ -147,13 +160,16 @@ const getHoverStyles = ({ alternate = false, theme }: hoverProps): ComponentStyl
                 ...(!alternate && { color: theme?.colors?.white }),
                 span: {
                     ...(!alternate && { color: theme?.colors?.white })
+                },
+                svg: {
+                    ...(!alternate && { fill: theme?.colors?.white })
                 }
             }
         })
     };
 };
 
-const MainButton = styled.button<ButtonComponentProps>(({ disabled, theme }) => ({
+const MainButton = styled.button<StyledButtonComponentProps>(({ disabled, theme }) => ({
     alignItems: 'center',
     border: 'none',
     borderRadius: 4,
@@ -169,6 +185,9 @@ const MainButton = styled.button<ButtonComponentProps>(({ disabled, theme }) => 
     overflow: 'hidden',
     textDecoration: 'none',
     userSelect: 'none',
+    svg: {
+        fill: theme?.colors?.white
+    },
     ...(!disabled && {
         ':after': {
             content: '""',
@@ -194,19 +213,24 @@ const MainButton = styled.button<ButtonComponentProps>(({ disabled, theme }) => 
 }));
 
 // color='primary'
-const PrimaryButton = styled(MainButton)<ButtonProps>(({ alternate, theme }) => ({
+const PrimaryButton = styled(MainButton)<StyledButtonComponentProps>(({ alternate, theme }) => ({
     backgroundColor: alternate ? theme?.colors?.white : theme?.colors?.storm,
-    ...(alternate && { color: theme?.colors?.storm }),
+    ...(alternate && {
+        color: theme?.colors?.storm,
+        svg: {
+            fill: theme?.colors?.storm
+        }
+    }),
     ':after': {
         backgroundImage: `radial-gradient(circle, ${alternate ? theme?.colors?.storm : theme?.colors?.white} 10%, transparent 10%)`
     }
 }),
 (props) => !props.disabled && getHoverStyles(props).primary,
 (props) => getDisabledStyles(props).primary,
-(props) => (props.icon && getIconStyles(props).primary));
+(props) => (props.isIconOnly && getIconStyles(props).primary));
 
 // color='secondary'
-const SecondaryButton = styled(MainButton)<ButtonProps>(({ alternate, theme }) => ({
+const SecondaryButton = styled(MainButton)<StyledButtonComponentProps>(({ alternate, theme }) => ({
     backgroundColor: 'transparent',
     border: `1px solid ${alternate ? theme?.colors?.white : theme?.colors?.storm}`,
     color: alternate ? theme?.colors?.white : theme?.colors?.storm,
@@ -215,14 +239,17 @@ const SecondaryButton = styled(MainButton)<ButtonProps>(({ alternate, theme }) =
     },
     span: {
         color: alternate ? theme?.colors?.white : theme?.colors?.storm
+    },
+    svg: {
+        fill: alternate ? theme?.colors?.white : theme?.colors?.storm
     }
 }),
 (props) => !props.disabled && getHoverStyles(props).secondary,
 (props) => getDisabledStyles(props).secondary,
-(props) => (props.icon && getIconStyles(props).secondary));
+(props) => (props.isIconOnly && getIconStyles(props).secondary));
 
 // color='destructive'
-const DestructiveButton = styled(MainButton)<ButtonProps>(({ alternate, theme }) => ({
+const DestructiveButton = styled(MainButton)<StyledButtonComponentProps>(({ alternate, theme }) => ({
     backgroundColor: alternate ? theme?.colors?.saturatedRed : 'transparent',
     border: alternate ? 'transparent' : `1px solid ${theme?.colors?.saturatedRed}`,
     color: alternate ? theme?.colors?.white : theme?.colors?.saturatedRed,
@@ -231,11 +258,14 @@ const DestructiveButton = styled(MainButton)<ButtonProps>(({ alternate, theme })
     },
     span: {
         color: alternate ? theme?.colors?.white : theme?.colors?.saturatedRed
+    },
+    svg: {
+        fill: alternate ? theme?.colors?.white : theme?.colors?.saturatedRed
     }
 }),
 (props) => !props.disabled && getHoverStyles(props).destructive,
 (props) => getDisabledStyles(props).destructive,
-(props) => (props.icon && getIconStyles(props).destructive));
+(props) => (props.isIconOnly && getIconStyles(props).destructive));
 
 export default {
     primary: PrimaryButton,
