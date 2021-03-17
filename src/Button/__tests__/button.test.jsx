@@ -1,6 +1,7 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import Button from '../Button';
-import { lightenDarkenColor } from 'core/styles/stylesUtil';
+import { lightenDarkenColor } from '../../styles/stylesUtil';
 
 const BUTTON_TEXT = 'buttonText';
 
@@ -47,33 +48,33 @@ describe('Button', () => {
         });
 
         it('renders primary variant when color is undefined', () => {
-            const { getByRole } = render(<Button>{BUTTON_TEXT}</Button>);
+            const { getByRole } = render(<Button theme={THEME}>{BUTTON_TEXT}</Button>);
 
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
         });
 
         it('renders primary variant when color does not exist', () => {
-            const { getByRole } = render(<Button color="non_existing_color">{BUTTON_TEXT}</Button>);
+            const { getByRole } = render(<Button color="non_existing_color" theme={THEME}>{BUTTON_TEXT}</Button>);
 
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
         });
 
         it('renders primary variant when specified', () => {
-            const { getByRole } = render(<Button color="primary">{BUTTON_TEXT}</Button>);
+            const { getByRole } = render(<Button color="primary" theme={THEME}>{BUTTON_TEXT}</Button>);
 
-            expect(getByRole('button').className.toLowerCase()).toContain('primarybutton');
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: THEME.colors.storm });
         });
 
         it('renders secondary variant when specified', () => {
-            const { getByRole } = render(<Button color="secondary">{BUTTON_TEXT}</Button>);
+            const { getByRole } = render(<Button color="secondary" theme={THEME}>{BUTTON_TEXT}</Button>);
 
-            expect(getByRole('button').className.toLowerCase()).toContain('secondarybutton');
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: 'transparent' });
         });
 
         it('renders desctructive variant when specified', () => {
-            const { getByRole } = render(<Button color="destructive">{BUTTON_TEXT}</Button>);
+            const { getByRole } = render(<Button color="destructive" theme={THEME}>{BUTTON_TEXT}</Button>);
 
-            expect(getByRole('button').className.toLowerCase()).toContain('destructivebutton');
+            expect(getByRole('button')).toHaveStyle({ backgroundColor: 'transparent' });
         });
     });
 
