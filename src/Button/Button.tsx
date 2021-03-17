@@ -3,7 +3,6 @@ import ButtonVariants from './buttonVariants';
 import IconButton from './IconButton';
 import {
     ButtonComponentProps,
-    COLORS,
     ICON_BUTTON_COLOR,
     ICON_SVGS,
     InvalidButtonColorError,
@@ -24,7 +23,7 @@ import {
  */
 const Button: FC<ButtonComponentProps> = ({
     alternate = false,
-    color = COLORS.PRIMARY,
+    color = 'primary',
     children,
     icon = false,
     iconPosition = 'left',
@@ -33,7 +32,7 @@ const Button: FC<ButtonComponentProps> = ({
     // When an icon is supplied we need to render the IconButton component inside the Button
     if (icon) {
         // If icon is true, we need to show the icon associated with the button color type, such as add or delete
-        const defaultIcon = shouldUseMappedIcon(icon) ? ICON_SVGS[color ?? COLORS.PRIMARY] : icon;
+        const defaultIcon = shouldUseMappedIcon(icon) ? ICON_SVGS[color ?? 'primary'] : icon;
         const isIconOnly = !children || !defaultIcon;
 
         // Icon Buttons have a different color mapping, i.e. there is no secondary, but primary uses the secondary component
