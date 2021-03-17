@@ -7,7 +7,7 @@ import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
 import ButtonsPage from './ButtonsPage';
 
 export default {
-    title: 'Example/Button',
+    title: 'Lakefront/Button',
     component: Button,
     argTypes: {
         onClick: {
@@ -38,7 +38,7 @@ export default {
                 defaultValue: { summary: false },
                 type: { summary: 'boolean' }
             },
-            description: 'HTML button element disabled prop'
+            description: 'HTML button element disabled prop.'
         }
     }
 } as Meta;
