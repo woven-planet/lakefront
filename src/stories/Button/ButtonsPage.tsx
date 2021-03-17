@@ -36,7 +36,6 @@ const ButtonsPage: FC = () => {
                     <Button color="secondary">Secondary</Button>
                     <Button color="destructive">Destructive</Button>
                     <Button icon />
-                    <Button color="secondary" icon />
                     <Button color="destructive" icon />
                 </Section>
                 <SectionLabel>Disabled:</SectionLabel>
@@ -48,7 +47,6 @@ const ButtonsPage: FC = () => {
                     <Button color="destructive" disabled>Destructive</Button>
                     <Button icon color="destructive" disabled>Destructive</Button>
                     <Button icon disabled />
-                    <Button color="secondary" icon disabled />
                     <Button color="destructive" icon disabled />
                 </Section>
             </DefaultWrapper>
@@ -61,7 +59,6 @@ const ButtonsPage: FC = () => {
                     <Button color="destructive" alternate>Destructive</Button>
                     <Button icon color="destructive" alternate>Destructive</Button>
                     <Button icon alternate />
-                    <Button color="secondary" icon alternate />
                     <Button color="destructive" icon alternate />
                 </Section>
                 <SectionLabel style={{color: 'white'}}>Disabled:</SectionLabel>
@@ -73,7 +70,6 @@ const ButtonsPage: FC = () => {
                     <Button color="destructive" alternate disabled>Destructive</Button>
                     <Button icon color="destructive" alternate disabled>Destructive</Button>
                     <Button icon alternate disabled />
-                    <Button color="secondary" icon alternate disabled />
                     <Button color="destructive" icon alternate disabled />
                 </Section>
             </AlternateWrapper>
