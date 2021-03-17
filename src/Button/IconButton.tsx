@@ -9,7 +9,7 @@ interface IconSpanProps {
 
 const IconSpan = styled.span<IconSpanProps>(({ iconPosition, isIconOnly }) => {
     const iconFirst = iconPosition === 'left';
-    const margin = iconFirst ? 'auto 10px auto 15px' : 'auto 15px auto 10px';
+    const margin = iconFirst ? 'auto 15px auto 10px' : 'auto 10px auto 15px';
     const flexDirection = iconFirst ? 'row' : 'row-reverse';
 
     return {
