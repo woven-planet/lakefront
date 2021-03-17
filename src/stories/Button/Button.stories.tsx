@@ -37,6 +37,11 @@ export default {
                 type: { summary: 'boolean' }
             },
             description: 'HTML button element disabled prop.'
+        },
+        icon: {
+            control: {
+                type: 'boolean'
+            }
         }
     }
 } as Meta;
