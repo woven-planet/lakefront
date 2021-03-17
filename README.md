@@ -32,4 +32,5 @@ ReactDOM.render(<App />, document.querySelector('#app'));
 
 ## Components
 We've added storybook pages to show how each component can be used.
-* [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/story/example-button--primary)
+* [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/story/lakefront-button--all-buttons)
+* [Input](https://toyotaresearchinstitute.github.io/lakefront/?path=/story/lakefront-input--placeholder)
