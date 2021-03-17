@@ -17,6 +17,7 @@ export const StyledInput = styled.input(({ theme }) => ({
     color: theme?.colors?.cinder,
     fontSize: 16,
     outline: 'none',
+    paddingLeft: 12,
     height: 40,
     width: 300,
     ':focus': {
