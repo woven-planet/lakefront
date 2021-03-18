@@ -28,12 +28,12 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
   const showIcon = indeterminate || isChecked;
-  const icon = indeterminate ? <Indeterminate /> : (checkedIcon || <Check />);
+  const icon = indeterminate ? <Indeterminate /> : checkedIcon || <Check />;
 
   const handleChange = (event: object) => {
     if (!disabled) {
-        onChange(event);
-        setIsChecked(!isChecked);
+      onChange(event);
+      setIsChecked(!isChecked);
     }
   };
 
