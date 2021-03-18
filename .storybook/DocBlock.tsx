@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ArgsTable, Description, Stories, Subtitle, Title } from "@storybook/addon-docs/blocks";
 
-const DocBlock = () => {
+const DocBlock: FC = () => {
     return (
         <>
             <Title />
