@@ -38,7 +38,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
   };
 
   return (
-    <StyledLabel>
+    <StyledLabel disabled={disabled} indeterminate={indeterminate}>
       <StyledCheckbox
         {...props}
         indeterminate={indeterminate}
