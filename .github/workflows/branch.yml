@@ -1,4 +1,4 @@
-name: Branch Feature Release
+name: Branch CI
 
 on:
   push:
@@ -17,13 +17,4 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm test
-      # Get the branch name
-      - uses: nelonoel/branch-name@v1.0.1
-      # Bump the version with the branch name as the preid
-      - uses: 'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          default: prerelease
-          preid: ${BRANCH_NAME}
       - run: npm run build
