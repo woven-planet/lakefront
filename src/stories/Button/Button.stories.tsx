@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import Button from 'src/Button/Button';
 import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
 import ButtonsPage from './ButtonsPage';
+import DocBlock from '.storybook/DocBlock';
 
 export default {
     title: 'Lakefront/Button',
@@ -43,6 +44,11 @@ export default {
                 type: 'boolean'
             }
         }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock
+        }
     }
 } as Meta;
 
@@ -59,19 +65,22 @@ const Template: Story<ButtonComponentProps> = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
     children: 'Button',
-    color: 'primary'
+    color: 'primary',
+    iconPosition: undefined
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
     children: 'Button',
-    color: 'secondary'
+    color: 'secondary',
+    iconPosition: undefined
 };
 
 export const Destructive = Template.bind({});
 Destructive.args = {
     children: 'Button',
-    color: 'destructive'
+    color: 'destructive',
+    iconPosition: undefined
 };
 
 // Individual Buttons (With Icon)
@@ -98,19 +107,22 @@ export const PrimaryIconButton = Template.bind({});
 PrimaryIconButton.args = {
     children: undefined,
     color: 'primary',
-    icon: true
+    icon: true,
+    iconPosition: undefined
 };
 
 export const SecondaryIconButton = Template.bind({});
 SecondaryIconButton.args = {
     children: undefined,
     color: 'secondary',
-    icon: true
+    icon: true,
+    iconPosition: undefined
 };
 
 export const DestructiveIconButton = Template.bind({});
 DestructiveIconButton.args = {
     children: undefined,
     color: 'destructive',
-    icon: true
+    icon: true,
+    iconPosition: undefined
 };
