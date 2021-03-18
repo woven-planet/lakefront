@@ -15,9 +15,8 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
+      - run: npm --no-git-tag-version version ${{ github.event.release.tag_name }}
       - run: npm run build
-      - name: Make prerelease to npm
-        uses: epeli/npm-release@v1
-        with:
-          type: prerelease
-          token: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
