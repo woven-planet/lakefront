@@ -16,6 +16,6 @@ jobs:
       - run: npm test
       - run: npm run build
       - name: Automated Version Bump
-      uses: 'phips28/gh-action-bump-version@master'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
