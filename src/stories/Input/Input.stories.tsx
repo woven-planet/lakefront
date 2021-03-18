@@ -1,7 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import Input from 'src/Input/Input';
-import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
 import { ComponentPropsWithoutRef } from "react";
 
 export default {

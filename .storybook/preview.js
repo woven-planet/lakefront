@@ -2,6 +2,8 @@ import { addDecorator } from '@storybook/react';
 import { withThemesProvider } from 'storybook-addon-emotion-theme';
 import theme from 'src/styles/theme';
 import globalStyleDecorator from './globalStyleDecorator';
+import { PARAM_KEY as docsViewId } from '@storybook/addon-docs/dist/shared';
+import { addParameters } from '@storybook/react';
 
 const themes = [theme];
 addDecorator(withThemesProvider(themes));
@@ -22,5 +24,14 @@ export const parameters = {
       },
     ],
   },
-  controls: { expanded: true }
-}
+  controls: { expanded: true },
+  previewTabs: {
+    'storybook/docs/panel': {
+      index: -1
+    }
+  }
+};
+
+addParameters({
+  viewMode: docsViewId,
+});
