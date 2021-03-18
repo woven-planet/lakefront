@@ -1,22 +1,46 @@
-import React from 'react';
-import Checkbox from '../Checkbox';
+import React from "react";
+import { render } from "@testing-library/react";
+import Checkbox from "../Checkbox";
+import { ReactComponent as Check } from "../assets/check.svg";
 
-describe('Checkbox', () => {
-    it.todo('renders un-checked checkbox and no label by default');
+describe("Checkbox", () => {
+  it("renders un-checked checkbox and no label by default", () => {
+    const { queryByRole } = render(<Checkbox />);
+
+    expect(queryByRole("checkbox")).toBeInTheDocument();
+  });
+
+  it("renders un-checked checkbox with label when label provided", () => {
+    const label = "Checkbox";
+    const { queryByRole, getByText } = render(<Checkbox label={label} />);
+
+    getByText(label);
+    expect(queryByRole("checkbox")).toBeInTheDocument();
+  });
+
+  it('renders checked checkbox when "checked" prop is true', () => {
+    const { container } = render(<Checkbox checked />);
     
-    it.todo('renders un-checked checkbox with label when label provided');
+    expect(container.querySelector('svg')).toBeInTheDocument();
+  });
+
+  it('renders indeterminate checkbox when "indeterminate" prop is true', () => {
+    const { container } = render(<Checkbox indeterminate />);
     
-    it.todo('renders checked checkbox when "checked" prop is true');
+    expect(container.querySelector('svg')).toBeInTheDocument();
+  });
+
+  it('renders provided svg when "checkedIcon" is provided', () => {
+    const { container } = render(<Checkbox checked checkedIcon={<Check />} />);
     
-    it.todo('renders indeterminate checkbox when "indeterminate" prop is true');
-    
-    it.todo('renders provided svg when "checkedIcon" is provided');
-    
-    it.todo('triggers handler when checkbox is changed');
-    
-    it.todo('prevents handler trigger when disabled prop is true');
-    
-    it('FAILS UNTIL TEST ARE WRITTEN', () => {
-        expect('TODO').toBe('COMPLETE');
-    });
+    expect(container.querySelector('svg')).toBeInTheDocument();
+  });
+
+  it.todo("triggers handler when checkbox is changed");
+
+  it.todo("prevents handler trigger when disabled prop is true");
+
+  it("FAILS UNTIL TEST ARE WRITTEN", () => {
+    expect("TODO").toBe("COMPLETE");
+  });
 });
