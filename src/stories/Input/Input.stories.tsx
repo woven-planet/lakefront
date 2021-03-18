@@ -1,7 +1,8 @@
+import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import Input from 'src/Input/Input';
-import { ComponentPropsWithoutRef } from "react";
+import Input, { InputProps } from 'src/Input/Input';
+import DocBlock from '../../../.storybook/DocBlock';
 
 export default {
     title: 'Lakefront/Input',
@@ -26,10 +27,15 @@ export default {
             },
             description: 'HTML input element disabled prop.'
         }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock
+        }
     }
 } as Meta;
 
-const Template: Story<ComponentPropsWithoutRef<'input'>> = (args) => <Input {...args} />;
+const Template: Story<InputProps & ComponentPropsWithoutRef<'input'>> = (args) => <Input {...args} />;
 
 export const Placeholder = Template.bind({});
 Placeholder.args = {

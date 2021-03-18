@@ -1,7 +1,7 @@
 import GlobalStyles from '../src/styles/GlobalStyles';
 
-const GlobalStyleDecorator = (storyFn) => {
+const GlobalStyleStorybookDecorator = (storyFn: any) => {
     return <GlobalStyles>{ storyFn() }</GlobalStyles>
 };
 
-export default GlobalStyleDecorator;
+export default GlobalStyleStorybookDecorator;
