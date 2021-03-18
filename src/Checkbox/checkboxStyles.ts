@@ -14,15 +14,21 @@ export const StyledLabel = styled.label<StyledLabelProps>(
 
     return {
       color: disabled ? theme?.colors?.mercury : theme?.colors?.cinder,
-      display: "inline-flex",
-      flexDirection: "row",
+      display: "inline-grid",
+      gridTemplateColumns: "32px auto",
+      gridTemplateRows: "auto",
       fontSize: 16,
       padding: 0,
       alignItems: "center",
+      span: {
+        gridColumn: "2 / span 1",
+        gridRow: "1 / span 1",
+      },
       svg: {
-        position: "absolute",
-        left: 14,
+        gridColumn: "1 / span 1",
+        gridRow: "1 / span 1",
         color: disabled ? disabledSvgColor : theme?.colors?.white,
+        marginLeft: 2,
       },
     };
   }
@@ -44,9 +50,10 @@ export const StyledCheckbox = styled.input<CheckboxProps>(
       "-webkit-appearance": "none",
       backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
       fontSize: 16,
-      margin: "0 12px 0 0",
       height: 20,
       width: 20,
+      gridColumn: "1 / span 1",
+      gridRow: "1 / span 1",
     };
   }
 );
