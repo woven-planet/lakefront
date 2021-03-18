@@ -30,6 +30,7 @@ export const StyledLabel = styled.label<StyledLabelProps>(
         color: disabled ? disabledSvgColor : theme?.colors?.white,
         marginLeft: 2,
       },
+      cursor: disabled ? 'not-allowed' : 'auto',
     };
   }
 );
@@ -54,6 +55,7 @@ export const StyledCheckbox = styled.input<CheckboxProps>(
       width: 20,
       gridColumn: "1 / span 1",
       gridRow: "1 / span 1",
+      cursor: disabled ? 'not-allowed' : 'auto',
     };
   }
 );

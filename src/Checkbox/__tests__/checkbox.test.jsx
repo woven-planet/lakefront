@@ -1,7 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import Checkbox from "../Checkbox";
 import { ReactComponent as Check } from "../assets/check.svg";
+
+const onChangeHandler = jest.fn();
+const LABEL = "Checkbox";
 
 describe("Checkbox", () => {
   it("renders un-checked checkbox and no label by default", () => {
@@ -11,10 +14,9 @@ describe("Checkbox", () => {
   });
 
   it("renders un-checked checkbox with label when label provided", () => {
-    const label = "Checkbox";
-    const { queryByRole, getByText } = render(<Checkbox label={label} />);
+    const { queryByRole, getByText } = render(<Checkbox label={LABEL} />);
 
-    getByText(label);
+    getByText(LABEL);
     expect(queryByRole("checkbox")).toBeInTheDocument();
   });
 
@@ -36,11 +38,19 @@ describe("Checkbox", () => {
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
-  it.todo("triggers handler when checkbox is changed");
+  it("triggers handler when checkbox is changed", () => {
+    const { getByText } = render(<Checkbox onChange={onChangeHandler} label={LABEL} />);
 
-  it.todo("prevents handler trigger when disabled prop is true");
+    fireEvent.click(getByText(LABEL));
 
-  it("FAILS UNTIL TEST ARE WRITTEN", () => {
-    expect("TODO").toBe("COMPLETE");
+    expect(onChangeHandler).toHaveBeenCalled();
+  });
+
+  it("prevents handler trigger when disabled prop is true", () => {
+    const { getByText } = render(<Checkbox onChange={onChangeHandler} label={LABEL} disabled />);
+
+    fireEvent.click(getByText(LABEL));
+
+    expect(onChangeHandler).not.toHaveBeenCalled();
   });
 });
