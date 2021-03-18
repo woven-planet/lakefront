@@ -17,6 +17,7 @@ const AlternateWrapper = styled(DefaultWrapper)({
 });
 
 const Section = styled.div({
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
