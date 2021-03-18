@@ -8,6 +8,10 @@ describe('Checkbox', () => {
     
     it.todo('renders checked checkbox when "checked" prop is true');
     
+    it.todo('renders indeterminate checkbox when "indeterminate" prop is true');
+    
+    it.todo('renders provided svg when "checkedIcon" is provided');
+    
     it.todo('triggers handler when checkbox is changed');
     
     it.todo('prevents handler trigger when disabled prop is true');

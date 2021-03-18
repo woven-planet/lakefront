@@ -7,8 +7,8 @@ export default {
     title: 'Lakefront/Checkbox',
     component: CheckboxComponent,
     argTypes: {
-        onChange: {
-            action: 'changed',
+        onClick: {
+            action: 'clicked',
             table: {
                 disable: true
             }
@@ -27,8 +27,6 @@ export default {
 const Template: Story<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => <CheckboxComponent {...args} />;
 
 export const Checkbox = Template.bind({});
-Checkbox.args = {
-};
 
 export const CheckboxWithLabel = Template.bind({});
 CheckboxWithLabel.args = {
