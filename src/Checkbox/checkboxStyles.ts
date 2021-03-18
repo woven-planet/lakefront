@@ -47,7 +47,7 @@ export const StyledCheckbox = styled.input<CheckboxProps>(
         disabled ? theme?.colors?.mercury : theme?.colors?.storm
       }`,
       borderRadius: 2,
-      "-webkit-appearance": "none",
+      WebkitAppearance: "none",
       backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
       fontSize: 16,
       height: 20,
