@@ -1,8 +1,8 @@
-name: NPM Release
+name: NPM Prerelease
 
 on:
   release:
-    types: [released]
+    types: [prereleased]
 
 jobs:
   build:
@@ -16,6 +16,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Make prerelease to npm
+      uses: epeli/npm-release@v1
+      with:
+        type: prerelease
+        token: ${{ secrets.NPM_TOKEN }}
