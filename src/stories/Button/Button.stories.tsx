@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import Button from 'src/Button/Button';
 import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
 import ButtonsPage from './ButtonsPage';
-import DocBlock from '../../../.storybook/DocBlock';
+import DocBlock from '.storybook/DocBlock';
 
 export default {
     title: 'Lakefront/Button',

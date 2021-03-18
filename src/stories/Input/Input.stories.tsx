@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import Input, { InputProps } from 'src/Input/Input';
-import DocBlock from '../../../.storybook/DocBlock';
+import DocBlock from '.storybook/DocBlock';
 
 export default {
     title: 'Lakefront/Input',
