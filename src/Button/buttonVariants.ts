@@ -224,7 +224,7 @@ const PrimaryButton = styled(MainButton)<StyledButtonComponentProps>(({ alternat
         }
     }),
     ':after': {
-        backgroundImage: `radial-gradient(circle, ${alternate ? theme?.colors?.storm : theme?.colors?.white} 10%, transparent 10%)`
+        backgroundImage: `radial-gradient(circle, ${alternate ? theme?.colors?.storm : theme?.colors?.white} 12%, transparent 14%)`
     }
 }),
 (props) => !props.disabled && getHoverStyles(props).primary,
@@ -237,7 +237,7 @@ const SecondaryButton = styled(MainButton)<StyledButtonComponentProps>(({ altern
     border: `1px solid ${alternate ? theme?.colors?.white : theme?.colors?.storm}`,
     color: alternate ? theme?.colors?.white : theme?.colors?.storm,
     ':after': {
-        backgroundImage: `radial-gradient(circle, ${theme?.colors?.storm} 10%, transparent 10%)`
+        backgroundImage: `radial-gradient(circle, ${theme?.colors?.storm} 12%, transparent 14%)`
     },
     span: {
         color: alternate ? theme?.colors?.white : theme?.colors?.storm
@@ -256,7 +256,7 @@ const DestructiveButton = styled(MainButton)<StyledButtonComponentProps>(({ alte
     border: alternate ? 'transparent' : `1px solid ${theme?.colors?.saturatedRed}`,
     color: alternate ? theme?.colors?.white : theme?.colors?.saturatedRed,
     ':after': {
-        backgroundImage: `radial-gradient(circle, ${theme?.colors?.white} 10%, transparent 10%)`
+        backgroundImage: `radial-gradient(circle, ${theme?.colors?.white} 12%, transparent 14%)`
     },
     span: {
         color: alternate ? theme?.colors?.white : theme?.colors?.saturatedRed
