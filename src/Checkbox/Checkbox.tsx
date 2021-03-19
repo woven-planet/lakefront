@@ -1,12 +1,13 @@
 import React, {
+  ChangeEvent,
   ComponentPropsWithoutRef,
   FC,
   ReactElement,
   useState,
-} from "react";
-import { StyledCheckbox, StyledLabel } from "./checkboxStyles";
-import { ReactComponent as Check } from "./assets/check.svg";
-import { ReactComponent as Indeterminate } from "./assets/indeterminate.svg";
+} from 'react';
+import { StyledCheckbox, StyledLabel } from './checkboxStyles';
+import { ReactComponent as Check } from './assets/check.svg';
+import { ReactComponent as Indeterminate } from './assets/indeterminate.svg';
 
 export interface CheckboxProps {
   /**
@@ -32,14 +33,14 @@ export interface CheckboxProps {
   /**
    * The action that should be run when the checked state changes.
    */
-  onChange?: (event: object) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 /**
  * Checkbox Component
  *
  * The Checkbox component takes in native checkbox props as well as its own CheckboxProps. The state is managed
- * in this component, but could be managed outside (not recommended) by forcing rerenders with new initial props
+ * in this component, but could be managed outside (not recommended) by forcing re-renders with new initial props
  * within the consuming app.
  *
  */
@@ -56,7 +57,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
   const showIcon = indeterminate || isChecked;
   const icon = indeterminate ? <Indeterminate /> : checkedIcon || <Check />;
 
-  const handleChange = (event: object) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!disabled) {
       onChange(event);
       setIsChecked(!isChecked);
