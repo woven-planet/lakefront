@@ -7,7 +7,7 @@ import StackBannerComponent, {
 import DocBlock from ".storybook/DocBlock";
 
 export default {
-  title: "Lakefront/StackBanner",
+  title: "Lakefront/Stack Banner",
   component: StackBannerComponent,
   parameters: {
     docs: {
@@ -36,7 +36,7 @@ StackBanner.args = {
       severity: "normal",
     },
     {
-      content: <div>Banner 4 (Undefined)</div>,
+      content: <div>Banner 4 (Default)</div>,
     },
   ],
 };
