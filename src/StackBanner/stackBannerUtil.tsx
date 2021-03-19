@@ -7,7 +7,7 @@ export const WARNING_SEVERITY = "warning";
 export const ERROR_SEVERITY = "error";
 export const DEFAULT_SEVERITY = "default";
 
-const DEFAULT_BACKGROUND_COLOR = "transparent";
+export const DEFAULT_BACKGROUND_COLOR = "transparent";
 
 export const StackBannerStoryContent = {
   Error: "Error: This should be addressed immediately.",
@@ -21,14 +21,6 @@ export type StackBannerIcon = ReactElement<SVGElement> | boolean | undefined;
 interface SeverityColors {
   [key: string]: string;
 }
-
-export const getStackBannerIcon = (icon: StackBannerIcon) => {
-  if (typeof icon === "boolean") {
-    return icon && <Flag />;
-  }
-
-  return icon || <Flag />;
-};
 
 export const getSeverityColor = (severity: string | undefined, theme?: Theme) => {
   const SEVERITY_COLORS: SeverityColors = {
@@ -45,3 +37,10 @@ export const getSeverityColor = (severity: string | undefined, theme?: Theme) =>
   return SEVERITY_COLORS[severity] || DEFAULT_BACKGROUND_COLOR;
 };
 
+export const getStackBannerIcon = (icon: StackBannerIcon) => {
+  if (typeof icon === "boolean") {
+    return icon && <Flag />;
+  }
+
+  return icon || <Flag />;
+};
