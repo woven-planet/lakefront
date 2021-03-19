@@ -7,7 +7,7 @@ import StackBannerRowComponent, {
 import DocBlock from ".storybook/DocBlock";
 
 export default {
-  title: "Lakefront/StackBanner/StackBannerRow",
+  title: "Lakefront/Stack Banner/Stack Banner Row",
   component: StackBannerRowComponent,
   argTypes: {
     icon: {
@@ -30,8 +30,25 @@ const Template: Story<
   StackBannerRowProps & ComponentPropsWithoutRef<"div">
 > = (args) => <StackBannerRowComponent {...args} />;
 
-export const StackBannerRow = Template.bind({});
-StackBannerRow.args = {
+export const Error = Template.bind({});
+Error.args = {
   content: <div>Stack Banner</div>,
   severity: "error",
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  content: <div>Stack Banner</div>,
+  severity: "warning",
+};
+
+export const Normal = Template.bind({});
+Normal.args = {
+  content: <div>Stack Banner</div>,
+  severity: "normal",
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  content: <div>Stack Banner</div>,
 };
