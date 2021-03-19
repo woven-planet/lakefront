@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactElement } from "react";
+import React, { FC, MouseEvent, ReactElement } from "react";
 import { StackBannerRowDiv } from "./stackBannerStyles";
 import { StackBannerIcon, getStackBannerIcon } from "./stackBannerUtil";
 
