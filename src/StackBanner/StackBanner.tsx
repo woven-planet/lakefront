@@ -9,6 +9,13 @@ export interface StackBannerProps {
   rows: StackBannerRowProps[];
 }
 
+/**
+ * StackBanner Component
+ *
+ * The StackBanner component is the container for StackBannerRows. As such,
+ * rows are required to display any content.
+ *
+ */
 const StackBanner: FC<StackBannerProps> = ({ rows }) => {
   return (
     <StackBannerListDiv>

@@ -1,5 +1,11 @@
 import { ComponentPropsWithoutRef } from "react";
 import { Meta, Story } from "@storybook/react/types-6-0";
+import {
+  NORMAL_SEVERITY,
+  WARNING_SEVERITY,
+  ERROR_SEVERITY,
+  StackBannerStoryContent,
+} from "src/StackBanner/stackBannerUtil";
 
 import StackBannerComponent, {
   StackBannerProps,
@@ -9,6 +15,11 @@ import DocBlock from ".storybook/DocBlock";
 export default {
   title: "Lakefront/Stack Banner",
   component: StackBannerComponent,
+  argTypes: {
+    rows: {
+      control: false
+    },
+  },
   parameters: {
     docs: {
       page: DocBlock,
@@ -24,19 +35,19 @@ export const StackBanner = Template.bind({});
 StackBanner.args = {
   rows: [
     {
-      content: <div>Banner 1 (Error)</div>,
-      severity: "error",
+      content: <div>{StackBannerStoryContent.Error}</div>,
+      severity: ERROR_SEVERITY,
     },
     {
-      content: <div>Banner 2 (Warning)</div>,
-      severity: "warning",
+      content: <div>{StackBannerStoryContent.Warning}</div>,
+      severity: WARNING_SEVERITY,
     },
     {
-      content: <div>Banner 3 (Normal)</div>,
-      severity: "normal",
+      content: <div>{StackBannerStoryContent.Normal}</div>,
+      severity: NORMAL_SEVERITY,
     },
     {
-      content: <div>Banner 4 (Default)</div>,
+      content: <div>{StackBannerStoryContent.Default}</div>,
     },
   ],
 };

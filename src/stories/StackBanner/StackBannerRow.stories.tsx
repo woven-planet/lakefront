@@ -1,5 +1,11 @@
 import { ComponentPropsWithoutRef } from "react";
 import { Meta, Story } from "@storybook/react/types-6-0";
+import {
+  NORMAL_SEVERITY,
+  WARNING_SEVERITY,
+  ERROR_SEVERITY,
+  StackBannerStoryContent,
+} from "src/StackBanner/stackBannerUtil";
 
 import StackBannerRowComponent, {
   StackBannerRowProps,
@@ -11,9 +17,7 @@ export default {
   component: StackBannerRowComponent,
   argTypes: {
     icon: {
-      table: {
-        disable: true,
-      },
+      control: "boolean"
     },
     content: {
       control: "text",
@@ -26,29 +30,29 @@ export default {
   },
 } as Meta;
 
-const Template: Story<
-  StackBannerRowProps & ComponentPropsWithoutRef<"div">
-> = (args) => <StackBannerRowComponent {...args} />;
+const Template: Story<StackBannerRowProps & ComponentPropsWithoutRef<"div">> = (
+  args
+) => <StackBannerRowComponent {...args} />;
 
 export const Error = Template.bind({});
 Error.args = {
-  content: <div>Stack Banner</div>,
-  severity: "error",
+  content: <div>{StackBannerStoryContent.Error}</div>,
+  severity: ERROR_SEVERITY,
 };
 
 export const Warning = Template.bind({});
 Warning.args = {
-  content: <div>Stack Banner</div>,
-  severity: "warning",
+  content: <div>{StackBannerStoryContent.Warning}</div>,
+  severity: WARNING_SEVERITY,
 };
 
 export const Normal = Template.bind({});
 Normal.args = {
-  content: <div>Stack Banner</div>,
-  severity: "normal",
+  content: <div>{StackBannerStoryContent.Normal}</div>,
+  severity: NORMAL_SEVERITY,
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  content: <div>Stack Banner</div>,
+  content: <div>{StackBannerStoryContent.Default}</div>,
 };
