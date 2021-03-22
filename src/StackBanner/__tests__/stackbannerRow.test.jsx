@@ -7,7 +7,7 @@ const content = <div>{CONTENT}</div>;
 
 describe("StackBannerRow", () => {
   it("renders stack banner row properly.", () => {
-    const { getByText } = render(<StackBannerRow content={content} />);
+    const { getByText } = render(<StackBannerRow key="1" content={content} />);
 
     getByText(CONTENT);
   });
@@ -15,7 +15,7 @@ describe("StackBannerRow", () => {
   it("handles onClick action", () => {
     const onClick = jest.fn();
     const { getByText } = render(
-      <StackBannerRow onClick={onClick} content={content} />
+      <StackBannerRow onClick={onClick} key="1" content={content} />
     );
 
     fireEvent.click(getByText(CONTENT));

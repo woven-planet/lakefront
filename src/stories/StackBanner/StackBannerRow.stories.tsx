@@ -38,21 +38,25 @@ export const Error = Template.bind({});
 Error.args = {
   content: <div>{StackBannerStoryContent.Error}</div>,
   severity: ERROR_SEVERITY,
+  key: "1",
 };
 
 export const Warning = Template.bind({});
 Warning.args = {
   content: <div>{StackBannerStoryContent.Warning}</div>,
   severity: WARNING_SEVERITY,
+  key: "2",
 };
 
 export const Normal = Template.bind({});
 Normal.args = {
   content: <div>{StackBannerStoryContent.Normal}</div>,
   severity: NORMAL_SEVERITY,
+  key: "3",
 };
 
 export const Default = Template.bind({});
 Default.args = {
   content: <div>{StackBannerStoryContent.Default}</div>,
+  key: "4",
 };

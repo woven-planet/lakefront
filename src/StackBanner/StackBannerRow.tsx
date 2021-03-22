@@ -4,6 +4,10 @@ import { StackBannerIcon, getStackBannerIcon } from "./stackBannerUtil";
 
 export interface StackBannerRowProps {
   /**
+   * A unique string key required for React list item changes. 
+   */
+  key: string;
+  /**
    * The main content to be displayed in in the banner.
    */
   content?: ReactElement<any>;
