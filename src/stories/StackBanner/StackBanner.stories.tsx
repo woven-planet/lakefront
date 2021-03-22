@@ -37,17 +37,21 @@ StackBanner.args = {
     {
       content: <div>{StackBannerStoryContent.Error}</div>,
       severity: ERROR_SEVERITY,
+      key: "1",
     },
     {
       content: <div>{StackBannerStoryContent.Warning}</div>,
       severity: WARNING_SEVERITY,
+      key: "2",
     },
     {
       content: <div>{StackBannerStoryContent.Normal}</div>,
       severity: NORMAL_SEVERITY,
+      key: "3",
     },
     {
       content: <div>{StackBannerStoryContent.Default}</div>,
+      key: "4",
     },
   ],
 };

@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { StackBannerListDiv } from "./stackBannerStyles";
 import StackBannerRow, { StackBannerRowProps } from "./StackBannerRow";
-import { v4 as uuid } from 'uuid';
 
 export interface StackBannerProps {
   /**
@@ -21,7 +20,7 @@ const StackBanner: FC<StackBannerProps> = ({ rows = [] }) => {
   return (
     <StackBannerListDiv>
       {rows.map((stackBannerRowProps: StackBannerRowProps) => {
-        return <StackBannerRow key={uuid()} {...stackBannerRowProps} />;
+        return <StackBannerRow {...stackBannerRowProps} />;
       })}
     </StackBannerListDiv>
   );

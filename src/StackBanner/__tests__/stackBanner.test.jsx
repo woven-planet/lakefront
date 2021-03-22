@@ -13,6 +13,7 @@ describe("StackBanner", () => {
           {
             severity: "error",
             content,
+            key: "1"
           },
         ]}
       />
