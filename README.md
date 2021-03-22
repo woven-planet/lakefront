@@ -16,6 +16,16 @@ npm install @toyota-research-institute/lakefront
 yarn add @toyota-research-institute/lakefront
 ```
 
+Emotion's `ThemeProvider` must wrap your application for the components to style correctly.
+```
+import { ThemeProvider } from '@emotion/react';
+import { theme } from '@toyota-research-institute/lakefront';
+
+<ThemeProvider theme={theme}>
+    ...
+</ThemeProvider>
+```
+
 ## Usage
 
 Here is a quick example to get you started, **it's all you need**:
