@@ -14,10 +14,13 @@ export const StyledLabel = styled.label(({ theme }) => ({
 export const StyledInput = styled.input(({ theme }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
+    boxSizing: 'border-box',
     color: theme?.colors?.cinder,
     fontSize: 16,
     outline: 'none',
+    paddingBottom: 0,
     paddingLeft: 12,
+    paddingTop: 0,
     height: 40,
     width: 300,
     ':focus': {
