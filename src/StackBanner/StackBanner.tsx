@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { ComponentPropsWithoutRef, FC } from "react";
 import { StackBannerListDiv } from "./stackBannerStyles";
 import StackBannerRow, { StackBannerRowProps } from "./StackBannerRow";
 
@@ -16,9 +16,9 @@ export interface StackBannerProps {
  * rows are required to display any content.
  *
  */
-const StackBanner: FC<StackBannerProps> = ({ rows = [] }) => {
+const StackBanner: FC<StackBannerProps & ComponentPropsWithoutRef<'div'>> = ({ rows = [], ...props }) => {
   return (
-    <StackBannerListDiv>
+    <StackBannerListDiv {...props}>
       {rows.map((stackBannerRowProps: StackBannerRowProps) => {
         return <StackBannerRow {...stackBannerRowProps} />;
       })}
