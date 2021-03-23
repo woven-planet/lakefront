@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, ReactElement } from "react";
+import React, { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from "react";
 import { StackBannerRowDiv } from "./stackBannerStyles";
 import { StackBannerIcon, getStackBannerIcon } from "./stackBannerUtil";
 
@@ -35,11 +35,12 @@ export interface StackBannerRowProps {
  * designed to be used with a StackBanner component, but can be used as a standalone component.
  *
  */
-const StackBannerRow: FC<StackBannerRowProps> = ({
+const StackBannerRow: FC<StackBannerRowProps & ComponentPropsWithoutRef<'div'>> = ({
   content = "",
   icon = true,
   severity = "default",
   onClick = () => null,
+  ...props
 }) => {
   const svg = getStackBannerIcon(icon);
 
@@ -48,6 +49,7 @@ const StackBannerRow: FC<StackBannerRowProps> = ({
       className="stackBannerRow"
       severity={severity}
       onClick={onClick}
+      {...props}
     >
       {svg}
       <div className="content">{content}</div>
