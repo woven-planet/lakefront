@@ -14,7 +14,7 @@ const THEME = {
   colors: {
     white: "white",
     orange: "orange",
-    watermelon: "red",
+    red: "red",
     default: DEFAULT_BACKGROUND_COLOR,
   },
 };
@@ -24,7 +24,7 @@ describe("getSeverityColor", () => {
     expect(getSeverityColor(NORMAL_SEVERITY, THEME)).toBe(THEME.colors.white);
     expect(getSeverityColor(WARNING_SEVERITY, THEME)).toBe(THEME.colors.orange);
     expect(getSeverityColor(ERROR_SEVERITY, THEME)).toBe(
-      THEME.colors.watermelon
+      THEME.colors.red
     );
     expect(getSeverityColor(DEFAULT_SEVERITY, THEME)).toBe(
       THEME.colors.default
