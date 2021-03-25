@@ -46,3 +46,16 @@ export const Filled = Template.bind({});
 Filled.args = {
     value: 'Filled Input'
 };
+
+export const FilledLabeledAndHasError = Template.bind({});
+FilledLabeledAndHasError.args = {
+    value: 'Invalid Input',
+    error: 'Please try again.',
+    label: 'My input'
+};
+
+export const FilledAndHasError = Template.bind({});
+FilledAndHasError.args = {
+    value: 'Invalid Input',
+    error: 'Please try again.'
+};

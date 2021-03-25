@@ -6,6 +6,11 @@ export interface InputProps {
      * This shows a label above the input when provided.
      */
     label?: string;
+    /**
+     * If not empty, the input component will be displayed in an error state with the provided error message.
+     */
+    error?: string;
+
 }
 
 /**
@@ -15,17 +20,21 @@ export interface InputProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, ...props }) => {
+const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, error = '', ...props }) => {
     return (
         <>
         {
             label ? (
-                <StyledLabel>
+                <StyledLabel error={error}>
                     <span>{label}</span>
-                    <StyledInput {...props} />
+                    <StyledInput error={error} {...props} />
+                    <span>{error}</span>
                 </StyledLabel>
             ) : (
-                <StyledInput {...props} />
+                <StyledLabel error={error}>
+                    <StyledInput error={error} {...props} />
+                    <span>{error}</span>
+                </StyledLabel>
             )
         }
         </>
