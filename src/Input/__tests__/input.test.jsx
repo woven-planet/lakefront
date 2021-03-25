@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import Input from "../../Input/Input";
 
 const LABEL = 'Label';
+const ERROR = 'Error';
 
 describe('Input', () => {
     describe('general rendering', () => {
@@ -21,9 +22,19 @@ describe('Input', () => {
                 <Input />
             );
 
-            const [label] = container.querySelectorAll('label');
+            const spans = container.querySelectorAll('span');
 
-            expect(label).toBeFalsy();
+            expect(spans.length).toBe(1);
+        });
+
+        it('should render the error message when error message present', () => {
+            const { getByText } = render(
+                <Input error={ERROR} />
+            );
+
+            const error = getByText('Error');
+
+            expect(error).toHaveTextContent(ERROR);
         });
     });
 });

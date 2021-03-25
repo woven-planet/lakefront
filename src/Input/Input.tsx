@@ -24,18 +24,11 @@ const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, erro
     return (
         <>
         {
-            label ? (
                 <StyledLabel error={error}>
-                    <span>{label}</span>
+                    {label && <span>{label}</span>}
                     <StyledInput error={error} {...props} />
                     <span>{error}</span>
                 </StyledLabel>
-            ) : (
-                <StyledLabel error={error}>
-                    <StyledInput error={error} {...props} />
-                    <span>{error}</span>
-                </StyledLabel>
-            )
         }
         </>
     );
