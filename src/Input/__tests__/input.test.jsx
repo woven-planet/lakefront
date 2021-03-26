@@ -24,7 +24,7 @@ describe('Input', () => {
 
             const spans = container.querySelectorAll('span');
 
-            expect(spans.length).toBe(1);
+            expect(spans.length).toBe(0);
         });
 
         it('should render the error message when error message present', () => {

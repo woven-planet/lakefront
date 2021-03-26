@@ -27,7 +27,7 @@ const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, erro
                 <StyledLabel error={error}>
                     {label && <span>{label}</span>}
                     <StyledInput error={error} {...props} />
-                    <span>{error}</span>
+                    <div>{error}</div>
                 </StyledLabel>
         }
         </>

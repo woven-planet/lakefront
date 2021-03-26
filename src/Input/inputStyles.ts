@@ -9,10 +9,13 @@ export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     fontWeight: 600,
     span: {
         marginBottom: 4,
-        marginTop: 4
     },
     ...(error && {
-        color: theme?.colors?.red
+        color: theme?.colors?.red,
+        div: {
+            marginTop: 4,
+            minHeight: 14,
+        }
     })
 }));
 
