@@ -1,17 +1,25 @@
 import styled from '@emotion/styled';
+import { InputProps } from './Input';
 
-export const StyledLabel = styled.label(({ theme }) => ({
+export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     color: theme?.colors?.cinder,
     display: 'flex',
     flexDirection: 'column',
     fontSize: 12,
     fontWeight: 600,
     span: {
-        marginBottom: 4
-    }
+        marginBottom: 4,
+    },
+    ...(error && {
+        color: theme?.colors?.red,
+        div: {
+            marginTop: 4,
+            minHeight: 14,
+        }
+    })
 }));
 
-export const StyledInput = styled.input(({ theme }) => ({
+export const StyledInput = styled.input<InputProps>(({ error, theme }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
     boxSizing: 'border-box',
@@ -28,5 +36,11 @@ export const StyledInput = styled.input(({ theme }) => ({
     },
     '::placeholder': {
         color: theme?.colors?.mercury
-    }
+    },
+    ...(error && {
+        border: `1px solid ${theme?.colors?.red}`,
+        ':focus': {
+            border: `1px solid ${theme?.colors?.red}`
+        },
+    })
 }));
