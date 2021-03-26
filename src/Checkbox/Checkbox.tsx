@@ -22,9 +22,9 @@ export interface CheckboxProps {
    */
   indeterminate?: boolean;
   /**
-   * The (optional) text label for the checkbox.
+   * The (optional) label for the checkbox.
    */
-  label?: string;
+  label?: string | ReactElement;
   /**
    * HTML input element disabled prop.
    */
