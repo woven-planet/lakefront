@@ -2,8 +2,7 @@ import React, {
   ChangeEvent,
   ComponentPropsWithoutRef,
   FC,
-  ReactElement,
-  useState,
+  ReactElement
 } from 'react';
 import { StyledCheckbox, StyledLabel } from './checkboxStyles';
 import { ReactComponent as Check } from './assets/check.svg';
@@ -11,7 +10,7 @@ import { ReactComponent as Indeterminate } from './assets/indeterminate.svg';
 
 export interface CheckboxProps {
   /**
-   * The initial value to control whether the checkbox should be checked or not.
+   * The value to control whether the checkbox should be checked or not.
    */
   checked?: boolean;
   /**
@@ -39,9 +38,9 @@ export interface CheckboxProps {
 /**
  * Checkbox Component
  *
- * The Checkbox component takes in native checkbox props as well as its own CheckboxProps. The state is managed
- * in this component, but could be managed outside (not recommended) by forcing re-renders with new initial props
- * within the consuming app.
+ * The Checkbox component takes in native checkbox props as well as its own CheckboxProps.
+ * The `checked` state is not managed in the component and should be received
+ * via the `checked` prop from the consuming app.
  *
  */
 const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
@@ -53,14 +52,12 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
   onChange = () => null,
   ...props
 }) => {
-  const [isChecked, setIsChecked] = useState(checked);
-  const showIcon = indeterminate || isChecked;
+  const showIcon = indeterminate || checked;
   const icon = indeterminate ? <Indeterminate /> : checkedIcon || <Check />;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!disabled) {
       onChange(event);
-      setIsChecked(!isChecked);
     }
   };
 
@@ -71,7 +68,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
         indeterminate={indeterminate}
         disabled={disabled}
         onChange={handleChange}
-        checked={isChecked}
+        checked={checked}
         type="checkbox"
       />
       {showIcon && icon}

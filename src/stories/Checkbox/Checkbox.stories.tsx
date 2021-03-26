@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import CheckboxComponent, { CheckboxProps } from 'src/Checkbox/Checkbox';
@@ -34,9 +34,18 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => (
-    <CheckboxComponent onClick={action('checked')} {...args} />
-);
+const Template: Story<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => {
+    const [isChecked, setIsChecked] = useState(false);
+    
+    const handleClick = (event: MouseEventHandler<HTMLInputElement>) => {
+        setIsChecked(!isChecked);
+        action(`Checked changed to ${!isChecked}`)(event);
+    };
+
+    return (
+        <CheckboxComponent checked={isChecked} onClick={handleClick} {...args} />
+    );
+};
 
 export const Checkbox = Template.bind({});
 
