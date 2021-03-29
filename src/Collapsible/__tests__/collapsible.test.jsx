@@ -3,7 +3,6 @@ import { fireEvent, render } from '@testing-library/react';
 import Collapsible from '../Collapsible';
 
 const TEXT_CONTENT = 'textContent';
-
 const PROPS = {
     title: 'title',
     subtitle: 'subtitle',
