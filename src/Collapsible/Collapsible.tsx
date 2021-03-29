@@ -37,7 +37,8 @@ export interface CollapsibleProps {
 /**
  * Collapsible Component
  *
- * The Collapsible component takes in native div props as well as its own CollapsibleProps. The `expanded` prop
+ * The Collapsible component can be used to make collapsible sections within a document.
+ * The component takes in native div props as well as its own CollapsibleProps. The `expanded` prop
  * controls the initial state of the component. Once initialized, the state is managed within this component.
  *
  */
