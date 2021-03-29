@@ -1,5 +1,6 @@
 export { default as Button } from './Button/Button';
 export { default as Checkbox } from './Checkbox/Checkbox';
+export { default as Collapsible } from './Collapsible/Collapsible';
 export { default as IconButton } from './Button/IconButton';
 export { default as Input } from './Input/Input';
 export { default as StackBanner } from './StackBanner/StackBanner';
