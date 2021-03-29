@@ -4,7 +4,7 @@ import React, {
   ReactElement,
   useState
 } from "react";
-import { StyledCollapsible, StyledLabel } from "./collapsibleStyles";
+import { StyledCollapsible } from "./collapsibleStyles";
 import Button from "../Button/Button";
 import { ReactComponent as ChevronUp } from "./assets/chevron-up.svg";
 import { ReactComponent as ChevronDown } from "./assets/chevron-down.svg";
@@ -31,7 +31,7 @@ export interface CollapsibleProps {
    * `Default = false` This determines if a horizontal divider should be displayed between the
    * title and the child content.
    */
-  divider?: string | ReactElement;
+  divider?: boolean;
 }
 
 /**
