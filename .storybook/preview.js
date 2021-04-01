@@ -1,7 +1,6 @@
 import { addDecorator } from '@storybook/react';
 import { withThemesProvider } from 'storybook-addon-emotion-theme';
 import theme from 'src/styles/theme';
-import { PARAM_KEY as docsViewId } from '@storybook/addon-docs/dist/shared';
 import { addParameters } from '@storybook/react';
 import GlobalStyleStorybookDecorator from './GlobalStyleStorybookDecorator';
 
@@ -34,5 +33,5 @@ export const parameters = {
 };
 
 addParameters({
-  viewMode: docsViewId,
+  viewMode: 'docs',
 });
