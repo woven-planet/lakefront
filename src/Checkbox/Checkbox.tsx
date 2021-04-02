@@ -4,9 +4,11 @@ import React, {
   FC,
   ReactElement
 } from 'react';
+import { ThemeProvider } from '@emotion/react';
 import { StyledCheckbox, StyledLabel } from './checkboxStyles';
 import { ReactComponent as Check } from './assets/check.svg';
 import { ReactComponent as Indeterminate } from './assets/indeterminate.svg';
+import theme from '../styles/theme';
 
 export interface CheckboxProps {
   /**
@@ -62,18 +64,20 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
   };
 
   return (
-    <StyledLabel disabled={disabled} indeterminate={indeterminate}>
-      <StyledCheckbox
-        {...props}
-        indeterminate={indeterminate}
-        disabled={disabled}
-        onChange={handleChange}
-        checked={checked}
-        type="checkbox"
-      />
-      {showIcon && icon}
-      {label && <span>{label}</span>}
-    </StyledLabel>
+    <ThemeProvider theme={theme}>
+      <StyledLabel disabled={disabled} indeterminate={indeterminate}>
+        <StyledCheckbox
+          {...props}
+          indeterminate={indeterminate}
+          disabled={disabled}
+          onChange={handleChange}
+          checked={checked}
+          type="checkbox"
+        />
+        {showIcon && icon}
+        {label && <span>{label}</span>}
+      </StyledLabel>
+    </ThemeProvider>
   );
 };
 
