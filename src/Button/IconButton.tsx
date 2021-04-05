@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
+import { ThemeProvider } from '@emotion/react';
 import { IconComponentProps } from './buttonUtil';
 import styled from '@emotion/styled';
+import theme from '../styles/theme';
 
 interface IconSpanProps {
     iconPosition?: 'left' | 'right';
@@ -33,10 +35,12 @@ const IconSpan = styled.span<IconSpanProps>(({ iconPosition, isIconOnly }) => {
  */
 const IconButton: FC<IconComponentProps> = ({ icon, children, iconPosition }) => {
     return (
-        <IconSpan iconPosition={iconPosition} isIconOnly={Boolean(!children)}>
-            {<span className="iconChild">{icon}</span>}
-            {children && <span className="iconChild">{children}</span>}
-        </IconSpan>
+        <ThemeProvider theme={theme}>
+            <IconSpan iconPosition={iconPosition} isIconOnly={Boolean(!children)}>
+                {<span className="iconChild">{icon}</span>}
+                {children && <span className="iconChild">{children}</span>}
+            </IconSpan>
+        </ThemeProvider>
     );
 };
 
