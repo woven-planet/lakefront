@@ -1,6 +1,8 @@
 import React, { ComponentPropsWithoutRef, FC } from "react";
+import { ThemeProvider } from '@emotion/react';
 import { StackBannerListDiv } from "./stackBannerStyles";
 import StackBannerRow, { StackBannerRowProps } from "./StackBannerRow";
+import theme from '../styles/theme';
 
 export interface StackBannerProps {
   /**
@@ -18,11 +20,13 @@ export interface StackBannerProps {
  */
 const StackBanner: FC<StackBannerProps & ComponentPropsWithoutRef<'div'>> = ({ rows = [], ...props }) => {
   return (
-    <StackBannerListDiv {...props}>
-      {rows.map((stackBannerRowProps: StackBannerRowProps) => {
-        return <StackBannerRow {...stackBannerRowProps} />;
-      })}
-    </StackBannerListDiv>
+    <ThemeProvider theme={theme}>
+      <StackBannerListDiv {...props}>
+        {rows.map((stackBannerRowProps: StackBannerRowProps) => {
+          return <StackBannerRow {...stackBannerRowProps} />;
+        })}
+      </StackBannerListDiv>
+    </ThemeProvider>
   );
 };
 
