@@ -39,10 +39,12 @@ const SelectPopover: FC<SelectPopoverProps> = (
     }) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [popoverElement, setPopoverElement] = useState<HTMLElement | null>(null);
+    const [update, setUpdate] = useState<number>(0);
 
     useEffect(() => {
         const bodyElementHTMLCollection = document.getElementsByTagName('body');
         const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
+        let observer: IntersectionObserver;
 
         if (renderInPortal && bodyElement) {
             const portalElement = document.createElement('div');
@@ -51,26 +53,38 @@ const SelectPopover: FC<SelectPopoverProps> = (
                 bodyElement.appendChild(portalElement);
             }
 
-            if (popoverElement) {
-                if (portal) {
-                    const { left, bottom, width } = popoverElement.getBoundingClientRect();
-                    portal.style.position = 'absolute';
-                    portal.style.left = `${left + (width / 2)}px`;
-                    portal.style.top = `${bottom + window.scrollY}px`;
-                }
-            }
+            if (!portal && popoverElement) {
+                observer = new IntersectionObserver(
+                    () => {
+                        setUpdate(new Date().getTime())
+                    }
+                );
 
-            if (!portal) {
+                observer.observe(popoverElement);
                 setPortal(portalElement);
             }
         }
 
         return () => {
-            if (portal && bodyElement) {
+            if (popoverElement && observer) {
+                observer.unobserve(popoverElement);
+            }
+
+            if (portal && bodyElement && bodyElement.contains(portal)) {
                 bodyElement.removeChild(portal);
             }
         }
     }, [popoverElement]);
+
+    useEffect(() => {
+        if (popoverElement && portal) {
+            const { left, bottom, width } = popoverElement.getBoundingClientRect();
+
+            portal.style.position = 'absolute';
+            portal.style.left = `${left + (width / 2)}px`;
+            portal.style.top = `${bottom + window.scrollY}px`;
+        }
+    }, [update]);
 
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setPopoverElement(node);
