@@ -9,6 +9,9 @@ export interface SelectPopoverOption {
 }
 
 export interface SelectPopoverProps {
+    /**
+     * Called on click with the value of the option that was clicked.
+     */
     handleClick(value: unknown): void;
     /**
      * Options to be mapped to items in the dropdown.
@@ -20,7 +23,7 @@ export interface SelectPopoverProps {
     visible: boolean;
     /**
      * When true, the component will mount a div to the body and render the popover through it.
-     * This is useful when the popover would be inside a scrollable container or one with overflow: hidden
+     * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off.
      */
     renderInPortal?: boolean;
