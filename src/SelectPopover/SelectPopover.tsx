@@ -79,7 +79,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
     const popover = useMemo(() => (
         <>
             {
-                visible && (
+                visible && options.length > 0 && (
                     <StyledSelectPopover>
                         {
                             options.map(({ name, value, key }) => (
