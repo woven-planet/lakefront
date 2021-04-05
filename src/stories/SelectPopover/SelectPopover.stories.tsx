@@ -8,6 +8,9 @@ export default {
     title: 'Lakefront/SelectPopover',
     component: SelectPopover,
     argTypes: {
+        handleClick: {
+            action: 'clicked'
+        },
         children: {
             table: {
                 disable: true
@@ -37,7 +40,6 @@ const options = [
 ];
 
 Popover.args = {
-    handleClick: () => {},
     options,
     visible: true
 };
@@ -45,7 +47,6 @@ Popover.args = {
 export const PopoverPortal = Template.bind({});
 
 PopoverPortal.args = {
-    handleClick: () => {},
     options,
     visible: true,
     renderInPortal: true
