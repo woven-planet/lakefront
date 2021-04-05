@@ -1,5 +1,7 @@
 import React, { ComponentPropsWithoutRef, FC } from 'react';
+import { ThemeProvider } from '@emotion/react';
 import { StyledInput, StyledLabel } from './inputStyles';
+import theme from '../styles/theme';
 
 export interface InputProps {
     /**
@@ -22,15 +24,13 @@ export interface InputProps {
  */
 const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, error = '', ...props }) => {
     return (
-        <>
-        {
-                <StyledLabel error={error}>
-                    {label && <span>{label}</span>}
-                    <StyledInput error={error} {...props} />
-                    <div>{error}</div>
-                </StyledLabel>
-        }
-        </>
+        <ThemeProvider theme={theme}>
+            <StyledLabel error={error}>
+                {label && <span>{label}</span>}
+                <StyledInput error={error} {...props} />
+                <div>{error}</div>
+            </StyledLabel>
+        </ThemeProvider>
     );
 };
 

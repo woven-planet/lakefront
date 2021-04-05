@@ -4,10 +4,12 @@ import React, {
   ReactElement,
   useState
 } from "react";
+import { ThemeProvider } from '@emotion/react';
 import { StyledCollapsible } from "./collapsibleStyles";
 import Button from "../Button/Button";
 import { ReactComponent as ChevronUp } from "./assets/chevron-up.svg";
 import { ReactComponent as ChevronDown } from "./assets/chevron-down.svg";
+import theme from '../styles/theme';
 
 export interface CollapsibleProps {
   /**
@@ -62,7 +64,7 @@ const Collapsible: FC<CollapsibleProps & ComponentPropsWithoutRef<"input">> = ({
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       {
         <StyledCollapsible {...props}>
           <div className="topCollapsible">
@@ -79,7 +81,7 @@ const Collapsible: FC<CollapsibleProps & ComponentPropsWithoutRef<"input">> = ({
           <div className={`bottomCollapsible ${isExpanded ? 'expanded': 'collapsed'}`}>{children}</div>
         </StyledCollapsible>
       }
-    </>
+    </ThemeProvider>
   );
 };
 
