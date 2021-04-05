@@ -41,14 +41,14 @@ const SelectPopover: FC<SelectPopoverProps> = (
         const bodyElementHTMLCollection = document.getElementsByTagName('body');
         const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
 
-        if (renderInPortal) {
+        if (renderInPortal && bodyElement) {
             const portalElement = document.createElement('div');
 
-            if (bodyElement && !portal) {
+            if (!portal) {
                 bodyElement.appendChild(portalElement);
             }
 
-            if (bodyElement && popoverElement) {
+            if (popoverElement) {
                 if (portal) {
                     const { left, bottom, width } = popoverElement.getBoundingClientRect();
                     portal.style.position = 'absolute';
