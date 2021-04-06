@@ -24,6 +24,7 @@ export const SelectPopoverItem = styled.div(({ theme }) => ({
     backgroundColor: theme?.colors?.white,
     color: theme?.colors?.storm,
     cursor: 'pointer',
+    display: 'flex',
     fontSize: 16,
     height: 40,
     minWidth: 160,
