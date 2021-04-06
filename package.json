@@ -15,7 +15,7 @@
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
-    "build-copy": "rollup -c && copyfiles -u 1 \"dist/**/*\" $npm_config_target",
+    "build-copy": "npm run build && copyfiles -u 1 \"dist/**/*\" $npm_config_target",
     "test": "jest",
     "test-watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
