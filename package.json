@@ -15,6 +15,7 @@
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
+    "build-copy": "rollup -c && copyfiles -u 1 \"dist/**/*\" $npm_config_target",
     "test": "jest",
     "test-watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
@@ -22,7 +23,8 @@
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.1.5"
+    "@emotion/styled": "^11.1.5",
+    "copyfiles": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
