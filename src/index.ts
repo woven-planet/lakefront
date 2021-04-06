@@ -5,5 +5,6 @@ export { default as IconButton } from './Button/IconButton';
 export { default as Input } from './Input/Input';
 export { default as StackBanner } from './StackBanner/StackBanner';
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';
+export { default as SelectPopover } from './SelectPopover/SelectPopover';
 export { default as colors } from './styles/cloudColors';
 export { default as theme } from './styles/theme';
