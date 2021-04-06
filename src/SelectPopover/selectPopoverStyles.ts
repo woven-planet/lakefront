@@ -28,7 +28,7 @@ export const SelectPopoverItem = styled.div(({ theme }) => ({
     fontSize: 16,
     height: 40,
     minWidth: 160,
-    padding: '10px 12px',
+    padding: '0 12px',
     userSelect: 'none',
     zIndex: 2,
     ':hover': {
