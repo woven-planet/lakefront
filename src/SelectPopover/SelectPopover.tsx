@@ -29,6 +29,15 @@ export interface SelectPopoverProps {
     renderInPortal?: boolean;
 }
 
+/**
+ * Select Popover Component
+ *
+ * The Select Popover component is a select-style component that displays like a popover at the bottom of the children.
+ * The state is not managed inside this component and visible needs to be maintained in the parent component.
+ * When used inside a scrollable or "overflow: hidden" element it may get cut off. When this is an issue,
+ * use the "renderInPortal" prop which appends a div to the body and positions the component to the correct coordinates.
+ *
+ */
 const SelectPopover: FC<SelectPopoverProps> = (
     {
         children,
