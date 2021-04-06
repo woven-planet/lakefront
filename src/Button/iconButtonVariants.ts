@@ -50,7 +50,8 @@ export const getIconStyles = ({ alternate, disabled, theme }: GetIconStylesProps
                         color: theme?.colors?.white
                     }
                 }
-            })
+            }),
+            border: `1px solid ${theme?.colors?.saturatedRed}`
         })
     };
 };
