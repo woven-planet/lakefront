@@ -24,7 +24,7 @@ export interface SelectPopoverProps {
     /**
      * When true, the component will mount a div to the body and render the popover through it.
      * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
-     * so it doesn't get cut off.
+     * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
      */
     renderInPortal?: boolean;
 }
