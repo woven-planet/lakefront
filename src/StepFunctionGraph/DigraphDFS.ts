@@ -37,7 +37,7 @@ class DigraphDFS {
         let lastPathReached = false;
 
         if (data[datum].length > 0 && !endReached && !lastPathReached) {
-            data[datum].forEach((val) => {
+            data[datum].forEach((val: number) => {
                 if (!lastPathReached && val !== endVertex) {
                     const newPath = [...path, val];
 
