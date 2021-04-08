@@ -160,8 +160,7 @@ const handleParallel = (
     vertex: number,
     endVertex: number,
     drawn: Map<number, NodeDimensions>,
-    highlight: boolean,
-    skipDraw = false
+    highlight: boolean
 ) => {
     const PARALLEL_PADDING = 20;
     const parallelNode = graph.getDataByVertex(vertex);
@@ -228,9 +227,7 @@ const handleParallel = (
         highlight
     };
 
-    if (!skipDraw) {
-        drawParallel(parallelArgs);
-    }
+    drawParallel(parallelArgs);
 
     const nodeData = {
         x: parallelArgs.x,
@@ -267,8 +264,7 @@ const getX = (
     previousVertex: number,
     graph: Digraph,
     drawn: Map<number, NodeDimensions>,
-    endVertex: number,
-    ctx: CanvasRenderingContext2D
+    endVertex: number
 ): number => {
     const isEnd = vertex === endVertex;
 
@@ -305,11 +301,6 @@ const getX = (
     const isParallelNext = nextVertex === vertex && parentType === WorkFlowType.PARALLEL;
     const parallelRange = getDrawnRangeMiddleX(parentOutdegree, graph, drawn);
     const newPositionByPrevious = previousEnd + (nodeWidth / 2) + X_OFFSET;
-
-    if (parentType === WorkFlowType.PARALLEL && !isParallelNext) {
-        const parallelNext = ~nextVertex ? nextVertex : endVertex;
-        handleParallel(ctx, graph, parentNode, parallelNext, drawn, false, true);
-    }
 
     // Base this X value on where the parent is, or the center of the canvas if there is no parent (the start node)
     const parentX = parentPosition ? parentPosition.x : (canvasWidth / centerDivision);
