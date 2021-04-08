@@ -44,16 +44,17 @@ export const getRange = (vertices: number[], xOffset: number, graph: Digraph): n
 export const getDrawnRange = (
     vertices: number[],
     graph: Digraph,
-    drawn: Map<number, NodeDimensions>
+    drawn: Map<number, NodeDimensions>,
+    leftMostX?: number
 ): number => {
     const sorted = vertices.sort((a, b) => a - b);
     const first = drawn.get(sorted[0]);
     const last = drawn.get(vertices[sorted.length - 1]);
-    const firstLeft = first ? first.mountingPoints.left.x : 0;
+    const firstLeft = leftMostX ?? (first ? first.mountingPoints.left.x : 0);
     const lastRight = last ? last.mountingPoints.right.x : 0;
 
     // If we don't have both, the math will be wrong so we won't count it as a valid range
-    return first && last ? lastRight - firstLeft : 0;
+    return (first || firstLeft) && last ? lastRight - firstLeft : 0;
 };
 
 export const getDrawnRangeMiddleX = (

@@ -160,12 +160,13 @@ const handleParallel = (
     vertex: number,
     endVertex: number,
     drawn: Map<number, NodeDimensions>,
-    highlight: boolean
+    highlight: boolean,
+    skipDraw = false
 ) => {
     const PARALLEL_PADDING = 20;
-    const mapNode = graph.getDataByVertex(vertex);
-    const [key] = Object.keys(mapNode);
-    const { End } = mapNode[key];
+    const parallelNode = graph.getDataByVertex(vertex);
+    const [key] = Object.keys(parallelNode);
+    const { End } = parallelNode[key];
     const nextVertex = getNextVertex(vertex, graph);
     const exclusionArray: number[] = [vertex, endVertex];
 
@@ -175,11 +176,6 @@ const handleParallel = (
 
     const paths = DigraphDFS.getAllDfsPaths(graph.getAdjacencyMatrix(), [vertex]);
     const parallelNodeMatrix = DigraphDFS.getVerticesAtDepthFromPaths(paths, exclusionArray);
-    const range: number = parallelNodeMatrix.reduce((accum, current) => {
-        const currentRange = getDrawnRange(current, graph, drawn);
-
-        return currentRange > accum ? currentRange : accum;
-    }, 0);
 
     const baselineNode = drawn.get(parallelNodeMatrix[0][0]);
     const baselineX = baselineNode ? baselineNode.x : 0;
@@ -189,12 +185,18 @@ const handleParallel = (
     const leftMostX = parallelNodeMatrix.reduce((accum, current) => {
         const smallestX = current.reduce((accum, currentDepthVertex) => {
             const drawnVertex = drawn.get(currentDepthVertex);
-            const x = drawnVertex ? drawnVertex.mountingPoints.left.x : 0;
+            const x = drawnVertex ? drawnVertex.mountingPoints.left.x : accum;
             return x < accum ? x : accum;
         }, baselineX);
 
         return smallestX < accum ? smallestX : accum;
     }, baselineX) - PARALLEL_PADDING;
+
+    const range: number = parallelNodeMatrix.reduce((accum, current) => {
+        const currentRange = getDrawnRange(current, graph, drawn, leftMostX);
+
+        return currentRange > accum ? currentRange : accum;
+    }, 0);
 
     // Calculate the lower bounds of the Parallel content
     const lastDepth = parallelNodeMatrix[parallelNodeMatrix.length - 1];
@@ -211,7 +213,7 @@ const handleParallel = (
     };
 
     const bottomRightPos = {
-        x: bottomRight ? bottomRight.x : 0,
+        x: bottomRight ? bottomRight.collisionBox.right.x : 0,
         y: bottomRight ? bottomRight.y : 0,
         height: bottomRight ? bottomRight.height : 0,
         width: bottomRight ? bottomRight.width : 0
@@ -226,7 +228,9 @@ const handleParallel = (
         highlight
     };
 
-    drawParallel(parallelArgs);
+    if (!skipDraw) {
+        drawParallel(parallelArgs);
+    }
 
     const nodeData = {
         x: parallelArgs.x,
@@ -263,7 +267,8 @@ const getX = (
     previousVertex: number,
     graph: Digraph,
     drawn: Map<number, NodeDimensions>,
-    endVertex: number
+    endVertex: number,
+    ctx: CanvasRenderingContext2D
 ): number => {
     const isEnd = vertex === endVertex;
 
@@ -299,27 +304,43 @@ const getX = (
     const parentOutdegree = parentNode ? graph.getOutdegree(parentNode).outVertices : [];
     const isParallelNext = nextVertex === vertex && parentType === WorkFlowType.PARALLEL;
     const parallelRange = getDrawnRangeMiddleX(parentOutdegree, graph, drawn);
+    const newPositionByPrevious = previousEnd + (nodeWidth / 2) + X_OFFSET;
+
+    if (parentType === WorkFlowType.PARALLEL && !isParallelNext) {
+        const parallelNext = ~nextVertex ? nextVertex : endVertex;
+        handleParallel(ctx, graph, parentNode, parallelNext, drawn, false, true);
+    }
 
     // Base this X value on where the parent is, or the center of the canvas if there is no parent (the start node)
     const parentX = parentPosition ? parentPosition.x : (canvasWidth / centerDivision);
     const positionByPrevious = (~previousEnd && isSameLevelType(parentType)) ||
         (~previousEnd && !isInPreviousGroup) ||
         parentType === WorkFlowType.CHOICE;
-    const positionByParent = parentType !== WorkFlowType.CHOICE &&
-        ((!~previousEnd && !isSameLevelType(parentType)) ||
+    let positionByParent = parentType !== WorkFlowType.CHOICE &&
+        (
+            (!~previousEnd && !isSameLevelType(parentType)) ||
             (!indegreeOverlap && (parentType !== WorkFlowType.PARALLEL)) ||
-            isParallelNext);
+            isParallelNext
+        );
+
+    if (positionByPrevious && positionByParent && parentX < newPositionByPrevious) {
+        positionByParent = false;
+    }
 
     // The rangePosition tells us where we need to draw in a range when positioning by previous
     // eslint-disable-next-line no-nested-ternary
     let rangePosition = ~previousEnd ?
-        previousEnd :
+        previousEnd + (nodeWidth / 2) + X_OFFSET :
         (flattened.length > 1) ?
             parentX - (range / 2) - (X_OFFSET * (drawableVertices.length - 1)) :
             (nodeWidth / 4);
 
     if (parentType === WorkFlowType.CHOICE && !~previousEnd && flattened.length > 1) {
-        rangePosition = parentX - (range / centerDivision) - (X_OFFSET * (drawableVertices.length - 1));
+        //rangePosition = parentX - (range / centerDivision) - (X_OFFSET * (drawableVertices.length - 1));
+    }
+
+    if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup) {
+        rangePosition += X_OFFSET * 2;
     }
 
     let calculatedX;
@@ -327,7 +348,14 @@ const getX = (
     if (isEnd) {
         calculatedX = canvasWidth / centerDivision;
     } else if (positionByPrevious && !positionByParent) {
-        calculatedX = rangePosition;
+        const [previousIndegreeVertex] = previousIndegrees;
+        const graphPreviousIndegree = graph.getDataByVertex(previousIndegreeVertex) || {};
+        const [key] = Object.keys(graphPreviousIndegree);
+        const { Type: previousIndegreeType = '' } = key ? graphPreviousIndegree[key] : {};
+        const drawnPreviousIndegree = drawn.get(previousIndegreeVertex);
+        calculatedX = previousIndegreeType === WorkFlowType.PARALLEL && parentType !== WorkFlowType.PARALLEL && drawnPreviousIndegree ?
+            drawnPreviousIndegree.mountingPoints.right.x :
+            rangePosition;
     } else if (positionByParent) {
         calculatedX = isParallelNext ? parallelRange : parentX;
     } else {
@@ -338,7 +366,7 @@ const getX = (
 };
 
 // Calculates the Y for each node based on depth in the depth matrix
-const getY = (depth: number, nodeHeight): number => {
+const getY = (depth: number, nodeHeight: number): number => {
     return (depth * (nodeHeight + Y_OFFSET)) + Y_OFFSET;
 };
 
@@ -399,21 +427,21 @@ export const drawGraph = (
             const previous = drawn.get(previousVertex);
 
             // Calculates the end of the previously drawn node so we can place the current node laterally
-            let previousEnd = previous ? previous.x + previous.width : -1;
+            let previousEnd = previous ? previous.collisionBox.right.x : -1;
             const node = graph.getDataByVertex(vertex);
             const [key] = Object.keys(node);
             const { Type, End } = node[key];
 
             const { height: nodeHeight, width: nodeWidth } = getNodeDimensions(key);
 
-            if (
-                (~previousEnd && !isInParallel(vertex, graph)) ||
-                (~previousEnd && isInParallel(vertex, graph) && !isInParallel(previousVertex, graph))
-            ) {
-                previousEnd += nodeWidth / 2;
-            } else if (~previousEnd) {
-                previousEnd += nodeWidth / 8;
-            }
+            // if (
+            //     (~previousEnd && !isInParallel(vertex, graph)) ||
+            //     (~previousEnd && isInParallel(vertex, graph) && !isInParallel(previousVertex, graph))
+            // ) {
+            //     previousEnd += nodeWidth;
+            // } else if (~previousEnd) {
+            //     previousEnd += nodeWidth / 4;
+            // }
 
             // Flattening the groups array since we sometimes need to work with the whole data set
             const flattened = ([] as number[]).concat(...groups);
@@ -433,7 +461,8 @@ export const drawGraph = (
                 previousVertex,
                 graph,
                 drawn,
-                endVertex
+                endVertex,
+                ctx
             );
             const y = getY(depthIndex, nodeHeight);
             const highlight = highlighted.includes(vertex);
@@ -497,18 +526,16 @@ export const drawGraph = (
     // Go back and draw all the Parallel and Map boxes we skipped earlier now that we can determine the height and width
     allVertices.forEach((vertex) => {
         // At this point, any un-drawn vertices should be Parallel and Map type nodes
-        if (!drawn.get(vertex)) {
-            const node = graph.getDataByVertex(vertex);
-            const [key] = Object.keys(node);
-            const { Type } = node[key];
-            const highlight = highlighted.includes(vertex);
+        const node = graph.getDataByVertex(vertex);
+        const [key] = Object.keys(node);
+        const { Type } = node[key];
+        const highlight = highlighted.includes(vertex);
 
-            // Just double-check that it's a Parallel type before drawing it
-            if (Type === WorkFlowType.PARALLEL) {
-                handleParallel(ctx, graph, vertex, endVertex, drawn, highlight);
-            } else if (Type === WorkFlowType.MAP) {
-                handleMap(ctx, vertex, endVertex, graph, drawn, highlight, highlighted);
-            }
+        // Just double-check that it's a Parallel type before drawing it
+        if (Type === WorkFlowType.PARALLEL) {
+            handleParallel(ctx, graph, vertex, endVertex, drawn, highlight);
+        } else if (Type === WorkFlowType.MAP) {
+            handleMap(ctx, vertex, endVertex, graph, drawn, highlight, highlighted);
         }
     });
 
@@ -567,7 +594,7 @@ export const drawGraph = (
                     const parallelNode = graph.getDataByVertex(vertex);
                     const [parallelNodeKey] = Object.keys(parallelNode);
                     const { End, Next } = parallelNode[parallelNodeKey];
-                    const nextVertexFindFn = (datum) => {
+                    const nextVertexFindFn = (datum: any) => {
                         const [dataKey] = Object.keys(datum);
                         return dataKey === Next;
                     };

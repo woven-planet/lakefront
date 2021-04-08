@@ -33,7 +33,15 @@ const Template: Story<GraphProps> = (args) => (
 export const SimpleGraph = Template.bind({});
 
 SimpleGraph.args = {
-    json: leftJson,
+    json: simpleJson,
+    handleSelectedNode: () => {},
+    highlightedKey: null
+};
+
+export const ComplexGraph = Template.bind({});
+
+ComplexGraph.args = {
+    json: workflowJson,
     handleSelectedNode: () => {},
     highlightedKey: null
 };
