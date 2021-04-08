@@ -49,7 +49,7 @@ const handleMap = (
     // so we need to find the nearest Next so we can terminate the DFS paths before exiting the Map
     const nestedNext = nodes.reduce((next: number, current: any) => {
         const { Next } = current;
-        const nextVertexFindFn = (datum) => {
+        const nextVertexFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === Next;
         };
@@ -539,7 +539,7 @@ export const drawGraph = (
             const nextNode = findNearestArrowNode(path, vertex, index, drawn, false);
             const alreadyDrawn = ~drawnArrowPairs.findIndex((tuple) => {
                 const [n1, n2] = tuple;
-                return n1 === node.vertex && n2 === nextNode.vertex;
+                return n1 === node?.vertex && n2 === nextNode?.vertex;
             });
 
             if (node && nextNode && node.vertex !== nextNode.vertex && nextNode.nodeType && !alreadyDrawn) {

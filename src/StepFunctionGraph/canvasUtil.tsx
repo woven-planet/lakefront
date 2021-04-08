@@ -82,7 +82,7 @@ export const drawParallel = (
 };
 
 export const drawMap = (
-    { ctx, x, y, width, height, highlight = false }: FunctionalDrawArgs & DimensionDrawArgs
+    { ctx, x, y, width, height, highlight = false }: Omit<FunctionalDrawArgs & DimensionDrawArgs, 'text'>
 ) => {
     // set the dimensions of the rectangle
     const rectWidth = width;

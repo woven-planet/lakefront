@@ -139,7 +139,7 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     // Handle Choice Type
     nodes.forEach((node) => {
         const [key] = Object.keys(node);
-        const currentFindFn = (datum) => {
+        const currentFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === key;
         };
@@ -150,10 +150,10 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         if (node[key]['Type'] === WorkFlowType.CHOICE) {
             const { Choices } = node[key];
 
-            Choices.forEach((choice) => {
+            Choices.forEach((choice: any) => {
                 const { Next: choiceNext } = choice;
 
-                const choiceNextFindFn = (datum) => {
+                const choiceNextFindFn = (datum: any) => {
                     const [dataKey] = Object.keys(datum);
                     return dataKey === choiceNext;
                 };
@@ -172,7 +172,7 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         const d = node[key] || {};
         const { Next } = d;
 
-        const nextVertexFindFn = (datum) => {
+        const nextVertexFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === Next;
         };
@@ -186,12 +186,12 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         const d = node[key] || {};
         const { Next } = d;
 
-        const currentFindFn = (datum) => {
+        const currentFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === key;
         };
 
-        const destinationFindFn = (datum) => {
+        const destinationFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === Next;
         };
@@ -217,7 +217,7 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     });
 
     const lastTopLevel = nodeKeys[nodeKeys.length - 1];
-    const lastTopLevelFindFn = (datum) => {
+    const lastTopLevelFindFn = (datum: any) => {
         const [dataKey] = Object.keys(datum);
         return dataKey === lastTopLevel;
     };
