@@ -452,8 +452,7 @@ export const drawGraph = (
                 previousVertex,
                 graph,
                 drawn,
-                endVertex,
-                ctx
+                endVertex
             );
             const y = getY(depthIndex, nodeHeight);
             const highlight = highlighted.includes(vertex);

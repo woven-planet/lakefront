@@ -62,7 +62,7 @@ export const drawStepNode = (
 };
 
 export const drawParallel = (
-    { ctx, x, y, width, height, highlight = false }: FunctionalDrawArgs & DimensionDrawArgs
+    { ctx, x, y, width, height, highlight = false }: Omit<FunctionalDrawArgs & DimensionDrawArgs, 'text'>
 ) => {
     const LINE_WIDTH = 2;
     // set the dimensions of the rectangle

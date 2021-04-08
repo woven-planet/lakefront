@@ -134,7 +134,7 @@ export const findNearestArrowNode = (
     index: number,
     drawn: Map<number, NodeDimensions>,
     isStart: boolean
-) => {
+): NodeDimensions | undefined => {
     const node = drawn.get(vertex);
     const nextNode = drawn.get(path[index + 1]);
     if ((node && node.nodeType === WorkFlowType.MAP)) {
@@ -171,7 +171,7 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
             const { Type, Next } = node[key];
 
             if (Type === WorkFlowType.PARALLEL || Type === WorkFlowType.MAP) {
-                const nextVertexFindFn = (datum) => {
+                const nextVertexFindFn = (datum: any) => {
                     const [dataKey] = Object.keys(datum);
                     return dataKey === Next;
                 };
@@ -205,7 +205,7 @@ export const getNextVertex = (vertex: number, graph: Digraph): number => {
     const [node] = Object.keys(mapData);
     const { Next = null } = node ? mapData[node] : {};
 
-    const nextVertexFindFn = (datum) => {
+    const nextVertexFindFn = (datum: any) => {
         const [dataKey] = Object.keys(datum);
         return dataKey === Next;
     };
@@ -298,7 +298,7 @@ export const redrawNode = (
 };
 
 // All nodes inside a Parallel are an outdegree from that node
-export const isInParallel = (vertex, graph): boolean => {
+export const isInParallel = (vertex: number, graph: Digraph): boolean => {
     const [node] = graph.getIndegree(vertex) ?? [];
     if (node) {
         const parent = graph.getDataByVertex(node);
