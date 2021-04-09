@@ -264,8 +264,10 @@ const getX = (
     previousVertex: number,
     graph: Digraph,
     drawn: Map<number, NodeDimensions>,
-    endVertex: number
-): number => {
+    endVertex: number,
+    delayed: any[],
+    renderParams: any
+): number | null => {
     const isEnd = vertex === endVertex;
 
     // There is only one parent node for any node except the end node
@@ -334,19 +336,35 @@ const getX = (
         rangePosition += X_OFFSET * 2;
     }
 
+    // Handle delayed nodes that need to draw after the others, such as those positioned after Parallel nodes
+    if (positionByPrevious && !positionByParent || delayed.filter(d => d[4] === previousVertex).length > 0) {
+        const [previousIndegreeVertex] = previousIndegrees;
+        const graphPreviousIndegree = graph.getDataByVertex(previousIndegreeVertex) || {};
+        const [previousKey] = Object.keys(graphPreviousIndegree);
+        const { Type: previousIndegreeType = '' } = previousKey ? graphPreviousIndegree[previousKey] : {};
+        const drawnPreviousIndegree = drawn.get(previousIndegreeVertex);
+
+        if (
+            previousIndegreeType === WorkFlowType.PARALLEL &&
+            parentType !== WorkFlowType.PARALLEL
+        ) {
+            // The d[4] is the arguments position of the vertex
+            if (delayed.filter(d => d[4] === vertex).length > 0 && drawnPreviousIndegree) {
+                rangePosition = drawnPreviousIndegree.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
+            } else {
+                delayed.push(renderParams);
+                return null;
+            }
+        }
+    }
+
+
     let calculatedX;
 
     if (isEnd) {
         calculatedX = canvasWidth / centerDivision;
     } else if (positionByPrevious && !positionByParent) {
-        const [previousIndegreeVertex] = previousIndegrees;
-        const graphPreviousIndegree = graph.getDataByVertex(previousIndegreeVertex) || {};
-        const [key] = Object.keys(graphPreviousIndegree);
-        const { Type: previousIndegreeType = '' } = key ? graphPreviousIndegree[key] : {};
-        const drawnPreviousIndegree = drawn.get(previousIndegreeVertex);
-        calculatedX = previousIndegreeType === WorkFlowType.PARALLEL && parentType !== WorkFlowType.PARALLEL && drawnPreviousIndegree ?
-            drawnPreviousIndegree.mountingPoints.right.x :
-            rangePosition;
+        calculatedX = rangePosition;
     } else if (positionByParent) {
         calculatedX = isParallelNext ? parallelRange : parentX;
     } else {
@@ -360,6 +378,129 @@ const getX = (
 const getY = (depth: number, nodeHeight: number): number => {
     return (depth * (nodeHeight + Y_OFFSET)) + Y_OFFSET;
 };
+
+interface RenderVertexParams {
+    depthWithoutParallel: number[];
+    index: number;
+    drawn: Map<number, NodeDimensions>;
+    graph: Digraph;
+    vertex: number;
+    groups: number[][];
+    width: number;
+    endVertex: number;
+    depthIndex: number;
+    highlighted: number[];
+    ctx: CanvasRenderingContext2D;
+    delayed: RenderVertexParams[];
+}
+
+// Renders a vertex from the main draw function
+function renderVertex(
+    depthWithoutParallel: number[],
+    index: number,
+    drawn: Map<number, NodeDimensions>,
+    graph: Digraph,
+    vertex: number,
+    groups: number[][],
+    width: number,
+    endVertex: number,
+    depthIndex: number,
+    highlighted: number[],
+    ctx: CanvasRenderingContext2D,
+    delayed: any[]
+) {
+    const previousVertex = depthWithoutParallel[index - 1];
+    const previous = drawn.get(previousVertex);
+
+    // Calculates the end of the previously drawn node so we can place the current node laterally
+    let previousEnd = previous ? previous.collisionBox.right.x : -1;
+    const node = graph.getDataByVertex(vertex);
+    const [key] = Object.keys(node);
+    const {Type, End} = node[key];
+
+    const {height: nodeHeight, width: nodeWidth} = getNodeDimensions(key);
+
+    // Flattening the groups array since we sometimes need to work with the whole data set
+    const flattened = ([] as number[]).concat(...groups);
+
+    // We don't need to offset a lone node at any given depth
+    const xOffset = flattened.length > 1 ? X_OFFSET : 0;
+    const range = getRange(flattened, xOffset, graph);
+
+    const x = getX(
+        groups,
+        depthWithoutParallel,
+        vertex,
+        nodeWidth,
+        width,
+        range,
+        previousEnd,
+        previousVertex,
+        graph,
+        drawn,
+        endVertex,
+        delayed,
+        arguments
+    );
+    const y = getY(depthIndex, nodeHeight);
+    const highlight = highlighted.includes(vertex);
+
+    if (x) {
+        switch (Type) {
+            case WorkFlowType.START:
+                drawTerminalNode({ctx, x, y, text: key});
+                break;
+            case WorkFlowType.END:
+                drawTerminalNode({ctx, x, y, text: key});
+                break;
+            case WorkFlowType.TASK:
+                drawStepNode({ctx, x, y, text: key, highlight});
+                break;
+            case WorkFlowType.CHOICE:
+                drawStepNode({ctx, x, y, text: key, highlight});
+                break;
+            case WorkFlowType.MAP:
+                break;
+            case WorkFlowType.PARALLEL:
+                break;
+            default:
+                drawStepNode({ctx, x, y, text: key, highlight});
+                break;
+        }
+    }
+
+    const nodeData = {
+        x,
+        y,
+        width: nodeWidth,
+        height: nodeHeight,
+        nodeType: Type,
+        vertex,
+        end: !!End
+    } as NodeDimensions;
+
+    const CIRCLE_TOP_OFFSET = 5;
+    const topOffset = Type === WorkFlowType.START || Type === WorkFlowType.END ?
+        TERMINAL_ARROW_OFFSET + CIRCLE_TOP_OFFSET :
+        -STEP_ARROW_OFFSET * 2;
+
+    const CIRCLE_BOTTOM_OFFSET = 10;
+    const bottomOffset = Type === WorkFlowType.START || Type === WorkFlowType.END ?
+        TERMINAL_ARROW_OFFSET + CIRCLE_BOTTOM_OFFSET :
+        STEP_ARROW_OFFSET;
+
+    const drawnData = {
+        ...nodeData,
+        ...{mountingPoints: generateMountingPoints(nodeData, topOffset, bottomOffset)},
+        ...{collisionBox: generateMountingPoints(nodeData, topOffset, bottomOffset)}
+    };
+
+    // Store node data after drawing
+    drawn.set(
+        vertex,
+        drawnData
+    );
+}
 
 // Main draw function for the Step Function Graph
 export const drawGraph = (
@@ -402,6 +543,8 @@ export const drawGraph = (
     // Panning is handled by translating offsets
     ctx.translate(pan.offset.x, pan.offset.y);
 
+    const delayed: any[] = [];
+
     // Main loop for drawing most nodes, outer loop iterating over each depth in the graph matrix
     verticesAtDepth.forEach((depth: number[], depthIndex: number) => {
         const groups: number[][] = getGroupsAtDepth(depth, graph);
@@ -414,101 +557,19 @@ export const drawGraph = (
 
         // Inner loop iterating over each vertex at a depth
         depthWithoutParallel.forEach((vertex: number, index: number) => {
-            const previousVertex = depthWithoutParallel[index - 1];
-            const previous = drawn.get(previousVertex);
-
-            // Calculates the end of the previously drawn node so we can place the current node laterally
-            let previousEnd = previous ? previous.collisionBox.right.x : -1;
-            const node = graph.getDataByVertex(vertex);
-            const [key] = Object.keys(node);
-            const { Type, End } = node[key];
-
-            const { height: nodeHeight, width: nodeWidth } = getNodeDimensions(key);
-
-            // if (
-            //     (~previousEnd && !isInParallel(vertex, graph)) ||
-            //     (~previousEnd && isInParallel(vertex, graph) && !isInParallel(previousVertex, graph))
-            // ) {
-            //     previousEnd += nodeWidth;
-            // } else if (~previousEnd) {
-            //     previousEnd += nodeWidth / 4;
-            // }
-
-            // Flattening the groups array since we sometimes need to work with the whole data set
-            const flattened = ([] as number[]).concat(...groups);
-
-            // We don't need to offset a lone node at any given depth
-            const xOffset = flattened.length > 1 ? X_OFFSET : 0;
-            const range = getRange(flattened, xOffset, graph);
-
-            const x = getX(
-                groups,
+            renderVertex(
                 depthWithoutParallel,
-                vertex,
-                nodeWidth,
-                width,
-                range,
-                previousEnd,
-                previousVertex,
-                graph,
+                index,
                 drawn,
-                endVertex
-            );
-            const y = getY(depthIndex, nodeHeight);
-            const highlight = highlighted.includes(vertex);
-
-            switch (Type) {
-                case WorkFlowType.START:
-                    drawTerminalNode({ ctx, x, y, text: key });
-                    break;
-                case WorkFlowType.END:
-                    drawTerminalNode({ ctx, x, y, text: key });
-                    break;
-                case WorkFlowType.TASK:
-                    drawStepNode({ ctx, x, y, text: key, highlight });
-                    break;
-                case WorkFlowType.CHOICE:
-                    drawStepNode({ ctx, x, y, text: key, highlight });
-                    break;
-                case WorkFlowType.MAP:
-                    break;
-                case WorkFlowType.PARALLEL:
-                    break;
-                default:
-                    drawStepNode({ ctx, x, y, text: key, highlight });
-                    break;
-            }
-
-            const nodeData = {
-                x,
-                y,
-                width: nodeWidth,
-                height: nodeHeight,
-                nodeType: Type,
+                graph,
                 vertex,
-                end: !!End
-            } as NodeDimensions;
-
-            const CIRCLE_TOP_OFFSET = 5;
-            const topOffset = Type === WorkFlowType.START || Type === WorkFlowType.END ?
-                TERMINAL_ARROW_OFFSET + CIRCLE_TOP_OFFSET :
-                -STEP_ARROW_OFFSET * 2;
-
-            const CIRCLE_BOTTOM_OFFSET = 10;
-            const bottomOffset = Type === WorkFlowType.START || Type === WorkFlowType.END ?
-                TERMINAL_ARROW_OFFSET + CIRCLE_BOTTOM_OFFSET :
-                STEP_ARROW_OFFSET;
-
-            const drawnData = {
-                ...nodeData,
-                ...{ mountingPoints: generateMountingPoints(nodeData, topOffset, bottomOffset) },
-                ...{ collisionBox: generateMountingPoints(nodeData, topOffset, bottomOffset) }
-            };
-
-            // Store node data after drawing
-            drawn.set(
-                vertex,
-                drawnData
+                groups,
+                width,
+                endVertex,
+                depthIndex,
+                highlighted,
+                ctx,
+                delayed
             );
         });
     });
@@ -527,6 +588,38 @@ export const drawGraph = (
         } else if (Type === WorkFlowType.MAP) {
             handleMap(ctx, vertex, endVertex, graph, drawn, highlight, highlighted);
         }
+    });
+
+    delayed.forEach((delayedDraw: any[]) => {
+        const [
+            depthWithoutParallel,
+            index,
+            ,
+            graph,
+            vertex,
+            groups,
+            width,
+            endVertex,
+            depthIndex,
+            highlighted,
+            ctx,
+            delayed
+        ] = delayedDraw;
+
+        renderVertex(
+            depthWithoutParallel,
+            index,
+            drawn,
+            graph,
+            vertex,
+            groups,
+            width,
+            endVertex,
+            depthIndex,
+            highlighted,
+            ctx,
+            delayed
+        );
     });
 
     // Draw arrows
