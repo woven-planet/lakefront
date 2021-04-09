@@ -337,20 +337,26 @@ const getX = (
     }
 
     // Handle delayed nodes that need to draw after the others, such as those positioned after Parallel nodes
-    if (positionByPrevious && !positionByParent || delayed.filter(d => d[4] === previousVertex).length > 0) {
+    if (positionByPrevious && !positionByParent) {
         const [previousIndegreeVertex] = previousIndegrees;
         const graphPreviousIndegree = graph.getDataByVertex(previousIndegreeVertex) || {};
         const [previousKey] = Object.keys(graphPreviousIndegree);
         const { Type: previousIndegreeType = '' } = previousKey ? graphPreviousIndegree[previousKey] : {};
         const drawnPreviousIndegree = drawn.get(previousIndegreeVertex);
+        const drawnPreviousNode = drawn.get(previousVertex);
 
         if (
             previousIndegreeType === WorkFlowType.PARALLEL &&
-            parentType !== WorkFlowType.PARALLEL
+            parentType !== WorkFlowType.PARALLEL ||
+            delayed.filter(d => d[4] === previousVertex).length > 0
         ) {
             // The d[4] is the arguments position of the vertex
             if (delayed.filter(d => d[4] === vertex).length > 0 && drawnPreviousIndegree) {
-                rangePosition = drawnPreviousIndegree.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
+                if (previousIndegreeType === WorkFlowType.PARALLEL) {
+                    rangePosition = drawnPreviousIndegree.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
+                } else if(drawnPreviousNode) {
+                    rangePosition = drawnPreviousNode.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
+                }
             } else {
                 delayed.push(renderParams);
                 return null;
