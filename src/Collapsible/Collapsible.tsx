@@ -44,7 +44,7 @@ export interface CollapsibleProps {
  * controls the initial state of the component. Once initialized, the state is managed within this component.
  *
  */
-const Collapsible: FC<CollapsibleProps & ComponentPropsWithoutRef<"input">> = ({
+const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<"div">, Exclude<keyof ComponentPropsWithoutRef<"div">, keyof CollapsibleProps>>> = ({
   expanded = false,
   title = "",
   subtitle = "",
