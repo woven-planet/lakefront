@@ -1,0 +1,60 @@
+name: Pull Request Check
+# Description:
+  # In this workflow we run our tests and automated versioning.
+
+# Jobs:
+  # Test Pull Request
+    # Here we perform a clean installation, run all tests
+    # and verify we can build the project successfully.
+  # Automated Version Patch
+    # Since commit messages are not available in pull request action payloads
+    # we can't check here for semantic versioning keywords. Instead we
+    # make sure at least a version patch is applied if no versioning changes
+    # are discovered.
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  test_pull_request:
+    name: 'Test Pull Request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+  automated_version_patch:
+    name: "Automated Version Patch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: "Version Check"
+        id: check
+        uses: EndBug/version-check@v2.0.1
+        with:
+          diff-search: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Apply Patch If Required"
+        if: steps.check.outputs.changed == 'false'
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          default: 'patch'
+      - name: "No Version Bump Required"
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "No bump required. Version change found in commit ${{ steps.check.outputs.commit }} - ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
