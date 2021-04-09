@@ -220,7 +220,7 @@ const handleParallel = (
 
     const parallelArgs = {
         ctx,
-        x: topLeft ? topLeft.mountingPoints.left.x - (PARALLEL_PADDING / 2) : leftMostX,
+        x: topLeft ? leftMostX - (PARALLEL_PADDING / 2) : leftMostX,
         y: (topLeftPos.y - bottomRightPos.height - PARALLEL_PADDING) - 1,
         width: range + PARALLEL_PADDING,
         height: -(topLeftPos.y - bottomRightPos.y) + bottomRightPos.height + (PARALLEL_PADDING * 3),
