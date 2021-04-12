@@ -189,7 +189,7 @@ const handleParallel = (
         }, baselineX);
 
         return smallestX < accum ? smallestX : accum;
-    }, baselineX) - PARALLEL_PADDING;
+    }, baselineX);
 
     const range: number = parallelNodeMatrix.reduce((accum, current) => {
         const currentRange = getDrawnRange(current, graph, drawn, leftMostX);
