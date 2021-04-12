@@ -10,7 +10,7 @@ Currently there is no automated solution to verify components are exported and a
  - [README => Components](README.md#components) - **Alphabetically** add a storybook link to your component. The url should be in the following format:
  
  
-    `https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-path--to-your-component`.
+    `https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-path--to-your-component`
  
     Note: You can find the the `path--to-your-component` to your component by running the project locally, navigating to your component, and copying it from the url.
 
