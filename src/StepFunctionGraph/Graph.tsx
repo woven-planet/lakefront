@@ -24,29 +24,30 @@ const MIN_ZOOM = window.devicePixelRatio + 1;
 const MAX_ZOOM = 1.2;
 const REDRAW_THROTTLE_MS = 50;
 
-const globalOffset = {
-    scale: 1,
-    offset: {
-        x: 0,
-        y: 0
-    },
-    defaultOffset: {
-        x: 0,
-        y: 0
-    }
-};
-const pan = {
-    start: {
-        x: null,
-        y: null
-    },
-    offset: {
-        x: 0,
-        y: 0
-    }
-};
-
 const StepFunctionGraph: React.FC<GraphProps> = props => {
+    const globalOffset = useMemo(() => ({
+            scale: 1,
+            offset: {
+                x: 0,
+                y: 0
+            },
+            defaultOffset: {
+                x: 0,
+                y: 0
+            }
+        }), []);
+
+    const pan = useMemo(() => ({
+        start: {
+            x: null,
+            y: null
+        },
+        offset: {
+            x: 0,
+            y: 0
+        }
+    }), []);
+
     const { handleSelectedNode, highlightedKey, json } = props;
     const canvasContainer = useRef<HTMLCanvasElement>(null);
     const [zoom, setZoom] = useState<number>(window.devicePixelRatio);
