@@ -34,9 +34,9 @@ export const getRange = (vertices: number[], xOffset: number, graph: Digraph): n
         const { Type } = nodeData[rangeKey];
 
         const { width: currentWidth } = getNodeDimensions(rangeKey);
-        const finalWidth = index === 0 ? currentWidth / 2 : currentWidth;
+
         return accum +
-            (Type === WorkFlowType.PARALLEL ? 0 : finalWidth) +
+            (Type === WorkFlowType.PARALLEL ? 0 : currentWidth) +
             (index < vertices.length ? xOffset : 0);
     }, 0);
 };
@@ -63,7 +63,14 @@ export const getDrawnRangeMiddleX = (
     graph: Digraph,
     drawn: Map<number, NodeDimensions>
 ): number => {
-    const xValues = vertices.map(vertex => drawn.get(vertex)?.x ?? 0);
+    const xValues: number[] = vertices.reduce((accum: number[], vertex) => {
+        const xVal = drawn.get(vertex)?.x;
+        if (xVal) {
+            accum.push(xVal);
+        }
+
+        return accum;
+    }, []);
     const left = Math.min(...xValues);
     const right = Math.max(...xValues);
 

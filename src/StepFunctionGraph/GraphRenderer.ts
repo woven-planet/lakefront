@@ -316,16 +316,12 @@ const getX = (
             isParallelNext
         );
 
-    if (positionByPrevious && positionByParent && parentX < newPositionByPrevious) {
-        positionByParent = false;
-    }
-
     // The rangePosition tells us where we need to draw in a range when positioning by previous
     // eslint-disable-next-line no-nested-ternary
     let rangePosition = ~previousEnd ?
-        previousEnd + (nodeWidth / 2) + X_OFFSET :
+        previousEnd + (range / flattened.length - 1) :
         (flattened.length > 1) ?
-            parentX - (range / 2) + X_OFFSET:
+            parentX - (range / 2) + (nodeWidth / 2):
             (nodeWidth / 4);
 
     if (!~previousEnd && flattened.length > 2) {
@@ -334,6 +330,15 @@ const getX = (
 
     if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup && flattened.length > 2) {
         rangePosition += X_OFFSET * 2;
+    }
+
+    if (
+        positionByPrevious &&
+        positionByParent &&
+        parentX < newPositionByPrevious &&
+        parentType !== WorkFlowType.PARALLEL
+    ) {
+        positionByParent = false;
     }
 
     const isDelayed = delayed.filter(d => d[4] === previousVertex).length > 0 || parentX === null
