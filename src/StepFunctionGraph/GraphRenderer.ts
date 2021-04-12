@@ -325,14 +325,14 @@ const getX = (
     let rangePosition = ~previousEnd ?
         previousEnd + (nodeWidth / 2) + X_OFFSET :
         (flattened.length > 1) ?
-            parentX - (range / 2) - (X_OFFSET * (drawableVertices.length - 1)) :
+            parentX - (range / 2) + X_OFFSET:
             (nodeWidth / 4);
 
     if (!~previousEnd && flattened.length > 2) {
         rangePosition /= 2;
     }
 
-    if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup) {
+    if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup && flattened.length > 2) {
         rangePosition += X_OFFSET * 2;
     }
 

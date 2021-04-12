@@ -34,8 +34,9 @@ export const getRange = (vertices: number[], xOffset: number, graph: Digraph): n
         const { Type } = nodeData[rangeKey];
 
         const { width: currentWidth } = getNodeDimensions(rangeKey);
+        const finalWidth = index === 0 ? currentWidth / 2 : currentWidth;
         return accum +
-            (Type === WorkFlowType.PARALLEL ? 0 : currentWidth) +
+            (Type === WorkFlowType.PARALLEL ? 0 : finalWidth) +
             (index < vertices.length ? xOffset : 0);
     }, 0);
 };
