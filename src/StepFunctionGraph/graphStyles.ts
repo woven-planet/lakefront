@@ -18,7 +18,7 @@ export const GraphControls = styled.div(({theme}) => ({
     position: 'absolute',
     right: 16,
     svg: {
-        fontSize: 17
+        height: 17
     },
     div: {
         backgroundColor: theme?.colors?.storm,
@@ -43,7 +43,7 @@ export const GraphControls = styled.div(({theme}) => ({
         borderTopRightRadius: 0,
         borderTop: `1px solid ${theme?.colors?.dolphin}`
     },
-    'svg path': {
-        color: theme?.colors?.mercury
+    'svg path:nth-of-type(2)': {
+        fill: theme?.colors?.mercury
     }
 }));

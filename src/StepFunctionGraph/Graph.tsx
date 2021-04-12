@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { generateStepFunctionGraph, WorkFlowType } from './StepFunctionUtil';
-import { ReactComponent as GpsFixedIcon } from 'src/Button/assets/delete.svg';
-import { ReactComponent as AddIcon } from 'src/Button/assets/add.svg';
-import { ReactComponent as RemoveIcon } from 'src/Checkbox/assets/indeterminate.svg';
+import { ReactComponent as GpsFixedIcon } from './assets/navigation.svg';
+import { ReactComponent as AddIcon } from './assets/plus.svg';
+import { ReactComponent as RemoveIcon } from './assets/minus.svg';
 import Digraph from './Digraph';
 import DigraphDFS from './DigraphDFS';
 import { drawGraph } from './GraphRenderer';
