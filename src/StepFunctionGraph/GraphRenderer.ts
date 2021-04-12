@@ -336,9 +336,11 @@ const getX = (
         rangePosition += X_OFFSET * 2;
     }
 
+    const isDelayed = delayed.filter(d => d[4] === previousVertex).length > 0 || parentX === null
+
     // Handle delayed nodes that need to draw after the others, such as those positioned after Parallel nodes
-    if (positionByPrevious && !positionByParent) {
-        const [previousIndegreeVertex] = previousIndegrees;
+    if (positionByPrevious && !positionByParent || isDelayed) {
+        const [previousIndegreeVertex] = previousIndegrees || [];
         const graphPreviousIndegree = graph.getDataByVertex(previousIndegreeVertex) || {};
         const [previousKey] = Object.keys(graphPreviousIndegree);
         const { Type: previousIndegreeType = '' } = previousKey ? graphPreviousIndegree[previousKey] : {};
@@ -348,7 +350,7 @@ const getX = (
         if (
             previousIndegreeType === WorkFlowType.PARALLEL &&
             parentType !== WorkFlowType.PARALLEL ||
-            delayed.filter(d => d[4] === previousVertex).length > 0
+            isDelayed
         ) {
             // The d[4] is the arguments position of the vertex
             if (delayed.filter(d => d[4] === vertex).length > 0 && drawnPreviousIndegree) {
