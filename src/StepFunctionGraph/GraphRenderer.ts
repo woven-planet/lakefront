@@ -328,8 +328,8 @@ const getX = (
             parentX - (range / 2) - (X_OFFSET * (drawableVertices.length - 1)) :
             (nodeWidth / 4);
 
-    if (parentType === WorkFlowType.CHOICE && !~previousEnd && flattened.length > 1) {
-        //rangePosition = parentX - (range / centerDivision) - (X_OFFSET * (drawableVertices.length - 1));
+    if (!~previousEnd && flattened.length > 2) {
+        rangePosition /= 2;
     }
 
     if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup) {
