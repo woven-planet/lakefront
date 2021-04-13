@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 
 import { generateStepFunctionGraph, WorkFlowType } from './StepFunctionUtil';
 import { ReactComponent as GpsFixedIcon } from './assets/navigation.svg';
@@ -11,11 +11,23 @@ import resizeObserver from '../lib/hooks/resizeObserver.js';
 import throttled from '../lib/hooks/throttle.js';
 import { NodeDimensions } from './GraphUtil';
 import { collides } from './canvasUtil';
-import { GraphControls, GraphContainer, StyledCanvas } from "./graphStyles";
+import { GraphControls, GraphContainer, StyledCanvas } from './graphStyles';
 
 export interface GraphProps {
+    /**
+     * Sends data stored with each node from the parsing step on click inside of any drawn node. Use this data to
+     * store the node key for the highlightedKey prop if node highlighting is desired.
+     */
     handleSelectedNode(node: any | null): void;
+
+    /**
+     * This should be the node key from the AWS JSON and if supplied, will highlight that node in the graph.
+     */
     highlightedKey: string | null;
+    /**
+     * This is AWS Step Function JSON contained in an object. See the Storybook Canvas for detailed examples of what
+     * should be provided.
+     */
     json: any;
 }
 
@@ -24,7 +36,15 @@ const MIN_ZOOM = window.devicePixelRatio + 1;
 const MAX_ZOOM = 1.2;
 const REDRAW_THROTTLE_MS = 50;
 
-const StepFunctionGraph: React.FC<GraphProps> = props => {
+/**
+ * Step Function Graph Component
+ *
+ * The Step Function Graph takes AWS Step Function JSON and renders an interactive 2D canvas of how its states connect
+ * together. It also takes a function "handleSelectedNode" that sends back which node has been clicked, so the
+ * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
+ * This component does not allow cycles, or nodes that connect such that a circular path is formed.
+ */
+const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
     const globalOffset = useMemo(() => ({
             scale: 1,
             offset: {
@@ -48,7 +68,6 @@ const StepFunctionGraph: React.FC<GraphProps> = props => {
         }
     }), []);
 
-    const { handleSelectedNode, highlightedKey, json } = props;
     const canvasContainer = useRef<HTMLCanvasElement>(null);
     const [zoom, setZoom] = useState<number>(window.devicePixelRatio);
     const [observedElement, setObservedElement] = useState<any>(null);

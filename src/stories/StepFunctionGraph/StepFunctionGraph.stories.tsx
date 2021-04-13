@@ -2,13 +2,13 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
 import StepFunctionGraph, { GraphProps } from '../../StepFunctionGraph/Graph';
-import { choiceJson, mapInMap, longJson, simpleJson, complexJson } from "./stepFunctionGraphData";
+import { choiceJson, mapInMap, longJson, simpleJson, complexJson } from './stepFunctionGraphData';
 
 export default {
     title: 'Lakefront/StepFunctionGraph',
     component: StepFunctionGraph,
     argTypes: {
-        handleClick: {
+        handleSelectedNode: {
             action: 'clicked'
         },
         children: {
