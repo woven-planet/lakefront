@@ -44,7 +44,7 @@ const REDRAW_THROTTLE_MS = 50;
  * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
  */
-const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
+export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
     const globalOffset = useMemo(() => ({
             scale: 1,
             offset: {
