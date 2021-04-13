@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
 import StepFunctionGraph, { GraphProps } from '../../StepFunctionGraph/Graph';
-import { leftJson, simpleJson, workflowJson } from "./stepFunctionGraphData";
+import { choiceJson, mapInMap, longJson, simpleJson, complexJson } from "./stepFunctionGraphData";
 
 export default {
     title: 'Lakefront/StepFunctionGraph',
@@ -41,7 +41,31 @@ SimpleGraph.args = {
 export const ComplexGraph = Template.bind({});
 
 ComplexGraph.args = {
-    json: workflowJson,
+    json: complexJson,
+    handleSelectedNode: () => {},
+    highlightedKey: null
+};
+
+export const ChoiceGraph = Template.bind({});
+
+ChoiceGraph.args = {
+    json: choiceJson,
+    handleSelectedNode: () => {},
+    highlightedKey: null
+};
+
+export const LongGraph = Template.bind({});
+
+LongGraph.args = {
+    json: longJson,
+    handleSelectedNode: () => {},
+    highlightedKey: null
+};
+
+export const MapGraph = Template.bind({});
+
+MapGraph.args = {
+    json: mapInMap,
     handleSelectedNode: () => {},
     highlightedKey: null
 };
