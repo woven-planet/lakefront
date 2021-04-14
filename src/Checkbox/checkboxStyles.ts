@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { CheckboxProps } from "./Checkbox";
+import styled from '@emotion/styled';
+import { CheckboxProps } from './Checkbox';
 
 interface StyledLabelProps {
   disabled?: boolean;
@@ -14,19 +14,19 @@ export const StyledLabel = styled.label<StyledLabelProps>(
 
     return {
       color: disabled ? theme?.colors?.mercury : theme?.colors?.cinder,
-      display: "inline-grid",
-      gridTemplateColumns: "32px auto",
-      gridTemplateRows: "auto",
+      display: 'inline-grid',
+      gridTemplateColumns: '32px auto',
+      gridTemplateRows: 'auto',
       fontSize: 16,
       padding: 0,
-      alignItems: "center",
+      alignItems: 'center',
       span: {
-        gridColumn: "2 / span 1",
-        gridRow: "1 / span 1",
+        gridColumn: '2 / span 1',
+        gridRow: '1 / span 1',
       },
       svg: {
-        gridColumn: "1 / span 1",
-        gridRow: "1 / span 1",
+        gridColumn: '1 / span 1',
+        gridRow: '1 / span 1',
         color: disabled ? disabledSvgColor : theme?.colors?.white,
         marginLeft: 2,
       },
@@ -48,14 +48,15 @@ export const StyledCheckbox = styled.input<CheckboxProps>(
         disabled ? theme?.colors?.mercury : theme?.colors?.storm
       }`,
       borderRadius: 2,
-      WebkitAppearance: "none",
+      WebkitAppearance: 'none',
       backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
       fontSize: 16,
+      outline: 'none',
       height: 20,
       width: 20,
-      gridColumn: "1 / span 1",
-      gridRow: "1 / span 1",
-      cursor: disabled ? 'not-allowed' : 'auto',
+      gridColumn: '1 / span 1',
+      gridRow: '1 / span 1',
+      cursor: disabled ? 'not-allowed' : 'pointer',
     };
   }
 );

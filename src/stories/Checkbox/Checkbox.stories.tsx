@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
+import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import CheckboxComponent, { CheckboxProps } from 'src/Checkbox/Checkbox';
@@ -26,7 +26,7 @@ export default {
             page: DocBlock,
             transformSource: (source: string) => {
                 return source
-                    .replace('onClick={function noRefCheck() {}}', '')
+                    .replace('onChange={function noRefCheck() {}}', '')
                     .replace(/\n/g, '')
                     .replace(/[ ]{2}/g, ' ');
             },
@@ -36,14 +36,21 @@ export default {
 
 const Template: Story<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => {
     const [isChecked, setIsChecked] = useState(false);
-    
-    const handleClick = (event: MouseEventHandler<HTMLInputElement>) => {
-        setIsChecked(!isChecked);
+
+    const handleClick = (event: ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(prevState => !prevState);
         action(`Checked changed to ${!isChecked}`)(event);
     };
 
     return (
-        <CheckboxComponent checked={isChecked} onClick={handleClick} {...args} />
+        <CheckboxComponent
+            checked={isChecked}
+            onChange={handleClick}
+            label={args.label}
+            indeterminate={args.indeterminate}
+            checkedIcon={args.checkedIcon}
+            disabled={args.disabled}
+        />
     );
 };
 
