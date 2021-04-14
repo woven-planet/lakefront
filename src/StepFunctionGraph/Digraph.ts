@@ -26,7 +26,7 @@ class Digraph {
         this.adjacencyMatrix = [];
         this.vertexDataMap = new Map<number, any>();
 
-        // Indegree represents the vertices that point to a vertex where the index is vertex we want values for
+        // Indegree represents the vertices that point to a vertex where the index is the vertex for which we want values
         this.indegree = Array.from({ length: vertices || 0 }, _ => Array(0));
 
         // Populate the adjacency matrix if a value is provided in the constructor

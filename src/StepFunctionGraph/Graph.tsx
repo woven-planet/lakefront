@@ -196,7 +196,6 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     const graph: Digraph = useMemo(() => new Digraph(), [json]);
 
     // Parse the JSON and return a complete graph
-    // This States field check can be removed once we fit the JSON to an interface
     const stepGraph: Digraph = useMemo(() => json.States && generateStepFunctionGraph(json, graph), [graph]);
 
     // Store all possible traversals of the graph starting at the Start node, which is always 0
