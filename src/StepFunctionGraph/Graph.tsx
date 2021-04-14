@@ -43,6 +43,7 @@ const REDRAW_THROTTLE_MS = 50;
  * together. It also takes a function "handleSelectedNode" that sends back which node has been clicked, so the
  * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
+ * Note: The highlight node centering functionality may be inaccurate when using an external monitor.
  */
 export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
     const globalOffset = useMemo(() => ({
