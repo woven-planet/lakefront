@@ -30,7 +30,10 @@ export interface GraphProps {
      */
     json: any;
 }
-
+const devicePixelRatio = window.devicePixelRatio;
+const DEFAULT_ZOOM = 2;
+const MIN_ZOOM = 3;
+const MAX_ZOOM = 1.2;
 const ZOOM_INCREMENT = 0.2;
 const REDRAW_THROTTLE_MS = 50;
 
@@ -68,12 +71,9 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     }), []);
 
     const canvasContainer = useRef<HTMLCanvasElement>(null);
-    const [zoom, setZoom] = useState<number>(window.devicePixelRatio);
+    const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
     const [observedElement, setObservedElement] = useState<any>(null);
     const [clickedNode, setClickedNode] = useState<NodeDimensions | null>(null);
-    const [devicePixelRatio, setDevicePixelRatio] = useState(window.devicePixelRatio);
-    const MIN_ZOOM = useMemo(() => window.devicePixelRatio + 1, [devicePixelRatio]);
-    const MAX_ZOOM = useMemo(() => window.devicePixelRatio - 0.2, [devicePixelRatio]);
     const [jsonHighlightedNode, setJsonHighlightedNode] = useState<NodeDimensions | null>(null);
     const clickHandler = useRef<(any | null)>(null);
 
@@ -122,10 +122,10 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
 
         // The pan won't reset unless there's an actual change to redraw the page
         if (zoom === devicePixelRatio) {
-            setZoom(devicePixelRatio - 0.0001);
-            setZoom(devicePixelRatio + 0.0001);
+            setZoom(DEFAULT_ZOOM - 0.0001);
+            setZoom(DEFAULT_ZOOM + 0.0001);
         } else {
-            setZoom(devicePixelRatio);
+            setZoom(DEFAULT_ZOOM);
         }
     };
 
@@ -324,12 +324,6 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     // When the page loads we need to set up the observer to see when the slider changes, which is really looking
     // at the graph itself to see if its width or properties change.
     useEffect(() => {
-        const devicePixelRatioFn = () => {
-            console.log('ratio changed.');
-            setDevicePixelRatio(window.devicePixelRatio);
-        };
-        const resolutionMatch = window.matchMedia('screen and (min-resolution: 2dppx)');
-        resolutionMatch.addEventListener('change', devicePixelRatioFn);
         const resizeCallback = (entries: any[]) => {
             setObservedElement(entries);
         };
@@ -338,7 +332,6 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
         graphResizeObserver.observe(graphRef.current as HTMLDivElement);
 
         return () => {
-            resolutionMatch.removeEventListener('change', devicePixelRatioFn);
             graphResizeObserver.disconnect();
         };
     }, []);
