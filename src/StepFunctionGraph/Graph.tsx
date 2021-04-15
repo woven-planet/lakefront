@@ -30,10 +30,11 @@ export interface GraphProps {
      */
     json: any;
 }
-
-const ZOOM_INCREMENT = 0.2;
-const MIN_ZOOM = window.devicePixelRatio + 1;
+const devicePixelRatio = window.devicePixelRatio;
+const DEFAULT_ZOOM = 2;
+const MIN_ZOOM = 3;
 const MAX_ZOOM = 1.2;
+const ZOOM_INCREMENT = 0.2;
 const REDRAW_THROTTLE_MS = 50;
 
 /**
@@ -43,7 +44,6 @@ const REDRAW_THROTTLE_MS = 50;
  * together. It also takes a function "handleSelectedNode" that sends back which node has been clicked, so the
  * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
- * Note: The highlight node centering functionality may be inaccurate when using an external monitor.
  */
 export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
     const globalOffset = useMemo(() => ({
@@ -70,7 +70,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     }), []);
 
     const canvasContainer = useRef<HTMLCanvasElement>(null);
-    const [zoom, setZoom] = useState<number>(window.devicePixelRatio);
+    const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
     const [observedElement, setObservedElement] = useState<any>(null);
     const [clickedNode, setClickedNode] = useState<NodeDimensions | null>(null);
     const [jsonHighlightedNode, setJsonHighlightedNode] = useState<NodeDimensions | null>(null);
@@ -120,11 +120,11 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
         };
 
         // The pan won't reset unless there's an actual change to redraw the page
-        if (zoom === window.devicePixelRatio) {
-            setZoom(window.devicePixelRatio - 0.0001);
-            setZoom(window.devicePixelRatio + 0.0001);
+        if (zoom === devicePixelRatio) {
+            setZoom(DEFAULT_ZOOM - 0.0001);
+            setZoom(DEFAULT_ZOOM + 0.0001);
         } else {
-            setZoom(window.devicePixelRatio);
+            setZoom(DEFAULT_ZOOM);
         }
     };
 
@@ -212,7 +212,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
             canvasContainer.current.style.height = `${height}`;
 
             // The scale sizes the canvas resolution so it isn't blurry
-            const scale = window.devicePixelRatio;
+            const scale = devicePixelRatio;
             canvasContainer.current.width = width * scale;
             canvasContainer.current.height = height * scale;
 
