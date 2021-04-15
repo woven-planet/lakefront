@@ -6,6 +6,7 @@ export interface SelectPopoverOption {
     name: string;
     value: unknown;
     key?: string;
+    disabled?: boolean;
 }
 
 export interface SelectPopoverProps {
@@ -99,21 +100,26 @@ const SelectPopover: FC<SelectPopoverProps> = (
         setPopoverElement(node);
     }
 
-    const popover = useMemo(() => (
+    const popover = useMemo(
+      () => (
         <>
-            {
-                visible && options.length > 0 && (
-                    <StyledSelectPopover>
-                        {
-                            options.map(({ name, value, key }) => (
-                                <SelectPopoverItem key={key ?? name} onClick={() => handleClick(value)}>{name}</SelectPopoverItem>
-                            ))
-                        }
-                    </StyledSelectPopover>
-                )
-            }
+          {visible && options.length > 0 && (
+            <StyledSelectPopover>
+              {options.map(({ name, value, key, disabled }) => (
+                <SelectPopoverItem
+                  key={key ?? name}
+                  onClick={() => !disabled && handleClick(value)}
+                  disabled={disabled}
+                >
+                  {name}
+                </SelectPopoverItem>
+              ))}
+            </StyledSelectPopover>
+          )}
         </>
-    ), [children, options]);
+      ),
+      [children, options]
+    );
 
     return (
         <StyledSelectPopoverWrapper ref={popoverNodeMounted}>

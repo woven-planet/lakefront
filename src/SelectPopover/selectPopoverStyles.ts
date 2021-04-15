@@ -1,4 +1,7 @@
 import styled from '@emotion/styled';
+import { lightenDarkenColor } from '../styles/stylesUtil';
+
+const DARKEN_MOST = -40;
 
 export const StyledSelectPopoverWrapper = styled.div({
     display: 'inline',
@@ -19,10 +22,14 @@ export const StyledSelectPopover = styled.div(({ theme }) => ({
     zIndex: 2
 }));
 
-export const SelectPopoverItem = styled.div(({ theme }) => ({
+interface SelectPopoverItemProps {
+    disabled?: boolean;
+}
+
+export const SelectPopoverItem = styled.div<SelectPopoverItemProps>(({ theme, disabled }) => ({
     alignItems: 'center',
     backgroundColor: theme?.colors?.white,
-    color: theme?.colors?.storm,
+    color: disabled ? lightenDarkenColor(theme?.colors?.white, DARKEN_MOST): theme?.colors?.storm,
     cursor: 'pointer',
     display: 'flex',
     fontSize: 16,
@@ -32,6 +39,7 @@ export const SelectPopoverItem = styled.div(({ theme }) => ({
     userSelect: 'none',
     zIndex: 2,
     ':hover': {
-        backgroundColor: theme?.colors?.mercury
+        backgroundColor: disabled ? theme?.colors?.white : theme?.colors?.mercury,
+        cursor: disabled ? 'not-allowed' : undefined
     }
 }));
