@@ -11,6 +11,11 @@ const options = [
     {
         name: 'Option 2',
         value: 'Value 2'
+    },
+    {
+        name: 'Option 3',
+        value: 'Value 3',
+        disabled: true
     }
 ];
 
@@ -64,5 +69,27 @@ describe('SelectPopover', () => {
 
         expect(handleClick).toHaveBeenCalledTimes(1);
         expect(handleClick).toHaveBeenCalledWith(options[0].value);
+    });
+
+    it('should not call handleClick on click of disabled item', () => {
+        const { getByText } = render(
+            <SelectPopover
+                options={options}
+                handleClick={handleClick}
+                visible={true}
+            >
+                <Button icon />
+            </SelectPopover>
+        );
+
+        const item1 = getByText(options[0].name);
+        const item2 = getByText(options[2].name);
+        
+        fireEvent.click(item1);
+        fireEvent.click(item2);
+
+        expect(handleClick).toHaveBeenCalledTimes(1);
+        expect(handleClick).toHaveBeenCalledWith(options[0].value);
+        expect(handleClick).not.toHaveBeenCalledWith(options[2].value);
     });
 });

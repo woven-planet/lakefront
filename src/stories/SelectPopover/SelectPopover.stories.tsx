@@ -36,7 +36,8 @@ export const Popover = Template.bind({});
 const options = [
     { name: 'Test 1', value: '1' },
     { name: 'Test 2', value: 2 },
-    { name: 'Test 3', value: { value: 3 }}
+    { name: 'Test 3', value: { value: 3 }},
+    { name: 'Test 4 (Disabled)', value: 4, disabled: true }
 ];
 
 Popover.args = {
