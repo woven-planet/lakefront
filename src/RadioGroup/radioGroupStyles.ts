@@ -18,7 +18,8 @@ export const StyledLabel = styled.label<StyledLabelProps>(
       marginBottom: 41,
       alignItems: 'center',
       span: {
-        marginLeft: 12
+        marginLeft: 12,
+        fontSize: 16
       },
       svg: {
         color: disabled ? theme?.colors?.mercury : theme?.colors?.white,
