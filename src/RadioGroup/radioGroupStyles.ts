@@ -30,21 +30,12 @@ export const StyledLabel = styled.label<StyledLabelProps>(
 );
 
 export const StyledRadioGroup = styled.input<RadioGroupProps>(
-  ({ theme, disabled }) => {
-    const backgroundColor =
-      theme?.colors?.white;
-    const disabledBackgroundColor = 
-      theme?.colors?.mercury;
+  ({ disabled }) => {
 
     return {
-      display: 'flex',
+      display: 'none',
       appearance: 'none',
       WebkitAppearance: 'none',
-      backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
-      fontSize: 16,
-      outline: 'none',
-      height: 20,
-      width: 20,
       cursor: disabled ? 'not-allowed' : 'pointer',
     };
   }

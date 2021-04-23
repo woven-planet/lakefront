@@ -53,3 +53,14 @@ RadioGroup.args = {
         {label: 'C', value: 'C'}
     ]
 };
+
+export const DisabledRadioGroup = Template.bind({});
+DisabledRadioGroup.args = {
+    name: 'alphabet',
+    options: [
+        {label: 'A', value: 'A'},
+        {label: 'B', value: 'B'},
+        {label: 'C', value: 'C'}
+    ],
+    disabled: true
+};
