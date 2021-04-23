@@ -1,12 +1,12 @@
 import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import RadioGroupComponent, { RadioButtonProps } from 'src/RadioGroup/RadioGroup';
+import RadioGroup, { RadioButtonProps } from 'src/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';
 
 export default {
     title: 'Lakefront/RadioGroup',
-    component: RadioGroupComponent,
+    component: RadioGroup,
     argTypes: {
         onChange: {
             control: false
@@ -33,19 +33,18 @@ const Template: Story<RadioButtonProps & ComponentPropsWithoutRef<'input'>> = (a
     };
 
     return (
-        <RadioGroupComponent
-            onChange={handleClick}
+        <RadioGroup
             name={args.name}
             options={args.options}
-            label={args.label}
-            disabled={args.disabled}
             value={value}
+            disabled={args.disabled}
+            onChange={handleClick}
         />
     );
 };
 
-export const RadioGroup = Template.bind({});
-RadioGroup.args = {
+export const StandardRadioGroup = Template.bind({});
+StandardRadioGroup.args = {
     name: 'alphabet',
     options: [
         {label: 'A', value: 'A'},

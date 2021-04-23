@@ -30,7 +30,7 @@ import {
      */
     disabled?: boolean;
     /**
-     * The action that should be run when the selected radio button state changes.
+     * The action that should be run when a radio button is selected.
      */
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   }
@@ -38,9 +38,7 @@ import {
   /**
    * RadioGroup Component
    *
-   * The RadioGroup component takes in native radio button props as well as its own CheckboxProps.
-   * The `checked` state is not managed in the component and should be received
-   * via the `checked` prop from the consuming app.
+   * The RadioGroup component takes in native radio button props as well as its own RadioGroupProps.
    *
    */
   const RadioGroup: FC<RadioGroupProps & ComponentPropsWithoutRef<"input">> = ({
