@@ -1,7 +1,7 @@
-import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import RadioGroup, { RadioButtonProps } from 'src/RadioGroup/RadioGroup';
+import RadioGroup, { RadioGroupProps } from 'src/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';
 
 export default {
@@ -25,7 +25,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<RadioButtonProps & ComponentPropsWithoutRef<'input'>> = (args) => {
+const Template: Story<RadioGroupProps & ComponentPropsWithoutRef<'input'>> = (args) => {
     const [value, setValue] = useState('');
 
     const handleClick = (event: ChangeEvent<HTMLInputElement>) => {

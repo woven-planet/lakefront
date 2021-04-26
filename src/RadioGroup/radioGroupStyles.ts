@@ -1,12 +1,7 @@
 import styled from '@emotion/styled';
 import { RadioGroupProps } from './RadioGroup';
 
-interface StyledLabelProps {
-  disabled?: boolean;
-  checked?: boolean;
-}
-
-export const StyledLabel = styled.label<StyledLabelProps>(
+export const StyledLabel = styled.label<RadioGroupProps>(
   ({ theme, disabled }) => {
 
     return {
