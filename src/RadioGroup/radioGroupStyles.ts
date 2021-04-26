@@ -3,7 +3,6 @@ import { RadioGroupProps } from './RadioGroup';
 
 export const StyledLabel = styled.label<RadioGroupProps>(
   ({ theme, disabled }) => ({
-    
       color: disabled ? theme?.colors?.mercury : theme?.colors?.cinder,
       display: 'flex',
       flexDirection: 'row',
@@ -25,7 +24,6 @@ export const StyledLabel = styled.label<RadioGroupProps>(
 
 export const StyledRadioGroup = styled.input<RadioGroupProps>(
   ({ disabled }) => ({
-
       display: 'none',
       appearance: 'none',
       WebkitAppearance: 'none',
