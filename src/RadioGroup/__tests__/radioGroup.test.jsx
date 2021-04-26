@@ -11,7 +11,7 @@ const options = [
 
 describe('RadioGroup', () => {
     describe('general rendering', () => {
-        it('renders the label and its text', () => {
+        it('renders the radio buttons', () => {
             const { container } = render(
                 <RadioGroup name={name} options={options} />
             );
