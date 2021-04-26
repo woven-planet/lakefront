@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { RadioGroupProps } from './RadioGroup';
 
 export const StyledLabel = styled.label<RadioGroupProps>(
-  ({ theme, disabled }) => ({
-      color: disabled ? theme?.colors?.mercury : theme?.colors?.cinder,
+  ({ ...props }) => ({
+      color: props.disabled ? props.theme?.colors?.mercury : props.theme?.colors?.cinder,
       display: 'flex',
       flexDirection: 'row',
       fontSize: 16,
@@ -15,10 +15,10 @@ export const StyledLabel = styled.label<RadioGroupProps>(
         fontSize: 16
       },
       svg: {
-        color: disabled ? theme?.colors?.mercury : theme?.colors?.white,
+        color: props.disabled ? props.theme?.colors?.mercury : props.theme?.colors?.white,
         marginLeft: 2,
       },
-      cursor: disabled ? 'not-allowed' : 'auto',
+      cursor: props.disabled ? 'not-allowed' : 'auto',
   })
 );
 
