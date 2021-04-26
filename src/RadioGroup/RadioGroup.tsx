@@ -1,7 +1,8 @@
 import {
     ChangeEvent,
     ComponentPropsWithoutRef,
-    FC
+    FC,
+    ReactElement
   } from 'react';
   import { ThemeProvider } from '@emotion/react';
   import { StyledRadioGroup, StyledLabel } from './radioGroupStyles';
@@ -19,7 +20,7 @@ import {
      */
     options: {
         value: string;
-        label: string;
+        label: string | ReactElement;
     }[];
     /**
      * The value of the selected radio button.
@@ -75,7 +76,7 @@ import {
                   type="radio"
                 />
                 {icon}
-                {option.label && <span>{option.label}</span>}
+                {option.label && <div className="label">{option.label}</div>}
             </StyledLabel>
           )
         })

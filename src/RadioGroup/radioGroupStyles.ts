@@ -14,7 +14,7 @@ export const StyledLabel = styled.label<StyledLabelProps>(
       padding: 0,
       marginBottom: 41,
       alignItems: 'center',
-      span: {
+      'div.label': {
         marginLeft: 12,
         fontSize: 16
       },

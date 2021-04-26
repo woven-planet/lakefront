@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import RadioGroup, { RadioGroupProps } from 'src/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';
+import { blue } from 'src/styles/cloudColors';
 
 export default {
     title: 'Lakefront/RadioGroup',
@@ -55,11 +56,44 @@ StandardRadioGroup.args = {
 
 export const DisabledRadioGroup = Template.bind({});
 DisabledRadioGroup.args = {
-    name: 'alphabet',
+    name: 'cells',
     options: [
-        {label: 'A', value: 'A'},
-        {label: 'B', value: 'B'},
-        {label: 'C', value: 'C'}
+        {label: 'A1', value: 'A1'},
+        {label: 'B2', value: 'B2'},
+        {label: 'C3', value: 'C3'}
     ],
     disabled: true
+};
+
+export const MixedContentRadioGroup = Template.bind({});
+const contentStyle = { height: '2em', width: '4em', borderRadius: 2 };
+MixedContentRadioGroup.args = {
+  name: 'mixedContent',
+  options: [
+    { label: 'A', value: 'A' },
+    {
+      label: <div style={{ ...contentStyle, backgroundColor: blue }} />,
+      value: 'B'
+    },
+    {
+      label: (
+        <div style={{ display: 'flex', flexDirection: 'column', width: '8em' }}>
+            <div>
+                Choose A Game
+            </div>
+            <div>
+            <select onChange={(e) => console.log(e)} style={{ ...contentStyle, width: '9em', marginTop: 5 }}>
+                <option key={'C1'} value={1}>
+                    {'Chess'}
+                </option>
+                <option key={'C2'} value={1}>
+                    {'Checkers'}
+                </option>
+            </select>
+            </div>
+        </div>
+      ),
+      value: 'C'
+    }
+  ]
 };
