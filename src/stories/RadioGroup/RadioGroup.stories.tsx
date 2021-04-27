@@ -48,9 +48,9 @@ export const StandardRadioGroup = Template.bind({});
 StandardRadioGroup.args = {
     name: 'alphabet',
     options: [
-        {label: 'A', value: 'A'},
-        {label: 'B', value: 'B'},
-        {label: 'C', value: 'C'}
+        { label: 'A', value: 'A' },
+        { label: 'B', value: 'B' },
+        { label: 'C', value: 'C' }
     ]
 };
 
@@ -58,9 +58,9 @@ export const SingleDisabledRadioGroupOption = Template.bind({});
 SingleDisabledRadioGroupOption.args = {
     name: 'cells',
     options: [
-        {label: 'A1', value: 'A1'},
-        {label: 'B2', value: 'B2', disabled: true },
-        {label: 'C3', value: 'C3'}
+        { label: 'A1', value: 'A1' },
+        { label: 'B2', value: 'B2', disabled: true },
+        { label: 'C3', value: 'C3' }
     ],
 };
 
@@ -68,9 +68,9 @@ export const AllDisabledRadioGroup = Template.bind({});
 AllDisabledRadioGroup.args = {
     name: 'states',
     options: [
-        {label: 'AL', value: 'AL'},
-        {label: 'AK', value: 'AK'},
-        {label: 'AZ', value: 'AZ'}
+        { label: 'AL', value: 'AL' },
+        { label: 'AK', value: 'AK' },
+        { label: 'AZ', value: 'AZ' }
     ],
     disabled: true
 };
