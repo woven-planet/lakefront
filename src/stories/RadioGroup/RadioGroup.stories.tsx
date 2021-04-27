@@ -92,7 +92,7 @@ MixedContentRadioGroup.args = {
                 Choose A Game
             </div>
             <div>
-            <select onChange={(e) => console.log(e)} style={{ ...contentStyle, width: '9em', marginTop: 5 }}>
+            <select style={{ ...contentStyle, width: '9em', marginTop: 5 }}>
                 <option key={'C1'} value={1}>
                     {'Chess'}
                 </option>
