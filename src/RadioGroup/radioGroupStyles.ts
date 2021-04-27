@@ -21,6 +21,9 @@ export const StyledLabel = styled.label<StyledLabelProps>(
       svg: {
         color: disabled ? theme?.colors?.mercury : theme?.colors?.white,
         marginLeft: 2,
+        'path:nth-of-type(2)': {
+          fill: disabled ? theme?.colors?.mercury : undefined
+        }
       },
       cursor: disabled ? 'not-allowed' : 'auto',
   })

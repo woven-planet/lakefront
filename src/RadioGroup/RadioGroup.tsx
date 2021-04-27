@@ -16,11 +16,14 @@ import {
      */
     name: string;
     /**
-     * The labels and values of the available radio buttons to select within the radio group.
+     * The options of each radio button within the radio group.
+     * Options include the `label` (appearance), `value` (returned on selection),
+     * and whether the individual option is `disabled`.
      */
     options: {
         value: string;
         label: string | ReactElement;
+        disabled?: boolean;
     }[];
     /**
      * The value of the selected radio button.
@@ -63,22 +66,23 @@ import {
         options.map((option) => {
 
           const icon = value === option.value ? <Checked /> : <Unchecked />;
+          const disableOption = disabled || option.disabled;
 
           return (
-            <StyledLabel disabled={disabled}>
-                <StyledRadioGroup
-                  {...props}
-                  name={name}
-                  options={options}
-                  value={option.value}
-                  disabled={disabled}
-                  onChange={handleChange}
-                  type="radio"
-                />
-                {icon}
-                {option.label && <div className="label">{option.label}</div>}
+            <StyledLabel disabled={disableOption}>
+              <StyledRadioGroup
+                {...props}
+                name={name}
+                options={options}
+                value={option.value}
+                disabled={disableOption}
+                onChange={disableOption ? () => null : handleChange}
+                type="radio"
+              />
+              {icon}
+              {option.label && <div className="label">{option.label}</div>}
             </StyledLabel>
-          )
+          );
         })
       }
       </ThemeProvider>

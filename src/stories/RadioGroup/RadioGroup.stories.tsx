@@ -54,13 +54,23 @@ StandardRadioGroup.args = {
     ]
 };
 
-export const DisabledRadioGroup = Template.bind({});
-DisabledRadioGroup.args = {
+export const SingleDisabledRadioGroupOption = Template.bind({});
+SingleDisabledRadioGroupOption.args = {
     name: 'cells',
     options: [
         {label: 'A1', value: 'A1'},
-        {label: 'B2', value: 'B2'},
+        {label: 'B2', value: 'B2', disabled: true },
         {label: 'C3', value: 'C3'}
+    ],
+};
+
+export const AllDisabledRadioGroup = Template.bind({});
+AllDisabledRadioGroup.args = {
+    name: 'states',
+    options: [
+        {label: 'AL', value: 'AL'},
+        {label: 'AK', value: 'AK'},
+        {label: 'AZ', value: 'AZ'}
     ],
     disabled: true
 };
