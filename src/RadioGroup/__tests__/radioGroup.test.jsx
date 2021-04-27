@@ -32,5 +32,21 @@ describe('RadioGroup', () => {
             expect(radioButtons[1]).toHaveAttribute('disabled');
             expect(radioButtons[2]).toHaveAttribute('disabled');
         });
+
+        it('should disable a single button disabled when disabled is true for that option', () => {
+            const { container } = render(
+              <RadioGroup
+                name={name}
+                options={[...options, { label: 'D', value: 'D', disabled: true }]}
+              />
+            );
+
+            const radioButtons = container.querySelectorAll('input');
+
+            expect(radioButtons[0]).not.toHaveAttribute('disabled');
+            expect(radioButtons[1]).not.toHaveAttribute('disabled');
+            expect(radioButtons[2]).not.toHaveAttribute('disabled');
+            expect(radioButtons[3]).toHaveAttribute('disabled');
+        });
     });
 });

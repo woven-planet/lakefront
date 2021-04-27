@@ -14,13 +14,16 @@ export const StyledLabel = styled.label<StyledLabelProps>(
       padding: 0,
       marginBottom: 41,
       alignItems: 'center',
-      span: {
+      'div.label': {
         marginLeft: 12,
         fontSize: 16
       },
       svg: {
         color: disabled ? theme?.colors?.mercury : theme?.colors?.white,
         marginLeft: 2,
+        'path:nth-of-type(2)': {
+          fill: disabled ? theme?.colors?.mercury : undefined
+        }
       },
       cursor: disabled ? 'not-allowed' : 'auto',
   })
