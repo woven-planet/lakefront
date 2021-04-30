@@ -55,3 +55,11 @@ Collapsible.args = {
   title: "Collapsible Component",
   subtitle: <div>Additional Info | <strong>100</strong> Count | Updated <strong>Today</strong></div>
 };
+
+export const NonCollapsible = Template.bind({});
+NonCollapsible.args = {
+  expanded: true,
+  title: "Non Collapsible Component",
+  subtitle: <div>Additional Info | <strong>100</strong> Count | Updated <strong>Today</strong></div>,
+  collapsible: false
+};
