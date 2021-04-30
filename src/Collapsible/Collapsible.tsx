@@ -35,7 +35,7 @@ export interface CollapsibleProps {
    */
   divider?: boolean;
   /**
-   * `Default = true` This determines if the collapse icon should be displayed and usable.
+   * `Default = true` This determines if the expand/collapse icon should be displayed and usable.
    */
   collapsible?: boolean;
 }
