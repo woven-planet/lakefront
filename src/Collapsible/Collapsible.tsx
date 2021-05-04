@@ -34,6 +34,10 @@ export interface CollapsibleProps {
    * title and the child content.
    */
   divider?: boolean;
+  /**
+   * `Default = true` This determines if the expand/collapse icon should be displayed and usable.
+   */
+  collapsible?: boolean;
 }
 
 /**
@@ -51,6 +55,7 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<"div">, E
   divider = true,
   onChange,
   children,
+  collapsible = true,
   ...props
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
@@ -71,10 +76,10 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<"div">, E
             <div className="title">{title}</div>
             <div className="subtitle">
               {subtitle}
-              <Button
+              {collapsible && (<Button
                 onClick={handleChange}
                 icon={isExpanded ? <ChevronUp /> : <ChevronDown />}
-              />
+              />)}
             </div>
           </div>
           {divider && <div className="divider" />}

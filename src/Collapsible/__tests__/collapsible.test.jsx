@@ -59,4 +59,10 @@ describe('Collapsible', () => {
         expect(container.querySelector('div.collapsed')).not.toBeInTheDocument();
         expect(container.querySelector('div.expanded')).toBeInTheDocument();
     });
+
+    it('does not display expand/collapse button when collapsible is false', () => {
+        const { queryByRole } = render(<Collapsible {...PROPS} collapsible={false} />);
+        
+        expect(queryByRole('button')).not.toBeInTheDocument();
+    });
 });
