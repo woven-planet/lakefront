@@ -30,7 +30,7 @@ export interface GraphProps {
      */
     json: any;
 }
-const devicePixelRatio = window.devicePixelRatio;
+const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
 const DEFAULT_ZOOM = 2;
 const MIN_ZOOM = 3;
 const MAX_ZOOM = 1.2;
