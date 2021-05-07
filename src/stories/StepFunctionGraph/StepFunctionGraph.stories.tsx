@@ -34,7 +34,7 @@ const Template: Story<GraphProps> = (args) => {
         args.handleSelectedNode(node);
     }
     return (
-        <div style={{height: 500, width: '100%', maxWidth: 1000}}>
+        <div style={{height: 700, width: '100%', maxWidth: 1000}}>
             <StepFunctionGraph
                 highlightedKey={highlighted}
                 json={args.json}

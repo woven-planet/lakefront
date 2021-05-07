@@ -7,6 +7,7 @@ export const GraphContainer = styled.div({
 });
 
 export const StyledCanvas = styled.canvas({
+    cursor: 'grab',
     height: '100%',
     width: '100%'
 });

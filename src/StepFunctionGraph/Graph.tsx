@@ -41,7 +41,7 @@ const REDRAW_THROTTLE_MS = 50;
  * Step Function Graph Component
  *
  * The Step Function Graph takes AWS Step Function JSON and renders an interactive 2D canvas of how its states connect
- * together. It also takes a function "handleSelectedNode" that sends back which node has been clicked, so the
+ * together. It can be panned by clicking in empty space and moving the mouse. It also takes a function "handleSelectedNode" that sends back which node has been clicked, so the
  * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
  */
