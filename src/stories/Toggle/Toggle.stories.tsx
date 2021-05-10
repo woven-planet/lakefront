@@ -32,12 +32,12 @@ export default {
 
 const toggleOptions: ToggleOption[] = [
     {
-        name: 'Left',
-        value: 'left'
+        name: 'First',
+        value: 'first'
     },
     {
-        name: 'Right',
-        value: 'right'
+        name: 'Second',
+        value: 'second'
     }
 ];
 

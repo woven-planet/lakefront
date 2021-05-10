@@ -1,26 +1,27 @@
 import styled from '@emotion/styled';
+import { ToggleProps } from './Toggle';
 
 export const Label = styled.span({
     cursor: 'pointer'
 });
 
-export const Bar = styled.span(({ theme }) => ({
-    backgroundColor: theme?.colors?.green,
+export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value'>>(({ theme, options, value }) => ({
+    backgroundColor: value === options[0].value ? theme?.colors?.alto : theme?.colors?.green,
     display: 'block',
-    width: 24,
-    height: 8,
-    borderRadius: 4
+    width: 36,
+    height: 14,
+    borderRadius: 8
 }));
 
-export const Icon = styled.span({
-    backgroundColor: '#55a379',
-    borderRadius: 16,
-    height: 16,
-    width: 16,
+export const Icon = styled.span(({ theme }) => ({
+    backgroundColor: theme?.colors?.storm,
+    borderRadius: 20,
+    height: 20,
+    width: 20,
     position: 'absolute',
-    top: 8,
+    top: 8.5,
     transition: 'left 0.3s'
-});
+}));
 
 export const IconWrapper = styled.div({
     position: 'relative',

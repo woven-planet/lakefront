@@ -9,26 +9,33 @@ export interface ToggleOption {
 export interface ToggleProps {
     options: ToggleOption[];
     onChange: (value: string) => void;
+    position: 'LEFT' | 'RIGHT';
     value: string;
 }
 
-const Toggle: FC<ToggleProps> = ({ options, onChange, value }) => {
-    const [leftOption, rightOption] = options;
-    const iconPosition = value === leftOption.value ? 0 : 8;
+const Toggle: FC<ToggleProps> = ({ options, onChange, position = 'RIGHT', value }) => {
+    const [firstOption, secondOption] = options;
+    const isFirstOption = value === firstOption.value;
+    const iconPosition = isFirstOption ? 0 : 16;
+    const label = isFirstOption ? firstOption.name : secondOption.name;
+    const labelOrder = position === 'LEFT' ? 0 : 2;
 
     const handleToggleClick = () => {
-        const newValue = value === leftOption.value ? rightOption.value : leftOption.value;
+        const newValue = value === firstOption.value ? secondOption.value : firstOption.value;
         onChange(newValue);
+    }
+
+    if (!options || options.length === 0) {
+        return null;
     }
 
     return (
         <ToggleWrapper>
-            <Label onClick={handleToggleClick}>{leftOption?.name}</Label>
+            <Label style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
             <IconWrapper onClick={handleToggleClick}>
-                <Bar />
+                <Bar options={options} value={value} />
                 <Icon style={{ left: iconPosition }} />
             </IconWrapper>
-            <Label>{rightOption?.name}</Label>
         </ToggleWrapper>
     );
 };
