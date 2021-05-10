@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
 import { createPortal } from 'react-dom';
 
 export interface SelectPopoverOption {
-    name: string;
+    name: ReactElement | string;
     value: unknown;
     key?: string;
     disabled?: boolean;
@@ -107,7 +107,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
             <StyledSelectPopover>
               {options.map(({ name, value, key, disabled }) => (
                 <SelectPopoverItem
-                  key={key ?? name}
+                  key={key ?? name.toString()}
                   onClick={() => !disabled && handleClick(value)}
                   disabled={disabled}
                 >
