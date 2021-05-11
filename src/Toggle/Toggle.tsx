@@ -7,13 +7,14 @@ export interface ToggleOption {
 }
 
 export interface ToggleProps {
+    disabled?: boolean;
     options: ToggleOption[];
     onChange: (value: string) => void;
     position: 'LEFT' | 'RIGHT';
     value: string;
 }
 
-const Toggle: FC<ToggleProps> = ({ options, onChange, position = 'RIGHT', value }) => {
+const Toggle: FC<ToggleProps> = ({ disabled, options, onChange, position = 'RIGHT', value }) => {
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
     const iconPosition = isFirstOption ? 0 : 16;
@@ -21,8 +22,10 @@ const Toggle: FC<ToggleProps> = ({ options, onChange, position = 'RIGHT', value 
     const labelOrder = position === 'LEFT' ? 0 : 2;
 
     const handleToggleClick = () => {
-        const newValue = value === firstOption.value ? secondOption.value : firstOption.value;
-        onChange(newValue);
+        if (!disabled) {
+            const newValue = value === firstOption.value ? secondOption.value : firstOption.value;
+            onChange(newValue);
+        }
     }
 
     if (!options || options.length === 0) {
@@ -31,10 +34,10 @@ const Toggle: FC<ToggleProps> = ({ options, onChange, position = 'RIGHT', value 
 
     return (
         <ToggleWrapper>
-            <Label style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
-            <IconWrapper onClick={handleToggleClick}>
-                <Bar options={options} value={value} />
-                <Icon style={{ left: iconPosition }} />
+            <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
+            <IconWrapper disabled={disabled} onClick={handleToggleClick}>
+                <Bar disabled={disabled} options={options} value={value} />
+                <Icon disabled={disabled} style={{ left: iconPosition }} />
             </IconWrapper>
         </ToggleWrapper>
     );
