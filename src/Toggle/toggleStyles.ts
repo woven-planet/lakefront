@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ToggleProps } from './Toggle';
+import { hexToRgb } from '../styles/stylesUtil';
 
 export const Label = styled.span({
     cursor: 'pointer'
@@ -20,7 +21,14 @@ export const Icon = styled.span(({ theme }) => ({
     width: 20,
     position: 'absolute',
     top: 8.5,
-    transition: 'left 0.3s'
+    transition: 'left 0.2s',
+    ':hover': {
+        boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.green, 0.2)}`,
+        transition: 'all 0.2s ease-in-out'
+    },
+    ':active': {
+        boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.green, 0.4)}`,
+    }
 }));
 
 export const IconWrapper = styled.div({
