@@ -13,14 +13,6 @@ export default {
             table: {
                 disable: true
             }
-        },
-        disabled: {
-            control: 'boolean',
-            table: {
-                defaultValue: { summary: false },
-                type: { summary: 'boolean' }
-            },
-            description: 'HTML input element disabled prop.'
         }
     },
     parameters: {
