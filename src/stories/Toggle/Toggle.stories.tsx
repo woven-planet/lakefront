@@ -2,11 +2,11 @@ import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import Toggle, { ToggleOption, ToggleProps } from 'src/Toggle/Toggle';
+import ToggleComponent, { ToggleOption, ToggleProps } from 'src/Toggle/Toggle';
 
 export default {
     title: 'Lakefront/Toggle',
-    component: Toggle,
+    component: ToggleComponent,
     argTypes: {
         onChange: {
             action: 'changed',
@@ -37,14 +37,22 @@ const Template: Story<ToggleProps> = (args) => {
     const [selected, setSelected] = useState(toggleOptions[0].value);
     const handleChange = (value: string) => {
         setSelected(value);
+
+        args.onChange(value);
     };
 
     return (
-        <Toggle {...args} value={selected} onChange={handleChange} />
+        <ToggleComponent
+            options={args.options}
+            disabled={args.disabled}
+            position={args.position}
+            value={selected}
+            onChange={handleChange}
+        />
     );
 }
 
-export const ToggleComponent = Template.bind({});
-ToggleComponent.args = {
+export const Toggle = Template.bind({});
+Toggle.args = {
     options: toggleOptions
 };
