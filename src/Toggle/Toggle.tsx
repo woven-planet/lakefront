@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 
 export interface ToggleOption {
@@ -23,7 +23,7 @@ export interface ToggleProps {
     /**
      * Determines which side of the switch the label is rendered.
      */
-    position: 'LEFT' | 'RIGHT';
+    position?: 'LEFT' | 'RIGHT';
     /**
      * The currently selected value. This value is passed in from the parent component.
      */
