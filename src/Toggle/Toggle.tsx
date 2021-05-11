@@ -7,13 +7,36 @@ export interface ToggleOption {
 }
 
 export interface ToggleProps {
+    /**
+     * When true, the switch will no longer toggle.
+     */
     disabled?: boolean;
+    /**
+     * Options for the labels and their values. It should only contain two objects.
+     */
     options: ToggleOption[];
+    /**
+     * This is called whenever the switch toggles with the value of the option.
+     * Clicking the label also toggles the switch.
+     */
     onChange: (value: string) => void;
+    /**
+     * Determines which side of the switch the label is rendered.
+     */
     position: 'LEFT' | 'RIGHT';
+    /**
+     * The currently selected value. This value is passed in from the parent component.
+     */
     value: string;
 }
 
+/**
+ * Toggle Component
+ *
+ * The Toggle component is a switch component that displays one of two labels depending on the state of the switch.
+ * It has a position prop to change the layout of the label. State for the value needs to be maintained in a parent
+ * component and passed in as a prop.
+ */
 const Toggle: FC<ToggleProps> = ({ disabled, options, onChange, position = 'RIGHT', value }) => {
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
