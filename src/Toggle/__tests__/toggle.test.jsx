@@ -73,4 +73,28 @@ describe('Toggle', () => {
         // We aren't changing the value, so this won't actually toggle in the test
         expect(onChange).toHaveBeenCalledWith(toggleOptions[1].value);
     });
+
+    it('does not call onChange when clicking label and switch wrapper when disabled', () => {
+        const { container, getByText } = render(
+            <Toggle
+                options={toggleOptions}
+                value={toggleOptions[0].value}
+                onChange={onChange}
+                disabled={true}
+            />
+        );
+
+        expect(getByText(toggleOptions[0].name)).toBeInTheDocument();
+
+        const label = getByText(toggleOptions[0].name);
+        const [wrapper] = container.querySelectorAll('div');
+
+        fireEvent.click(label);
+
+        expect(onChange).not.toHaveBeenCalled();
+
+        fireEvent.click(wrapper);
+
+        expect(onChange).not.toHaveBeenCalled();
+    });
 });
