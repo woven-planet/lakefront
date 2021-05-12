@@ -25,6 +25,8 @@ export const teal = '#5fc8c7';
 export const blue = '#71a3d9';
 export const lavender = '#8f8de4';
 export const havelockBlue = '#5c85d6';
+export const calmingBlue = '#65c3d6';
+export const sinbad = '#94cbd6';
 export const cranberry = '#d65c85';
 export const viking = '#5cd6c2';
 export const mediumPurple = '#995cd6';
@@ -66,6 +68,8 @@ export default {
     blue,
     lavender,
     havelockBlue,
+    calmingBlue,
+    sinbad,
     cranberry,
     viking,
     mediumPurple,
