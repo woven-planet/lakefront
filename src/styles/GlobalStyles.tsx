@@ -14,6 +14,6 @@ const GlobalStyles: FC = ({ children }) => {
             {children}
         </>
     );
-}
+};
 
 export default GlobalStyles;

@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import SelectPopover, { SelectPopoverProps } from 'src/SelectPopover/SelectPopover';
 import DocBlock from '.storybook/DocBlock';
-import { Button } from "../../index";
+import { Button } from '../../index';
 import { blue } from 'src/styles/cloudColors';
 
 export default {

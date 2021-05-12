@@ -1,6 +1,6 @@
-import React, { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from "react";
-import { StackBannerRowDiv } from "./stackBannerStyles";
-import { StackBannerIcon, getStackBannerIcon } from "./stackBannerUtil";
+import React, { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from 'react';
+import { StackBannerRowDiv } from './stackBannerStyles';
+import { StackBannerIcon, getStackBannerIcon } from './stackBannerUtil';
 
 export interface StackBannerRowProps {
   /**
@@ -21,7 +21,7 @@ export interface StackBannerRowProps {
    * The severity of the content that maps to varying background color levels.
    * If left undefined, the background will be transparent.
    */
-  severity?: "normal" | "warning" | "error" | "default";
+  severity?: 'normal' | 'warning' | 'error' | 'default';
   /**
    * The action to run when the banner is clicked.
    */
@@ -36,9 +36,9 @@ export interface StackBannerRowProps {
  *
  */
 const StackBannerRow: FC<StackBannerRowProps & ComponentPropsWithoutRef<'div'>> = ({
-  content = "",
+  content = '',
   icon = true,
-  severity = "default",
+  severity = 'default',
   onClick = () => null,
   ...props
 }) => {

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Button from 'src/Button/Button';
-import styled from "@emotion/styled";
-import theme from "src/styles/theme";
+import styled from '@emotion/styled';
+import theme from 'src/styles/theme';
 
 const DefaultWrapper = styled.div({
     backgroundColor: theme.colors.white,
@@ -95,6 +95,6 @@ const ButtonsPage: FC = () => {
                 </Section>
             </AlternateWrapper>
         </div>
-    )
-}
+    );
+};
 export default ButtonsPage;

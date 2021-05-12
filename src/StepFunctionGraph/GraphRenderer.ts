@@ -341,7 +341,7 @@ const getX = (
         positionByParent = false;
     }
 
-    const isDelayed = delayed.filter(d => d[4] === previousVertex).length > 0 || parentX === null
+    const isDelayed = delayed.filter(d => d[4] === previousVertex).length > 0 || parentX === null;
 
     // Handle delayed nodes that need to draw after the others, such as those positioned after Parallel nodes
     if (positionByPrevious && !positionByParent || isDelayed) {

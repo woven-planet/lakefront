@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
+import theme from '../styles/theme';
+import { ThemeProvider } from '@emotion/react';
 
 export interface ToggleOption {
     name: string;
@@ -60,20 +62,22 @@ const Toggle: FC<ToggleProps> = ({
             const newValue = value === firstOption.value ? secondOption.value : firstOption.value;
             onChange(newValue);
         }
-    }
+    };
 
     if (!options || options.length === 0) {
         return null;
     }
 
     return (
-        <ToggleWrapper className={className}>
-            <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
-            <IconWrapper disabled={disabled} onClick={handleToggleClick}>
-                <Bar disabled={disabled} options={options} value={value} />
-                <Icon disabled={disabled} style={{ left: iconPosition }} />
-            </IconWrapper>
-        </ToggleWrapper>
+        <ThemeProvider theme={theme}>
+            <ToggleWrapper className={className}>
+                <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
+                <IconWrapper disabled={disabled} onClick={handleToggleClick}>
+                    <Bar disabled={disabled} options={options} value={value} />
+                    <Icon disabled={disabled} style={{ left: iconPosition }} />
+                </IconWrapper>
+            </ToggleWrapper>
+        </ThemeProvider>
     );
 };
 

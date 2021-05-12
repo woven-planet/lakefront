@@ -17,7 +17,7 @@ export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value' | 'disabled
         display: 'block',
         height: 14,
         width: 36
-    }
+    };
 });
 
 export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disabled }) => ({
@@ -26,7 +26,7 @@ export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disable
     height: 20,
     width: 20,
     position: 'absolute',
-    top: 8.5,
+    top: 9,
     transition: 'left 0.2s'
 }));
 
