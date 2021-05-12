@@ -26,7 +26,7 @@ export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disable
     height: 20,
     width: 20,
     position: 'absolute',
-    top: 8.5,
+    top: 9,
     transition: 'left 0.2s'
 }));
 
