@@ -50,7 +50,7 @@ const Template: Story<ToggleProps> = (args) => {
             onChange={handleChange}
         />
     );
-}
+};
 
 export const Toggle = Template.bind({});
 Toggle.args = {

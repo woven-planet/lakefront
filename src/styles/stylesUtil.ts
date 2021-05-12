@@ -45,7 +45,7 @@ export const hexToRgb = (hex: string, opacity?: number): string => {
     } : null;
 
     const rgbString = `${rgb?.r},${rgb?.g},${rgb?.b}`;
-    const fnString = opacity ? `rgba(` : `rgb(`;
+    const fnString = opacity ? 'rgba(' : 'rgb(';
 
     return rgb ? `${fnString}${rgbString}${opacity ? ',' + opacity : ''})`: '';
-}
+};

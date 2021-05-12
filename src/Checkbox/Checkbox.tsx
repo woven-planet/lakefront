@@ -45,11 +45,11 @@ export interface CheckboxProps {
  * via the `checked` prop from the consuming app.
  *
  */
-const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<"input">> = ({
+const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   checked = false,
   checkedIcon,
   indeterminate = false,
-  label = "",
+  label = '',
   disabled = false,
   onChange = () => null,
   ...props

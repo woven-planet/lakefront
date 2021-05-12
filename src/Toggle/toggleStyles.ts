@@ -17,7 +17,7 @@ export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value' | 'disabled
         display: 'block',
         height: 14,
         width: 36
-    }
+    };
 });
 
 export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disabled }) => ({

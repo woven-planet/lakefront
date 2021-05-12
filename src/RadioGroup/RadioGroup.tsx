@@ -45,7 +45,7 @@ import React, {
    * The RadioGroup component takes in native radio button props as well as its own RadioGroupProps.
    *
    */
-  const RadioGroup: FC<RadioGroupProps & ComponentPropsWithoutRef<"input">> = ({
+  const RadioGroup: FC<RadioGroupProps & ComponentPropsWithoutRef<'input'>> = ({
     name,
     options,
     value,

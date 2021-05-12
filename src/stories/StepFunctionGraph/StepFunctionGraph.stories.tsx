@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import DocBlock from '.storybook/DocBlock';
 import StepFunctionGraph, { GraphProps } from '../../StepFunctionGraph/Graph';
 import { choiceJson, mapInMap, longJson, simpleJson, complexJson } from './stepFunctionGraphData';
-import { useState } from "react";
+import { useState } from 'react';
 
 export default {
     title: 'Lakefront/StepFunctionGraph',
@@ -32,7 +32,7 @@ const Template: Story<GraphProps> = (args) => {
         }
 
         args.handleSelectedNode(node);
-    }
+    };
     return (
         <div style={{height: 700, width: '100%', maxWidth: 1000}}>
             <StepFunctionGraph
