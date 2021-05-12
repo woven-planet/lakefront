@@ -8,6 +8,10 @@ export interface ToggleOption {
 
 export interface ToggleProps {
     /**
+     * Optional className for styling component.
+     */
+    className?: string;
+    /**
      * When true, the switch will no longer toggle.
      */
     disabled?: boolean;
@@ -37,7 +41,14 @@ export interface ToggleProps {
  * It has a position prop to change the layout of the label. State for the value needs to be maintained in a parent
  * component and passed in as a prop.
  */
-const Toggle: FC<ToggleProps> = ({ disabled, options, onChange, position = 'RIGHT', value }) => {
+const Toggle: FC<ToggleProps> = ({
+        className,
+        disabled,
+        options,
+        onChange,
+        position = 'RIGHT',
+        value
+    }) => {
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
     const iconPosition = isFirstOption ? 0 : 16;
@@ -56,7 +67,7 @@ const Toggle: FC<ToggleProps> = ({ disabled, options, onChange, position = 'RIGH
     }
 
     return (
-        <ToggleWrapper>
+        <ToggleWrapper className={className}>
             <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
             <IconWrapper disabled={disabled} onClick={handleToggleClick}>
                 <Bar disabled={disabled} options={options} value={value} />
