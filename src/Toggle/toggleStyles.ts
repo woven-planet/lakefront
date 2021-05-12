@@ -9,10 +9,10 @@ export const Label = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disabl
 }));
 
 export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value' | 'disabled'>>(({ theme, disabled, options, value }) => {
-    const backgroundColor = value === options[0].value ? theme?.colors?.alto : theme?.colors?.green;
+    const backgroundColor = value === options[0].value ? theme?.colors?.alto : theme?.colors?.calmingBlue;
 
     return {
-        backgroundColor: disabled && value === options[1].value ? theme?.colors?.vista : backgroundColor,
+        backgroundColor: disabled && value === options[1].value ? theme?.colors?.sinbad : backgroundColor,
         borderRadius: 8,
         display: 'block',
         height: 14,
@@ -36,11 +36,11 @@ export const IconWrapper = styled.div<Pick<ToggleProps, 'disabled'>>(({ theme, d
     padding: '12px 0',
     cursor: 'pointer',
     ':hover span:nth-of-type(2)': {
-        ...(!disabled && { boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.green, 0.2)}` }),
+        ...(!disabled && { boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.calmingBlue, 0.2)}` }),
         transition: 'all 0.2s ease-in-out'
     },
     ':active span:nth-of-type(2)': {
-        ...(!disabled && { boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.green, 0.4)}` }),
+        ...(!disabled && { boxShadow: `0 0 0 11px ${hexToRgb(theme?.colors?.calmingBlue, 0.4)}` }),
     }
 }));
 
