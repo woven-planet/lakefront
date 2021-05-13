@@ -4,11 +4,11 @@ import Toggle from '../Toggle';
 
 const toggleOptions = [
     {
-        name: 'First',
+        label: 'First',
         value: 'first'
     },
     {
-        name: 'Second',
+        label: 'Second',
         value: 'second'
     }
 ];
@@ -31,7 +31,7 @@ describe('Toggle', () => {
 
         const [icon] = container.querySelectorAll('div span:nth-of-type(2)');
 
-        expect(getByText(toggleOptions[0].name)).toBeInTheDocument();
+        expect(getByText(toggleOptions[0].label)).toBeInTheDocument();
         expect(icon).toHaveStyle('left: 0px');
     });
 
@@ -46,7 +46,7 @@ describe('Toggle', () => {
 
         const [icon] = container.querySelectorAll('div span:nth-of-type(2)');
 
-        expect(getByText(toggleOptions[1].name)).toBeInTheDocument();
+        expect(getByText(toggleOptions[1].label)).toBeInTheDocument();
         expect(icon).toHaveStyle('left: 16px');
     });
 
@@ -59,9 +59,9 @@ describe('Toggle', () => {
             />
         );
 
-        expect(getByText(toggleOptions[0].name)).toBeInTheDocument();
+        expect(getByText(toggleOptions[0].label)).toBeInTheDocument();
 
-        const label = getByText(toggleOptions[0].name);
+        const label = getByText(toggleOptions[0].label);
         const [wrapper] = container.querySelectorAll('div');
 
         fireEvent.click(label);
@@ -84,9 +84,9 @@ describe('Toggle', () => {
             />
         );
 
-        expect(getByText(toggleOptions[0].name)).toBeInTheDocument();
+        expect(getByText(toggleOptions[0].label)).toBeInTheDocument();
 
-        const label = getByText(toggleOptions[0].name);
+        const label = getByText(toggleOptions[0].label);
         const [wrapper] = container.querySelectorAll('div');
 
         fireEvent.click(label);
