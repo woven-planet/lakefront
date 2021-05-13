@@ -3,12 +3,12 @@ import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 import theme from '../styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
-export interface ToggleOption {
+export interface ToggleOption<T> {
     name: string;
-    value: string;
+    value: T;
 }
 
-export interface ToggleProps {
+export interface ToggleProps<T> {
     /**
      * Optional className for styling component.
      */
@@ -20,12 +20,12 @@ export interface ToggleProps {
     /**
      * Options for the labels and their values. It should only contain two objects.
      */
-    options: ToggleOption[];
+    options: ToggleOption<T>[];
     /**
      * This is called whenever the switch toggles with the value of the option.
      * Clicking the label also toggles the switch.
      */
-    onChange: (value: string) => void;
+    onChange: (value: T) => void;
     /**
      * Determines which side of the switch the label is rendered.
      */
@@ -33,7 +33,7 @@ export interface ToggleProps {
     /**
      * The currently selected value. This value is passed in from the parent component.
      */
-    value: string;
+    value: T;
 }
 
 /**
@@ -43,14 +43,14 @@ export interface ToggleProps {
  * It has a position prop to change the layout of the label. State for the value needs to be maintained in a parent
  * component and passed in as a prop.
  */
-const Toggle: FC<ToggleProps> = ({
+const Toggle = <T, >({
         className,
         disabled,
         options,
         onChange,
         position = 'RIGHT',
         value
-    }) => {
+    }: ToggleProps<T>) => {
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
     const iconPosition = isFirstOption ? 0 : 16;

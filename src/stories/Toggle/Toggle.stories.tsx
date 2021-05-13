@@ -22,7 +22,7 @@ export default {
     }
 } as Meta;
 
-const toggleOptions: ToggleOption[] = [
+const toggleOptions: ToggleOption<string>[] = [
     {
         name: 'First',
         value: 'first'
@@ -33,7 +33,9 @@ const toggleOptions: ToggleOption[] = [
     }
 ];
 
-const Template: Story<ToggleProps> = (args) => {
+
+
+const Template: Story<ToggleProps<string>> = (args) => {
     const [selected, setSelected] = useState(toggleOptions[0].value);
     const handleChange = (value: string) => {
         setSelected(value);
