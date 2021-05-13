@@ -4,7 +4,7 @@ import theme from '../styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
 export interface ToggleOption<T> {
-    name: string;
+    label: string;
     value: T;
 }
 
@@ -54,7 +54,7 @@ const Toggle = <T, >({
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
     const iconPosition = isFirstOption ? 0 : 16;
-    const label = isFirstOption ? firstOption.name : secondOption.name;
+    const label = isFirstOption ? firstOption.label : secondOption.label;
     const labelOrder = position === 'LEFT' ? 0 : 2;
 
     const handleToggleClick = () => {
@@ -72,7 +72,7 @@ const Toggle = <T, >({
         <ThemeProvider theme={theme}>
             <ToggleWrapper className={className}>
                 <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
-                <IconWrapper disabled={disabled} onClick={handleToggleClick}>
+                <IconWrapper disabled={disabled} position={position} onClick={handleToggleClick}>
                     <Bar disabled={disabled} options={options} value={value} />
                     <Icon disabled={disabled} style={{ left: iconPosition }} />
                 </IconWrapper>

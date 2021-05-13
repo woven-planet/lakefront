@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
@@ -24,11 +24,11 @@ export default {
 
 const toggleOptions: ToggleOption<string>[] = [
     {
-        name: 'First',
+        label: 'First',
         value: 'first'
     },
     {
-        name: 'Second',
+        label: 'Second',
         value: 'second'
     }
 ];
