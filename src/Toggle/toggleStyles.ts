@@ -20,7 +20,7 @@ export const Bar = styled.span<Pick<ToggleProps<unknown>, 'options' | 'value' | 
     };
 });
 
-export const Icon = styled.span<Pick<ToggleProps<any>, 'disabled'>>(({ theme, disabled }) => ({
+export const Icon = styled.span<Pick<ToggleProps<unknown>, 'disabled'>>(({ theme, disabled }) => ({
     backgroundColor: disabled ? theme?.colors?.bombay : theme?.colors?.storm,
     borderRadius: 20,
     height: 20,
@@ -30,7 +30,7 @@ export const Icon = styled.span<Pick<ToggleProps<any>, 'disabled'>>(({ theme, di
     transition: 'left 0.2s'
 }));
 
-export const IconWrapper = styled.div<Pick<ToggleProps<any>, 'disabled' | 'position'>>(({ theme, disabled, position }) => ({
+export const IconWrapper = styled.div<Pick<ToggleProps<unknown>, 'disabled' | 'position'>>(({ theme, disabled, position }) => ({
     position: 'relative',
     ...(position === 'LEFT' ? { marginLeft: 12 } : { marginRight: 12 }),
     padding: '12px 0',
