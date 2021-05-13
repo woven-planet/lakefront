@@ -3,6 +3,7 @@ export { default as Checkbox } from './Checkbox/Checkbox';
 export { default as Collapsible } from './Collapsible/Collapsible';
 export { default as IconButton } from './Button/IconButton';
 export { default as Input } from './Input/Input';
+export { default as Loading } from'./Loading/Loading';
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 export { default as StackBanner } from './StackBanner/StackBanner';
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';

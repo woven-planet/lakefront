@@ -1,7 +1,8 @@
 import React from 'react';
-import { ReactComponent as SpinnerLogo } from './tri_logo_monochrome.svg';
+import { ReactComponent as SpinnerLogo } from './assets/tri_logo_monochrome.svg';
 import { StyledLoadingContainer } from './loadingStyles';
-
+import { ThemeProvider } from '@emotion/react';
+import theme from '../styles/theme';
 export interface LoadingProps {
     /**
      * The text that shows when loading.
@@ -16,24 +17,30 @@ export interface LoadingProps {
      */
     width?: number;
     /**
+     * Viewbox specs for loading icon.
+     */
+    viewbox?: string;
+    /**
+     * The icon to be shown when loading.
+     */
+    logo?: React.ElementType;
+     /**
      * Additional styles.
      */
     className?: string;
-
-    viewbox?: string;
-
-    logo?: React.ElementType;
 }
 
 const Loading: React.FC<LoadingProps> = ({ label, height = 24, width = 24, className, viewbox = '0 0 175 150', logo }) => {
     const Logo = logo ? logo : SpinnerLogo;
     return (
-        <StyledLoadingContainer className={className}>
-            <Logo viewbox={viewbox} height={height} width={width} />
-            {
-                label && <div>{label}</div>
-            }
-        </StyledLoadingContainer>
+        <ThemeProvider theme={theme}>
+            <StyledLoadingContainer className={className}>
+                <Logo viewbox={viewbox} height={height} width={width} />
+                {
+                    label && <div>{label}</div>
+                }
+            </StyledLoadingContainer>
+        </ThemeProvider>
     );
 };
 
