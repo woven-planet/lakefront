@@ -1,6 +1,6 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import RadioGroup from "../../RadioGroup/RadioGroup";
+import React from 'react';
+import { render } from '@testing-library/react';
+import RadioGroup from '../../RadioGroup/RadioGroup';
 
 const name = 'Alphabet';
 const options = [

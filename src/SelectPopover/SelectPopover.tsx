@@ -1,6 +1,8 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
 import { createPortal } from 'react-dom';
+import theme from '../styles/theme';
+import { ThemeProvider } from '@emotion/react';
 
 export interface SelectPopoverOption {
     name: ReactElement | string;
@@ -66,7 +68,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
             if (!portal && popoverElement) {
                 observer = new IntersectionObserver(
                     () => {
-                        setUpdate(new Date().getTime())
+                        setUpdate(new Date().getTime());
                     }
                 );
 
@@ -83,7 +85,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
             if (portal && bodyElement && bodyElement.contains(portal)) {
                 bodyElement.removeChild(portal);
             }
-        }
+        };
     }, [popoverElement]);
 
     useEffect(() => {
@@ -98,7 +100,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
 
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setPopoverElement(node);
-    }
+    };
 
     const popover = useMemo(
       () => (
@@ -122,17 +124,19 @@ const SelectPopover: FC<SelectPopoverProps> = (
     );
 
     return (
-        <StyledSelectPopoverWrapper ref={popoverNodeMounted}>
-            {children}
-            {
-                portal ? (
-                    createPortal(popover, portal)
-                ) : (
-                    popover
-                )
-            }
-        </StyledSelectPopoverWrapper>
-    )
+        <ThemeProvider theme={theme}>
+            <StyledSelectPopoverWrapper ref={popoverNodeMounted}>
+                {children}
+                {
+                    portal ? (
+                        createPortal(popover, portal)
+                    ) : (
+                        popover
+                    )
+                }
+            </StyledSelectPopoverWrapper>
+        </ThemeProvider>
+    );
 };
 
 export default SelectPopover;

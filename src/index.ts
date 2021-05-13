@@ -9,5 +9,6 @@ export { default as StackBanner } from './StackBanner/StackBanner';
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';
 export { default as SelectPopover } from './SelectPopover/SelectPopover';
 export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
+export { default as Toggle, ToggleOption } from './Toggle/Toggle';
 export { default as colors } from './styles/cloudColors';
 export { default as theme } from './styles/theme';

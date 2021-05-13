@@ -12,6 +12,8 @@ import throttled from '../lib/hooks/throttle.js';
 import { NodeDimensions } from './GraphUtil';
 import { collides } from './canvasUtil';
 import { GraphControls, GraphContainer, StyledCanvas } from './graphStyles';
+import theme from '../styles/theme';
+import { ThemeProvider } from '@emotion/react';
 
 export interface GraphProps {
     /**
@@ -403,20 +405,22 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     }, []);
 
     return (
-        <GraphContainer ref={graphRef}>
-            <StyledCanvas ref={canvasContainer} />
-            <GraphControls>
-                <div onClick={handleRecenter}>
-                    <GpsFixedIcon />
-                </div>
-                <div onClick={handleZoomIn}>
-                    <AddIcon />
-                </div>
-                <div onClick={handleZoomOut}>
-                    <RemoveIcon />
-                </div>
-            </GraphControls>
-        </GraphContainer>
+        <ThemeProvider theme={theme}>
+            <GraphContainer ref={graphRef}>
+                <StyledCanvas ref={canvasContainer} />
+                <GraphControls>
+                    <div onClick={handleRecenter}>
+                        <GpsFixedIcon />
+                    </div>
+                    <div onClick={handleZoomIn}>
+                        <AddIcon />
+                    </div>
+                    <div onClick={handleZoomOut}>
+                        <RemoveIcon />
+                    </div>
+                </GraphControls>
+            </GraphContainer>
+        </ThemeProvider>
     );
 };
 

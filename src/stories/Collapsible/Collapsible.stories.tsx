@@ -37,7 +37,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CollapsibleProps & ComponentPropsWithoutRef<"div">> = (
+const Template: Story<CollapsibleProps & ComponentPropsWithoutRef<'div'>> = (
   args
 ) => (
   <CollapsibleComponent {...args}>
@@ -52,14 +52,14 @@ const Template: Story<CollapsibleProps & ComponentPropsWithoutRef<"div">> = (
 export const Collapsible = Template.bind({});
 Collapsible.args = {
   expanded: true,
-  title: "Collapsible Component",
+  title: 'Collapsible Component',
   subtitle: <div>Additional Info | <strong>100</strong> Count | Updated <strong>Today</strong></div>
 };
 
 export const NonCollapsible = Template.bind({});
 NonCollapsible.args = {
   expanded: true,
-  title: "Non Collapsible Component",
+  title: 'Non Collapsible Component',
   subtitle: <div>Additional Info | <strong>100</strong> Count | Updated <strong>Today</strong></div>,
   collapsible: false
 };

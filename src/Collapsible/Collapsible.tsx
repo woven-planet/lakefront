@@ -3,12 +3,12 @@ import React, {
   FC,
   ReactElement,
   useState
-} from "react";
+} from 'react';
 import { ThemeProvider } from '@emotion/react';
-import { StyledCollapsible } from "./collapsibleStyles";
-import Button from "../Button/Button";
-import { ReactComponent as ChevronUp } from "./assets/chevron-up.svg";
-import { ReactComponent as ChevronDown } from "./assets/chevron-down.svg";
+import { StyledCollapsible } from './collapsibleStyles';
+import Button from '../Button/Button';
+import { ReactComponent as ChevronUp } from './assets/chevron-up.svg';
+import { ReactComponent as ChevronDown } from './assets/chevron-down.svg';
 import theme from '../styles/theme';
 
 export interface CollapsibleProps {
@@ -48,10 +48,10 @@ export interface CollapsibleProps {
  * controls the initial state of the component. Once initialized, the state is managed within this component.
  *
  */
-const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<"div">, Exclude<keyof ComponentPropsWithoutRef<"div">, keyof CollapsibleProps>>> = ({
+const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, Exclude<keyof ComponentPropsWithoutRef<'div'>, keyof CollapsibleProps>>> = ({
   expanded = false,
-  title = "",
-  subtitle = "",
+  title = '',
+  subtitle = '',
   divider = true,
   onChange,
   children,

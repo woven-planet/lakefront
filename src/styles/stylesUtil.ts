@@ -32,3 +32,20 @@ export const lightenDarkenColor = (hexColor = '', percent: number): string => {
     const outputLength = usePound ? 7 : 6;
     return value.length === outputLength ? value : value.padEnd(outputLength, '0');
 };
+
+/**
+ * Takes a hex string and an optional opacity value and returns an rgb or rgba string.
+ */
+export const hexToRgb = (hex: string, opacity?: number): string => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const rgb = result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+
+    const rgbString = `${rgb?.r},${rgb?.g},${rgb?.b}`;
+    const fnString = opacity ? 'rgba(' : 'rgb(';
+
+    return rgb ? `${fnString}${rgbString}${opacity ? ',' + opacity : ''})`: '';
+};

@@ -9,6 +9,9 @@ export const storm = '#2c2c35';
 export const cinder = '#0f0f1a';
 export const black = '#000000';
 export const grey30 = '#4d4d4d';
+export const doveGrey = '#6e6e6e';
+export const bombay = '#ababae';
+export const alto = '#d8d8d8';
 
 export const red = '#f47368';
 export const watermelon = '#ff5b73';
@@ -21,6 +24,13 @@ export const emerald = '#43d47d';
 export const teal = '#5fc8c7';
 export const blue = '#71a3d9';
 export const lavender = '#8f8de4';
+export const havelockBlue = '#5c85d6';
+export const calmingBlue = '#65c3d6';
+export const sinbad = '#94cbd6';
+export const cranberry = '#d65c85';
+export const viking = '#5cd6c2';
+export const mediumPurple = '#995cd6';
+export const vista = '#94d6b1';
 
 export const saturatedRed = '#ef5042';
 export const saturatedOrange = '#ef8b38';
@@ -43,6 +53,9 @@ export default {
     cinder,
     black,
     grey30,
+    doveGrey,
+    bombay,
+    alto,
     red,
     watermelon,
     orange,
@@ -54,6 +67,13 @@ export default {
     teal,
     blue,
     lavender,
+    havelockBlue,
+    calmingBlue,
+    sinbad,
+    cranberry,
+    viking,
+    mediumPurple,
+    vista,
     saturatedRed,
     saturatedOrange,
     saturatedYellow,
