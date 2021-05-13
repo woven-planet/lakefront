@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
@@ -22,18 +22,20 @@ export default {
     }
 } as Meta;
 
-const toggleOptions: ToggleOption[] = [
+const toggleOptions: ToggleOption<string>[] = [
     {
-        name: 'First',
+        label: 'First',
         value: 'first'
     },
     {
-        name: 'Second',
+        label: 'Second',
         value: 'second'
     }
 ];
 
-const Template: Story<ToggleProps> = (args) => {
+
+
+const Template: Story<ToggleProps<string>> = (args) => {
     const [selected, setSelected] = useState(toggleOptions[0].value);
     const handleChange = (value: string) => {
         setSelected(value);

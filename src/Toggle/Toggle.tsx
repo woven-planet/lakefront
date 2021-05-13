@@ -3,12 +3,12 @@ import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 import theme from '../styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
-export interface ToggleOption {
-    name: string;
-    value: string;
+export interface ToggleOption<T> {
+    label: string;
+    value: T;
 }
 
-export interface ToggleProps {
+export interface ToggleProps<T> {
     /**
      * Optional className for styling component.
      */
@@ -20,12 +20,12 @@ export interface ToggleProps {
     /**
      * Options for the labels and their values. It should only contain two objects.
      */
-    options: ToggleOption[];
+    options: ToggleOption<T>[];
     /**
      * This is called whenever the switch toggles with the value of the option.
      * Clicking the label also toggles the switch.
      */
-    onChange: (value: string) => void;
+    onChange: (value: T) => void;
     /**
      * Determines which side of the switch the label is rendered.
      */
@@ -33,7 +33,7 @@ export interface ToggleProps {
     /**
      * The currently selected value. This value is passed in from the parent component.
      */
-    value: string;
+    value: T;
 }
 
 /**
@@ -43,18 +43,18 @@ export interface ToggleProps {
  * It has a position prop to change the layout of the label. State for the value needs to be maintained in a parent
  * component and passed in as a prop.
  */
-const Toggle: FC<ToggleProps> = ({
+const Toggle = <T, >({
         className,
         disabled,
         options,
         onChange,
         position = 'RIGHT',
         value
-    }) => {
+    }: ToggleProps<T>) => {
     const [firstOption, secondOption] = options;
     const isFirstOption = value === firstOption.value;
     const iconPosition = isFirstOption ? 0 : 16;
-    const label = isFirstOption ? firstOption.name : secondOption.name;
+    const label = isFirstOption ? firstOption.label : secondOption.label;
     const labelOrder = position === 'LEFT' ? 0 : 2;
 
     const handleToggleClick = () => {
@@ -72,7 +72,7 @@ const Toggle: FC<ToggleProps> = ({
         <ThemeProvider theme={theme}>
             <ToggleWrapper className={className}>
                 <Label disabled={disabled} style={{ order: labelOrder }} onClick={handleToggleClick}>{label}</Label>
-                <IconWrapper disabled={disabled} onClick={handleToggleClick}>
+                <IconWrapper disabled={disabled} position={position} onClick={handleToggleClick}>
                     <Bar disabled={disabled} options={options} value={value} />
                     <Icon disabled={disabled} style={{ left: iconPosition }} />
                 </IconWrapper>

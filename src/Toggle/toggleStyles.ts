@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 import { ToggleProps } from './Toggle';
 import { hexToRgb } from '../styles/stylesUtil';
 
-export const Label = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disabled }) => ({
+export const Label = styled.span<Pick<ToggleProps<unknown>, 'disabled'>>(({ theme, disabled }) => ({
     color: disabled ? theme?.colors?.doveGrey : theme?.colors?.black,
     cursor: 'pointer',
     fontSize: 16
 }));
 
-export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value' | 'disabled'>>(({ theme, disabled, options, value }) => {
+export const Bar = styled.span<Pick<ToggleProps<unknown>, 'options' | 'value' | 'disabled'>>(({ theme, disabled, options, value }) => {
     const backgroundColor = value === options[0].value ? theme?.colors?.alto : theme?.colors?.calmingBlue;
 
     return {
@@ -20,7 +20,7 @@ export const Bar = styled.span<Pick<ToggleProps, 'options' | 'value' | 'disabled
     };
 });
 
-export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disabled }) => ({
+export const Icon = styled.span<Pick<ToggleProps<unknown>, 'disabled'>>(({ theme, disabled }) => ({
     backgroundColor: disabled ? theme?.colors?.bombay : theme?.colors?.storm,
     borderRadius: 20,
     height: 20,
@@ -30,9 +30,9 @@ export const Icon = styled.span<Pick<ToggleProps, 'disabled'>>(({ theme, disable
     transition: 'left 0.2s'
 }));
 
-export const IconWrapper = styled.div<Pick<ToggleProps, 'disabled'>>(({ theme, disabled }) => ({
+export const IconWrapper = styled.div<Pick<ToggleProps<unknown>, 'disabled' | 'position'>>(({ theme, disabled, position }) => ({
     position: 'relative',
-    margin: '0 12px',
+    ...(position === 'LEFT' ? { marginLeft: 12 } : { marginRight: 12 }),
     padding: '12px 0',
     cursor: 'pointer',
     ':hover span:nth-of-type(2)': {
