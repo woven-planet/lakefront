@@ -11,7 +11,11 @@ export interface LoadingProps {
     /**
      * The direction of the default animation.
      */
-    spinDirection?: 'LEFT' | 'RIGHT'
+    spinDirection?: 'LEFT' | 'RIGHT';
+    /**
+     * Label position in relation to the SVG.
+     */
+    labelPosition?: 'BOTTOM' | 'RIGHT';
     /**
      * The text that shows when loading.
      */
@@ -43,6 +47,7 @@ const Loading: React.FC<LoadingProps> = (
         animated = true,
         spinDirection = 'RIGHT',
         label,
+        labelPosition = 'BOTTOM',
         height = 24,
         width = 24,
         logo,
@@ -52,7 +57,12 @@ const Loading: React.FC<LoadingProps> = (
     const Logo = logo ? logo : SpinnerLogo;
     return (
         <ThemeProvider theme={theme}>
-            <StyledLoadingContainer className={className} animated={animated} spinDirection={spinDirection}>
+            <StyledLoadingContainer
+                className={className}
+                animated={animated}
+                spinDirection={spinDirection}
+                labelPosition={labelPosition}
+            >
                 <Logo height={height} width={width} {...logoProps} />
                 {
                     label && <div>{label}</div>

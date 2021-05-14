@@ -1,4 +1,3 @@
-import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import LoadingComponent, { LoadingProps } from 'src/Loading/Loading';
@@ -25,6 +24,8 @@ export default {
 const Template: Story<LoadingProps> = (args) => (
     <LoadingComponent {...args} />
 );
+
+export const Loading = Template.bind({});
 
 export const LoadingWithLabel = Template.bind({});
 LoadingWithLabel.args = {

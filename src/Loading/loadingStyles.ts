@@ -8,9 +8,9 @@ const spinAnimation = keyframes`
 `;
 
 export const StyledLoadingContainer = styled.div<LoadingProps>(
-    ({ theme, animated, logo, spinDirection }) => ({
+    ({ theme, animated, labelPosition, logo, spinDirection }) => ({
         display: 'inline-flex',
-        flexDirection: 'column',
+        flexDirection: labelPosition === 'BOTTOM' ? 'column' : 'row',
         alignItems: 'center',
         'svg': {
             ...(animated && { animation: `${spinAnimation} 2s linear infinite` }),
@@ -23,7 +23,7 @@ export const StyledLoadingContainer = styled.div<LoadingProps>(
         },
         div: {
             color: theme?.colors?.$akoya,
-            paddingTop: 8,
+            paddingTop: labelPosition === 'BOTTOM' ? 8 : 0,
         }
     })
 );
