@@ -8,6 +8,12 @@ export default {
     title: 'Lakefront/Loading',
     component: LoadingComponent,
     argTypes: {
+        spinDirection: {
+            control: {
+                type: 'radio',
+                options: ['LEFT', 'RIGHT']
+            }
+        }
     },
     parameters: {
         docs: {
@@ -16,17 +22,11 @@ export default {
     }
 } as Meta;
 
-const Template: Story<LoadingProps & ComponentPropsWithoutRef<'div'>> = (args) => {
-
-    return (
-        <LoadingComponent
-        />
-    );
-};
-
-//export const Loading = Template.bind({});
+const Template: Story<LoadingProps> = (args) => (
+    <LoadingComponent {...args} />
+);
 
 export const LoadingWithLabel = Template.bind({});
 LoadingWithLabel.args = {
-    label: 'I am loading'
+    label: 'Loading...'
 };

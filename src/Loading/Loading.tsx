@@ -5,6 +5,14 @@ import { ThemeProvider } from '@emotion/react';
 import theme from '../styles/theme';
 export interface LoadingProps {
     /**
+     * Determines if the component should rotate.
+     */
+    animated?: boolean;
+    /**
+     * The direction of the default animation.
+     */
+    spinDirection?: 'LEFT' | 'RIGHT'
+    /**
      * The text that shows when loading.
      */
     label?: string;
@@ -17,11 +25,11 @@ export interface LoadingProps {
      */
     width?: number;
     /**
-     * Viewbox specs for loading icon.
+     * Viewbox specs for SVG component if not already present in the SVG.
      */
-    viewbox?: string;
+    viewBox?: string;
     /**
-     * The icon to be shown when loading.
+     * The SVG image to be shown when loading.
      */
     logo?: React.ElementType;
      /**
@@ -30,12 +38,22 @@ export interface LoadingProps {
     className?: string;
 }
 
-const Loading: React.FC<LoadingProps> = ({ label, height = 24, width = 24, className, viewbox = '0 0 175 150', logo }) => {
+const Loading: React.FC<LoadingProps> = (
+    {
+        animated = true,
+        spinDirection = 'RIGHT',
+        label,
+        height = 24,
+        width = 24,
+        logo,
+        className,
+        ...logoProps
+    }) => {
     const Logo = logo ? logo : SpinnerLogo;
     return (
         <ThemeProvider theme={theme}>
-            <StyledLoadingContainer className={className}>
-                <Logo viewbox={viewbox} height={height} width={width} />
+            <StyledLoadingContainer className={className} animated={animated} spinDirection={spinDirection}>
+                <Logo height={height} width={width} {...logoProps} />
                 {
                     label && <div>{label}</div>
                 }
