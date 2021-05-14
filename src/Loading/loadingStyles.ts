@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
-import { keyframes } from "@emotion/core";
+import { keyframes } from '@emotion/core';
 import { LoadingProps } from './Loading';
 
 
-const spinLogo = keyframes` 
-    spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+const spinAnimation = keyframes`
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 `;
 
 export const StyledLoadingContainer = styled.div<LoadingProps>(
@@ -16,7 +14,7 @@ export const StyledLoadingContainer = styled.div<LoadingProps>(
         flexDirection: 'column',
         alignItems: 'center',
         svg: {
-            animation: `${spinLogo} 2s linear infinite`,
+            animation: `${spinAnimation} 2s linear infinite`,
             marginLeft: 5,
             marginRight: 10,
             path: {
