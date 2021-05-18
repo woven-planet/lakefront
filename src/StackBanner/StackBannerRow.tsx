@@ -1,10 +1,10 @@
-import React, { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from 'react';
 import { StackBannerRowDiv } from './stackBannerStyles';
 import { StackBannerIcon, getStackBannerIcon } from './stackBannerUtil';
 
 export interface StackBannerRowProps {
   /**
-   * A unique string key required for React list item changes. 
+   * A unique string key required for React list item changes.
    */
   key: string;
   /**

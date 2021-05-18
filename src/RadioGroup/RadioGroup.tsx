@@ -1,4 +1,4 @@
-import React, {
+import {
     ChangeEvent,
     ComponentPropsWithoutRef,
     FC,
@@ -9,7 +9,7 @@ import React, {
   import { ReactComponent as Checked } from './assets/radioChecked.svg';
   import { ReactComponent as Unchecked } from './assets/radioUnchecked.svg';
   import theme from '../styles/theme';
-  
+
   export interface RadioGroupProps {
     /**
      * The name of the radio button group.
@@ -38,7 +38,7 @@ import React, {
      */
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   }
-  
+
   /**
    * RadioGroup Component
    *
@@ -53,16 +53,16 @@ import React, {
     onChange = () => null,
     ...props
   }) => {
-  
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (!disabled) {
         onChange(event);
       }
     };
-  
+
     return (
       <ThemeProvider theme={theme}>
-      { 
+      {
         options.map((option) => {
 
           const icon = value === option.value ? <Checked /> : <Unchecked />;
@@ -88,6 +88,5 @@ import React, {
       </ThemeProvider>
     );
   };
-  
+
   export default RadioGroup;
- 

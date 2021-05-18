@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithoutRef, FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledInput, StyledLabel } from './inputStyles';
 import theme from '../styles/theme';

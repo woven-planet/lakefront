@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 import theme from '../styles/theme';
 import { ThemeProvider } from '@emotion/react';

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
+import { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
 import { createPortal } from 'react-dom';
 import theme from '../styles/theme';
