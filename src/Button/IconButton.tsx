@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { IconComponentProps } from './buttonUtil';
 import styled from '@emotion/styled';

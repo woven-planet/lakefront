@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithoutRef, FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StackBannerListDiv } from './stackBannerStyles';
 import StackBannerRow, { StackBannerRowProps } from './StackBannerRow';
