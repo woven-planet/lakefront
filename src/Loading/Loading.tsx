@@ -17,7 +17,7 @@ export interface LoadingProps {
      */
     labelPosition?: 'BOTTOM' | 'RIGHT';
     /**
-     * The text that shows when loading.
+     * The text or element that shows next to the svg.
      */
     label?: string | ReactElement;
     /**
