@@ -1,4 +1,4 @@
-import React from 'react';
+import { ElementType, FC, ReactElement } from 'react';
 import { ReactComponent as SpinnerLogo } from './assets/tri_logo_monochrome.svg';
 import { StyledLoadingContainer } from './loadingStyles';
 import { ThemeProvider } from '@emotion/react';
@@ -19,7 +19,7 @@ export interface LoadingProps {
     /**
      * The text that shows when loading.
      */
-    label?: string;
+    label?: string | ReactElement;
     /**
      * The height of the loading image.
      */
@@ -35,14 +35,14 @@ export interface LoadingProps {
     /**
      * The SVG image to be shown when loading.
      */
-    svg?: React.ElementType;
+    svg?: ElementType;
      /**
      * Additional styles.
      */
     className?: string;
 }
 
-const Loading: React.FC<LoadingProps> = (
+const Loading: FC<LoadingProps> = (
     {
         animated = true,
         spinDirection = 'RIGHT',
