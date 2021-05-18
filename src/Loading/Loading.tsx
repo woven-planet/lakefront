@@ -35,7 +35,7 @@ export interface LoadingProps {
     /**
      * The SVG image to be shown when loading.
      */
-    logo?: React.ElementType;
+    svg?: React.ElementType;
      /**
      * Additional styles.
      */
@@ -50,11 +50,11 @@ const Loading: React.FC<LoadingProps> = (
         labelPosition = 'BOTTOM',
         height = 24,
         width = 24,
-        logo,
+        svg,
         className,
         ...logoProps
     }) => {
-    const Logo = logo ? logo : SpinnerLogo;
+    const Svg = svg ? svg : SpinnerLogo;
     return (
         <ThemeProvider theme={theme}>
             <StyledLoadingContainer
@@ -63,7 +63,7 @@ const Loading: React.FC<LoadingProps> = (
                 spinDirection={spinDirection}
                 labelPosition={labelPosition}
             >
-                <Logo height={height} width={width} {...logoProps} />
+                <Svg height={height} width={width} {...logoProps} />
                 {
                     label && <div>{label}</div>
                 }

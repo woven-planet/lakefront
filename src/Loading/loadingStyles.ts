@@ -8,7 +8,7 @@ const spinAnimation = keyframes`
 `;
 
 export const StyledLoadingContainer = styled.div<LoadingProps>(
-    ({ theme, animated, labelPosition, logo, spinDirection }) => ({
+    ({ theme, animated, labelPosition, svg, spinDirection }) => ({
         display: 'inline-flex',
         flexDirection: labelPosition === 'BOTTOM' ? 'column' : 'row',
         alignItems: 'center',
@@ -18,7 +18,7 @@ export const StyledLoadingContainer = styled.div<LoadingProps>(
             marginLeft: 5,
             marginRight: 10,
             path: {
-                ...(logo && { fill: theme?.colors?.$akoya })
+                ...(svg && { fill: theme?.colors?.$akoya })
             }
         },
         div: {

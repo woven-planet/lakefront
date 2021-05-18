@@ -19,18 +19,18 @@ describe('Loading', () => {
         expect(oneDiv).toHaveLength(1);
     });
 
-    it('renders with logo prop', () => {
+    it('renders with svg prop', () => {
         const logo = () => <svg />;
-        const { container } = render(<Loading logo={logo} />);
+        const { container } = render(<Loading svg={logo} />);
 
         const [svg] = container.querySelectorAll('svg');
 
         expect(svg.getAttributeNames()).toHaveLength(0);
     });
 
-    it('renders with logo prop with height and width', () => {
+    it('renders with svg prop with height and width', () => {
         const logo = (props) => <svg {...props} />;
-        const { container } = render(<Loading height={10} width={10} logo={logo} />);
+        const { container } = render(<Loading height={10} width={10} svg={logo} />);
 
         const [svg] = container.querySelectorAll('svg');
 
