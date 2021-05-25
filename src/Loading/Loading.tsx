@@ -29,10 +29,6 @@ export interface LoadingProps {
      */
     width?: number;
     /**
-     * Viewbox specs for SVG component if not already present in the SVG.
-     */
-    viewBox?: string;
-    /**
      * The SVG image to be shown when loading.
      */
     svg?: ElementType;
