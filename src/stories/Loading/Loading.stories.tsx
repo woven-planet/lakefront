@@ -22,7 +22,9 @@ export default {
 } as Meta;
 
 const Template: Story<LoadingProps> = (args) => (
-    <LoadingComponent {...args} />
+    <div style={{ display: 'flex' }}>
+        <LoadingComponent {...args} />
+    </div>
 );
 
 export const Loading = Template.bind({});
