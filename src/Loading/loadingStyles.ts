@@ -9,7 +9,7 @@ const spinAnimation = keyframes`
 
 export const StyledLoadingContainer = styled.div<LoadingProps>(
     ({ theme, animated, labelPosition, svg, spinDirection }) => ({
-        display: 'inline-flex',
+        display: 'flex',
         flexDirection: labelPosition === 'BOTTOM' ? 'column' : 'row',
         alignItems: 'center',
         'svg': {
