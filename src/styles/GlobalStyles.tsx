@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { css, Global } from '@emotion/react';
 
 const styles = css({
-    'body': {
+    '*': {
         fontFamily: '"Source Sans Pro", sans-serif'
     }
 });

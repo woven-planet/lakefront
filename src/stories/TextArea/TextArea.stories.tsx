@@ -1,12 +1,12 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import Input, { InputProps } from 'src/Input/Input';
+import TextArea, { TextAreaProps } from 'src/TextArea/TextArea';
 import DocBlock from '.storybook/DocBlock';
 
 export default {
-    title: 'Lakefront/Input',
-    component: Input,
+    title: 'Lakefront/TextArea',
+    component: TextArea,
     argTypes: {
         onChange: {
             action: 'changed',
@@ -25,7 +25,7 @@ export default {
                 defaultValue: { summary: false },
                 type: { summary: 'boolean' }
             },
-            description: 'HTML input element disabled prop.'
+            description: 'HTML textarea element disabled prop.'
         }
     },
     parameters: {
@@ -35,7 +35,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<InputProps & ComponentPropsWithoutRef<'input'>> = (args) => <Input {...args} />;
+const Template: Story<TextAreaProps & ComponentPropsWithoutRef<'textarea'>> = (args) => <TextArea {...args} />;
 
 export const Placeholder = Template.bind({});
 Placeholder.args = {
@@ -44,32 +44,32 @@ Placeholder.args = {
 
 export const Filled = Template.bind({});
 Filled.args = {
-    value: 'Filled Input'
+    value: 'Filled TextArea'
 };
 
 export const FilledLabeledAndHasError = Template.bind({});
 FilledLabeledAndHasError.args = {
-    value: 'Invalid Input',
+    value: 'Invalid TextArea',
     error: 'Please try again.',
-    label: 'My input'
+    label: 'My textarea'
 };
 
 export const FilledAndHasError = Template.bind({});
 FilledAndHasError.args = {
-    value: 'Invalid Input',
+    value: 'Invalid TextArea',
     error: 'Please try again.'
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
     value: '',
-    label: 'My input',
+    label: 'My textarea',
     disabled: true
 };
 
 export const DisabledWithText = Template.bind({});
 DisabledWithText.args = {
-    value: 'Disabled Input',
-    label: 'My input',
+    value: 'Disabled TextArea',
+    label: 'My textarea',
     disabled: true
 };

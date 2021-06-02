@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { InputProps } from './Input';
+import { TextAreaProps } from './TextArea';
 
-export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
+export const StyledLabel = styled.label<TextAreaProps>(({ error, theme }) => ({
     color: theme?.colors?.cinder,
     display: 'flex',
     flexDirection: 'column',
@@ -19,25 +19,23 @@ export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     })
 }));
 
-export const StyledInput = styled.input<InputProps>(({ error, theme, disabled }) => ({
+export const StyledTextArea = styled.textarea<TextAreaProps>(({ error, theme, disabled }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
     boxSizing: 'border-box',
     color: theme?.colors?.cinder,
     fontSize: 16,
     outline: 'none',
-    paddingBottom: 0,
-    paddingLeft: 12,
-    paddingTop: 0,
-    height: 40,
+    padding: 12,
+    height: 200,
     width: 300,
-    cursor: disabled ? 'not-allowed' : undefined,
     ':focus': {
         border: `1px solid ${theme?.colors?.cinder}`
     },
     '::placeholder': {
         color: theme?.colors?.mercury
     },
+    cursor: disabled ? 'not-allowed' : undefined,
     ...(error && {
         border: `1px solid ${theme?.colors?.red}`,
         ':focus': {
