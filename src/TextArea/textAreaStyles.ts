@@ -19,7 +19,7 @@ export const StyledLabel = styled.label<TextAreaProps>(({ error, theme }) => ({
     })
 }));
 
-export const StyledTextArea = styled.textarea<TextAreaProps>(({ error, theme }) => ({
+export const StyledTextArea = styled.textarea<TextAreaProps>(({ error, theme, disabled }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
     boxSizing: 'border-box',
@@ -35,6 +35,7 @@ export const StyledTextArea = styled.textarea<TextAreaProps>(({ error, theme }) 
     '::placeholder': {
         color: theme?.colors?.mercury
     },
+    cursor: disabled ? 'not-allowed' : undefined,
     ...(error && {
         border: `1px solid ${theme?.colors?.red}`,
         ':focus': {

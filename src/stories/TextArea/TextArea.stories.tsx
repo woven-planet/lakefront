@@ -59,3 +59,17 @@ FilledAndHasError.args = {
     value: 'Invalid TextArea',
     error: 'Please try again.'
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+    value: '',
+    label: 'My textarea',
+    disabled: true
+};
+
+export const DisabledWithText = Template.bind({});
+DisabledWithText.args = {
+    value: 'Disabled TextArea',
+    label: 'My textarea',
+    disabled: true
+};

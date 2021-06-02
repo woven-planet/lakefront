@@ -19,7 +19,7 @@ export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     })
 }));
 
-export const StyledInput = styled.input<InputProps>(({ error, theme }) => ({
+export const StyledInput = styled.input<InputProps>(({ error, theme, disabled }) => ({
     border: `1px solid ${theme?.colors?.mercury}`,
     borderRadius: 4,
     boxSizing: 'border-box',
@@ -31,6 +31,7 @@ export const StyledInput = styled.input<InputProps>(({ error, theme }) => ({
     paddingTop: 0,
     height: 40,
     width: 300,
+    cursor: disabled ? 'not-allowed' : undefined,
     ':focus': {
         border: `1px solid ${theme?.colors?.cinder}`
     },

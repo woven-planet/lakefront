@@ -59,3 +59,17 @@ FilledAndHasError.args = {
     value: 'Invalid Input',
     error: 'Please try again.'
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+    value: '',
+    label: 'My input',
+    disabled: true
+};
+
+export const DisabledWithText = Template.bind({});
+DisabledWithText.args = {
+    value: 'Disabled Input',
+    label: 'My input',
+    disabled: true
+};
