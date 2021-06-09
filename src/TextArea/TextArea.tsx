@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithRef, FC, forwardRef } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledTextArea, StyledLabel } from './textAreaStyles';
 import theme from '../styles/theme';
@@ -22,16 +22,16 @@ export interface TextAreaProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const TextArea: FC<TextAreaProps & ComponentPropsWithoutRef<'textarea'>> = ({ label, error = '', ...props }) => {
+const TextArea: FC<TextAreaProps & ComponentPropsWithRef<'textarea'>> = forwardRef(({ label, error = '', ...props }, ref) => {
     return (
         <ThemeProvider theme={theme}>
             <StyledLabel error={error}>
                 {label && <span>{label}</span>}
-                <StyledTextArea error={error} {...props} />
+                <StyledTextArea ref={ref} error={error} {...props} />
                 <div>{error}</div>
             </StyledLabel>
         </ThemeProvider>
     );
-};
+});
 
 export default TextArea;
