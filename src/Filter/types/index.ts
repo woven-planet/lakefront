@@ -147,3 +147,34 @@ export enum FilterMode {
     FilterUI = 'filter',
     JSON = 'json'
 }
+
+/**
+ * LocationState is the current state of the location.
+ */
+interface LocationState {
+    search: string;
+}
+
+/**
+ * Location holds information about the current user location
+ * and url state when using the consuming application.
+ */
+export interface Location {
+    pathname: string;
+    search: string;
+    state: LocationState;
+    hash: string;
+    key?: string;
+}
+
+/**
+ * UrlParameters is a map of the current url parameter name and values.
+ */
+export interface UrlParameters {
+    [key: string]: string[] | string;
+};
+
+/**
+ * UpdateHistory is the structure of a history update callback.
+ */
+export type UpdateHistory = ({ search }: LocationState) => void;
