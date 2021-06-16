@@ -1,0 +1,107 @@
+import { useState, useEffect, useMemo } from 'react';
+import queryString from 'query-string';
+import { useHistory, useLocation } from 'react-router-dom';
+
+import { FilterHooks, FilterSet, FilterValues } from '../types';
+import { AdditionalJSONFilter } from '../modules';
+import {
+    getApiQueryUrl,
+    getApiPostBody,
+    parseInitialFilterValues,
+    getCurrentBrowserQueryParams,
+    getFilterBrowserQueryParams
+} from '../util';
+
+const userJSONQueryParam = 'userJSON';
+
+export const useFilter = (userFilters: FilterSet, supportJSON = false): FilterHooks => {
+    const location = useLocation();
+    const history = useHistory();
+    const filters = useMemo(() => {
+        return supportJSON ? { ...userFilters, [userJSONQueryParam]: AdditionalJSONFilter() } : userFilters;
+    }, [supportJSON, userFilters]);
+
+    const [filterValues, setFilterValues] = useState(parseInitialFilterValues(location, filters));
+    const filterUrl = useMemo(() => getApiQueryUrl(filters, filterValues), [filters, filterValues]);
+    const filterPostBody = useMemo(() => getApiPostBody(filters, filterValues), [filters, filterValues]);
+
+    // initialize the filter values based on url params and default values
+    useEffect(() => {
+        const initialFilterValues = parseInitialFilterValues(location, filters);
+        setFilterValues(initialFilterValues);
+    }, [filters]);
+
+    // update the filter values in the state, and update the browser url
+    const updateFilterValues = (values: FilterValues) => {
+        setFilterValues(values);
+        const nonFilterQueryParams = getCurrentBrowserQueryParams(location, Object.keys(filters));
+        const filterQueryParams = getFilterBrowserQueryParams(filters, values);
+        const newQueryParams = { ...nonFilterQueryParams, ...filterQueryParams };
+        history.replace({ search: queryString.stringify(newQueryParams) });
+    };
+
+    const updateFilter = (name: string, value: any) => {
+        updateFilterValues({
+            ...filterValues,
+            [name]: value
+        });
+    };
+
+    const clearFilter = (name: string) => {
+        // required filters are not cleared or reset
+        if (!filters[name].required) {
+            const defaultValue = filters[name].getDefaultFilterValue();
+
+            updateFilterValues({
+                ...filterValues,
+                [name]: defaultValue
+            });
+        }
+    };
+
+    const clearAllFilters = () => {
+        const newFilterValues = {};
+
+        Object.keys(filters).forEach(key => {
+            // required filters are not cleared or reset
+            if (filters[key].required) {
+                newFilterValues[key] = filterValues[key];
+            } else {
+                newFilterValues[key] = filters[key].getDefaultFilterValue();
+            }
+        });
+
+        updateFilterValues(newFilterValues);
+    };
+
+    const applyApiPostBody = (apiPostBody: FilterPostBody) => {
+        if (supportJSON) {
+            const newFilterValues = {};
+
+            Object.keys(filters).forEach(key => {
+                const getFilterValueFromApiPostBody = filters[key].getFilterValueFromApiPostBody;
+                if (getFilterValueFromApiPostBody) {
+                    newFilterValues[key] = getFilterValueFromApiPostBody(key, apiPostBody);
+                }
+            });
+
+            // Each filter's getFilterValueFromApiPostBody() call removes the parsed section when complete, so that
+            // the remaining post body represents "leftover" JSON that doesn't correspond to any filter. Set the
+            // "additional JSON filter" to this leftover value so it can also be displayed as a chip or dismissed.
+            newFilterValues[userJSONQueryParam] = apiPostBody;
+
+            updateFilterValues(newFilterValues);
+        }
+    };
+
+    return {
+        filters,
+        filterUrl,
+        filterPostBody,
+        filterValues,
+        updateFilter,
+        clearFilter,
+        clearAllFilters,
+        applyApiPostBody
+    };
+};

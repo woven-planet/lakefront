@@ -27,7 +27,8 @@
   "dependencies": {
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
-    "copyfiles": "^2.4.1"
+    "copyfiles": "^2.4.1",
+    "query-string": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
