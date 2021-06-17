@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useFilter } from '../filterHooks';
+import queryString from 'query-string';
 
 const KEYWORD_DEMO = 'demoText';
 const PHRASE_DEMO = 'demo phrase here.';
@@ -172,6 +173,20 @@ describe('useFilter', () => {
             // keywords is cleared/reset, but phrases is not changed
             expect(result.current.filterValues.keywords).toBe('');
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
+        });
+    });
+
+    it('calls updateHistory on filter update', () => {
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+
+        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
+        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+
+        expect(updateHistory).toHaveBeenCalledWith({
+          search: queryString.stringify({
+            keywords: KEYWORD_DEMO,
+            phrases: PHRASE_DEMO
+          })
         });
     });
 });
