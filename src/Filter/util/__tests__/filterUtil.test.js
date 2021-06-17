@@ -1,4 +1,5 @@
 import { getDefaultValue, getDefaultJsonViewValue, getFilterAppliedCount } from '../filterUtil';
+import { FILTERS } from './filter.data';
 
 describe('getDefaultValue', () => {
     describe('when url parameter key exists', () => {
@@ -36,32 +37,6 @@ describe('getDefaultJsonViewValue', () => {
 });
 
 describe('getFilterAppliedCount', () => {
-    const BASE_FILTER = {
-        getApiQueryUrl: (key, value) => {
-            return value ? `&${key}=${encodeURIComponent(value)}` : '';
-        },
-        getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-        getBrowserQueryUrlValue: (value) => value,
-        getDefaultFilterValue: () => '',
-        isDefaultFilterValue: (value) => value === '',
-        getFilterBarLabel: (value) => value,
-        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
-        renderComponent: ({ name, value, update }) => <input key={name} onChange={update} value={value} />
-    };
-
-    const FILTERS = {
-        keywords: {
-            description: 'Words to include.',
-            label: 'Keywords',
-            ...BASE_FILTER
-        },
-        phrases: {
-            description: 'Phrases to lookup.',
-            label: 'Phrases',
-            ...BASE_FILTER
-        }
-    };
-
     it('returns the count of all changed filters', () => {
         expect(getFilterAppliedCount(FILTERS, { keywords: '', phrases: '2' })).toBe(1);
         expect(getFilterAppliedCount(FILTERS, { keywords: '2', phrases: '2' })).toBe(2);

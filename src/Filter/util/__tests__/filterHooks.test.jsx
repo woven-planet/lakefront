@@ -1,52 +1,11 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useFilter } from '../filterHooks';
 import queryString from 'query-string';
-
-const KEYWORD_DEMO = 'demoText';
-const PHRASE_DEMO = 'demo phrase here.';
-const DEFAULT_PHRASE_DEMO = 'A random phrase then.';
-
-const BASE_FILTER = {
-    getApiQueryUrl: (key, value) => {
-        return value ? `&${key}=${encodeURIComponent(value)}` : '';
-    },
-    getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: (value) => value,
-    getDefaultFilterValue: () => '',
-    isDefaultFilterValue: (value) => value === '',
-    getFilterBarLabel: (value) => value,
-    parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
-    renderComponent: ({ name, value, update }) => <input key={name} onChange={update} value={value} />
-};
-
-const FILTERS = {
-    keywords: {
-        description: 'Words to include.',
-        label: 'Keywords',
-        ...BASE_FILTER
-    },
-    phrases: {
-        description: 'Phrases to lookup.',
-        label: 'Phrases',
-        ...BASE_FILTER
-    }
-};
-
-const LOCATION = {
-    pathname: 'path',
-    search: '',
-    state: {
-        search: ''
-    },
-    hash: '',
-    key: 'key'
-};
-
-const updateHistory = jest.fn();
+import { DEFAULT_PHRASE_DEMO, FILTERS, KEYWORD_DEMO, LOCATION, PHRASE_DEMO } from './filter.data';
 
 describe('useFilter', () => {
     it('should have initial values', () => {
-        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         const { filterValues } = result.current;
         expect(filterValues.keywords).toBe('');
@@ -54,7 +13,7 @@ describe('useFilter', () => {
     });
 
     it('update filter works', () => {
-        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         act(() => {
             result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -65,7 +24,7 @@ describe('useFilter', () => {
     });
 
     it('update filter causes filter url values to change', () => {
-        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         act(() => {
             result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -80,7 +39,7 @@ describe('useFilter', () => {
     });
 
     it('update filter causes filter post body values to change', () => {
-        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         act(() => {
             result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -105,7 +64,7 @@ describe('useFilter', () => {
     });
 
     it('clear all filters works', () => {
-        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         act(() => {
             result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -140,7 +99,7 @@ describe('useFilter', () => {
                 }
             }
         };
-        const { result } = renderHook(() => useFilter(FILTERS_WITH_DEFAULT_PHRASES, false, LOCATION, updateHistory));
+        const { result } = renderHook(() => useFilter(FILTERS_WITH_DEFAULT_PHRASES, false, LOCATION, () => null));
 
         act(() => {
             result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -175,9 +134,7 @@ describe('useFilter', () => {
         };
 
         it('should not change filter value when calling clearFilter', () => {
-            const { result } = renderHook(() =>
-                useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory)
-            );
+            const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, () => null));
 
             act(() => {
                 result.current.updateFilter('phrases', PHRASE_DEMO);
@@ -191,9 +148,7 @@ describe('useFilter', () => {
         });
 
         it('should keep existing filter value for required filter only when calling clearAllFilters', () => {
-            const { result } = renderHook(() =>
-                useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory)
-            );
+            const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, () => null));
 
             act(() => {
                 result.current.updateFilter('keywords', KEYWORD_DEMO);
@@ -216,6 +171,7 @@ describe('useFilter', () => {
     });
 
     it('calls updateHistory on filter update', () => {
+        const updateHistory = jest.fn();
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
         act(() => {
