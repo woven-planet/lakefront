@@ -3,7 +3,7 @@ import { useFilter } from '../filterHooks';
 
 const KEYWORD_DEMO = 'demoText';
 const PHRASE_DEMO = 'demo phrase here.';
-const REQUIRED_PHRASE_DEMO = 'A random phrase then.';
+const DEFAULT_PHRASE_DEMO = 'A random phrase then.';
 
 const BASE_FILTER = {
     getApiQueryUrl: (key, value) => {
@@ -28,9 +28,6 @@ const FILTERS = {
     phrases: {
         description: 'Phrases to lookup.',
         label: 'Phrases',
-        getDefaultFilterValue: () => {
-            return REQUIRED_PHRASE_DEMO
-        },
         ...BASE_FILTER
     }
 };
@@ -110,6 +107,35 @@ describe('useFilter', () => {
         act(() => {
             const filterUrl = result.current.filterUrl;
             expect(filterUrl).toBe('');
+        });
+    });
+
+    it('clear all filter sets default value.', () => {
+        const FILTERS_WITH_DEFAULT_PHRASES = {
+            ...FILTERS,
+            phrases: {
+                ...FILTERS.phrases,
+                getDefaultFilterValue: () => {
+                    return DEFAULT_PHRASE_DEMO
+                },
+            }
+        };
+        const { result } = renderHook(() => useFilter(FILTERS_WITH_DEFAULT_PHRASES, false, LOCATION, updateHistory));
+
+        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
+        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+
+        act(() => {
+            const filterUrl = result.current.filterUrl;
+            expect(filterUrl).toMatch(/phrases/);
+            expect(filterUrl).toMatch(/keywords/);
+        });
+
+        act(() => { result.current.clearAllFilters(); });
+
+        act(() => {
+            const filterUrl = result.current.filterUrl;
+            expect(filterUrl).toBe(`&phrases=${encodeURIComponent(DEFAULT_PHRASE_DEMO)}`);
         });
     });
 
