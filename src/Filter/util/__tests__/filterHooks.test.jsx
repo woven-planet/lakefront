@@ -11,10 +11,10 @@ const BASE_FILTER = {
         return value ? `&${key}=${encodeURIComponent(value)}` : '';
     },
     getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: value => value,
+    getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => '',
-    isDefaultFilterValue: value => value === '',
-    getFilterBarLabel: value => value,
+    isDefaultFilterValue: (value) => value === '',
+    getFilterBarLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
     renderComponent: ({ name, value, update }) => <input key={name} onChange={update} value={value} />
 };
@@ -24,7 +24,6 @@ const FILTERS = {
         description: 'Words to include.',
         label: 'Keywords',
         ...BASE_FILTER
-        
     },
     phrases: {
         description: 'Phrases to lookup.',
@@ -57,7 +56,9 @@ describe('useFilter', () => {
     it('update filter works', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
 
         const { filterValues } = result.current;
         expect(filterValues.keywords).toBe(KEYWORD_DEMO);
@@ -66,8 +67,12 @@ describe('useFilter', () => {
     it('update filter causes filter url values to change', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
+        act(() => {
+            result.current.updateFilter('phrases', PHRASE_DEMO);
+        });
 
         const { filterUrl } = result.current;
         expect(filterUrl).toContain(`&keywords=${KEYWORD_DEMO}`);
@@ -77,15 +82,23 @@ describe('useFilter', () => {
     it('update filter causes filter post body values to change', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
+        act(() => {
+            result.current.updateFilter('phrases', PHRASE_DEMO);
+        });
 
         let { filterPostBody } = result.current;
         expect(filterPostBody.keywords).toBe(KEYWORD_DEMO);
         expect(filterPostBody.phrases).toBe(PHRASE_DEMO);
 
-        act(() => { result.current.updateFilter('keywords', ''); });
-        act(() => { result.current.updateFilter('phrases', ''); });
+        act(() => {
+            result.current.updateFilter('keywords', '');
+        });
+        act(() => {
+            result.current.updateFilter('phrases', '');
+        });
 
         ({ filterPostBody } = result.current);
         expect(filterPostBody).toEqual({});
@@ -94,8 +107,12 @@ describe('useFilter', () => {
     it('clear all filters works', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
+        act(() => {
+            result.current.updateFilter('phrases', PHRASE_DEMO);
+        });
 
         act(() => {
             const filterUrl = result.current.filterUrl;
@@ -103,7 +120,9 @@ describe('useFilter', () => {
             expect(filterUrl).toMatch(/keywords/);
         });
 
-        act(() => { result.current.clearAllFilters(); });
+        act(() => {
+            result.current.clearAllFilters();
+        });
 
         act(() => {
             const filterUrl = result.current.filterUrl;
@@ -117,14 +136,18 @@ describe('useFilter', () => {
             phrases: {
                 ...FILTERS.phrases,
                 getDefaultFilterValue: () => {
-                    return DEFAULT_PHRASE_DEMO
-                },
+                    return DEFAULT_PHRASE_DEMO;
+                }
             }
         };
         const { result } = renderHook(() => useFilter(FILTERS_WITH_DEFAULT_PHRASES, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
+        act(() => {
+            result.current.updateFilter('phrases', PHRASE_DEMO);
+        });
 
         act(() => {
             const filterUrl = result.current.filterUrl;
@@ -132,7 +155,9 @@ describe('useFilter', () => {
             expect(filterUrl).toMatch(/keywords/);
         });
 
-        act(() => { result.current.clearAllFilters(); });
+        act(() => {
+            result.current.clearAllFilters();
+        });
 
         act(() => {
             const filterUrl = result.current.filterUrl;
@@ -150,25 +175,39 @@ describe('useFilter', () => {
         };
 
         it('should not change filter value when calling clearFilter', () => {
-            const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory));
+            const { result } = renderHook(() =>
+                useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory)
+            );
 
-            act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+            act(() => {
+                result.current.updateFilter('phrases', PHRASE_DEMO);
+            });
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
-            
-            act(() => { result.current.clearFilter('phrases'); });
+
+            act(() => {
+                result.current.clearFilter('phrases');
+            });
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
         });
-        
+
         it('should keep existing filter value for required filter only when calling clearAllFilters', () => {
-            const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory));
-            
-            act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-            act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
-            
+            const { result } = renderHook(() =>
+                useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, updateHistory)
+            );
+
+            act(() => {
+                result.current.updateFilter('keywords', KEYWORD_DEMO);
+            });
+            act(() => {
+                result.current.updateFilter('phrases', PHRASE_DEMO);
+            });
+
             expect(result.current.filterValues.keywords).toBe(KEYWORD_DEMO);
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
-            act(() => { result.current.clearAllFilters(); });
+            act(() => {
+                result.current.clearAllFilters();
+            });
 
             // keywords is cleared/reset, but phrases is not changed
             expect(result.current.filterValues.keywords).toBe('');
@@ -179,14 +218,18 @@ describe('useFilter', () => {
     it('calls updateHistory on filter update', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, updateHistory));
 
-        act(() => { result.current.updateFilter('keywords', KEYWORD_DEMO); });
-        act(() => { result.current.updateFilter('phrases', PHRASE_DEMO); });
+        act(() => {
+            result.current.updateFilter('keywords', KEYWORD_DEMO);
+        });
+        act(() => {
+            result.current.updateFilter('phrases', PHRASE_DEMO);
+        });
 
         expect(updateHistory).toHaveBeenCalledWith({
-          search: queryString.stringify({
-            keywords: KEYWORD_DEMO,
-            phrases: PHRASE_DEMO
-          })
+            search: queryString.stringify({
+                keywords: KEYWORD_DEMO,
+                phrases: PHRASE_DEMO
+            })
         });
     });
 });
