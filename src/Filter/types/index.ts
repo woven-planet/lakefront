@@ -1,3 +1,5 @@
+import { JSONObject } from 'src/types/global';
+
 /**
  * FilterRenderProps are the required props of the renderComponent
  * function of the FilterModule.
@@ -12,9 +14,7 @@ export interface FilterRenderProps<T> {
  * FilterPostBody is a map of key/value pairs that's
  * intended to be sent as a JSON post body payload.
  */
-export interface FilterPostBody {
-    [key: string]: any;
-}
+export interface FilterPostBody extends JSONObject {}
 
 /**
  * FilterModule is the minimum expected structure of a filter

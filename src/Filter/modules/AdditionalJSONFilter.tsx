@@ -1,3 +1,4 @@
+import { JSONObject } from 'src/types/global';
 import { FilterModule } from '../types';
 
 const isActualValue = (value: any) => {
@@ -13,7 +14,7 @@ const isActualValue = (value: any) => {
  * This filter intentionally does NOT implement getFilterValueFromApiPostBody, because the useFilter hook
  * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON
  */
-export const AdditionalJSONFilter = (): FilterModule<any> => ({
+export const AdditionalJSONFilter = (): FilterModule<JSONObject> => ({
     label: 'Additional JSON',
     inputHidden: true,
     getApiQueryUrl: () => '',
