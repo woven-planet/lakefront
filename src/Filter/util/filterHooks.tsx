@@ -3,14 +3,14 @@ import queryString from 'query-string';
 
 import { AdditionalJSONFilter } from '../modules';
 import { FilterHooks, FilterPostBody, FilterSet, FilterValues, Location, UpdateHistory } from '../types';
+import { USER_JSON_QUERY_PARAM } from './filterUtil';
 import {
-    USER_JSON_QUERY_PARAM,
     getApiQueryUrl,
     getApiPostBody,
     getCurrentBrowserQueryParams,
     getFilterBrowserQueryParams,
     parseInitialFilterValues
-} from '../util';
+} from './filterHooksUtil';
 
 /**
  * The useFilter hook is primarily designed to use with the Filter

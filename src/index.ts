@@ -4,8 +4,10 @@ export { default as Checkbox } from './Checkbox/Checkbox';
 
 export { default as Collapsible } from './Collapsible/Collapsible';
 
-export { default as Filter } from './Filter';
-export * from './Filter'
+export { default as Filter } from './Filter/Filter';
+export * from './Filter/util';
+export * from './Filter/types';
+export * from './Filter/modules';
 
 export { default as IconButton } from './Button/IconButton';
 
