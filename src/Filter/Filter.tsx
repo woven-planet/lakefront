@@ -1,8 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import queryString from 'query-string';
-import FilterIcon from '@material-ui/icons/FilterList';
-import Icon from '@material-ui/core/Icon';
-
 import { FilterComponentProps, FilterMode } from './types';
 import { FILTER_MODE_OPTIONS, getCurrentBrowserQueryParams, getDefaultJsonViewValue } from './util';
 import { ThemeProvider } from '@emotion/react';
@@ -14,6 +11,9 @@ import {
     FiltersSection,
     SidePanel
 } from './filterStyles';
+import { ReactComponent as Add } from './assets/add.svg';
+import { ReactComponent as Remove } from './assets/remove.svg';
+import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from '../styles/theme';
 
 export const Filter: FC<FilterComponentProps> = ({
@@ -121,7 +121,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                     <section key={key}>
                                         <h3 onClick={() => toggleSection(key)}>
                                             {filter.label}
-                                            <Icon>{activeSection !== key ? 'add' : 'remove'}</Icon>
+                                            {activeSection !== key ? <Add /> : <Remove />}
                                         </h3>
                                         {activeSection === key && (
                                             <>

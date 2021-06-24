@@ -18,7 +18,7 @@ export const FilterContainer = styled.div<FilterContainerProps>(({ showJSONInput
         '.filterHeader': {
             borderBottom: 'none',
             '.filterMenuIcon': {
-                transform: 'rotate(-90deg)'
+                transform: 'rotate(90deg)'
             }
         },
         '.filters, .jsonInputSection': {
