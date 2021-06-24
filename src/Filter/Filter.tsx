@@ -1,12 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import classNames from 'classnames';
 import queryString from 'query-string';
 import FilterIcon from '@material-ui/icons/FilterList';
 import Icon from '@material-ui/core/Icon';
 
 import { FilterComponentProps, FilterMode } from './types';
 import { FILTER_MODE_OPTIONS, getCurrentBrowserQueryParams, getDefaultJsonViewValue } from './util';
-import styles from './filterContainer.module.scss';
+import { ThemeProvider } from '@emotion/react';
+import {
+    FilterContainer,
+    FilterSectionBody,
+    FilterSectionDescription,
+    FilterHeader,
+    FiltersSection,
+    SidePanel
+} from './filterStyles';
+import theme from '../styles/theme';
 
 export const Filter: FC<FilterComponentProps> = ({
     ContextSwitchMenu,
@@ -36,12 +44,6 @@ export const Filter: FC<FilterComponentProps> = ({
     // use isCollapsed prop if provided to track state externally, otherwise track state internally
     const isCollapsed = isCollapsedProp === undefined ? isCollapsedState : isCollapsedProp;
 
-    const containerClasses = classNames(
-        styles.container,
-        { [styles.showJSONInput]: isJSONInputAllowed && jsonQueryParams.jsonView },
-        { [styles.panelCollapsed]: isCollapsed }
-    );
-
     const { filters, filterValues, updateFilter, clearFilter, clearAllFilters } = filterHooks;
 
     // save the additional query parameters in the browser url
@@ -68,7 +70,7 @@ export const Filter: FC<FilterComponentProps> = ({
         }
     };
     const setJsonViewParam = (jsonView: boolean) => {
-        setJsonQueryParams(params => ({ ...params, jsonView }));
+        setJsonQueryParams((params) => ({ ...params, jsonView }));
     };
     const toggleJsonView = (mode: FilterMode) => {
         const jsonView = mode === FilterMode.JSON;
@@ -89,75 +91,84 @@ export const Filter: FC<FilterComponentProps> = ({
     };
 
     return (
-        <div className={containerClasses}>
-            <div className={classNames(styles.sidePanel)}>
-                <h2 className={styles.filterHeader}>
-                    {(!isCollapsed && ContextSwitchMenu) && (
-                        isJSONInputAllowed ? (
-                            <ContextSwitchMenu
-                                options={FILTER_MODE_OPTIONS}
-                                value={jsonQueryParams.jsonView ? FilterMode.JSON : FilterMode.FilterUI}
-                                onChange={toggleJsonView}
-                                triggerClassName={styles.filterContextTriggerContent}
-                            />
-                        ) : 'Filter Results'
+        <ThemeProvider theme={theme}>
+            <FilterContainer
+                showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
+                isCollapsed={isCollapsed}
+            >
+                <SidePanel className="sidePanel">
+                    <FilterHeader className="filterHeader">
+                        {!isCollapsed &&
+                            ContextSwitchMenu &&
+                            (isJSONInputAllowed ? (
+                                <ContextSwitchMenu
+                                    options={FILTER_MODE_OPTIONS}
+                                    value={jsonQueryParams.jsonView ? FilterMode.JSON : FilterMode.FilterUI}
+                                    onChange={toggleJsonView}
+                                    triggerClassName="filterContextTriggerContent"
+                                />
+                            ) : (
+                                'Filter Results'
+                            ))}
+                        <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
+                    </FilterHeader>
+
+                    {(!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
+                        <FiltersSection className="filters">
+                            {Object.entries(filters)
+                                .filter(([, f]) => !f.inputHidden)
+                                .map(([key, filter]) => (
+                                    <section key={key}>
+                                        <h3 onClick={() => toggleSection(key)}>
+                                            {filter.label}
+                                            <Icon>{activeSection !== key ? 'add' : 'remove'}</Icon>
+                                        </h3>
+                                        {activeSection === key && (
+                                            <>
+                                                <FilterSectionDescription>
+                                                    {filter.description}
+                                                </FilterSectionDescription>
+                                                <FilterSectionBody>
+                                                    {filter.renderComponent({
+                                                        name: key,
+                                                        value: filterValues[key],
+                                                        update: (value) => updateFilter(key, value)
+                                                    })}
+                                                </FilterSectionBody>
+                                            </>
+                                        )}
+                                    </section>
+                                ))}
+                        </FiltersSection>
                     )}
-                    <FilterIcon className={styles.filterMenuIcon} onClick={toggleCollapsed} />
-                </h2>
 
-                {(!isJSONInputAllowed || !jsonQueryParams.jsonView) &&
-                    <div className={styles.filters}>
-                        {Object.entries(filters).filter(([, f]) => !f.inputHidden).map(([key, filter]) => (
-                            <section key={key}>
-                                <h3 onClick={() => toggleSection(key)}>
-                                    {filter.label}
-                                    <Icon>{activeSection !== key ? 'add' : 'remove'}</Icon>
-                                </h3>
-                                {activeSection === key && (
-                                    <>
-                                        <p className={styles.filterDescription}>{filter.description}</p>
-                                        <div className={styles.filterSection}>
-                                            {filter.renderComponent({
-                                                name: key,
-                                                value: filterValues[key],
-                                                update: value => updateFilter(key, value)
-                                            })}
-                                        </div>
-                                    </>
-                                )}
-                            </section>
-                        ))}
-                    </div>
-                }
+                    {isJSONInputAllowed && jsonQueryParams.jsonView && FilterJSONInput && (
+                        <div className="jsonInputSection">
+                            <FilterJSONInput filterHooks={filterHooks} onInputModifiedChange={setIsJSONInputModified} />
+                        </div>
+                    )}
 
-                {(isJSONInputAllowed && jsonQueryParams.jsonView && FilterJSONInput) &&
-                    <div className={styles.jsonInputSection}>
-                        <FilterJSONInput filterHooks={filterHooks} onInputModifiedChange={setIsJSONInputModified} />
-                    </div>
-                }
+                    {isJSONInputAllowed && FilterJSONConfirmationModal && (
+                        <FilterJSONConfirmationModal
+                            modalVisible={isJSONModifiedModalShowing}
+                            handleModalClose={() => setIsJSONModifiedModalShowing(false)}
+                            onConfirm={confirmSwitchToFilterUI}
+                        />
+                    )}
+                </SidePanel>
 
-                {(isJSONInputAllowed && FilterJSONConfirmationModal) &&
-                    <FilterJSONConfirmationModal
-                        modalVisible={isJSONModifiedModalShowing}
-                        handleModalClose={() => setIsJSONModifiedModalShowing(false)}
-                        onConfirm={confirmSwitchToFilterUI}
-                    />
-                }
-            </div>
-
-            {
-                (!hideFilterBar && FilterBar) && (
+                {!hideFilterBar && FilterBar && (
                     <FilterBar
                         filters={filters}
                         filterValues={filterValues}
                         clearFilter={clearFilter}
                         clearAllFilter={clearAllFilters}
                     />
-                )
-            }
+                )}
 
-            {children}
-        </div>
+                {children}
+            </FilterContainer>
+        </ThemeProvider>
     );
 };
 

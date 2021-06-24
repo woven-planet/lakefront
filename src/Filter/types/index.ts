@@ -246,3 +246,12 @@ export interface FilterComponentProps {
     onToggleCollapsed?(isCollapsed: boolean): void;
     updateHistory: UpdateHistory;
 }
+
+/**
+ * FilterContainerProps is the structure of the expected props
+ * to be provided to outermost container of the Filter component.
+ */
+export interface FilterContainerProps {
+    showJSONInput: boolean;
+    isCollapsed: boolean;
+};
