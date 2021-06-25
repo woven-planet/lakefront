@@ -6,7 +6,7 @@ const FILTER_BAR_HEIGHT = 48;
 export const FilterContainer = styled.div<FilterContainerProps>(({ showJSONInput, isCollapsed }) => ({
     display: 'grid',
     gridTemplateColumns: '264px minmax(min-content, auto)',
-    gridTemplateRows: `${FILTER_BAR_HEIGHT} auto`,
+    gridTemplateRows: `${FILTER_BAR_HEIGHT}px auto`,
     ...(showJSONInput && {
         gridTemplateColumns: 'minmax(min-content, max-content) minmax(min-content, auto)'
     }),
