@@ -30,12 +30,14 @@ const FILTERS = {
     keywords: {
         description: 'Words to include.',
         label: 'Keywords',
-        ...BASE_FILTER
+        ...BASE_FILTER,
+        getFilterBarLabel: (value) => `Keywords: ${value}`,
     },
     phrases: {
         description: 'Phrases to lookup.',
         label: 'Phrases',
-        ...BASE_FILTER
+        ...BASE_FILTER,
+        getFilterBarLabel: (value) => `Phrases: ${value}`
     }
 };
 

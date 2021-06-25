@@ -64,7 +64,7 @@ export const FilterItem: FC<FilterItemProps> = (props) => {
     return (
         <div className="filterItem">
             <span className="filterItemLabel">{itemLabel}</span>
-            {!item.required && <div className="filterItemClose" onClick={handleCloseIcon}>X</div>}
+            {!item.required && <div className="filterItemClose" onClick={handleCloseIcon}>x</div>}
         </div>
     );
 };
