@@ -99,8 +99,7 @@ export const Filter: FC<FilterComponentProps> = ({
                 <SidePanel className="sidePanel">
                     <FilterHeader className="filterHeader">
                         {!isCollapsed &&
-                            ContextSwitchMenu &&
-                            (isJSONInputAllowed ? (
+                            ((ContextSwitchMenu && isJSONInputAllowed) ? (
                                 <ContextSwitchMenu
                                     options={FILTER_MODE_OPTIONS}
                                     value={jsonQueryParams.jsonView ? FilterMode.JSON : FilterMode.FilterUI}
@@ -121,7 +120,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                     <section key={key}>
                                         <h3 onClick={() => toggleSection(key)}>
                                             {filter.label}
-                                            {activeSection !== key ? <Add /> : <Remove />}
+                                            {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                                         </h3>
                                         {activeSection === key && (
                                             <>
