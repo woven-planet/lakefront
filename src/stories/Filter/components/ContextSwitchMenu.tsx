@@ -47,10 +47,10 @@ const ContextSwitchMenu: FC<ContextSwitchMenuProps> = ({ options, value, onChang
     };
 
     const handleClick = (value: any) => {
-        console.log(value)
         onChange(value);
         setActionsVisible(false);
     };
+
     return (
         <ThemeProvider theme={theme}>
             <ContextSwitchContainer>

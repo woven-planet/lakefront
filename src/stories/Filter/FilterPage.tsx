@@ -1,11 +1,12 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Filter from 'src/Filter/Filter';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { useFilter } from 'src/Filter/util';
-import { ContextSwitchMenu, FilterBar } from './components';
+import { ContextSwitchMenu, FilterBar, FilterJSONInput } from './components';
 import Input from 'src/Input/Input';
+import { FilterComponentProps } from 'src/Filter/types';
 
 const StyledInput = styled(Input)({
     width: '100%'
@@ -21,6 +22,7 @@ const BASE_FILTER = {
     isDefaultFilterValue: (value) => value === '',
     getFilterBarLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
+    getFilterValueFromApiPostBody: (key, apiPostBody) => apiPostBody[key] || '',
     renderComponent: ({ name, value, update }) => (
         <StyledInput key={name} placeholder={name} onChange={(e) => update(e.target.value)} value={value} />
     )
@@ -72,17 +74,18 @@ const PageBody = styled.div(({ theme }) => ({
     height: 300
 }));
 
-const FilterPage: FC = (props) => {
+const FilterPage: FC<FilterComponentProps> = (props) => {
     const location = { ...LOCATION };
     const updateHistory = () => null;
-    const filterHooks = useFilter(FILTERS, false, location, updateHistory);
+    const filterHooks = useFilter(FILTERS, props.isJSONInputAllowed, location, updateHistory);
 
     return (
         <ThemeProvider theme={theme}>
             <DefaultWrapper>
                 <Filter
-                    FilterBar={FilterBar}
                     ContextSwitchMenu={ContextSwitchMenu}
+                    FilterBar={FilterBar}
+                    FilterJSONInput={FilterJSONInput}
                     {...props}
                     filterHooks={filterHooks}
                     location={location}
