@@ -67,7 +67,7 @@ const ContextSwitchMenu: FC<ContextSwitchMenuProps> = ({ options, value, onChang
                 >
                     <DropdownButton alternate onClick={handleDropdown}>
                         <ButtonLabel>
-                            Filter Results
+                            {options.get(value)}
                             <DownArrow />
                         </ButtonLabel>
                     </DropdownButton>
