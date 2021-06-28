@@ -67,7 +67,9 @@ const PageBody = styled.div(({ theme }) => ({
     alignItems: 'center',
     width: '100%',
     color: theme.colors.gunpowder,
+    backgroundColor: theme.colors.akoya,
     fontSize: 20,
+    height: 300
 }));
 
 const FilterPage: FC = (props) => {

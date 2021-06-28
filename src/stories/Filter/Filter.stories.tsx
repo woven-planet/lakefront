@@ -1,4 +1,3 @@
-
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import FilterPage from './FilterPage';
@@ -9,15 +8,51 @@ export default {
     title: 'Lakefront/Filter',
     component: FilterComponent,
     argTypes: {
-        checked: {
+        ContextSwitchMenu: {
             control: false
         },
-        checkedIcon: {
-            table: {
-                disable: true
+        FilterBar: {
+            control: false
+        },
+        FilterJSONConfirmationModal: {
+            control: false
+        },
+        FilterJSONInput: {
+            control: false
+        },
+        additionalQueryParams: {
+            control: false
+        },
+        filterHooks: {
+            control: false
+        },
+        hideFilterBar: {
+            control: {
+                type: 'boolean'
             }
         },
-        onChange: {
+        initialActiveSection: {
+            control: {
+                type: 'text'
+            }
+        },
+        isCollapsed: {
+            control: {
+                type: 'boolean'
+            }
+        },
+        isJSONInputAllowed: {
+            control: {
+                type: 'boolean'
+            }
+        },
+        location: {
+            control: false
+        },
+        onToggleCollapsed: {
+            control: false
+        },
+        updateHistory: {
             control: false
         }
     },
