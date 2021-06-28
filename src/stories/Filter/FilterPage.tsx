@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { useFilter } from 'src/Filter/util';
-import { FilterBar } from './components';
+import { ContextSwitchMenu, FilterBar } from './components';
 import Input from 'src/Input/Input';
 
 const StyledInput = styled(Input)({
@@ -82,6 +82,7 @@ const FilterPage: FC = (props) => {
             <DefaultWrapper>
                 <Filter
                     FilterBar={FilterBar}
+                    ContextSwitchMenu={ContextSwitchMenu}
                     {...props}
                     filterHooks={filterHooks}
                     location={location}

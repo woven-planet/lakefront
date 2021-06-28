@@ -69,5 +69,6 @@ const AllTemplate: Story = (args) => <FilterPage {...args} />;
 export const AllFilters = AllTemplate.bind({});
 
 AllFilters.args = {
-    hideFilterBar: false
+    hideFilterBar: false,
+    isJSONInputAllowed: true
 };
