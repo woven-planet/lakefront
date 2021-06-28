@@ -1,8 +1,8 @@
 import { FC, useRef, useState, useEffect } from 'react';
 
 import { getFilterAppliedCount } from 'src/Filter/util';
-import { FilterModule, FilterSet } from 'src/Filter/modules';
-import { FilterValues } from 'src/Filter/types';
+import { FilterModule } from 'src/Filter/modules';
+import { FilterBarProps } from 'src/Filter/types';
 import styled from '@emotion/styled';
 
 interface FilterItemProps {
@@ -69,14 +69,7 @@ export const FilterItem: FC<FilterItemProps> = (props) => {
     );
 };
 
-interface Props {
-    filters: FilterSet;
-    filterValues: FilterValues;
-    clearFilter(name: string): void;
-    clearAllFilter(): void;
-}
-
-const FilterBar: FC<Props> = (props) => {
+const FilterBar: FC<FilterBarProps> = (props) => {
     const { filters, filterValues, clearFilter, clearAllFilter } = props;
     const [isMinimized, setMinimized] = useState(false);
     const filterBarRef = useRef<HTMLDivElement>(null);
