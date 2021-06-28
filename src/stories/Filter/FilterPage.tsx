@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { useFilter } from 'src/Filter/util';
-import { ContextSwitchMenu, FilterBar, FilterJSONInput } from './components';
+import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput } from './components';
 import Input from 'src/Input/Input';
 import { FilterComponentProps } from 'src/Filter/types';
 
@@ -85,6 +85,7 @@ const FilterPage: FC<FilterComponentProps> = (props) => {
                 <Filter
                     ContextSwitchMenu={ContextSwitchMenu}
                     FilterBar={FilterBar}
+                    FilterJSONConfirmationModal={FilterJSONConfirmationModal}
                     FilterJSONInput={FilterJSONInput}
                     {...props}
                     filterHooks={filterHooks}

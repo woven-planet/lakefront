@@ -92,6 +92,7 @@ export const Filter: FC<FilterComponentProps> = ({
     };
     const confirmSwitchToFilterUI = () => {
         setJsonViewParam(false);
+        setIsJSONInputModified(false);
     };
     const toggleSection = (section: string) => {
         const newSection = activeSection === section ? '' : section;
