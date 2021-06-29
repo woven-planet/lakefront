@@ -33,7 +33,9 @@ const FILTERS = {
         description: 'Words to include.',
         label: 'Keywords',
         ...BASE_FILTER,
-        getFilterBarLabel: (value) => `Keywords: ${value}`,
+        getDefaultFilterValue: () => 'lakehouse',
+        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || 'lakehouse',
+        getFilterBarLabel: (value) => `Keywords: ${value}`
     },
     phrases: {
         description: 'Phrases to lookup.',
@@ -74,7 +76,7 @@ const PageBody = styled.div(({ theme }) => ({
     height: 300
 }));
 
-const FilterPage: FC<FilterComponentProps> = (props) => {
+const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilterBar'>> = (props) => {
     const location = { ...LOCATION };
     const updateHistory = () => null;
     const filterHooks = useFilter(FILTERS, props.isJSONInputAllowed, location, updateHistory);

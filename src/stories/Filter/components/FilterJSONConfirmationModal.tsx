@@ -18,7 +18,7 @@ const ModalContainer = styled.div<FilterJSONConfirmationModalProps>(({ modalVisi
 
 const ModalContent = styled.div({
     backgroundColor: '#fefefe',
-    margin: 'auto',
+    margin: '10% auto auto',
     padding: '20px',
     border: '1px solid #888',
     width: '80%'
