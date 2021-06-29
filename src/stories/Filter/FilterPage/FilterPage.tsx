@@ -34,4 +34,5 @@ const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilt
         </ThemeProvider>
     );
 };
+
 export default FilterPage;

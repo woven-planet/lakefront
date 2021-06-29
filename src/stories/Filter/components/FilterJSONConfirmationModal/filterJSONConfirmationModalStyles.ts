@@ -1,4 +1,3 @@
-
 import styled from '@emotion/styled';
 import { FilterJSONConfirmationModalProps } from 'src/Filter/types';
 
