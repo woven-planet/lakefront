@@ -6,7 +6,7 @@ interface UrlPreviewProps {
     queryParams?: string;
 }
 
-const UrlPreview: FC<UrlPreviewProps> = ({ baseUrl = 'https://localhost/lakefront', queryParams = '' }) => {
+const UrlPreview: FC<UrlPreviewProps> = ({ baseUrl = 'https://localhost/repository', queryParams = '' }) => {
     return (
         <UrlPreviewContainer>
             <PreviewBar

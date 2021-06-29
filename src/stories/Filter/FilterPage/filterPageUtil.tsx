@@ -21,8 +21,8 @@ export const FILTERS = {
         description: 'Words to include.',
         label: 'Keywords',
         ...BASE_FILTER,
-        getDefaultFilterValue: () => 'lakehouse',
-        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || 'lakehouse',
+        getDefaultFilterValue: () => 'lakefront',
+        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || 'lakefront',
         getFilterBarLabel: (value) => `Keywords: ${value}`
     },
     phrases: {
