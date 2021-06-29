@@ -1,8 +1,7 @@
 import { FC, useRef, useState, useEffect } from 'react';
 
 import { getFilterAppliedCount } from 'src/Filter/util';
-import { FilterModule } from 'src/Filter/modules';
-import { FilterBarProps } from 'src/Filter/types';
+import { FilterBarProps, FilterModule } from 'src/Filter/types';
 import styled from '@emotion/styled';
 
 interface FilterItemProps {
