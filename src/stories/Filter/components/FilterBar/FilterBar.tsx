@@ -1,8 +1,7 @@
 import { FC, useRef, useState, useEffect } from 'react';
-
 import { getFilterAppliedCount } from 'src/Filter/util';
 import { FilterBarProps, FilterModule } from 'src/Filter/types';
-import styled from '@emotion/styled';
+import { FilterBarContainer } from './filterBarStyles';
 
 interface FilterItemProps {
     clearFilter(name: string): void;
@@ -10,42 +9,6 @@ interface FilterItemProps {
     item: FilterModule<any>;
     value: any;
 }
-
-const FilterBarContainer = styled.div(({ theme }) => ({
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-    borderBottom: `1px solid ${theme.colors.selago}`,
-    padding: '0 1rem',
-    '.filterItem': {
-        borderRadius: 2,
-        border: `solid 1px ${theme.colors.selago}`,
-        backgroundColor: '$akoya',
-        color: theme.colors.gunpowder,
-        padding: '4px 6px',
-        display: 'inline-flex',
-        marginRight: 8,
-        alignItems: 'center',
-        '.filterItemLabel': {
-            maxWidth: 325,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap'
-        },
-        '.filterItemClose': {
-            borderLeft: `1px solid ${theme.colors.pavement}`,
-            marginLeft: 8,
-            paddingLeft: 8,
-            fontSize: 20,
-            cursor: 'pointer'
-        }
-    },
-    '.clearAll': {
-        color: theme.colors.saturatedBlue,
-        cursor: 'pointer'
-    }
-}));
 
 export const FilterItem: FC<FilterItemProps> = (props) => {
     const { name, clearFilter, item, value } = props;
