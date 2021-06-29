@@ -1,5 +1,5 @@
 import { getDefaultValue, getDefaultJsonViewValue, getFilterAppliedCount } from '../filterUtil';
-import { FILTERS } from './filter.data';
+import { FILTERS } from '../../__tests__/filter.data';
 
 describe('getDefaultValue', () => {
     describe('when url parameter key exists', () => {

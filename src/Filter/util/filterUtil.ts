@@ -18,7 +18,7 @@ export const USER_JSON_QUERY_PARAM = 'userJSON';
  */
 export const getDefaultValue = (urlParams: UrlParameters, key: string, defaultValue: any) => {
     if (urlParams[key]) {
-        return Array.isArray(urlParams[key]) ? urlParams[key][0] : urlParams[key];
+        return Array.isArray(urlParams[key]) ? urlParams[key]?.[0] : urlParams[key];
     }
 
     return defaultValue;

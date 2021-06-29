@@ -5,7 +5,7 @@ import {
     getCurrentBrowserQueryParams,
     getFilterBrowserQueryParams
 } from '../filterHooksUtil';
-import { FILTERS, KEYWORD_DEMO, PHRASE_DEMO } from './filter.data';
+import { FILTERS, KEYWORD_DEMO, PHRASE_DEMO } from '../../__tests__/filter.data';
 
 const FILTER_HOOKS_UTIL_VALUES = { keywords: KEYWORD_DEMO, phrases: PHRASE_DEMO };
 const FILTER_HOOKS_UTIL_LOCATION = { search: `&keywords=${KEYWORD_DEMO}&phrases=${encodeURIComponent(PHRASE_DEMO)}` };

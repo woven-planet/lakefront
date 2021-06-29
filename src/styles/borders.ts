@@ -1,7 +1,5 @@
 import colors from './cloudColors';
-import borders from './borders';
 
 export default {
-    colors,
-    borders
+    primary: `1px solid ${colors.selago}`
 };

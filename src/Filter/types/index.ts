@@ -1,3 +1,4 @@
+import { Dispatch, FC, SetStateAction } from 'react';
 import { JSONObject } from 'src/types/global';
 
 /**
@@ -153,6 +154,7 @@ export enum FilterMode {
  */
 interface LocationState {
     search: string;
+    hash?: string;
 }
 
 /**
@@ -171,10 +173,85 @@ export interface Location {
  * UrlParameters is a map of the current url parameter name and values.
  */
 export interface UrlParameters {
-    [key: string]: string[] | string;
+    [key: string]: string[] | string | null;
 };
 
 /**
  * UpdateHistory is the structure of a history update callback.
  */
-export type UpdateHistory = ({ search }: LocationState) => void;
+export type UpdateHistory = ({ search, hash }: LocationState) => void;
+
+/**
+ * ContextSwitchMenuProps is the structure of the ContextSwitchMenu
+ * component that can be used to toggle Filter component
+ * views.
+ */
+export interface ContextSwitchMenuProps {
+    options: Map<FilterMode, string>;
+    value: FilterMode;
+    onChange?: (filterMode: FilterMode) => void;
+    triggerClassName?: string;
+}
+
+/**
+ * FilterBarProps is the structure of the FilterBar
+ * component that can be used to display the applied filters.
+ */
+export interface FilterBarProps {
+    filters: FilterSet;
+    filterValues: FilterValues;
+    clearFilter?: (name: string) => void;
+    clearAllFilter?: () => void;
+}
+
+/**
+ * FilterJSONConfirmationModalProps is the structure of the
+ * FilterJSONConfirmationModal component that can be used to
+ * confirm the user has finished making unsaved changes.
+ */
+export interface FilterJSONConfirmationModalProps {
+    modalVisible: boolean;
+    handleModalClose?: () => void;
+    onConfirm?: () => void;
+}
+
+/**
+ * FilterJSONInputProps is the structure of the
+ * FilterJSONInput component that can be used by
+ * the end user to edit the filter JSON parameters and values.
+ */
+export interface FilterJSONInputProps {
+    filterHooks: FilterHooks;
+    onInputModifiedChange?: Dispatch<SetStateAction<boolean>>;
+}
+
+/**
+ * FilterComponentProps is the structure of the expected props
+ * to be provided to the primary Filter component.
+ */
+export interface FilterComponentProps {
+    ContextSwitchMenu?: FC<ContextSwitchMenuProps>;
+    FilterBar?: FC<FilterBarProps>;
+    FilterJSONConfirmationModal?: FC<FilterJSONConfirmationModalProps>;
+    FilterJSONInput?: FC<FilterJSONInputProps>;
+    additionalQueryParams?: {
+        [key: string]: string;
+    };
+    filterHooks: FilterHooks;
+    hideFilterBar?: boolean;
+    initialActiveSection?: string;
+    isCollapsed?: boolean;
+    isJSONInputAllowed?: boolean;
+    location: Location;
+    onToggleCollapsed?(isCollapsed: boolean): void;
+    updateHistory: UpdateHistory;
+}
+
+/**
+ * FilterContainerProps is the structure of the expected props
+ * to be provided to outermost container of the Filter component.
+ */
+export interface FilterContainerProps {
+    showJSONInput: boolean;
+    isCollapsed: boolean;
+};
