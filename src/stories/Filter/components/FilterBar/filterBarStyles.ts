@@ -4,7 +4,7 @@ export const FilterBarContainer = styled.div(({ theme }) => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colors.white,
     borderBottom: `1px solid ${theme.colors.selago}`,
     padding: '0 1rem',
     '.filterItem': {
