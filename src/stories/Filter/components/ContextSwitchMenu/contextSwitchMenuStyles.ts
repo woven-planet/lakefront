@@ -22,7 +22,7 @@ export const DropdownButton = styled(Button)(({ theme }) => ({
     height: 36,
     paddingLeft: 13,
     padding: 0,
-    border: `0px solid white`,
+    border: `0px solid ${theme.colors.white}`,
     fontWeight: 400,
     justifyContent: 'space-between',
     ':hover': {
