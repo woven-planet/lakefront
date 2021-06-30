@@ -1,3 +1,4 @@
+import { RadioFilter } from 'src/Filter/modules/RadioFilter';
 import { StyledInput } from './filterPageStyles';
 
 const BASE_FILTER = {
@@ -16,6 +17,25 @@ const BASE_FILTER = {
     )
 };
 
+const RADIO_FILTER_OPTIONS = [
+    {
+        label: 'North',
+        value: 'north'
+    },
+    {
+        label: 'East',
+        value: 'east'
+    },
+    {
+        label: 'South',
+        value: 'south'
+    },
+    {
+        label: 'West',
+        value: 'west'
+    }
+];
+
 export const FILTERS = {
     keywords: {
         description: 'Words to include.',
@@ -30,7 +50,15 @@ export const FILTERS = {
         label: 'Phrases',
         ...BASE_FILTER,
         getFilterBarLabel: (value) => `Phrases: ${value}`
-    }
+    },
+    direction: RadioFilter({
+        initialValue: RADIO_FILTER_OPTIONS[0].value,
+        defaultValue: '',
+        options: RADIO_FILTER_OPTIONS,
+        label: 'Direction',
+        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || RADIO_FILTER_OPTIONS[0].value,
+        ...BASE_FILTER
+    })
 };
 
 export const LOCATION = {
