@@ -230,20 +230,64 @@ export interface FilterJSONInputProps {
  * to be provided to the primary Filter component.
  */
 export interface FilterComponentProps {
+    /**
+     * ContextSwitchMenu can be used to toggle Filter component views.
+     */
     ContextSwitchMenu?: FC<ContextSwitchMenuProps>;
+    /**
+     * FilterBar can be used to display the applied filters.
+     */
     FilterBar?: FC<FilterBarProps>;
+    /**
+     * FilterJSONConfirmationModal can be used to
+     * confirm the user has finished making unsaved changes.
+     */
     FilterJSONConfirmationModal?: FC<FilterJSONConfirmationModalProps>;
+    /**
+     * FilterJSONInput can be used by
+     * the end user to edit the filter JSON parameters and values.
+     */
     FilterJSONInput?: FC<FilterJSONInputProps>;
+    /**
+     * Additional query params that can be provided seperate from
+     * the current filters.
+     */
     additionalQueryParams?: {
         [key: string]: string;
     };
+    /**
+     * The available values and functions returned from the useFilter hook.
+     */
     filterHooks: FilterHooks;
+    /**
+     * Controls whether the FilterBar component (if provided)
+     * is visible.
+     */
     hideFilterBar?: boolean;
+    /**
+     * Controls which filter (if any) is expanded by default.
+     */
     initialActiveSection?: string;
+    /**
+     * Controls whether the filter side panel is expanded or collapsed.
+     */
     isCollapsed?: boolean;
+    /**
+     * Controls whether the user can add additional filters via a JSON editor.
+     */
     isJSONInputAllowed?: boolean;
+    /**
+     * The (mutable) location state which gets updated as filters are applied.
+     */
     location: Location;
+    /**
+     * The callback that runs when the filter pane is collapsed.
+     */
     onToggleCollapsed?(isCollapsed: boolean): void;
+    /**
+     * This controls how the location/history state is updated
+     * as filters change.
+     */
     updateHistory: UpdateHistory;
 }
 

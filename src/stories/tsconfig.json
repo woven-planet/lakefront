@@ -3,5 +3,5 @@
         "baseUrl": "../../",
         "jsx": "react-jsx"
     },
-    "include": ["./**/*"]
+    "include": ["./**/*", "../global.d.ts", "../emotion.d.ts"]
 }

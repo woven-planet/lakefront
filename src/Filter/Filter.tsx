@@ -16,6 +16,14 @@ import { ReactComponent as Remove } from './assets/remove.svg';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from '../styles/theme';
 
+/**
+ * Filter Component
+ *
+ * The Filter component can be used to display the effects
+ * the `useFilter` hook (or other filter state manager) has on
+ * a given page. Various components can be provided to increase/limit
+ * what changes are diplayed.
+ */
 export const Filter: FC<FilterComponentProps> = ({
     ContextSwitchMenu,
     FilterBar,
@@ -84,6 +92,7 @@ export const Filter: FC<FilterComponentProps> = ({
     };
     const confirmSwitchToFilterUI = () => {
         setJsonViewParam(false);
+        setIsJSONInputModified(false);
     };
     const toggleSection = (section: string) => {
         const newSection = activeSection === section ? '' : section;
