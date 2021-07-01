@@ -17,11 +17,11 @@ const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilt
         <ThemeProvider theme={theme}>
             <DefaultWrapper>
                 <Filter
+                    {...props}
                     ContextSwitchMenu={ContextSwitchMenu}
                     FilterBar={FilterBar}
                     FilterJSONConfirmationModal={FilterJSONConfirmationModal}
                     FilterJSONInput={FilterJSONInput}
-                    {...props}
                     filterHooks={filterHooks}
                     location={location}
                     updateHistory={updateHistory}
