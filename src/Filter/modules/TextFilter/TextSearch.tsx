@@ -1,5 +1,5 @@
 import { FC, FocusEvent, KeyboardEvent, useEffect, useState } from 'react';
-import Input from 'src/Input/Input';
+import { StyledInput } from './textSearchStyles';
 
 interface TextSearchProps {
     onChange(text: string): void;
@@ -28,7 +28,7 @@ const TextSearch: FC<TextSearchProps> = ({ onChange, value }) => {
     };
 
     return (
-        <Input
+        <StyledInput
             id="keyword"
             type="text"
             onBlur={handleOnBlur}
