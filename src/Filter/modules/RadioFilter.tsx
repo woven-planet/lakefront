@@ -1,5 +1,5 @@
 import RadioGroup from "src/RadioGroup/RadioGroup";
-import { FilterModule } from "../types";
+import { FilterModule, RadioFilterOptions } from "../types";
 
 
 interface RadioFilterProps {
@@ -10,10 +10,11 @@ interface RadioFilterProps {
         value: string;
     }[];
     label: string;
+    radioFilterOptions?: RadioFilterOptions;
 }
 
 export const RadioFilter = (
-    { initialValue, defaultValue, options, label }: RadioFilterProps
+    { initialValue, defaultValue, options, label, radioFilterOptions }: RadioFilterProps
 ): FilterModule<string> => ({
     label,
     getApiQueryUrl: (key, value) => {
@@ -30,5 +31,6 @@ export const RadioFilter = (
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || initialValue,
     renderComponent: ({ name, value, update }) => (
         <RadioGroup key={name} name={name} value={value} onChange={(event) => update(event.target.value)} options={options} />
-    )
+    ),
+    ...radioFilterOptions
 });

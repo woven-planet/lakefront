@@ -299,3 +299,9 @@ export interface FilterContainerProps {
     showJSONInput: boolean;
     isCollapsed: boolean;
 };
+
+/**
+ * `RadioFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default text filter behaviour.
+ */
+ export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}

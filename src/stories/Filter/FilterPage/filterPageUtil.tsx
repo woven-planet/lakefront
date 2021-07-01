@@ -56,7 +56,6 @@ export const FILTERS = {
         defaultValue: '',
         options: RADIO_FILTER_OPTIONS,
         label: 'Direction',
-        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || RADIO_FILTER_OPTIONS[0].value,
         ...BASE_FILTER
     })
 };
