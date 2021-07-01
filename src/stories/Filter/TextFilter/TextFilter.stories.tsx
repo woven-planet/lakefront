@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import FilterPage from '../FilterPage';
+import FilterPage from '../components/FilterPage';
 import TextFilterDocs, { TextFilterArgs } from './TextFilterDocs';
 import DocBlock from '.storybook/DocBlock';
 import { TextFilter as TextFilterFunction } from 'src/Filter/modules';

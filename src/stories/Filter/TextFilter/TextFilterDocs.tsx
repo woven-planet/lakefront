@@ -9,12 +9,12 @@ export interface TextFilterArgs {
     /**
      * The description/help text to display above the text filter component.
      */
-    description: string;
+    description?: string;
     /**
      * Any valid `FilterModule` property (excluding description and label)
      * which will override default text filter behaviour.
      */
-    textFilterOptions: TextFilterOptions;
+    textFilterOptions?: TextFilterOptions;
 }
 
 /**

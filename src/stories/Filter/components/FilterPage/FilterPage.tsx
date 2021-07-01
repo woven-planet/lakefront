@@ -3,7 +3,7 @@ import Filter from 'src/Filter/Filter';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { useFilter } from 'src/Filter/util';
-import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput, UrlPreview } from '../components';
+import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput, UrlPreview } from '..';
 import { FilterComponentProps, FilterSet } from 'src/Filter/types';
 import { DefaultWrapper, PageBody } from './filterPageStyles';
 import { FILTERS, LOCATION } from './filterPageUtil';
