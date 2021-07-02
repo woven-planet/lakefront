@@ -18,7 +18,9 @@ export interface TextFilterArgs {
 }
 
 /**
- * `TextFilter` is a text input control meant to be used as a keyword(s) search. While the default
+ * TextFilter Component
+ * 
+ * The TextFilter component is a text input control meant to be used as a keyword(s) search. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
  * be supplied via the `textFilterOptions` parameter to change how the filter looks and acts.
  */
