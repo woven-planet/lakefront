@@ -1,36 +1,15 @@
-import { StyledInput } from './filterPageStyles';
-
-const BASE_FILTER = {
-    getApiQueryUrl: (key, value) => {
-        return value ? `&${key}=${encodeURIComponent(value)}` : '';
-    },
-    getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: (value) => value,
-    getDefaultFilterValue: () => '',
-    isDefaultFilterValue: (value) => value === '',
-    getFilterBarLabel: (value) => value,
-    parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
-    getFilterValueFromApiPostBody: (key, apiPostBody) => apiPostBody[key] || '',
-    renderComponent: ({ name, value, update }) => (
-        <StyledInput key={name} placeholder={name} onChange={(e) => update(e.target.value)} value={value} />
-    )
-};
+import { TextFilter } from 'src/Filter/modules';
 
 export const FILTERS = {
-    keywords: {
-        description: 'Words to include.',
-        label: 'Keywords',
-        ...BASE_FILTER,
-        getDefaultFilterValue: () => 'lakefront',
-        parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || 'lakefront',
-        getFilterBarLabel: (value) => `Keywords: ${value}`
-    },
-    phrases: {
-        description: 'Phrases to lookup.',
-        label: 'Phrases',
-        ...BASE_FILTER,
-        getFilterBarLabel: (value) => `Phrases: ${value}`
-    }
+    textFilter: TextFilter(
+        'Text Filter',
+        'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
+        {
+            getDefaultFilterValue: () => 'lakefront',
+            parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
+            getFilterBarLabel: (value: string) => `Text Filter: ${value}`
+        }
+    )
 };
 
 export const LOCATION = {
