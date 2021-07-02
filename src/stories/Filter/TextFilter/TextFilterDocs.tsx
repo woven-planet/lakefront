@@ -20,7 +20,7 @@ export interface TextFilterArgs {
 /**
  * `TextFilter` is a text input control meant to be used as a keyword(s) search. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
- * be supplied via the `textFilterOptions` to change how the filter looks and acts.
+ * be supplied via the `textFilterOptions` parameter to change how the filter looks and acts.
  */
 const TextFilterDocs: FC<TextFilterArgs> = () => null;
 
