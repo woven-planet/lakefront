@@ -56,8 +56,8 @@ return (
         </DefaultWrapper>
     </ThemeProvider>
 );
-                `,
-              },
+                `
+            }
         }
     }
 } as Meta;
@@ -66,7 +66,7 @@ return (
 const TextFilterTemplate: Story = (args: TextFilterArgs) => {
     const pageFilters = {
         textFilter: TextFilterFunction(args.label, args.description, {})
-    }
+    };
 
     return <FilterPage pageFilters={pageFilters} />;
 };
