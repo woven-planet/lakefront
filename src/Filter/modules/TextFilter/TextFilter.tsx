@@ -18,8 +18,6 @@ export const TextFilter = (
     description?: string,
     textFilterOptions: TextFilterOptions = {}
 ): FilterModule<string> => ({
-    description,
-    label,
     getApiQueryUrl: (key, value) => {
         return value ? `&${key}=${encodeURIComponent(value)}` : '';
     },
@@ -30,7 +28,9 @@ export const TextFilter = (
     getFilterBarLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || '',
     renderComponent: ({ name, value, update }) => <TextSearch key={name} onChange={update} value={value} />,
-    ...textFilterOptions
+    ...textFilterOptions,
+    description,
+    label,
 });
 
 export default TextFilter;
