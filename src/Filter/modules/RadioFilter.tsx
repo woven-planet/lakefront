@@ -2,7 +2,7 @@ import RadioGroup from "src/RadioGroup/RadioGroup";
 import { FilterModule, RadioFilterOptions } from "../types";
 
 
-interface RadioFilterProps {
+export interface RadioFilterProps {
     initialValue: string;
     defaultValue: string;
     options: {
