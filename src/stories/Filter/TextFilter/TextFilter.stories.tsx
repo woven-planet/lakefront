@@ -18,7 +18,8 @@ export default {
             description: 'The description/help text to display above the text filter component.'
         },
         textFilterOptions: {
-            control: false
+            control: false,
+            description: 'Any valid `FilterModule` property (excluding description and label) which will override default text filter behaviour.'
         }
     },
     parameters: {
