@@ -1,5 +1,5 @@
 import { AdditionalJSONFilter } from './AdditionalJSONFilter';
-import { RadioFilter } from './RadioFilter';
+import RadioFilter from './RadioFilter';
 
 export {
     AdditionalJSONFilter,

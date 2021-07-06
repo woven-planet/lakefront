@@ -9,24 +9,16 @@ export default {
     title: 'Lakefront/Filter/RadioFilter',
     component: RadioFilterDocs,
     argTypes: {
-        label: {
-            control: 'text',
-            description: 'The label to display for the radio filter component.'
-        },
-        initialValue: {
-            control: 'text',
-            description: 'The value to the radio filter starts with selected.'
-        },
-        defaultValue: {
-            control: 'text',
-            description: 'The default value when there is no value selected.'
-        },
-        options: {
-            control: 'array',
-            description: 'The list of options to choose from in the radio filter.'
+        radioFilterProps: {
+            control: {
+                type: 'object'
+            },
+            description: 'The props required to be supplied as the first argument of the RadioFilter component.'
         },
         radioFilterOptions: {
-            control: false
+            control: false,
+            description:
+                'Any valid `FilterModule` property (excluding description and label) which will override default radio filter behaviour.'
         }
     },
     parameters: {
@@ -36,14 +28,9 @@ export default {
                 code: `
 const FILTERS = {
     radioFilter: RadioFilter(
+        props.radioFilterOptions
         {
-            props.label,
-            props.initialValue,
-            props.defaultValue,
-            props.options,
-            {
-                // ...RadioFilterOptions
-            }
+            // ...RadioFilterOptions
         }
     )
 };
@@ -95,7 +82,7 @@ const RADIO_FILTER_OPTIONS = [
 // Radio Filter
 const RadioFilterTemplate: Story = (args: RadioFilterArgs) => {
     const pageFilters = {
-        radioFilter: RadioFilterFunction({args.initialValue, args.defaultValue, args.label,, args.options})
+        radioFilter: RadioFilterFunction(args.radioFilterProps, {})
     };
 
     return <FilterPage pageFilters={pageFilters} />;
@@ -104,8 +91,10 @@ const RadioFilterTemplate: Story = (args: RadioFilterArgs) => {
 export const RadioFilter = RadioFilterTemplate.bind({});
 
 RadioFilter.args = {
-    label: 'Radio Filter',
-    initialValue: RADIO_FILTER_OPTIONS[0].value,
-    defaultValue: '',
-    options: RADIO_FILTER_OPTIONS
+    radioFilterProps: {
+        label: 'Radio Filter',
+        initialValue: RADIO_FILTER_OPTIONS[0].value,
+        defaultValue: '',
+        options: RADIO_FILTER_OPTIONS
+    }
 };

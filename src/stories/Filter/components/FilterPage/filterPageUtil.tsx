@@ -1,4 +1,4 @@
-import { RadioFilter } from 'src/Filter/modules/RadioFilter';
+import { RadioFilter } from 'src/Filter/modules';
 
 const RADIO_FILTER_OPTIONS = [
     {
