@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import Input from 'src/Input/Input';
 
 export const DefaultWrapper = styled.div(({ theme }) => ({
     backgroundColor: theme.colors.white,
@@ -13,7 +12,8 @@ export const DefaultWrapper = styled.div(({ theme }) => ({
 
 export const PageBody = styled.div(({ theme }) => ({
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
     color: theme.colors.gunpowder,
@@ -21,7 +21,3 @@ export const PageBody = styled.div(({ theme }) => ({
     fontSize: 20,
     height: 300
 }));
-
-export const StyledInput = styled(Input)({
-    width: '100%'
-});

@@ -3,8 +3,8 @@ import Filter from 'src/Filter/Filter';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { useFilter } from 'src/Filter/util';
-import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput } from '..';
-import { FilterComponentProps } from 'src/Filter/types';
+import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput, UrlPreview } from '..';
+import { FilterComponentProps, FilterSet } from 'src/Filter/types';
 import { DefaultWrapper, PageBody } from './filterPageStyles';
 import { FILTERS, LOCATION } from './filterPageUtil';
 
@@ -26,16 +26,17 @@ const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilt
         <ThemeProvider theme={theme}>
             <DefaultWrapper>
                 <Filter
+                    {...props}
                     ContextSwitchMenu={ContextSwitchMenu}
                     FilterBar={FilterBar}
                     FilterJSONConfirmationModal={FilterJSONConfirmationModal}
                     FilterJSONInput={FilterJSONInput}
-                    {...props}
                     filterHooks={filterHooks}
                     location={location}
                     updateHistory={updateHistory}
                 >
                     <PageBody>
+                        <UrlPreview queryParams={filterHooks.filterUrl.substring(1)} />
                         <div>Modify filters in the left pane.</div>
                     </PageBody>
                 </Filter>
