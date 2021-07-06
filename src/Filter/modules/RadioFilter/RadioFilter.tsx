@@ -1,4 +1,4 @@
-import RadioGroup from 'src/RadioGroup/RadioGroup';
+import RadioGroup from '../../../RadioGroup/RadioGroup';
 import { FilterModule, RadioFilterProps, RadioFilterOptions } from 'src/Filter/types';
 
 /**
