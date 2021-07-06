@@ -95,6 +95,7 @@ RadioFilter.args = {
         label: 'Radio Filter',
         initialValue: RADIO_FILTER_OPTIONS[0].value,
         defaultValue: '',
-        options: RADIO_FILTER_OPTIONS
+        options: RADIO_FILTER_OPTIONS,
+        description: 'RadioFilter is a radio group control meant to single select a value.'
     }
 };

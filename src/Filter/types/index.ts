@@ -312,6 +312,7 @@ export interface RadioFilterProps {
         value: string;
     }[];
     label: string;
+    description?: string;
 }
 
 /**

@@ -16,10 +16,9 @@ import { FilterModule, RadioFilterProps, RadioFilterOptions } from 'src/Filter/t
  * meant to override default text filter behaviour.
  */
 const RadioFilter = (
-    { initialValue, defaultValue, options, label }: RadioFilterProps,
+    { initialValue, defaultValue, options, label, description }: RadioFilterProps,
     radioFilterOptions: RadioFilterOptions = {}
 ): FilterModule<string> => ({
-    label,
     getApiQueryUrl: (key, value) => {
         return value !== defaultValue ? `&${key}=${value}` : '';
     },
@@ -41,7 +40,9 @@ const RadioFilter = (
             options={options}
         />
     ),
-    ...radioFilterOptions
+    ...radioFilterOptions,
+    description,
+    label,
 });
 
 export default RadioFilter;

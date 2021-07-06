@@ -8,10 +8,19 @@ import { FilterComponentProps } from 'src/Filter/types';
 import { DefaultWrapper, PageBody } from './filterPageStyles';
 import { FILTERS, LOCATION } from './filterPageUtil';
 
-const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilterBar'>> = (props) => {
+interface FilterPageProps {
+    pageFilters?: FilterSet;
+}
+
+const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilterBar'> & FilterPageProps> = (
+    props
+) => {
+    const {
+        pageFilters = FILTERS
+    } = props;
     const location = { ...LOCATION };
     const updateHistory = () => null;
-    const filterHooks = useFilter(FILTERS, props.isJSONInputAllowed, location, updateHistory);
+    const filterHooks = useFilter(pageFilters, props.isJSONInputAllowed, location, updateHistory);
 
     return (
         <ThemeProvider theme={theme}>

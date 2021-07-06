@@ -25,6 +25,7 @@ export const FILTERS = {
         defaultValue: '',
         initialValue: RADIO_FILTER_OPTIONS[0].value,
         options: RADIO_FILTER_OPTIONS,
+        description: 'RadioFilter is a radio group control meant to single select a value.'
     })
 };
 
