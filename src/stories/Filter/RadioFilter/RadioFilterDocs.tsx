@@ -29,8 +29,10 @@ export interface RadioFilterArgs {
 }
 
 /**
- * `RadioFilter` is a filter by use of radio group. While the default
- * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
+ * RadioFilter Component
+ * 
+ * The RadioFilter component is a filter by use of radio group. While the default
+ * behaviour should suffice, any valid `FilterModule` property (excluding label) can
  * be supplied via the `radioFilterOptions` parameter to change how the filter looks and acts.
  */
 const RadioFilterDocs: FC<RadioFilterArgs> = () => null;

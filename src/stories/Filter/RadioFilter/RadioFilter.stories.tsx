@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
+import FilterPage from '../components/FilterPage';
 import RadioFilterDocs, { RadioFilterArgs } from './RadioFilterDocs';
 import DocBlock from '.storybook/DocBlock';
 import { RadioFilter as RadioFilterFunction } from 'src/Filter/modules';
-import FilterPage from '../components/FilterPage';
 
 export default {
     title: 'Lakefront/Filter/RadioFilter',
@@ -19,11 +19,11 @@ export default {
         },
         defaultValue: {
             control: 'text',
-            description: 'The value to the radio filter defaults to when none are selected.'
+            description: 'The default value when there is no value selected.'
         },
         options: {
             control: 'array',
-            description: 'The radio options to select from.'
+            description: 'The list of options to choose from in the radio filter.'
         },
         radioFilterOptions: {
             control: false
@@ -41,7 +41,9 @@ const FILTERS = {
             props.initialValue,
             props.defaultValue,
             props.options,
-            // ...RadioFilterOptions
+            {
+                // ...RadioFilterOptions
+            }
         }
     )
 };
