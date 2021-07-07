@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { TextFilterOptions } from 'src/Filter/types';
+import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface TextFilterArgs {
     /**
@@ -16,6 +17,20 @@ export interface TextFilterArgs {
      */
     textFilterOptions?: TextFilterOptions;
 }
+
+/**
+ * Example of text filter source code.
+ */
+ export const TEXT_FILTER_SOURCE_CODE = createFilterSourceCode(`{
+    textFilter: TextFilter(
+        'Text Filter',
+        'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
+        {
+            getDefaultFilterValue: () => '',
+            ...additionalTextFilterOptions
+        }
+    )
+}`);
 
 /**
  * TextFilter Component
