@@ -1,5 +1,6 @@
 import RadioGroup from '../../../RadioGroup/RadioGroup';
 import { FilterModule, RadioFilterProps, RadioFilterOptions } from 'src/Filter/types';
+import { RadioGroupContainer } from './radioFilterStyles';
 
 /**
  * RadioFilter Component
@@ -11,7 +12,7 @@ import { FilterModule, RadioFilterProps, RadioFilterOptions } from 'src/Filter/t
  *
  * `radioFilterProps` - The props required to be supplied as the first argument of
  * the RadioFilter component.
- * 
+ *
  * `radioFilterOptions` - Any valid `FilterModule` property (excluding description and label)
  * meant to override default text filter behaviour.
  */
@@ -32,17 +33,19 @@ const RadioFilter = (
     },
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || initialValue,
     renderComponent: ({ name, value, update }) => (
-        <RadioGroup
-            key={name}
-            name={name}
-            value={value}
-            onChange={(event) => update(event.target.value)}
-            options={options}
-        />
+        <RadioGroupContainer>
+            <RadioGroup
+                key={name}
+                name={name}
+                value={value}
+                onChange={(event) => update(event.target.value)}
+                options={options}
+            />
+        </RadioGroupContainer>
     ),
     ...radioFilterOptions,
     description,
-    label,
+    label
 });
 
 export default RadioFilter;
