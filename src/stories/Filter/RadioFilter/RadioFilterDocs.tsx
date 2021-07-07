@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { RadioFilterOptions, RadioFilterProps } from 'src/Filter/types';
+import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface RadioFilterArgs {
     /**
@@ -13,6 +14,28 @@ export interface RadioFilterArgs {
      */
     radioFilterOptions?: RadioFilterOptions;
 }
+
+/**
+ * Example of radio filter source code.
+ */
+export const RADIO_FILTER_SOURCE_CODE = createFilterSourceCode(`{
+    radioFilter: RadioFilter(
+        {
+            label: 'Radio Filter',
+            initialValue: 'north',
+            defaultValue: '',
+            options: [
+                { label: 'North', value: 'north' },
+                ...additionalRadioGroupOptions
+            ],
+            description: 'RadioFilter is a radio group control meant to single select a value.'
+        },
+        {
+            getFilterBarLabel: (value: string) => \`Radio Filter: \${value}\`,
+            ...additionalRadioFilterOptions
+        }
+    )
+}`);
 
 /**
  * RadioFilter Component

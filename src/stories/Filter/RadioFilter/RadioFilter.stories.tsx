@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import FilterPage from '../components/FilterPage';
-import RadioFilterDocs, { RadioFilterArgs } from './RadioFilterDocs';
+import RadioFilterDocs, { RadioFilterArgs, RADIO_FILTER_SOURCE_CODE } from './RadioFilterDocs';
 import DocBlock from '.storybook/DocBlock';
 import { RadioFilter as RadioFilterFunction } from 'src/Filter/modules';
 
@@ -25,36 +25,7 @@ export default {
         docs: {
             page: DocBlock,
             source: {
-                code: `
-const FILTERS = {
-    radioFilter: RadioFilter(
-        props.radioFilterOptions
-        {
-            // ...RadioFilterOptions
-        }
-    )
-};
-const location = {};
-const updateHistory = () => null;
-const filterHooks = useFilter(FILTERS, true, location, updateHistory);
-return (
-    <ThemeProvider theme={theme}>
-        <DefaultWrapper>
-            <Filter
-                {...props}
-                filterHooks={filterHooks}
-                location={location}
-                updateHistory={updateHistory}
-            >
-                <PageBody>
-                    <UrlPreview queryParams={filterHooks.filterUrl.substring(1)} />
-                    <div>Modify filters in the left pane.</div>
-                </PageBody>
-            </Filter>
-        </DefaultWrapper>
-    </ThemeProvider>
-);
-                `
+                code: RADIO_FILTER_SOURCE_CODE
             }
         }
     }
