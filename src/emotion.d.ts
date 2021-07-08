@@ -1,6 +1,7 @@
 import '@emotion/react';
 import colors from 'core/styles/cloudColors';
-import colors from 'core/styles/borders';
+import borders from 'core/styles/borders';
+
 type ColorsType = typeof colors;
 type BordersType = typeof borders;
 
