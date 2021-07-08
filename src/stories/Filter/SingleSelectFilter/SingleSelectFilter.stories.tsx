@@ -1,0 +1,53 @@
+import { Meta, Story } from '@storybook/react/types-6-0';
+
+import FilterPage, { SINGLE_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
+import SingleSelectFilterDocs, { SingleSelectFilterArgs, SINGLE_SELECT_FILTER_SOURCE_CODE } from './SingleSelectFilterDocs';
+import DocBlock from '.storybook/DocBlock';
+import { SingleSelectFilter as SingleSelectFilterFunction } from 'src/Filter/modules';
+
+export default {
+    title: 'Lakefront/Filter/SingleSelectFilter',
+    component: SingleSelectFilterDocs,
+    argTypes: {
+        singleSelectFilterProps: {
+            control: {
+                type: 'object'
+            },
+            description: 'The props required to be supplied as the first argument of the SingleSelectFilter component.'
+        },
+        singleSelectFilterOptions: {
+            control: false,
+            description:
+                'Any valid `FilterModule` property (excluding description and label) which will override default single select filter behaviour.'
+        }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock,
+            source: {
+                code: SINGLE_SELECT_FILTER_SOURCE_CODE
+            }
+        }
+    }
+} as Meta;
+
+// Single Select Filter
+const SingleSelectFilterTemplate: Story = (args: SingleSelectFilterArgs) => {
+    const pageFilters = {
+        singleSelectFilter: SingleSelectFilterFunction(args.singleSelectFilterProps, {})
+    };
+
+    return <FilterPage pageFilters={pageFilters} />;
+};
+
+export const SingleSelectFilter = SingleSelectFilterTemplate.bind({});
+
+SingleSelectFilter.args = {
+    singleSelectFilterProps: {
+        label: 'Single Select Filter',
+        selectPlaceholderLabel: 'Select a color',
+        filterLabelPrefix: 'Single Select Filter',
+        options: SINGLE_SELECT_FILTER_OPTIONS,
+        description: 'SingleSelectFilter is a select dropdown control meant to single select a value.'
+    }
+};
