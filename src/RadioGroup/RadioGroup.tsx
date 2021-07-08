@@ -66,6 +66,7 @@ import {
         options.map((option) => {
 
           const icon = value === option.value ? <Checked /> : <Unchecked />;
+          const checked = value === option.value;
           const disableOption = disabled || option.disabled;
 
           return (
@@ -78,6 +79,7 @@ import {
                 disabled={disableOption}
                 onChange={disableOption ? () => null : handleChange}
                 type="radio"
+                checked={checked}
               />
               {icon}
               {option.label && <div className="label">{option.label}</div>}
