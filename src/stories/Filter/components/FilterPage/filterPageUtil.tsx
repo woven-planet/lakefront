@@ -1,4 +1,5 @@
 import { RadioFilter } from 'src/Filter/modules';
+import { TextFilter } from 'src/Filter/modules';
 
 const RADIO_FILTER_OPTIONS = [
     {
@@ -30,6 +31,15 @@ export const FILTERS = {
         },
         {
             getFilterBarLabel: (value: string) => `Radio Filter: ${value}`
+        }
+    ),
+    textFilter: TextFilter(
+        'Text Filter',
+        'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
+        {
+            getDefaultFilterValue: () => 'lakefront',
+            parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
+            getFilterBarLabel: (value: string) => `Text Filter: ${value}`
         }
     )
 };

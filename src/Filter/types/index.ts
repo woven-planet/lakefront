@@ -320,3 +320,9 @@ export interface RadioFilterProps {
  * meant to override default text filter behaviour.
  */
  export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
+ 
+ /**
+ * `TextFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default text filter behaviour.
+ */
+ export interface TextFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
