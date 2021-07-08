@@ -1,5 +1,5 @@
 import { getUrlFromList } from 'src/Filter/util/filterUtil';
-import CheckboxGroup from 'src/CheckboxGroup';
+import CheckboxGroup from 'src/CheckboxGroup/CheckboxGroup';
 import { FilterModule } from 'src/Filter/types';
 import { pluralize } from 'src/lib/util';
 
@@ -9,7 +9,7 @@ interface ListFilterOptions {
 }
 
 export const ListFilter = (
-    options,
+    options: any[],
     label: string,
     description?: string,
     listFilterOptions: ListFilterOptions = {}

@@ -10,7 +10,7 @@ const StyledDivider = styled.div({
     margin: '8px 0px'
 });
 
-interface Props {
+interface CheckboxGroupProps {
     options: {
         value: string;
         label: string | ReactElement;
@@ -26,15 +26,22 @@ interface Props {
     allLabel?: string;
 }
 
-const CheckboxGroup: FC<Props> = props => {
+const CheckboxGroup: FC<CheckboxGroupProps> = (
+    {
+        allColor,
+        allLabel,
+        className,
+        name,
+        onHandleChange,
+        options,
+        selected,
+        showAll = true
+    }) => {
     const isItemChecked = (value: string) => {
-        const { selected } = props;
-
         return selected.has(value);
     };
 
     const onItemChange = (value: string) => {
-        const { selected, onHandleChange } = props;
         if (selected.has(value)) {
             // remove item
             selected.delete(value);
@@ -46,7 +53,6 @@ const CheckboxGroup: FC<Props> = props => {
     };
 
     const onAllItemChange = () => {
-        const { selected, onHandleChange, options } = props;
         const isAllSelected = selected.size === options.length;
 
         let newSelection;
@@ -60,8 +66,6 @@ const CheckboxGroup: FC<Props> = props => {
         onHandleChange(newSelection);
     };
 
-
-    const { allColor, className, name, options, selected, showAll, allLabel } = props;
     const isAllSelected = selected.size === options.length;
     const allDisplayLabel = allLabel ? ` ${allLabel}` : '';
 
@@ -75,7 +79,7 @@ const CheckboxGroup: FC<Props> = props => {
                         color={allColor}
                         id={`checkbox-${name}-all`}
                         onChange={onAllItemChange}
-                        isSelected={isAllSelected}
+                        checked={isAllSelected}
                     />
                     <StyledDivider />
                 </>
@@ -90,18 +94,14 @@ const CheckboxGroup: FC<Props> = props => {
                         value={option.value}
                         label={option.label}
                         id={checkBoxId}
-                        onChange={onItemChange}
-                        isSelected={isSelected}
+                        onChange={(evt) => onItemChange(evt.target.value)}
+                        checked={isSelected}
                         color={option.color}
                     />
                 );
             })}
         </div>
     );
-};
-
-CheckboxGroup.defaultProps = {
-    showAll: true
 };
 
 export default CheckboxGroup;
