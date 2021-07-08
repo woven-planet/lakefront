@@ -47,6 +47,7 @@ We've added storybook pages to show how each component can be used.
 * [Checkbox](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkbox--checkbox)
 * [Collapsible](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-collapsible--collapsible)
 * [Filter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter--all-filters)
+  * [TextFilter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter-textfilter--text-filter)
 * [Input](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-input--placeholder)
 * [Loading](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-loading--loading)
 * [RadioGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-radiogroup--standard-radio-group)
