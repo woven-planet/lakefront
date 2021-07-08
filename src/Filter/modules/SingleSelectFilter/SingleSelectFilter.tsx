@@ -6,14 +6,14 @@ import { FilterModule, SingleSelectFilterProps, SingleSelectFilterOptions } from
  * SingleSelectFilter Component
  * 
  * The SingleSelectFilter component is a single select dropdown filter. While the default
- * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
+ * behaviour should suffice, any valid `FilterModule` property (excluding description, label, and required) can
  * be supplied via the `singleSelectFilterOptions` parameter to change how the filter looks and acts.
  * SingleSelectFilter arguments include:
  *
  * `singleSelectFilterProps` - The props required to be supplied as the first argument of
  * the SingleSelectFilter component.
  *
- * `singleSelectFilterOptions` - Any valid `FilterModule` property (excluding description and label)
+ * `singleSelectFilterOptions` - Any valid `FilterModule` property (excluding description, label, and required)
  * meant to override default text filter behaviour.
  */
 const SingleSelectFilter = (

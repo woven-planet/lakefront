@@ -316,7 +316,7 @@ export interface FilterContainerProps {
 }
 
 /**
- * `SingleSelectFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * `SingleSelectFilterOptions` is any valid `FilterModule` property (excluding description, label, and required)
  * meant to override default text filter behaviour.
  */
  export interface SingleSelectFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label' | 'required'> {}

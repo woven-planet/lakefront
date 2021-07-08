@@ -18,7 +18,7 @@ export default {
         singleSelectFilterOptions: {
             control: false,
             description:
-                'Any valid `FilterModule` property (excluding description and label) which will override default single select filter behaviour.'
+                'Any valid `FilterModule` property (excluding description, label, and required) which will override default single select filter behaviour.'
         }
     },
     parameters: {
