@@ -91,15 +91,16 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                 const isSelected = isItemChecked(option.value);
                 const checkBoxId = `checkbox-${name}-${option.value}`;
                 return (
-                    <Checkbox
-                        key={option.value}
-                        value={option.value}
-                        label={option.label}
-                        id={checkBoxId}
-                        onChange={(evt) => onItemChange(evt.target.value)}
-                        checked={isSelected}
-                        color={option.color}
-                    />
+                    <div key={option.value}>
+                        <Checkbox
+                            value={option.value}
+                            label={option.label}
+                            id={checkBoxId}
+                            onChange={(evt) => onItemChange(evt.target.value)}
+                            checked={isSelected}
+                            color={option.color}
+                        />
+                    </div>
                 );
             })}
         </div>

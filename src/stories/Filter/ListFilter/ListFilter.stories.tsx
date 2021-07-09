@@ -4,6 +4,7 @@ import FilterPage from '../components/FilterPage';
 import DocBlock from '.storybook/DocBlock';
 import { ListFilter as ListFilterFunction } from 'src/Filter/modules';
 import ListFilterDocs, { LIST_FILTER_SOURCE_CODE, ListFilterArgs } from './ListFilterDocs';
+import { CheckboxGroupOption } from 'src/CheckboxGroup/CheckboxGroup';
 
 export default {
     title: 'Lakefront/Filter/ListFilter',
@@ -16,6 +17,9 @@ export default {
         description: {
             control: 'text',
             description: 'The description/help text to display above the text filter component.'
+        },
+        listFilterOptions: {
+            control: false
         }
     },
     parameters: {
@@ -31,7 +35,7 @@ export default {
 // ListFilter
 const ListFilterTemplate: Story = (args: ListFilterArgs) => {
     const pageFilters = {
-        textFilter: ListFilterFunction(args.label, args.description, {})
+        textFilter: ListFilterFunction(args.options, args.label, args.description, {})
     };
 
     return <FilterPage pageFilters={pageFilters} />;
@@ -39,7 +43,23 @@ const ListFilterTemplate: Story = (args: ListFilterArgs) => {
 
 export const ListFilter = ListFilterTemplate.bind({});
 
+const options: CheckboxGroupOption[] = [
+    {
+        label: 'First',
+        value: 'first'
+    },
+    {
+        label: 'Second',
+        value: 'second'
+    },
+    {
+        label: 'Third',
+        value: 'third'
+    }
+];
+
 ListFilter.args = {
     label: 'List Filter',
-    description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
+    description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.',
+    options
 };
