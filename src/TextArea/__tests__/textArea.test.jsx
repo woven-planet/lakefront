@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import TextArea from '../../TextArea/TextArea';
+import TextArea from '../TextArea';
 
 const LABEL = 'Label';
 const ERROR = 'Error';

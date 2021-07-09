@@ -8,7 +8,7 @@ import {
   import { StyledRadioGroup, StyledLabel } from './radioGroupStyles';
   import { ReactComponent as Checked } from './assets/radioChecked.svg';
   import { ReactComponent as Unchecked } from './assets/radioUnchecked.svg';
-  import theme from '../styles/theme';
+  import theme from 'src/styles/theme';
 
   export interface RadioGroupProps {
     /**
