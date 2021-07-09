@@ -10,12 +10,14 @@ const StyledDivider = styled.div({
     margin: '8px 0px'
 });
 
+export interface CheckboxGroupOption {
+    value: string;
+    label: string | ReactElement;
+    color?: string;
+};
+
 interface CheckboxGroupProps {
-    options: {
-        value: string;
-        label: string | ReactElement;
-        color?: string;
-    }[];
+    options: CheckboxGroupOption[];
     allColor?: string;
     className?: string;
     classNameItem?: string;

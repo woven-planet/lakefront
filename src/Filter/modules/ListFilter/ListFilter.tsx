@@ -3,12 +3,12 @@ import CheckboxGroup from 'src/CheckboxGroup/CheckboxGroup';
 import { FilterModule } from 'src/Filter/types';
 import { pluralize } from 'src/lib/util';
 
-interface ListFilterOptions {
+export interface ListFilterOptions {
     allLabel?: string;
     initialValue?: string | any[];
 }
 
-export const ListFilter = (
+const ListFilter = (
     options: any[],
     label: string,
     description?: string,
@@ -78,3 +78,5 @@ export const ListFilter = (
         />
     )
 });
+
+export default ListFilter;
