@@ -4,7 +4,7 @@ import FilterPage from '../components/FilterPage';
 import DocBlock from '.storybook/DocBlock';
 import { ListFilter as ListFilterFunction } from 'src/Filter/modules';
 import ListFilterDocs, { LIST_FILTER_SOURCE_CODE, ListFilterArgs } from './ListFilterDocs';
-import { CheckboxGroupOption } from 'src/CheckboxGroup/CheckboxGroup';
+import { listFilterOptions } from './listFilterUtil';
 
 export default {
     title: 'Lakefront/Filter/ListFilter',
@@ -43,23 +43,8 @@ const ListFilterTemplate: Story = (args: ListFilterArgs) => {
 
 export const ListFilter = ListFilterTemplate.bind({});
 
-const options: CheckboxGroupOption[] = [
-    {
-        label: 'First',
-        value: 'first'
-    },
-    {
-        label: 'Second',
-        value: 'second'
-    },
-    {
-        label: 'Third',
-        value: 'third'
-    }
-];
-
 ListFilter.args = {
     label: 'List Filter',
     description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.',
-    options
+    options: listFilterOptions
 };

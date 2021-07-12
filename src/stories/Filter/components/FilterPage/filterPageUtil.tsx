@@ -1,4 +1,5 @@
-import { TextFilter } from 'src/Filter/modules';
+import { ListFilter, TextFilter } from 'src/Filter/modules';
+import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 export const FILTERS = {
     textFilter: TextFilter(
@@ -9,6 +10,11 @@ export const FILTERS = {
             parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
             getFilterBarLabel: (value: string) => `Text Filter: ${value}`
         }
+    ),
+    listFilter: ListFilter(
+        listFilterOptions,
+        'List Filter',
+        'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
     )
 };
 
