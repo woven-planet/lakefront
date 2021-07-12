@@ -1,4 +1,19 @@
-import { SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { MultiSelectFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+
+export const MULTI_SELECT_FILTER_OPTIONS = [
+    {
+        label: 'Colors',
+        value: 'colors'
+    },
+    {
+        label: 'Sizes',
+        value: 'sizes'
+    },
+    {
+        label: 'Shapes',
+        value: 'shapes'
+    }
+];
 
 export const SINGLE_SELECT_FILTER_OPTIONS = [
     {
@@ -16,6 +31,15 @@ export const SINGLE_SELECT_FILTER_OPTIONS = [
 ];
 
 export const FILTERS = {
+    multiSelectFilter: MultiSelectFilter(
+        {
+            label: 'Multi Select Filter',
+            creatable: true,
+            initialValue: ['colors'],
+            options: MULTI_SELECT_FILTER_OPTIONS,
+            description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
+        }
+    ),
     singleSelectFilter: SingleSelectFilter(
         {
             label: 'Single Select Filter',

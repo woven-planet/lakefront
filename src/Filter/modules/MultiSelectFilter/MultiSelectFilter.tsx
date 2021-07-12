@@ -1,7 +1,21 @@
-import { getUrlFromList } from './dataToolsUtil';
+import { getUrlFromList } from './multiSelectUtil';
 import MultiSelect from './MultiSelect';
 import { FilterModule, MultiSelectFilterProps, MultiSelectFilterOptions } from 'src/Filter/types';
 
+/**
+ * MultiSelectFilter Component
+ * 
+ * The MultiSelectFilter component is a multi select dropdown filter. While the default
+ * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
+ * be supplied via the `multiSelectFilterOptions` parameter to change how the filter looks and acts.
+ * MultiSelectFilter arguments include:
+ *
+ * `multiSelectFilterProps` - The props required to be supplied as the first argument of
+ * the MultiSelectFilter component.
+ *
+ * `multiSelectFilterOptions` - Any valid `FilterModule` property (excluding description and label)
+ * meant to override default text filter behaviour.
+ */
 const MultiSelectFilter = (
     {
         options,
