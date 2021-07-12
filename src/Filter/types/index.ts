@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction } from 'react';
+import { SelectOverLayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
+import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
-import { SelectOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 
 /**
  * FilterRenderProps are the required props of the renderComponent
@@ -302,11 +303,32 @@ export interface FilterContainerProps {
 };
 
 /**
+ * `MultiSelectFilterProps` are the props required to be supplied as the
+ * first argument of the MultiSelectFilter component.
+ */
+export interface MultiSelectFilterProps {
+    options: MultiSelectOption[];
+    label: string;
+    description?: string;
+    initialValue?: any[];
+    creatable?: boolean;
+    handleCreateItem?: (item: string) => void;
+    disableMenu?: boolean;
+}
+
+/**
+ * `MultiSelectFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default multi select filter behaviour.
+ */
+ export interface MultiSelectFilterOptions extends Omit<Partial<FilterModule<string[]>>, 'description' | 'label'> {}
+
+
+/**
  * `SingleSelectFilterProps` are the props required to be supplied as the
  * first argument of the SingleSelectFilter component.
  */
  export interface SingleSelectFilterProps {
-    options: SelectOption[];
+    options: SelectOverLayOption[];
     label: string;
     description?: string;
     selectPlaceholderLabel?: string;
@@ -317,7 +339,7 @@ export interface FilterContainerProps {
 
 /**
  * `SingleSelectFilterOptions` is any valid `FilterModule` property (excluding description, label, and required)
- * meant to override default text filter behaviour.
+ * meant to override default single select filter behaviour.
  */
  export interface SingleSelectFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label' | 'required'> {}
 

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { lightenDarkenColor } from 'src/styles/stylesUtil';
-import { SelectOption } from './SelectOverlay';
+import { SelectOverLayOption } from './SelectOverlay';
 import { GroupTypeBase, Styles } from 'react-select';
 
 const DARKEN_MOST = -40;
@@ -10,7 +10,7 @@ export const HiddenSelectControl = styled.select({
     display: 'none'
 });
 
-export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption, false, GroupTypeBase<SelectOption>>> = {
+export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOverLayOption, false, GroupTypeBase<SelectOverLayOption>>> = {
     control: (defaultStyles, state) => ({
         ...defaultStyles,
         flexWrap: undefined,

@@ -2,14 +2,9 @@ import { FC, useMemo } from 'react';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
+import { SelectOption } from 'src/types/global';
 
-/**
- * `SelectOption` is the structure of a selectable option.
- */
-export interface SelectOption {
-    value: string | number | undefined;
-    label: string;
-}
+export type SelectOverLayOption = SelectOption<string | number | undefined>;
 
 /**
  * `SelectProps` are the props to be provided to the Select
@@ -17,7 +12,7 @@ export interface SelectOption {
  * element and a react-select based SelectOverlay component.
  */
 export interface SelectProps {
-    options: SelectOption[];
+    options: SelectOverLayOption[];
     onChange(event: any): void;
     value: string | number;
     onBlur?(event: any): void;
@@ -38,7 +33,7 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
         [options, value]
     );
 
-    const handleChange = (option: SelectOption | null) => {
+    const handleChange = (option: SelectOverLayOption | null) => {
         const newValue = option?.value;
         onChange({
             target: { value: newValue },
