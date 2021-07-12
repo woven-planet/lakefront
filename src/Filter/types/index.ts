@@ -296,9 +296,10 @@ export interface FilterComponentProps {
  * to be provided to outermost container of the Filter component.
  */
 export interface FilterContainerProps {
-    showJSONInput: boolean;
     isCollapsed: boolean;
-};
+    showJSONInput: boolean;
+    hideFilterBar?: boolean;
+}
 
 /**
  * `TextFilterOptions` is any valid `FilterModule` property (excluding description and label)

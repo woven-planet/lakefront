@@ -10,11 +10,16 @@ const StyledDivider = styled.div({
     margin: '8px 0px'
 });
 
+const CheckboxGroupWrapper = styled.div({
+    display: 'flex',
+    flexDirection: 'column'
+});
+
 export interface CheckboxGroupOption {
     value: string;
     label: string | ReactElement;
     color?: string;
-};
+}
 
 interface CheckboxGroupProps {
     options: CheckboxGroupOption[];
@@ -72,7 +77,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
     const allDisplayLabel = allLabel ? ` ${allLabel}` : '';
 
     return (
-        <div className={className}>
+        <CheckboxGroupWrapper className={className}>
             {showAll && (
                 <>
                     <Checkbox
@@ -91,19 +96,18 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                 const isSelected = isItemChecked(option.value);
                 const checkBoxId = `checkbox-${name}-${option.value}`;
                 return (
-                    <div key={option.value}>
-                        <Checkbox
-                            value={option.value}
-                            label={option.label}
-                            id={checkBoxId}
-                            onChange={(evt) => onItemChange(evt.target.value)}
-                            checked={isSelected}
-                            color={option.color}
-                        />
-                    </div>
+                    <Checkbox
+                        key={option.value}
+                        value={option.value}
+                        label={option.label}
+                        id={checkBoxId}
+                        onChange={(evt) => onItemChange(evt.target.value)}
+                        checked={isSelected}
+                        color={option.color}
+                    />
                 );
             })}
-        </div>
+        </CheckboxGroupWrapper>
     );
 };
 

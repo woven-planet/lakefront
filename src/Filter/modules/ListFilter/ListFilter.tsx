@@ -61,9 +61,9 @@ const ListFilter = (
         }
         if (listFilterOptions.initialValue?.length) {
             const { initialValue } = listFilterOptions;
-            const initialfilterValue = typeof initialValue === 'string' ? [initialValue] : initialValue;
+            const initialFilterValue = typeof initialValue === 'string' ? [initialValue] : initialValue;
 
-            return new Set(initialfilterValue);
+            return new Set(initialFilterValue);
         }
         return new Set(options.map(item => item.value));
     },

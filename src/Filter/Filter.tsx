@@ -104,6 +104,7 @@ export const Filter: FC<FilterComponentProps> = ({
             <FilterContainer
                 showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
                 isCollapsed={isCollapsed}
+                hideFilterBar={hideFilterBar}
             >
                 <SidePanel className="sidePanel">
                     <FilterHeader className="filterHeader">
