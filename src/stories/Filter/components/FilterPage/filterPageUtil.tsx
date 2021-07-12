@@ -2,15 +2,15 @@ import { MultiSelectFilter, SingleSelectFilter, TextFilter } from 'src/Filter/mo
 
 export const MULTI_SELECT_FILTER_OPTIONS = [
     {
-        label: 'Colors',
+        label: 'colors',
         value: 'colors'
     },
     {
-        label: 'Sizes',
+        label: 'sizes',
         value: 'sizes'
     },
     {
-        label: 'Shapes',
+        label: 'shapes',
         value: 'shapes'
     }
 ];
@@ -38,6 +38,9 @@ export const FILTERS = {
             initialValue: ['colors'],
             options: MULTI_SELECT_FILTER_OPTIONS,
             description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
+        },
+        {
+            getDefaultFilterValue: () => ['colors'],
         }
     ),
     singleSelectFilter: SingleSelectFilter(

@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
 import { SelectOption } from 'src/types/global';
+import { ThemeProvider } from '@emotion/react';
 
 export type SelectOverLayOption = SelectOption<string | number | undefined>;
 
@@ -42,25 +43,27 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
     };
 
     return (
-        <Select
-            isDisabled={disabled}
-            id={selectId}
-            defaultValue={defaultValue}
-            value={currentValue}
-            options={options}
-            onChange={handleChange}
-            styles={SELECT_OVERLAY_STYLES}
-            theme={(defaultTheme) => ({
-                ...defaultTheme,
-                colors: {
-                    ...theme.colors,
-                    primary: theme.colors.white,
-                    primary25: disabled ? theme.colors.white : theme.colors.mercury
-                }
-            })}
-            isSearchable={isSearchable}
-            {...rest}
-        />
+        <ThemeProvider theme={theme}>
+            <Select
+                isDisabled={disabled}
+                id={selectId}
+                defaultValue={defaultValue}
+                value={currentValue}
+                options={options}
+                onChange={handleChange}
+                styles={SELECT_OVERLAY_STYLES}
+                theme={(defaultTheme) => ({
+                    ...defaultTheme,
+                    colors: {
+                        ...theme.colors,
+                        primary: theme.colors.white,
+                        primary25: disabled ? theme.colors.white : theme.colors.mercury
+                    }
+                })}
+                isSearchable={isSearchable}
+                {...rest}
+            />
+        </ThemeProvider>
     );
 };
 

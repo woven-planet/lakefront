@@ -31,6 +31,7 @@ export interface MultiSelectFilterArgs {
             description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
         },
         {
+            getDefaultFilterValue: () => ['colors']
             ...additionalMultiSelectFilterOptions
         }
     )

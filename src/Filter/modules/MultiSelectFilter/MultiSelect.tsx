@@ -5,6 +5,8 @@ import CreatableSelect from 'react-select/creatable';
 import { SelectOption } from 'src/types/global';
 import { MULTI_SELECT_STYLES } from './multiSelectStyles';
 import { createOption } from './multiSelectUtil';
+import { ThemeProvider } from '@emotion/react';
+import theme from 'src/styles/theme';
 
 export type MultiSelectOption = SelectOption<string>;
 
@@ -78,7 +80,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
             : undefined;
 
         return (
-            <>
+            <ThemeProvider theme={theme}>
                 {creatable ? (
                     <CreatableSelect
                         components={disabledMenuComponents}
@@ -91,6 +93,15 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         onCreateOption={this.handleCreate}
                         options={this.state.items}
                         styles={MULTI_SELECT_STYLES}
+                        theme={(defaultTheme) => ({
+                            ...defaultTheme,
+                            colors: {
+                                ...theme.colors,
+                                primary: theme.colors.white,
+                                primary25: theme.colors.mercury,
+                                neutral0: theme.colors.white
+                            }
+                        })}
                     />
                 ) : (
                     <Select
@@ -102,9 +113,18 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         onChange={this.handleChange}
                         options={items}
                         styles={MULTI_SELECT_STYLES}
+                        theme={(defaultTheme) => ({
+                            ...defaultTheme,
+                            colors: {
+                                ...theme.colors,
+                                primary: theme.colors.white,
+                                primary25: theme.colors.mercury,
+                                neutral0: theme.colors.white
+                            }
+                        })}
                     />
                 )}
-            </>
+            </ThemeProvider>
         );
     }
 }
