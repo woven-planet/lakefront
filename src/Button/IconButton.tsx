@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { IconComponentProps } from './buttonUtil';
 import styled from '@emotion/styled';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 interface IconSpanProps {
     iconPosition?: 'left' | 'right';

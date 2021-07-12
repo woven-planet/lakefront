@@ -9,7 +9,7 @@ import {
     InvalidButtonColorError,
     shouldUseMappedIcon
 } from './buttonUtil';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 /**
  * Button Component

@@ -8,7 +8,7 @@ import {
   import { StyledRadioGroup, StyledLabel } from './radioGroupStyles';
   import { ReactComponent as Checked } from './assets/radioChecked.svg';
   import { ReactComponent as Unchecked } from './assets/radioUnchecked.svg';
-  import theme from '../styles/theme';
+  import theme from 'src/styles/theme';
 
   export interface RadioGroupProps {
     /**
@@ -66,6 +66,7 @@ import {
         options.map((option) => {
 
           const icon = value === option.value ? <Checked /> : <Unchecked />;
+          const checked = value === option.value;
           const disableOption = disabled || option.disabled;
 
           return (
@@ -78,6 +79,7 @@ import {
                 disabled={disableOption}
                 onChange={disableOption ? () => null : handleChange}
                 type="radio"
+                checked={checked}
               />
               {icon}
               {option.label && <div className="label">{option.label}</div>}

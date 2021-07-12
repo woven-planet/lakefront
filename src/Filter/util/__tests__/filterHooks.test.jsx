@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useFilter } from '../filterHooks';
 import queryString from 'query-string';
-import { DEFAULT_PHRASE_DEMO, FILTERS, KEYWORD_DEMO, LOCATION, PHRASE_DEMO } from '../../__tests__/filter.data';
+import { DEFAULT_PHRASE_DEMO, FILTERS, KEYWORD_DEMO, LOCATION, PHRASE_DEMO } from 'src/Filter/__tests__/filter.data';
 
 describe('useFilter', () => {
     it('should have initial values', () => {
