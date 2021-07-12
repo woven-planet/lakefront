@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { lightenDarkenColor } from '../styles/stylesUtil';
+import { lightenDarkenColor } from 'src/styles/stylesUtil';
 import { ButtonComponentProps, ComponentStyles } from './buttonUtil';
 import { css, Theme } from '@emotion/react';
 import { getIconStyles } from './iconButtonVariants';

@@ -8,7 +8,7 @@ import { ThemeProvider } from '@emotion/react';
 import { StyledCheckbox, StyledLabel } from './checkboxStyles';
 import { ReactComponent as Check } from './assets/check.svg';
 import { ReactComponent as Indeterminate } from './assets/indeterminate.svg';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 export interface CheckboxProps {
   /**

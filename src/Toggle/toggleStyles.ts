@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ToggleProps } from './Toggle';
-import { hexToRgb } from '../styles/stylesUtil';
+import { hexToRgb } from 'src/styles/stylesUtil';
 
 export const Label = styled.span<Pick<ToggleProps<unknown>, 'disabled'>>(({ theme, disabled }) => ({
     color: disabled ? theme?.colors?.doveGrey : theme?.colors?.black,

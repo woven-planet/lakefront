@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { lightenDarkenColor } from '../styles/stylesUtil';
+import { lightenDarkenColor } from 'src/styles/stylesUtil';
 
 const DARKEN_MOST = -40;
 

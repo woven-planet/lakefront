@@ -6,10 +6,10 @@ import {
 } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledCollapsible } from './collapsibleStyles';
-import Button from '../Button/Button';
+import Button from 'src/Button/Button';
 import { ReactComponent as ChevronUp } from './assets/chevron-up.svg';
 import { ReactComponent as ChevronDown } from './assets/chevron-down.svg';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 export interface CollapsibleProps {
   /**

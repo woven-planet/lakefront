@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledInput, StyledLabel } from './inputStyles';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 export interface InputProps {
     /**
