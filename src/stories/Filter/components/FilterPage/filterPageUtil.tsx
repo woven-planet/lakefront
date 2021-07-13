@@ -1,7 +1,60 @@
-import { ListFilter, TextFilter } from 'src/Filter/modules';
+import { ListFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
+export const SINGLE_SELECT_FILTER_OPTIONS = [
+    {
+        label: 'Red',
+        value: 'red'
+    },
+    {
+        label: 'Green',
+        value: 'green'
+    },
+    {
+        label: 'Blue',
+        value: 'blue'
+    }
+];
+
+const RADIO_FILTER_OPTIONS = [
+    {
+        label: 'North',
+        value: 'north'
+    },
+    {
+        label: 'East',
+        value: 'east'
+    },
+    {
+        label: 'South',
+        value: 'south'
+    },
+    {
+        label: 'West',
+        value: 'west'
+    }
+];
+
 export const FILTERS = {
+    radioFilter: RadioFilter(
+        {
+            label: 'Radio Filter',
+            defaultValue: '',
+            initialValue: RADIO_FILTER_OPTIONS[0].value,
+            options: RADIO_FILTER_OPTIONS,
+            description: 'RadioFilter is a radio group control meant to single select a value.'
+        },
+        {
+            getFilterBarLabel: (value: string) => `Radio Filter: ${value}`
+        }
+    ),
+    singleSelectFilter: SingleSelectFilter({
+        label: 'Single Select Filter',
+        selectPlaceholderLabel: 'Select a color',
+        filterLabelPrefix: 'Single Select Filter',
+        options: SINGLE_SELECT_FILTER_OPTIONS,
+        description: 'SingleSelectFilter is a select dropdown control meant to single select a value.'
+    }),
     textFilter: TextFilter(
         'Text Filter',
         'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',

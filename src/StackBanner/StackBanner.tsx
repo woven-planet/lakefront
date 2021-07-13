@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, FC } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StackBannerListDiv } from './stackBannerStyles';
 import StackBannerRow, { StackBannerRowProps } from './StackBannerRow';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 export interface StackBannerProps {
   /**

@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import SelectPopover from '../../SelectPopover/SelectPopover';
-import Button from '../../Button/Button';
+import SelectPopover from '../SelectPopover';
+import Button from 'src/Button/Button';
 
 const options = [
     {

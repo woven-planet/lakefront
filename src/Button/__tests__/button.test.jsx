@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import Button from '../Button';
-import { lightenDarkenColor } from '../../styles/stylesUtil';
+import { lightenDarkenColor } from 'src/styles/stylesUtil';
 
 const BUTTON_TEXT = 'buttonText';
 

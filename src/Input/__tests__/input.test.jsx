@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Input from '../../Input/Input';
+import Input from '../Input';
 
 const LABEL = 'Label';
 const ERROR = 'Error';

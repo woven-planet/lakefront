@@ -7,12 +7,12 @@ import { ReactComponent as RemoveIcon } from './assets/minus.svg';
 import Digraph from './Digraph';
 import DigraphDFS from './DigraphDFS';
 import { drawGraph } from './GraphRenderer';
-import resizeObserver from '../lib/hooks/resizeObserver.js';
-import throttled from '../lib/hooks/throttle.js';
+import resizeObserver from 'src/lib/hooks/resizeObserver.js';
+import throttled from 'src/lib/hooks/throttle.js';
 import { NodeDimensions } from './GraphUtil';
 import { collides } from './canvasUtil';
 import { GraphControls, GraphContainer, StyledCanvas } from './graphStyles';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
 export interface GraphProps {
