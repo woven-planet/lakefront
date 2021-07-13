@@ -28,9 +28,11 @@ describe('Select', () => {
 
     it('triggers handler on select change', () => {
         const onChangeCallback = jest.fn();
-        const { container } = render(<Select onChange={onChangeCallback} value={'1'} options={options} />);
+        const { getByRole, getAllByText } = render(<Select onChange={onChangeCallback} value={'1'} options={options} />);
 
-        fireEvent.change(container.querySelector('select'), { target: { value: '2' } });
+        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.click(getAllByText('two')[1]);
+
         expect(onChangeCallback).toHaveBeenCalled();
     });
 });
