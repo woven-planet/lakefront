@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
 import { createPortal } from 'react-dom';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
 export interface SelectPopoverOption {

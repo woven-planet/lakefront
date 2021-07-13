@@ -322,6 +322,27 @@ export interface MultiSelectFilterProps {
  */
  export interface MultiSelectFilterOptions extends Omit<Partial<FilterModule<string[]>>, 'description' | 'label'> {}
 
+/**
+ * `RadioFilterProps` are the props required to be supplied as the first argument of
+ * the RadioFilter component.
+ */
+export interface RadioFilterProps {
+    initialValue: string;
+    defaultValue: string;
+    options: {
+        label: string;
+        value: string;
+    }[];
+    label: string;
+    description?: string;
+}
+
+/**
+ * `RadioFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default text filter behaviour.
+ */
+ export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
+ 
 
 /**
  * `SingleSelectFilterProps` are the props required to be supplied as the

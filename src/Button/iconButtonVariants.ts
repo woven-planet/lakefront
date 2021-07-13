@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react';
-import { lightenDarkenColor } from '../styles/stylesUtil';
+import { lightenDarkenColor } from 'src/styles/stylesUtil';
 import { ComponentStyles } from './buttonUtil';
 
 const MAIN_STYLES = {

@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, FocusEventHandler, useMemo } from 'react';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
@@ -14,9 +14,9 @@ export type SelectOverLayOption = SelectOption<string | number | undefined>;
  */
 export interface SelectProps {
     options: SelectOverLayOption[];
-    onChange(event: any): void;
+    onChange(option: SelectOption | null): void;
     value: string | number;
-    onBlur?(event: any): void;
+    onBlur?: FocusEventHandler;
     autoFocus?: boolean;
     className?: string;
     id?: string;
@@ -24,7 +24,7 @@ export interface SelectProps {
     isSearchable?: boolean;
 }
 
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, ...rest }) => {
+const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, value, ...rest }) => {
     const { currentValue, defaultValue, selectId } = useMemo(
         () => ({
             currentValue: options.find((option) => option.value === value),
@@ -34,14 +34,6 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
         [options, value]
     );
 
-    const handleChange = (option: SelectOverLayOption | null) => {
-        const newValue = option?.value;
-        onChange({
-            target: { value: newValue },
-            currentTarget: { value: newValue }
-        });
-    };
-
     return (
         <ThemeProvider theme={theme}>
             <Select
@@ -50,7 +42,6 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
                 defaultValue={defaultValue}
                 value={currentValue}
                 options={options}
-                onChange={handleChange}
                 styles={SELECT_OVERLAY_STYLES}
                 theme={(defaultTheme) => ({
                     ...defaultTheme,

@@ -14,7 +14,7 @@ import {
 import { ReactComponent as Add } from './assets/add.svg';
 import { ReactComponent as Remove } from './assets/remove.svg';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 
 /**
  * Filter Component

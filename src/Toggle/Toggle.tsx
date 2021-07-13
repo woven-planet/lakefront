@@ -1,5 +1,5 @@
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
-import theme from '../styles/theme';
+import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import { SelectOption as ToggleOption } from 'src/types/global';
 

@@ -1,4 +1,4 @@
-import { MultiSelectFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { MultiSelectFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
 
 export const MULTI_SELECT_FILTER_OPTIONS = [
     {
@@ -30,6 +30,25 @@ export const SINGLE_SELECT_FILTER_OPTIONS = [
     }
 ];
 
+const RADIO_FILTER_OPTIONS = [
+    {
+        label: 'North',
+        value: 'north'
+    },
+    {
+        label: 'East',
+        value: 'east'
+    },
+    {
+        label: 'South',
+        value: 'south'
+    },
+    {
+        label: 'West',
+        value: 'west'
+    }
+];
+
 export const FILTERS = {
     multiSelectFilter: MultiSelectFilter(
         {
@@ -41,6 +60,18 @@ export const FILTERS = {
         },
         {
             getDefaultFilterValue: () => ['colors'],
+        }
+    ),
+    radioFilter: RadioFilter(
+        {
+            label: 'Radio Filter',
+            defaultValue: '',
+            initialValue: RADIO_FILTER_OPTIONS[0].value,
+            options: RADIO_FILTER_OPTIONS,
+            description: 'RadioFilter is a radio group control meant to single select a value.'
+        },
+        {
+            getFilterBarLabel: (value: string) => `Radio Filter: ${value}`
         }
     ),
     singleSelectFilter: SingleSelectFilter(
