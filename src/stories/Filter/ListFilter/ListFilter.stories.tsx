@@ -12,11 +12,11 @@ export default {
     argTypes: {
         label: {
             control: 'text',
-            description: 'The label to display for the text filter component.'
+            description: 'The label to display for the list filter component.'
         },
         description: {
             control: 'text',
-            description: 'The description/help text to display above the text filter component.'
+            description: 'The description/help text to display above the list filter component.'
         },
         listFilterOptions: {
             control: false
@@ -35,7 +35,7 @@ export default {
 // ListFilter
 const ListFilterTemplate: Story = (args: ListFilterArgs) => {
     const pageFilters = {
-        textFilter: ListFilterFunction(args.options, args.label, args.description, {})
+        listFilter: ListFilterFunction(args.options, args.label, args.description, {})
     };
 
     return <FilterPage pageFilters={pageFilters} />;

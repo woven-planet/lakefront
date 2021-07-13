@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { TextFilterOptions } from 'src/Filter/types';
+import { ListFilterOverrides } from 'src/Filter/types';
 import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
-import { ListFilterOptions } from '../../../Filter/modules/ListFilter/ListFilter';
-import { CheckboxGroupOption } from '../../../CheckboxGroup/CheckboxGroup';
+import { ListFilterOptions } from 'src/Filter/modules/ListFilter/ListFilter';
+import { CheckboxGroupOption } from 'src/CheckboxGroup/CheckboxGroup';
 
 export interface ListFilterArgs {
     /**
@@ -18,21 +18,30 @@ export interface ListFilterArgs {
      */
     description?: string;
     /**
+     * Additional options for the list filter settings.
+     */
+    listFilterOptions: ListFilterOptions;
+    /**
      * Additional options for the list filter behavior.
      */
-    listFilterOptions: ListFilterOptions
+    listFilterOverrides: ListFilterOverrides;
 }
 
 /**
  * Example of list filter source code.
  */
  export const LIST_FILTER_SOURCE_CODE = createFilterSourceCode(`{
-    textFilter: ListFilter(
+    listFilter: ListFilter(
+        [{ label: 'First', value: 'first' }, { label: 'Second', value: 'second' }],
         'List Filter',
-        'ListFilter is a checkbox group control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
+        'ListFilter is a checkbox group control meant to be used for filtering specific items in a set. (Tab or Enter to apply)',
+        {
+            allLabel: 'Custom All Label Text',
+            initialValue: 'first'
+        },
         {
             getDefaultFilterValue: () => '',
-            ...additionalTextFilterOptions
+            ...additionalListFilterOptions
         }
     )
 }`);
@@ -40,9 +49,9 @@ export interface ListFilterArgs {
 /**
  * ListFilter Component
  *
- * The ListFilter component is a checkbox control meant to be used as a keyword(s) search. While the default
+ * The ListFilter component is a checkbox control meant to be used for filtering specific items in a set. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
- * be supplied via the `textFilterOptions` parameter to change how the filter looks and acts.
+ * be supplied via the `listFilterOverrides` parameter to change how the filter looks and acts.
  */
 const ListFilterDocs: FC<ListFilterArgs> = () => null;
 
