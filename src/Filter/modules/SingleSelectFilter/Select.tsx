@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { HiddenSelectControl } from './selectStyles';
 import SelectOverlay, { SelectOption, SelectProps } from './SelectOverlay';
 
-const Select: FC<SelectProps> = ({ options, className, ...rest }) => {
+const Select: FC<SelectProps> = ({ options, className, onChange, ...rest }) => {
     return (
         <div>
             <HiddenSelectControl {...rest}>
@@ -12,7 +12,7 @@ const Select: FC<SelectProps> = ({ options, className, ...rest }) => {
                     </option>
                 ))}
             </HiddenSelectControl>
-            <SelectOverlay {...rest} options={options} />
+            <SelectOverlay {...rest} onChange={onChange} options={options} />
         </div>
     );
 };
