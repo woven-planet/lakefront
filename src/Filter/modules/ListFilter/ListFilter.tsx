@@ -15,8 +15,6 @@ const ListFilter = (
     listFilterOptions: ListFilterOptions = {},
     listFilterOverrides: ListFilterOverrides = {}
 ): FilterModule<Set<string>> => ({
-    label,
-    description,
     getApiQueryUrl: (key, value) => {
         if (value) {
             return getUrlFromList(key, value, options.length);
@@ -78,7 +76,9 @@ const ListFilter = (
             allLabel={listFilterOptions.allLabel || pluralize(label, label.length)}
         />
     ),
-    ...listFilterOverrides
+    ...listFilterOverrides,
+    label,
+    description
 });
 
 export default ListFilter;
