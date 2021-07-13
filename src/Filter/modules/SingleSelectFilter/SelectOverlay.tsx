@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, FocusEventHandler, useMemo } from 'react';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
@@ -7,8 +7,16 @@ import theme from 'src/styles/theme';
  * `SelectOption` is the structure of a selectable option.
  */
 export interface SelectOption {
-    value: string | number | undefined;
+    value: string;
     label: string;
+}
+
+/**
+ * Structure of the SelectOverlay onChange argument.
+ */
+export interface SelectOverlayChangeEvent {
+    target: { value?: string };
+    currentTarget: { value?: string };
 }
 
 /**
@@ -18,9 +26,9 @@ export interface SelectOption {
  */
 export interface SelectProps {
     options: SelectOption[];
-    onChange(event: any): void;
+    onChange(event: SelectOverlayChangeEvent): void;
     value: string | number;
-    onBlur?(event: any): void;
+    onBlur?: FocusEventHandler;
     autoFocus?: boolean;
     className?: string;
     id?: string;
