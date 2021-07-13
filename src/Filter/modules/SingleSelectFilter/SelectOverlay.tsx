@@ -12,21 +12,13 @@ export interface SelectOption {
 }
 
 /**
- * Structure of the SelectOverlay onChange argument.
- */
-export interface SelectOverlayChangeEvent {
-    target: { value?: string };
-    currentTarget: { value?: string };
-}
-
-/**
  * `SelectProps` are the props to be provided to the Select
  * component which consists of a (hidden) standard select
  * element and a react-select based SelectOverlay component.
  */
 export interface SelectProps {
     options: SelectOption[];
-    onChange(event: SelectOverlayChangeEvent): void;
+    onChange(option: SelectOption | null): void;
     value: string | number;
     onBlur?: FocusEventHandler;
     autoFocus?: boolean;
@@ -36,7 +28,7 @@ export interface SelectProps {
     isSearchable?: boolean;
 }
 
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, ...rest }) => {
+const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, value, ...rest }) => {
     const { currentValue, defaultValue, selectId } = useMemo(
         () => ({
             currentValue: options.find((option) => option.value === value),
@@ -46,14 +38,6 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
         [options, value]
     );
 
-    const handleChange = (option: SelectOption | null) => {
-        const newValue = option?.value;
-        onChange({
-            target: { value: newValue },
-            currentTarget: { value: newValue }
-        });
-    };
-
     return (
         <Select
             isDisabled={disabled}
@@ -61,7 +45,6 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
             defaultValue={defaultValue}
             value={currentValue}
             options={options}
-            onChange={handleChange}
             styles={SELECT_OVERLAY_STYLES}
             theme={(defaultTheme) => ({
                 ...defaultTheme,
