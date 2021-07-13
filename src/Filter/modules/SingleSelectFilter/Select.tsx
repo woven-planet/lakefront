@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { HiddenSelectControl } from './selectStyles';
-import SelectOverlay, { SelectOverLayOption, SelectProps } from './SelectOverlay';
+import SelectOverlay, { SelectOverlayOption, SelectProps } from './SelectOverlay';
 
 const Select: FC<SelectProps> = ({ options, className, onChange, ...rest }) => {
     return (
         <div>
             <HiddenSelectControl {...rest}>
-                {options.map((option: SelectOverLayOption) => (
+                {options.map((option: SelectOverlayOption) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
                     </option>

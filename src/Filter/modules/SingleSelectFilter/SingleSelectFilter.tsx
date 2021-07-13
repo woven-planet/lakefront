@@ -1,6 +1,6 @@
 import Select from './Select';
 import { FilterModule, SingleSelectFilterProps, SingleSelectFilterOptions } from 'src/Filter/types';
-import { SelectOverLayOption } from './SelectOverlay';
+import { SelectOverlayOption } from './SelectOverlay';
 
 /**
  * SingleSelectFilter Component
@@ -45,7 +45,7 @@ const SingleSelectFilter = (
             filterOptions.unshift({ label: selectPlaceholderLabel || 'Select', value: '' });
         }
 
-        const handleUpdate = (option: SelectOverLayOption | null) => {
+        const handleUpdate = (option: SelectOverlayOption | null) => {
             update(option?.value);
         };
 

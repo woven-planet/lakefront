@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { SelectOverLayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
+import { SelectOverlayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
 
@@ -349,7 +349,7 @@ export interface RadioFilterProps {
  * first argument of the SingleSelectFilter component.
  */
  export interface SingleSelectFilterProps {
-    options: SelectOverLayOption[];
+    options: SelectOverlayOption[];
     label: string;
     description?: string;
     selectPlaceholderLabel?: string;

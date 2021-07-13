@@ -5,7 +5,7 @@ import theme from 'src/styles/theme';
 import { SelectOption } from 'src/types/global';
 import { ThemeProvider } from '@emotion/react';
 
-export type SelectOverLayOption = SelectOption<string | number | undefined>;
+export type SelectOverlayOption = SelectOption<string>;
 
 /**
  * `SelectProps` are the props to be provided to the Select
@@ -13,8 +13,8 @@ export type SelectOverLayOption = SelectOption<string | number | undefined>;
  * element and a react-select based SelectOverlay component.
  */
 export interface SelectProps {
-    options: SelectOverLayOption[];
-    onChange(option: SelectOption | null): void;
+    options: SelectOverlayOption[];
+    onChange(option: SelectOverlayOption | null): void;
     value: string | number;
     onBlur?: FocusEventHandler;
     autoFocus?: boolean;
