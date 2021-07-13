@@ -28,7 +28,7 @@ describe('ListFilter', () => {
         const { getApiQueryUrl } = ListFilter(options, '', '');
 
         it('returns the proper url when there is a value', () => {
-            expect(getApiQueryUrl('a', 'first name')).toBe('&a=first%20name');
+            expect(getApiQueryUrl('a', ['first name'])).toBe('&a=first+name');
         });
 
         it('returns an empty string when value is falsy', () => {
@@ -43,7 +43,10 @@ describe('ListFilter', () => {
         const { getApiPostBody } = ListFilter(options, '', '');
 
         it('returns the proper object when there is a value', () => {
-            expect(getApiPostBody('a', 'first name')).toMatchObject({ a: 'first name' });
+            const testSet = new Set().add('first name');
+            const expected = { a: ['first name'] };
+
+            expect(getApiPostBody('a', testSet)).toMatchObject(expected);
         });
 
         it('returns an undefined when value is falsy', () => {
@@ -58,8 +61,8 @@ describe('ListFilter', () => {
         const { getBrowserQueryUrlValue } = ListFilter(options, '', '');
 
         it('returns the value provided', () => {
-            expect(getBrowserQueryUrlValue('a')).toBe('a');
-            expect(getBrowserQueryUrlValue(1)).toBe(1);
+            expect(getBrowserQueryUrlValue(new Set(['a']))).toStrictEqual(['a']);
+            expect(getBrowserQueryUrlValue(new Set([1]))).toStrictEqual([1]);
             expect(getBrowserQueryUrlValue()).toBeUndefined();
         });
     });
@@ -67,18 +70,21 @@ describe('ListFilter', () => {
     describe('getDefaultFilterValue', () => {
         const { getDefaultFilterValue } = ListFilter(options, '', '');
 
-        it('returns an empty string', () => {
-            expect(getDefaultFilterValue('a')).toBe('');
-            expect(getDefaultFilterValue(1)).toBe('');
-            expect(getDefaultFilterValue()).toBe('');
+        it('returns a default set based on the options', () => {
+            const defaultValues = new Set([options[0].value, options[1].value]);
+
+            expect(getDefaultFilterValue('a')).toStrictEqual(defaultValues);
+            expect(getDefaultFilterValue(1)).toStrictEqual(defaultValues);
+            expect(getDefaultFilterValue()).toStrictEqual(defaultValues);
         });
     });
 
     describe('isDefaultFilterValue', () => {
         const { isDefaultFilterValue } = ListFilter(options, '', '');
+        const defaultValues = new Set([options[0].value, options[1].value]);
 
         it('returns true if value is equal to empty string', () => {
-            expect(isDefaultFilterValue('')).toBe(true);
+            expect(isDefaultFilterValue(defaultValues)).toBe(true);
             expect(isDefaultFilterValue('a')).toBe(false);
             expect(isDefaultFilterValue()).toBe(false);
         });
@@ -86,27 +92,31 @@ describe('ListFilter', () => {
 
     describe('getFilterBarLabel', () => {
         const { getFilterBarLabel } = ListFilter(options, '', '');
+        const allOptions = new Set([options[0].value, options[1].value]);
+        const oneOption = new Set([options[0].value]);
 
         it('returns the value provided', () => {
-            expect(getFilterBarLabel('a')).toBe('a');
-            expect(getFilterBarLabel(1)).toBe(1);
-            expect(getFilterBarLabel()).toBeUndefined();
+            expect(getFilterBarLabel(allOptions)).toBe('Test 1,Test 2');
+            expect(getFilterBarLabel(oneOption)).toBe('Test 1');
+            expect(getFilterBarLabel()).toBe('');
         });
     });
 
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = ListFilter(options, '', '');
+        const allOptions = new Set([options[0].value, options[1].value]);
+        const oneOption = new Set([options[0].value]);
 
         it('returns value if value is truthy', () => {
-            expect(parseInitialFilterValue('a')).toBe('a');
-            expect(parseInitialFilterValue(1)).toBe(1);
+            expect(parseInitialFilterValue('a')).toStrictEqual(new Set(['a']));
+            expect(parseInitialFilterValue([1])).toStrictEqual(new Set([1]));
         });
 
         it('returns empty string if value is falsy', () => {
-            expect(parseInitialFilterValue('')).toBe('');
-            expect(parseInitialFilterValue(null)).toBe('');
-            expect(parseInitialFilterValue(0)).toBe('');
-            expect(parseInitialFilterValue()).toBe('');
+            expect(parseInitialFilterValue('')).toStrictEqual(allOptions);
+            expect(parseInitialFilterValue(null)).toStrictEqual(allOptions);
+            expect(parseInitialFilterValue(0)).toStrictEqual(allOptions);
+            expect(parseInitialFilterValue()).toStrictEqual(allOptions);
         });
     });
 
@@ -115,10 +125,16 @@ describe('ListFilter', () => {
 
         it('returns the expected component', () => {
             const update = jest.fn();
-            const { getByRole } = render(<div>{renderComponent({ name: 'name', value: '1', update })}</div>);
-            expect(getByRole('label')).toHaveValue('1');
-            fireEvent.blur(getByRole('label'), { target: { value: 'asdf' } });
-            expect(update).toBeCalledWith('asdf');
+            const selected = new Set([options[0].value]);
+            const { getByLabelText } = render(<div>{renderComponent({ name: 'name', value: selected, update })}</div>);
+
+            expect(getByLabelText('Test 1')).toBeChecked();
+            fireEvent.click(getByLabelText('Test 1'));
+
+            // Nothing is selected now, so it is called with an empty Set
+            expect(update).toBeCalledWith(new Set());
+            fireEvent.click(getByLabelText('Test 1'));
+            expect(update).toBeCalledWith(selected);
         });
     });
 
@@ -151,6 +167,7 @@ describe('ListFilter', () => {
             options,
             'label',
             'description',
+            {},
             filterModuleKeys.reduce((acc, k) => ({ ...acc, [k]: () => null }), {})
         );
 

@@ -1,6 +1,6 @@
 import { getUrlFromList } from 'src/Filter/util/filterUtil';
 import CheckboxGroup, { CheckboxGroupOption } from 'src/CheckboxGroup/CheckboxGroup';
-import { FilterModule } from 'src/Filter/types';
+import { FilterModule, ListFilterOverrides } from 'src/Filter/types';
 import { pluralize } from 'src/lib/util';
 
 export interface ListFilterOptions {
@@ -12,7 +12,8 @@ const ListFilter = (
     options: CheckboxGroupOption[],
     label: string,
     description?: string,
-    listFilterOptions: ListFilterOptions = {}
+    listFilterOptions: ListFilterOptions = {},
+    listFilterOverrides: ListFilterOverrides = {}
 ): FilterModule<Set<string>> => ({
     label,
     description,
@@ -76,7 +77,8 @@ const ListFilter = (
             selected={value}
             allLabel={listFilterOptions.allLabel || pluralize(label, label.length)}
         />
-    )
+    ),
+    ...listFilterOverrides
 });
 
 export default ListFilter;
