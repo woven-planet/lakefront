@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledInput, StyledLabel } from './inputStyles';
 import theme from 'src/styles/theme';
@@ -22,8 +22,8 @@ export interface InputProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, error = '', ...props }) => {
-    return (
+const Input = forwardRef<HTMLInputElement, InputProps & ComponentPropsWithoutRef<'input'>>(
+    ({ label, error = '', ...props }, ref) => (
         <ThemeProvider theme={theme}>
             <StyledLabel error={error}>
                 {label && <span>{label}</span>}
@@ -31,7 +31,7 @@ const Input: FC<InputProps & ComponentPropsWithoutRef<'input'>> = ({ label, erro
                 <div>{error}</div>
             </StyledLabel>
         </ThemeProvider>
-    );
-};
+    )
+);
 
 export default Input;
