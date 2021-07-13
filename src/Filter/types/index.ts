@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { JSONObject } from 'src/types/global';
+import { SelectOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 
 /**
  * FilterRenderProps are the required props of the renderComponent
@@ -320,6 +321,27 @@ export interface RadioFilterProps {
  * meant to override default text filter behaviour.
  */
  export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
+ 
+
+/**
+ * `SingleSelectFilterProps` are the props required to be supplied as the
+ * first argument of the SingleSelectFilter component.
+ */
+ export interface SingleSelectFilterProps {
+    options: SelectOption[];
+    label: string;
+    description?: string;
+    selectPlaceholderLabel?: string;
+    filterLabelPrefix?: string;
+    initialValue?: string | number;
+    required?: boolean;
+}
+
+/**
+ * `SingleSelectFilterOptions` is any valid `FilterModule` property (excluding description, label, and required)
+ * meant to override default text filter behaviour.
+ */
+ export interface SingleSelectFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label' | 'required'> {}
  
  /**
  * `TextFilterOptions` is any valid `FilterModule` property (excluding description and label)
