@@ -36,6 +36,11 @@ const RADIO_FILTER_OPTIONS = [
 ];
 
 export const FILTERS = {
+    listFilter: ListFilter(
+        listFilterOptions,
+        'List Filter',
+        'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
+    ),
     radioFilter: RadioFilter(
         {
             label: 'Radio Filter',
@@ -63,11 +68,6 @@ export const FILTERS = {
             parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
             getFilterBarLabel: (value: string) => `Text Filter: ${value}`
         }
-    ),
-    listFilter: ListFilter(
-        listFilterOptions,
-        'List Filter',
-        'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
     )
 };
 

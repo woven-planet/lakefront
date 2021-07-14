@@ -18,7 +18,7 @@ export default {
             control: 'text',
             description: 'The description/help text to display above the list filter component.'
         },
-        listFilterOptions: {
+        listFilterOverrides: {
             control: false
         }
     },
@@ -35,7 +35,7 @@ export default {
 // ListFilter
 const ListFilterTemplate: Story = (args: ListFilterArgs) => {
     const pageFilters = {
-        listFilter: ListFilterFunction(args.options, args.label, args.description, {})
+        listFilter: ListFilterFunction(args.options, args.label, args.description, args.listFilterOptions)
     };
 
     return <FilterPage pageFilters={pageFilters} />;
@@ -46,5 +46,8 @@ export const ListFilter = ListFilterTemplate.bind({});
 ListFilter.args = {
     label: 'List Filter',
     description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.',
-    options: listFilterOptions
+    options: listFilterOptions,
+    listFilterOptions: {
+        allLabel: 'All Test Data'
+    }
 };

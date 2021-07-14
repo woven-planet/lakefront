@@ -250,7 +250,7 @@ export interface FilterComponentProps {
      */
     FilterJSONInput?: FC<FilterJSONInputProps>;
     /**
-     * Additional query params that can be provided seperate from
+     * Additional query params that can be provided separate from
      * the current filters.
      */
     additionalQueryParams?: {
@@ -303,6 +303,12 @@ export interface FilterContainerProps {
 }
 
 /**
+ * `ListFilterOverrides` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default list filter behaviour.
+ */
+export interface ListFilterOverrides extends Omit<Partial<FilterModule<Set<string>>>, 'description' | 'label'> {}
+
+/**
  * `RadioFilterProps` are the props required to be supplied as the first argument of
  * the RadioFilter component.
  */
@@ -322,7 +328,6 @@ export interface RadioFilterProps {
  * meant to override default text filter behaviour.
  */
  export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
-
 
 /**
  * `SingleSelectFilterProps` are the props required to be supplied as the
@@ -349,9 +354,3 @@ export interface RadioFilterProps {
  * meant to override default text filter behaviour.
  */
  export interface TextFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
-
-/**
- * `ListFilterOverrides` is any valid `FilterModule` property (excluding description and label)
- * meant to override default list filter behaviour.
- */
-export interface ListFilterOverrides extends Omit<Partial<FilterModule<Set<string>>>, 'description' | 'label'> {}

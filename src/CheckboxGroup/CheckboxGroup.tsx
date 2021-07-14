@@ -26,7 +26,6 @@ interface CheckboxGroupProps {
     allColor?: string;
     className?: string;
     classNameItem?: string;
-    showAll?: boolean;
     onHandleChange(items: Set<string>): void;
     name: string;
     selected: Set<string>;
@@ -41,8 +40,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
         name,
         onHandleChange,
         options,
-        selected,
-        showAll = true
+        selected
     }) => {
     const isItemChecked = (value: string) => {
         return selected.has(value);
@@ -74,15 +72,14 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
     };
 
     const isAllSelected = selected.size === options.length;
-    const allDisplayLabel = allLabel ? ` ${allLabel}` : '';
 
     return (
         <CheckboxGroupWrapper className={className}>
-            {showAll && (
+            {allLabel && (
                 <>
                     <Checkbox
                         value="all"
-                        label={`All${allDisplayLabel}`}
+                        label={allLabel}
                         color={allColor}
                         id={`checkbox-${name}-all`}
                         onChange={onAllItemChange}
