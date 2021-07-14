@@ -1,4 +1,4 @@
-import { getUrlFromList } from './multiSelectUtil';
+import { getUrlFromList } from 'src/Filter/util/filterUtil';
 import MultiSelect from './MultiSelect';
 import { FilterModule, MultiSelectFilterProps, MultiSelectFilterOptions } from 'src/Filter/types';
 

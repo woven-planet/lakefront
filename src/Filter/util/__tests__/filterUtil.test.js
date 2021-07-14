@@ -1,4 +1,4 @@
-import { getDefaultValue, getDefaultJsonViewValue, getFilterAppliedCount } from '../filterUtil';
+import { getDefaultValue, getDefaultJsonViewValue, getFilterAppliedCount, getUrlFromList } from '../filterUtil';
 import { FILTERS } from 'src/Filter/__tests__/filter.data';
 
 describe('getDefaultValue', () => {
@@ -61,5 +61,31 @@ describe('getFilterAppliedCount', () => {
                 phrases: '2'
             })
         ).toBe(0);
+    });
+});
+
+describe('getUrlFromList', () => {
+    it('appends each list item to the url with correct name', () => {
+        expect(getUrlFromList('item', ['red', 'blue'], 3)).toBe('&item=red&item=blue');
+    });
+
+    describe('when list is an array', () => {
+        it('returns an empty string if list size matches count.', () => {
+            expect(getUrlFromList('item', ['red', 'blue'], 2)).toBe('');
+        });
+
+        it('returns an empty string if list size is 0.', () => {
+            expect(getUrlFromList('item', [], 2)).toBe('');
+        });
+    });
+
+    describe('when list is a set', () => {
+        it('returns an empty string if list size matches count.', () => {
+            expect(getUrlFromList('item', new Set(['red', 'blue']), 2)).toBe('');
+        });
+
+        it('returns an empty string if list size is 0.', () => {
+            expect(getUrlFromList('item', new Set(), 2)).toBe('');
+        });
     });
 });
