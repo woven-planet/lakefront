@@ -1,4 +1,5 @@
-import { RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { ListFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 export const SINGLE_SELECT_FILTER_OPTIONS = [
     {
@@ -35,6 +36,11 @@ const RADIO_FILTER_OPTIONS = [
 ];
 
 export const FILTERS = {
+    listFilter: ListFilter(
+        listFilterOptions,
+        'List Filter',
+        'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
+    ),
     radioFilter: RadioFilter(
         {
             label: 'Radio Filter',
