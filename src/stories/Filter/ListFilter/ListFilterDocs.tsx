@@ -51,7 +51,17 @@ export interface ListFilterArgs {
  *
  * The ListFilter component is a checkbox control meant to be used for filtering specific items in a set. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
- * be supplied via the `listFilterOverrides` parameter to change how the filter looks and acts.
+ * be supplied via the `listFilterOverrides` parameter to change how the filter looks and acts as well as the
+ * `listFilterOptions` to set additional properties related to the list filter itself.
+ *
+ * `label` - The label to display for the text filter component.
+ *
+ * `description` - The description/help text to display above the text filter component.
+ *
+ * `listFilterOptions` - Used to set additional listFilter options such as the allLabel and initialValue.
+ *
+ * `listFilterOverrides` - Any valid `FilterModule` property (excluding description and label)
+ * which will override default text filter behaviour.
  */
 const ListFilterDocs: FC<ListFilterArgs> = () => null;
 
