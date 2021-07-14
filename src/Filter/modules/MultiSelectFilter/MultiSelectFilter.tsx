@@ -55,6 +55,10 @@ const MultiSelectFilter = (
     },
     getFilterBarLabel: (values) => {
         if (values) {
+            if (!Array.isArray(values)) {
+                return '';
+            }
+
             const filterValues = values.map((value) => {
                 const valueLabel = options.find((option) => option.value === value);
                 if (valueLabel) {
