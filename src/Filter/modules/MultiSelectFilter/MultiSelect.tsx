@@ -50,7 +50,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
     }
 
     handleChange = (selectedOptions: MultiSelectOption[] | OptionsType<MultiSelectOption> | null) => {
-        const items = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+        const items = selectedOptions ? selectedOptions.map((option: MultiSelectOption) => option.value) : [];
         this.setState({ selected: items });
         this.props.selectItem(items);
     };
