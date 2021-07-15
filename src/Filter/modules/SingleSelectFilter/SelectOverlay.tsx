@@ -2,14 +2,10 @@ import { FC, FocusEventHandler, useMemo } from 'react';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
+import { SelectOption } from 'src/types/global';
+import { ThemeProvider } from '@emotion/react';
 
-/**
- * `SelectOption` is the structure of a selectable option.
- */
-export interface SelectOption {
-    value: string;
-    label: string;
-}
+export type SelectOverlayOption = SelectOption<string>;
 
 /**
  * `SelectProps` are the props to be provided to the Select
@@ -17,8 +13,8 @@ export interface SelectOption {
  * element and a react-select based SelectOverlay component.
  */
 export interface SelectProps {
-    options: SelectOption[];
-    onChange(option: SelectOption | null): void;
+    options: SelectOverlayOption[];
+    onChange(option: SelectOverlayOption | null): void;
     value: string | number;
     onBlur?: FocusEventHandler;
     autoFocus?: boolean;
@@ -39,24 +35,26 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
     );
 
     return (
-        <Select
-            isDisabled={disabled}
-            id={selectId}
-            defaultValue={defaultValue}
-            value={currentValue}
-            options={options}
-            styles={SELECT_OVERLAY_STYLES}
-            theme={(defaultTheme) => ({
-                ...defaultTheme,
-                colors: {
-                    ...theme.colors,
-                    primary: theme.colors.white,
-                    primary25: disabled ? theme.colors.white : theme.colors.mercury
-                }
-            })}
-            isSearchable={isSearchable}
-            {...rest}
-        />
+        <ThemeProvider theme={theme}>
+            <Select
+                isDisabled={disabled}
+                id={selectId}
+                defaultValue={defaultValue}
+                value={currentValue}
+                options={options}
+                styles={SELECT_OVERLAY_STYLES}
+                theme={(defaultTheme) => ({
+                    ...defaultTheme,
+                    colors: {
+                        ...theme.colors,
+                        primary: theme.colors.white,
+                        primary25: disabled ? theme.colors.white : theme.colors.mercury
+                    }
+                })}
+                isSearchable={isSearchable}
+                {...rest}
+            />
+        </ThemeProvider>
     );
 };
 

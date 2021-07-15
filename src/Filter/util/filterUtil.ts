@@ -66,4 +66,3 @@ export const getUrlFromList = (name: string, list: string[] | Set<string>, count
     }
     return `&${url}`;
 };
-

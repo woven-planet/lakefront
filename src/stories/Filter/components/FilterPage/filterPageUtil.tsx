@@ -1,5 +1,20 @@
-import { ListFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { ListFilter, MultiSelectFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
+
+export const MULTI_SELECT_FILTER_OPTIONS = [
+    {
+        label: 'colors',
+        value: 'colors'
+    },
+    {
+        label: 'sizes',
+        value: 'sizes'
+    },
+    {
+        label: 'shapes',
+        value: 'shapes'
+    }
+];
 
 export const SINGLE_SELECT_FILTER_OPTIONS = [
     {
@@ -36,6 +51,18 @@ const RADIO_FILTER_OPTIONS = [
 ];
 
 export const FILTERS = {
+    multiSelectFilter: MultiSelectFilter(
+        {
+            label: 'Multi Select Filter',
+            creatable: true,
+            initialValue: ['colors'],
+            options: MULTI_SELECT_FILTER_OPTIONS,
+            description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
+        },
+        {
+            getDefaultFilterValue: () => ['colors']
+        }
+    ),
     listFilter: ListFilter(
         listFilterOptions,
         'List Filter',

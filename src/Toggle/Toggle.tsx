@@ -1,11 +1,9 @@
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
+import { SelectOption as ToggleOption } from 'src/types/global';
 
-export interface ToggleOption<T> {
-    label: string;
-    value: T;
-}
+export { ToggleOption };
 
 export interface ToggleProps<T> {
     /**
