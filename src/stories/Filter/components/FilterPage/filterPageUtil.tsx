@@ -1,4 +1,5 @@
-import { MultiSelectFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { ListFilter, MultiSelectFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 export const MULTI_SELECT_FILTER_OPTIONS = [
     {
@@ -59,8 +60,13 @@ export const FILTERS = {
             description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
         },
         {
-            getDefaultFilterValue: () => ['colors'],
+            getDefaultFilterValue: () => ['colors']
         }
+    ),
+    listFilter: ListFilter(
+        listFilterOptions,
+        'List Filter',
+        'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.'
     ),
     radioFilter: RadioFilter(
         {
@@ -74,15 +80,13 @@ export const FILTERS = {
             getFilterBarLabel: (value: string) => `Radio Filter: ${value}`
         }
     ),
-    singleSelectFilter: SingleSelectFilter(
-        {
-            label: 'Single Select Filter',
-            selectPlaceholderLabel: 'Select a color',
-            filterLabelPrefix: 'Single Select Filter',
-            options: SINGLE_SELECT_FILTER_OPTIONS,
-            description: 'SingleSelectFilter is a select dropdown control meant to single select a value.'
-        }
-    ),
+    singleSelectFilter: SingleSelectFilter({
+        label: 'Single Select Filter',
+        selectPlaceholderLabel: 'Select a color',
+        filterLabelPrefix: 'Single Select Filter',
+        options: SINGLE_SELECT_FILTER_OPTIONS,
+        description: 'SingleSelectFilter is a select dropdown control meant to single select a value.'
+    }),
     textFilter: TextFilter(
         'Text Filter',
         'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',

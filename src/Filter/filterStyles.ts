@@ -3,10 +3,12 @@ import { FilterContainerProps } from './types';
 
 const FILTER_BAR_HEIGHT = 48;
 
-export const FilterContainer = styled.div<FilterContainerProps>(({ showJSONInput, isCollapsed }) => ({
+export const FilterContainer = styled.div<FilterContainerProps>(({ showJSONInput, isCollapsed, hideFilterBar }) => ({
     display: 'grid',
     gridTemplateColumns: '264px minmax(min-content, auto)',
-    gridTemplateRows: `${FILTER_BAR_HEIGHT}px auto`,
+    gridTemplateRows: hideFilterBar === true ?
+        '1fr' :
+        `${FILTER_BAR_HEIGHT}px auto`,
     ...(showJSONInput && {
         gridTemplateColumns: 'minmax(min-content, max-content) minmax(min-content, auto)'
     }),
@@ -33,7 +35,7 @@ export const SidePanel = styled.div(({ theme }) => ({
     borderRight: '1px solid #bdbdbd',
     gridRow: '1 / 3',
     h2: {
-        fontFamily: "'Source Sans Pro', sans-serif",
+        fontFamily: '"Source Sans Pro", sans-serif',
         fontSize: 16,
         fontWeight: 700,
         margin: 0,

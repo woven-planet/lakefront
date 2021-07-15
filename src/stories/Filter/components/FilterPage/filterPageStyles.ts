@@ -19,5 +19,5 @@ export const PageBody = styled.div(({ theme }) => ({
     color: theme.colors.gunpowder,
     backgroundColor: theme.colors.akoya,
     fontSize: 20,
-    height: 300
+    minHeight: 400
 }));
