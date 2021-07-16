@@ -1,6 +1,6 @@
 import { JSONObject } from 'src/types/global';
 import { AdditionalJSONFilterOptions, FilterModule } from 'src/Filter/types';
-import { isActualValue } from './additionalJSONFilterUtil';
+import { ADDITIONAL_JSON_FILTER_BAR_LABEL, ADDITIONAL_JSON_FILTER_LABEL, isActualValue } from './additionalJSONFilterUtil';
 
 /**
  * AdditionalJSONFilter Component
@@ -15,14 +15,14 @@ import { isActualValue } from './additionalJSONFilterUtil';
  * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON.
  */
 const AdditionalJSONFilter = (additionalJSONFilterOptions: AdditionalJSONFilterOptions = {}): FilterModule<JSONObject> => ({
-    label: 'Additional JSON',
+    label: ADDITIONAL_JSON_FILTER_LABEL,
     inputHidden: true,
     getApiQueryUrl: () => '',
     getApiPostBody: (_, value) => value,
     getBrowserQueryUrlValue: value => (isActualValue(value) ? JSON.stringify(value) : undefined),
     getDefaultFilterValue: () => undefined,
     isDefaultFilterValue: value => !isActualValue(value),
-    getFilterBarLabel: value => (value ? 'Additional JSON Filters' : ''),
+    getFilterBarLabel: value => (value ? ADDITIONAL_JSON_FILTER_BAR_LABEL : ''),
     parseInitialFilterValue: (browserQueryUrlValue: string) => {
         return browserQueryUrlValue ? JSON.parse(browserQueryUrlValue) : undefined;
     },
