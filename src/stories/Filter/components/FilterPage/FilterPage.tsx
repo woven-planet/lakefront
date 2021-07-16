@@ -12,7 +12,7 @@ interface FilterPageProps {
     pageFilters?: FilterSet;
 }
 
-const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilterBar'> & FilterPageProps> = (
+const FilterPage: FC<Pick<FilterComponentProps, 'isJSONInputAllowed' | 'hideFilterBar' | 'initialActiveSection'> & FilterPageProps> = (
     props
 ) => {
     const {

@@ -19,6 +19,12 @@ export interface AdditionalJSONFilterArgs {
             label: 'Additional JSON Filter',
             inputHidden: false,
             description: 'AdditionalJSONFilter is normally hidden, but can be overriden to display ui.',
+            getApiQueryUrl: (key: string, value: { additionalJSONFilter: number }) => {
+                return value?.additionalJSONFilter ? \`&\${key}=\${encodeURIComponent(value.additionalJSONFilter)}\` : '';
+            },
+            getDefaultFilterValue: () => ({ additionalJSONFilter: 1 }),
+            parseInitialFilterValue: () => ({ additionalJSONFilter: 1 }),
+            isDefaultFilterValue: () => false,
             ...additionalAdditionalJSONFilterOptions
         }
     )
@@ -34,7 +40,7 @@ export interface AdditionalJSONFilterArgs {
  * but it has (by default) `inputHidden` set to true which causes it to not render any UI in the filter drawer.
  * 
  * This filter (by default) intentionally does not implement getFilterValueFromApiPostBody, because the useFilter hook
- * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON
+ * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON.
  */
 const AdditionalJSONFilterDocs: FC<AdditionalJSONFilterArgs> = () => null;
 

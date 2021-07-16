@@ -12,7 +12,7 @@ import { isActualValue } from './additionalJSONFilterUtil';
  * but it has (by default) `inputHidden` set to true which causes it to not render any UI in the filter drawer.
  * 
  * This filter (by default) intentionally does not implement getFilterValueFromApiPostBody, because the useFilter hook
- * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON
+ * sets this filter's value based on the JSON "leftover" after all the other filters parse their values from JSON.
  */
 const AdditionalJSONFilter = (additionalJSONFilterOptions: AdditionalJSONFilterOptions = {}): FilterModule<JSONObject> => ({
     label: 'Additional JSON',

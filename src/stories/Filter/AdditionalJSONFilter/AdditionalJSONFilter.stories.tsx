@@ -31,7 +31,7 @@ const AdditionalJSONFilterTemplate: Story = (args: AdditionalJSONFilterArgs) => 
         additionalJSONFilter: AdditionalJSONFilterFunction(args.additionalJSONFilterOptions)
     };
 
-    return <FilterPage pageFilters={pageFilters} hideFilterBar={false} />;
+    return <FilterPage pageFilters={pageFilters} hideFilterBar={false} initialActiveSection="additionalJSONFilter" />;
 };
 
 export const AdditionalJSONFilter = AdditionalJSONFilterTemplate.bind({});
@@ -39,13 +39,13 @@ export const AdditionalJSONFilter = AdditionalJSONFilterTemplate.bind({});
 AdditionalJSONFilter.args = {
     additionalJSONFilterOptions: {
         label: 'Additional JSON Filter',
-            inputHidden: false,
-            description: 'AdditionalJSONFilter is normally hidden, but can be overriden to display ui.',
-            getApiQueryUrl: (key: string, value: { additionalJSONFilter: number }) => {
-                return value?.additionalJSONFilter ? `&${key}=${encodeURIComponent(value.additionalJSONFilter)}` : '';
-            },
-            getDefaultFilterValue: () => ({ additionalJSONFilter: 1 }),
-            parseInitialFilterValue: () => ({ additionalJSONFilter: 1 }),
-            isDefaultFilterValue: () => false,
+        inputHidden: false,
+        description: 'AdditionalJSONFilter is normally hidden, but can be overriden to display ui.',
+        getApiQueryUrl: (key: string, value: { additionalJSONFilter: number }) => {
+            return value?.additionalJSONFilter ? `&${key}=${encodeURIComponent(value.additionalJSONFilter)}` : '';
+        },
+        getDefaultFilterValue: () => ({ additionalJSONFilter: 1 }),
+        parseInitialFilterValue: () => ({ additionalJSONFilter: 1 }),
+        isDefaultFilterValue: () => false,
     }
 };
