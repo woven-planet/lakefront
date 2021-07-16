@@ -2,7 +2,7 @@ import { FC, MouseEventHandler } from 'react';
 import { FilterModule } from 'src/Filter/types';
 import { ReactComponent as Add } from 'src/Filter/assets/add.svg';
 import { ReactComponent as Remove } from 'src/Filter/assets/remove.svg';
-import { FilterBadge, FilterDetails, FilterSectionHeaderContainer } from './filterSectionHeaderStyles';
+import { ClearButton, FilterActions, FilterBadge, FilterDetails, FilterSectionHeaderContainer } from './filterSectionHeaderStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
@@ -23,7 +23,10 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '',
                         <div>10</div>
                     </FilterBadge>
                 </FilterDetails>
-                {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
+                <FilterActions>
+                    <ClearButton>x</ClearButton>
+                    {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
+                </FilterActions>
             </FilterSectionHeaderContainer>
         </ThemeProvider>
     );
