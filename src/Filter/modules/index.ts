@@ -1,4 +1,4 @@
-import { AdditionalJSONFilter } from './AdditionalJSONFilter';
+import AdditionalJSONFilter from './AdditionalJSONFilter';
 import ListFilter from './ListFilter';
 import MultiSelectFilter from './MultiSelectFilter';
 import RadioFilter from './RadioFilter';

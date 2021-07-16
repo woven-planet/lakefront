@@ -304,6 +304,12 @@ export interface FilterContainerProps {
 }
 
 /**
+ * `AdditionalJSONFilterOptions` is any valid `FilterModule` property
+ * meant to override default additional JSON filter behaviour.
+ */
+ export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
+
+/**
  * `ListFilterOverrides` is any valid `FilterModule` property (excluding description and label)
  * meant to override default list filter behaviour.
  */
