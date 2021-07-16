@@ -11,10 +11,9 @@ import {
     FiltersSection,
     SidePanel
 } from './filterStyles';
-import { ReactComponent as Add } from './assets/add.svg';
-import { ReactComponent as Remove } from './assets/remove.svg';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
+import { FilterSectionHeader } from './components';
 
 /**
  * Filter Component
@@ -128,10 +127,12 @@ export const Filter: FC<FilterComponentProps> = ({
                                 .filter(([, f]) => !f.inputHidden)
                                 .map(([key, filter]) => (
                                     <section key={key}>
-                                        <h3 onClick={() => toggleSection(key)}>
-                                            {filter.label}
-                                            {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
-                                        </h3>
+                                        <FilterSectionHeader
+                                            activeSection={activeSection}
+                                            filter={filter}
+                                            key={key}
+                                            onClick={() => toggleSection(key)}
+                                        />
                                         {activeSection === key && (
                                             <>
                                                 <FilterSectionDescription>
