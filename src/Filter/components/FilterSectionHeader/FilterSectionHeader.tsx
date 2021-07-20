@@ -9,11 +9,17 @@ import theme from 'src/styles/theme';
 interface FilterSectionHeaderProps {
     activeSection?: string;
     filter: FilterModule<any>;
-    key: string;
+    name: string;
     onClick?: MouseEventHandler<HTMLHeadingElement>;
+    clearFilter: (name: string) => void;
 }
 
-const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '', filter, key, onClick }) => {
+const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '', clearFilter, filter, name, onClick }) => {
+    const handleClear: MouseEventHandler<SVGElement> = (event) => {
+        event.stopPropagation();
+        clearFilter(name);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <FilterSectionHeaderContainer onClick={onClick}>
@@ -24,8 +30,8 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '',
                     </FilterBadge>
                 </FilterDetails>
                 <FilterActions>
-                    <ClearButton />
-                    {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
+                    <ClearButton onClick={handleClear} />
+                    {activeSection !== name ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                 </FilterActions>
             </FilterSectionHeaderContainer>
         </ThemeProvider>
