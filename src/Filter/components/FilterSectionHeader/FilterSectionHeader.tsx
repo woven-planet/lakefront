@@ -24,7 +24,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '',
                     </FilterBadge>
                 </FilterDetails>
                 <FilterActions>
-                    <ClearButton>x</ClearButton>
+                    <ClearButton />
                     {activeSection !== key ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                 </FilterActions>
             </FilterSectionHeaderContainer>

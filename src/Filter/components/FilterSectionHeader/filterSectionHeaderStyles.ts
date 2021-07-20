@@ -1,27 +1,17 @@
 import styled from '@emotion/styled';
+import { ReactComponent as CloseLabel } from 'src/Filter/assets/closeLabel.svg';
 
-export const ClearButton = styled.div({
-    "#base": {
-        background: "red",
-        display: "inline-block",
-        height: "55px",
-        marginLeft: "20px",
-        marginTop: "55px",
-        position: "relative",
-        width: "100px"
-      },
-      "#base:before": {
-        borderBottom: "35px solid red",
-        borderLeft: "50px solid transparent",
-        borderRight: "50px solid transparent",
-        content: '""',
-        height: "0",
-        left: "0",
-        position: "absolute",
-        top: "-35px",
-        width: "0"
-      }
-});
+export const ClearButton = styled(CloseLabel)(({ theme }) => ({
+    'path:first-of-type': {
+        fill: theme?.colors?.akoya
+    },
+    'path:last-of-type': {
+        fill: theme?.colors?.mercury
+    },
+    text: {
+        fill: theme?.colors?.storm
+    }
+}));
 
 export const FilterActions = styled.div({
     display: 'flex',
