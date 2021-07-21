@@ -2,12 +2,28 @@ import styled from '@emotion/styled';
 import { ReactComponent as CloseLabel } from 'src/Filter/assets/closeLabel.svg';
 
 export const FilterValueChip = styled.div(({ theme }) => ({
-    border: `solid 1px ${theme?.colors?.akoya}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: `solid 1px ${theme?.colors?.mercury}`,
     padding: 2,
     margin: 2,
-    color: theme?.colors?.storm,
-    borderRadius: 2
+    borderRadius: 2,
+    backgroundColor: theme?.colors?.akoya,
+    flexGrow: 1,
+    maxWidth: '50%',
+    fontSize: 12,
+    fontWeight: 600,
+    color: theme?.colors?.gunpowder,
+    height: 24
 }));
+
+export const FilterValueChipsContainer = styled.div({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 2
+});
 
 export const ClearButton = styled(CloseLabel)(({ theme }) => ({
     'path:first-of-type': {
