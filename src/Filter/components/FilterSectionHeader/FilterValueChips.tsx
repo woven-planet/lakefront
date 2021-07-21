@@ -4,7 +4,7 @@ import { FilterValueChipsContainer } from './filterSectionHeaderStyles';
 
 interface FilterValueChipsProps {
     value: string | string[];
-    visible: boolean;
+    visible?: boolean;
 }
 
 const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible }) => {
