@@ -88,6 +88,23 @@ describe('AdditionalJSONFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        const { getFilterSectionLabel } = AdditionalJSONFilter();
+
+        it(`returns ${ADDITIONAL_JSON_FILTER_BAR_LABEL} if value is truthy`, () => {
+            expect(getFilterSectionLabel('a')).toBe(ADDITIONAL_JSON_FILTER_BAR_LABEL);
+            expect(getFilterSectionLabel(1)).toBe(ADDITIONAL_JSON_FILTER_BAR_LABEL);
+            expect(getFilterSectionLabel({})).toBe(ADDITIONAL_JSON_FILTER_BAR_LABEL);
+        });
+
+        it(`returns empty string if value is falsy`, () => {
+            expect(getFilterSectionLabel('')).toBe('');
+            expect(getFilterSectionLabel(0)).toBe('');
+            expect(getFilterSectionLabel(null)).toBe('');
+            expect(getFilterSectionLabel()).toBe('');
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = AdditionalJSONFilter();
 
@@ -124,6 +141,7 @@ describe('AdditionalJSONFilter', () => {
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent',
         ];
@@ -137,6 +155,7 @@ describe('AdditionalJSONFilter', () => {
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent,
         } = AdditionalJSONFilter({
@@ -153,6 +172,7 @@ describe('AdditionalJSONFilter', () => {
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
 
             const { getByText } = render(

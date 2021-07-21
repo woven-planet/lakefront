@@ -83,6 +83,16 @@ describe('TextFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        const { getFilterSectionLabel } = TextFilter('', '');
+
+        it('returns the value provided', () => {
+            expect(getFilterSectionLabel('a')).toBe('a');
+            expect(getFilterSectionLabel(1)).toBe(1);
+            expect(getFilterSectionLabel()).toBeUndefined();
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = TextFilter('', '');
 
@@ -121,6 +131,7 @@ describe('TextFilter', () => {
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent'
         ];
@@ -134,6 +145,7 @@ describe('TextFilter', () => {
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent
         } = TextFilter(
@@ -154,6 +166,7 @@ describe('TextFilter', () => {
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
 
             const { queryByRole } = render(

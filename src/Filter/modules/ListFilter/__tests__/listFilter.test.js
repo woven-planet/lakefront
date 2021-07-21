@@ -24,6 +24,14 @@ describe('ListFilter', () => {
         expect(ListFilter(options, '', description)).toMatchObject({ description });
     });
 
+    describe('getFilterCount', () => {
+        const { getFilterCount } = ListFilter(options, '', '');
+
+        it('returns the the value size', () => {
+            expect(getFilterCount(new Set([1,2,3]))).toBe(3);
+        });
+    });
+
     describe('getApiQueryUrl', () => {
         const { getApiQueryUrl } = ListFilter(options, '', '');
 
@@ -102,6 +110,21 @@ describe('ListFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        const { getFilterSectionLabel } = ListFilter(options, '', '');
+        const allOptions = new Set([options[0].value, options[1].value]);
+        const oneOption = new Set([options[0].value]);
+
+        it('returns array of values provided', () => {
+            expect(getFilterSectionLabel(allOptions)).toMatchObject(['Test 1','Test 2']);
+            expect(getFilterSectionLabel(oneOption)).toMatchObject(['Test 1']);
+        });
+
+        it('returns empty array by default', () => {
+            expect(getFilterSectionLabel()).toMatchObject([]);
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = ListFilter(options, '', '');
         const allOptions = new Set([options[0].value, options[1].value]);
@@ -142,12 +165,14 @@ describe('ListFilter', () => {
         const filterModuleKeys = [
             'label',
             'description',
+            'getFilterCount',
             'getApiQueryUrl',
             'getApiPostBody',
             'getBrowserQueryUrlValue',
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent'
         ];
@@ -155,12 +180,14 @@ describe('ListFilter', () => {
         const {
             label,
             description,
+            getFilterCount,
             getApiQueryUrl,
             getApiPostBody,
             getBrowserQueryUrlValue,
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent
         } = ListFilter(
@@ -177,12 +204,14 @@ describe('ListFilter', () => {
         });
 
         it('overrides default methods', () => {
+            expect(getFilterCount('a')).toBeNull();
             expect(getApiQueryUrl('a', 'b')).toBeNull();
             expect(getApiPostBody('a', 'b')).toBeNull();
             expect(getBrowserQueryUrlValue('a')).toBeNull();
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
 
             const { queryByRole } = render(
