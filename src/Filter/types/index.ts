@@ -41,6 +41,10 @@ export interface FilterModule<T> {
      */
     inputHidden?: boolean;
     /**
+     * gets the number of filter values this filter applies. If not supplied, the count will be assumed to be `1`.
+     */
+    getFilterCount?(value: T): number;
+    /**
      * generates filter url query param in API calls (&key=valueString)
      */
     getApiQueryUrl(key: string, value: T): string;

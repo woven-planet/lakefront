@@ -28,7 +28,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '',
                 <FilterDetails>
                     {filter.label}
                     <FilterBadge>
-                        <div>10</div>
+                        <div>{filter.getFilterCount ? filter.getFilterCount(value) : 1}</div>
                     </FilterBadge>
                 </FilterDetails>
                 <FilterActions>

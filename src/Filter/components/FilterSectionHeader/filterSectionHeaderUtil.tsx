@@ -9,14 +9,12 @@ export const createChips = (value: string | string[]) => {
 
     return (
         <>
-            {chips.map((content: string) => {
+            {chips.map((content: string, idx: number) => {
                 if (!content) {
                     return null;
                 }
 
-                return (
-                    <FilterValueChip>{content}</FilterValueChip>
-                );
+                return <FilterValueChip key={`${content}-${idx}`}>{content}</FilterValueChip>;
             })}
         </>
     );
