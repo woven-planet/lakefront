@@ -54,7 +54,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
                     )}
                 </FilterDetails>
                 <FilterActions>
-                    {filterApplied && <ClearButton onClick={handleClear} />}
+                    {filterApplied && <ClearButton onClick={handleClear} aria-label="clear" />}
                     {activeSection !== name ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                 </FilterActions>
             </FilterSectionHeaderContainer>
