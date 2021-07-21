@@ -32,6 +32,7 @@ export const FilterValueChipsContainer = styled.div({
 });
 
 export const ClearButton = styled(CloseLabel)(({ theme }) => ({
+    marginRight: 8,
     'path:first-of-type': {
         fill: theme?.colors?.akoya
     },
