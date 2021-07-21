@@ -17,7 +17,11 @@ export const createChips = (value: string | string[]) => {
                     return null;
                 }
 
-                return <FilterValueChip key={`${content}-${idx}`}>{content}</FilterValueChip>;
+                return (
+                    <FilterValueChip key={`${content}-${idx}`}>
+                        <div>{content}</div>
+                    </FilterValueChip>
+                );
             })}
         </>
     );
@@ -27,6 +31,6 @@ export const getFilterCount = (value: any, filter: FilterModule<any>, filterAppl
     if (filter.getFilterCount) {
         return filter.getFilterCount(value);
     }
-    
+
     return filterApplied ? DEFAULT_FILTER_COUNT : 0;
 };

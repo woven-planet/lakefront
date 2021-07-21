@@ -15,7 +15,13 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     fontSize: 12,
     fontWeight: 600,
     color: theme?.colors?.gunpowder,
-    height: 24
+    height: 24,
+    div: {
+        maxWidth: '90%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+    }
 }));
 
 export const FilterValueChipsContainer = styled.div({

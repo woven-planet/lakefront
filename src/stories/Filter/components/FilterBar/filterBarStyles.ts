@@ -10,7 +10,7 @@ export const FilterBarContainer = styled.div(({ theme }) => ({
     '.filterItem': {
         borderRadius: 2,
         border: `solid 1px ${theme.colors.selago}`,
-        backgroundColor: '$akoya',
+        backgroundColor: theme.colors.akoya,
         color: theme.colors.gunpowder,
         padding: '4px 6px',
         display: 'inline-flex',
