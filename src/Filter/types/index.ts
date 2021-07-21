@@ -25,66 +25,66 @@ export interface FilterPostBody extends JSONObject {}
  */
 export interface FilterModule<T> {
     /**
-     * text label displayed above the filter input controls
+     * Text label displayed above the filter input controls.
      */
     label: string;
     /**
-     * optional paragraph describing the filter (also displayed above the filter input controls)
+     * Optional paragraph describing the filter (also displayed above the filter input controls).
      */
     description?: string;
     /**
-     * when true, indicates that filter may not be dismissed and must always have a value. defaults to false.
+     * When true, indicates that filter may not be dismissed and must always have a value. defaults to false.
      */
     required?: boolean;
     /**
-     * when true, indicates that UI should not be displayed in left panel for this filter. defaults to false.
+     * When true, indicates that UI should not be displayed in left panel for this filter. defaults to false.
      */
     inputHidden?: boolean;
     /**
-     * gets the number of filter values this filter applies. If not supplied (and filter is not default value),
+     * Gets the number of filter values this filter applies. If not supplied (and filter is not default value),
      * the count will be assumed to be `1`.
      */
     getFilterCount?(value: T): number;
     /**
-     * generates filter url query param in API calls (&key=valueString)
+     * Generates filter url query param in API calls (&key=valueString).
      */
     getApiQueryUrl(key: string, value: T): string;
     /**
-     * generates post body used to apply this filter when used in a POST search request
+     * Generates post body used to apply this filter when used in a POST search request.
      */
     getApiPostBody(key: string, value: T): FilterPostBody | null | undefined;
     /**
-     * generates the url query param value(s) for saving filter value(s) in the browser address bar (key is automatic)
+     * Generates the url query param value(s) for saving filter value(s) in the browser address bar (key is automatic).
      */
     getBrowserQueryUrlValue(value: T): string | string[] | null | undefined;
     /**
-     * returns filter value that is set when filter is cleared
+     * Returns filter value that is set when filter is cleared.
      */
     getDefaultFilterValue(): T | null | undefined;
     /**
-     * returns boolean indicating if the current filter value matches the default value (if true, chip is hidden in the filter bar)
+     * Returns boolean indicating if the current filter value matches the default value (if true, chip is hidden in the filter bar).
      */
     isDefaultFilterValue(value: T): boolean;
     /**
-     * generates the string in displayed on this filter's chip in the filter bar
+     * Generates the string in displayed on this filter's chip in the filter bar.
      */
     getFilterBarLabel(value: T): string;
     /**
-     * generates the array of values to be displayed on this filter's section in the filter pane
+     * Generates the array of values to be displayed on this filter's section in the filter pane.
      */
     getFilterSectionLabel(value: T): string | string[];
     /**
-     * parses filter value from browser url query param value(s) and pre-populates the filter value on init
+     * Parses filter value from browser url query param value(s) and pre-populates the filter value on init.
      */
     parseInitialFilterValue(browserQueryUrlValue?: string | string[] | null | undefined): T | null | undefined;
     /**
-     * renders the filter input controls in the left filter drawer
+     * Renders the filter input controls in the left filter drawer.
      */
     renderComponent(input: FilterRenderProps<T>): React.ReactElement;
     /**
      * OPTIONAL (support direct JSON input) - extracts/parses the filter value from an API post body.
      * Note: should also delete this filter's key & value from the provided API post body, so that
-     * unparsed JSON can be identified and separated into its own pseudo-filter
+     * unparsed JSON can be identified and separated into its own pseudo-filter.
      */
     getFilterValueFromApiPostBody?(key: string, mutableApiPostBody: FilterPostBody | null | undefined):
         T | null | undefined;
