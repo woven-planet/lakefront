@@ -1,6 +1,14 @@
 import styled from '@emotion/styled';
 import { ReactComponent as CloseLabel } from 'src/Filter/assets/closeLabel.svg';
 
+export const FilterValueChip = styled.div(({ theme }) => ({
+    border: `solid 1px ${theme?.colors?.akoya}`,
+    padding: 2,
+    margin: 2,
+    color: theme?.colors?.storm,
+    borderRadius: 2
+}));
+
 export const ClearButton = styled(CloseLabel)(({ theme }) => ({
     'path:first-of-type': {
         fill: theme?.colors?.akoya

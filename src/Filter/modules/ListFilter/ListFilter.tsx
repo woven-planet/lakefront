@@ -67,6 +67,16 @@ const ListFilter = (
         }
         return '';
     },
+    getFilterSectionLabel: value => {
+        if (value) {
+            return Array.from(value)
+                .map(item => {
+                    const itemLabel = options.find(i => i.value === item);
+                    return String(itemLabel?.label);
+                })
+        }
+        return [];
+    },
     parseInitialFilterValue: browserQueryUrlValue => {
         if (browserQueryUrlValue) {
             // initial value is either a single string or array of strings

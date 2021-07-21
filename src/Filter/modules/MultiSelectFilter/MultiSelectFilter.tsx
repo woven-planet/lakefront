@@ -76,6 +76,29 @@ const MultiSelectFilter = (
 
         return '';
     },
+    getFilterSectionLabel: (values) => {
+        if (values) {
+            if (!Array.isArray(values)) {
+                return [];
+            }
+
+            const filterValues = values.map((value) => {
+                const valueLabel = options.find((option) => option.value === value);
+                if (valueLabel) {
+                    const pos = valueLabel.label.indexOf('[');
+                    if (pos > 0) {
+                        return valueLabel.label.substring(0, pos).trim();
+                    }
+                    return valueLabel.label;
+                }
+                return value;
+            });
+
+            return filterValues;
+        }
+
+        return [];
+    },
     parseInitialFilterValue: (browserQueryUrlValue) => {
         if (browserQueryUrlValue) {
             return typeof browserQueryUrlValue === 'string' ? [browserQueryUrlValue] : browserQueryUrlValue;

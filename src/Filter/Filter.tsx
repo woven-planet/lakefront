@@ -133,6 +133,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                             name={key}
                                             onClick={() => toggleSection(key)}
                                             clearFilter={clearFilter}
+                                            value={filterValues[key]}
                                         />
                                         {activeSection === key && (
                                             <>

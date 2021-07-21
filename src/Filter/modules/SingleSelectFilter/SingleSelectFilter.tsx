@@ -36,6 +36,7 @@ const SingleSelectFilter = (
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: value => value === '',
     getFilterBarLabel: value => (filterLabelPrefix ? `${filterLabelPrefix}: ${value}` : value),
+    getFilterSectionLabel: value => value,
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || (initialValue ? String(initialValue) : ''),
     renderComponent: ({ name, value, update }) => {
         // shallow copy of options to not mutate the original

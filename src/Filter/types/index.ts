@@ -65,6 +65,10 @@ export interface FilterModule<T> {
      */
     getFilterBarLabel(value: T): string;
     /**
+     * generates the array of values to be displayed on this filter's section in the filter pane
+     */
+    getFilterSectionLabel(value: T): string | string[];
+    /**
      * parses filter value from browser url query param value(s) and pre-populates the filter value on init
      */
     parseInitialFilterValue(browserQueryUrlValue?: string | string[] | null | undefined): T | null | undefined;

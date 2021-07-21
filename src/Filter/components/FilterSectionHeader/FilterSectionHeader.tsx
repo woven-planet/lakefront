@@ -5,16 +5,18 @@ import { ReactComponent as Remove } from 'src/Filter/assets/remove.svg';
 import { ClearButton, FilterActions, FilterBadge, FilterDetails, FilterSectionHeaderContainer } from './filterSectionHeaderStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
+import FilterValueChips from './FilterValueChips';
 
 interface FilterSectionHeaderProps {
     activeSection?: string;
     filter: FilterModule<any>;
     name: string;
+    value: any;
     onClick?: MouseEventHandler<HTMLHeadingElement>;
     clearFilter: (name: string) => void;
 }
 
-const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '', clearFilter, filter, name, onClick }) => {
+const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '', clearFilter, filter, name, onClick, value }) => {
     const handleClear: MouseEventHandler<SVGElement> = (event) => {
         event.stopPropagation();
         clearFilter(name);
@@ -34,6 +36,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({ activeSection = '',
                     {activeSection !== name ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                 </FilterActions>
             </FilterSectionHeaderContainer>
+            <FilterValueChips value={filter.getFilterSectionLabel(value)} />
         </ThemeProvider>
     );
 };
