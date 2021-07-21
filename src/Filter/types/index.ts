@@ -302,7 +302,7 @@ export interface FilterComponentProps {
     updateHistory: UpdateHistory;
     /**
      * This is the max number of chips to display before switching to
-     * a badge displaying that displays the number of applied filters.
+     * a badge displaying the number of applied filters.
      */
      badgeThreshold?: number;
 }
