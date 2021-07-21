@@ -37,7 +37,8 @@ export const Filter: FC<FilterComponentProps> = ({
     isJSONInputAllowed = false,
     location,
     onToggleCollapsed,
-    updateHistory
+    updateHistory,
+    badgeThreshold = 4
 }) => {
     const urlParams = queryString.parse(location.search);
     const [isCollapsedState, setIsCollapsedState] = useState(false);
@@ -134,6 +135,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                             onClick={() => toggleSection(key)}
                                             clearFilter={clearFilter}
                                             value={filterValues[key]}
+                                            badgeThreshold={badgeThreshold}
                                         />
                                         {activeSection === key && (
                                             <>

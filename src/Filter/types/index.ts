@@ -41,7 +41,8 @@ export interface FilterModule<T> {
      */
     inputHidden?: boolean;
     /**
-     * gets the number of filter values this filter applies. If not supplied, the count will be assumed to be `1`.
+     * gets the number of filter values this filter applies. If not supplied (and filter is not default value),
+     * the count will be assumed to be `1`.
      */
     getFilterCount?(value: T): number;
     /**
@@ -299,6 +300,11 @@ export interface FilterComponentProps {
      * as filters change.
      */
     updateHistory: UpdateHistory;
+    /**
+     * This is the max number of chips to display before switching to
+     * a badge displaying that displays the number of applied filters.
+     */
+     badgeThreshold?: number;
 }
 
 /**
