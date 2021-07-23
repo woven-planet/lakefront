@@ -50,7 +50,7 @@ describe('FilterSectionHeader', () => {
         );
 
         expect(queryByText('b')).toBeInTheDocument();
-        expect(queryByText('4')).not.toBeInTheDocument();
+        expect(queryByText('3')).not.toBeInTheDocument();
     });
 
     it('shows the clear button when filters have been applied', () => {
