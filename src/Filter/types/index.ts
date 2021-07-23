@@ -99,7 +99,7 @@ export interface FilterValues {
 /**
  * FilterHooks is the available values and functions returned from the useFilter hook.
  */
-export interface FilterHooks {
+export interface FilterHooks<T = FilterPostBody> {
     /**
      * The currently available filter set.
      */
@@ -111,7 +111,7 @@ export interface FilterHooks {
     /**
      * The current post body after filters applied.
      */
-    filterPostBody: FilterPostBody;
+    filterPostBody: T | FilterPostBody;
     /**
      * The current filter values.
      */
@@ -131,7 +131,7 @@ export interface FilterHooks {
     /**
      * The function to determine how filters update the post body.
      */
-    applyApiPostBody(apiPostBody: FilterPostBody): void;
+    applyApiPostBody(apiPostBody: T | FilterPostBody): void;
 }
 
 /**

@@ -18,12 +18,12 @@ import {
  * The state as it applies to the current url and a dynamic api post body
  * can be updated and/or cleared using this hook.
  */
-export const useFilter = (
+export const useFilter = <T extends unknown>(
     userFilters: FilterSet,
     supportJSON = false,
     location: Location,
     updateHistory: UpdateHistory
-): FilterHooks => {
+): FilterHooks<T> => {
     const filters = useMemo(() => {
         return supportJSON ? { ...userFilters, [USER_JSON_QUERY_PARAM]: AdditionalJSONFilter() } : userFilters;
     }, [supportJSON, userFilters]);
