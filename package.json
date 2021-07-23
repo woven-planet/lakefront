@@ -80,7 +80,7 @@
   "files": [
     "dist"
   ],
-  "typings": "dist/index.d.ts",
+  "typings": "dist/index.cjs.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ToyotaResearchInstitute/lakefront.git"
