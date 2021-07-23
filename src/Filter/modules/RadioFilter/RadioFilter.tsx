@@ -31,6 +31,10 @@ const RadioFilter = (
         const itemLabel = options.find((i) => i.value === value);
         return itemLabel ? itemLabel.label : '';
     },
+    getFilterSectionLabel: (value) => {
+        const itemLabel = options.find((i) => i.value === value);
+        return itemLabel ? itemLabel.label : '';
+    },
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || initialValue,
     renderComponent: ({ name, value, update }) => (
         <RadioGroupContainer>

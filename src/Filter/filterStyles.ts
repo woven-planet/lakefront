@@ -48,16 +48,6 @@ export const SidePanel = styled.div(({ theme }) => ({
         padding: '0 0 10px'
     },
     section: { padding: '16px 0', borderBottom: theme?.borders?.primary },
-    'section h3': {
-        fontSize: 16,
-        fontWeight: 500,
-        margin: 0,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        textTransform: 'capitalize',
-        cursor: 'pointer'
-    },
     '.options': {
         paddingLeft: 14
     }

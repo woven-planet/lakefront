@@ -100,6 +100,13 @@ describe('SingleSelectFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        it('returns value provided', () => {
+            const { getFilterSectionLabel } = SingleSelectFilter({ options: SINGLE_SELECT_FILTER_OPTIONS, filterLabelPrefix: 'value' }, {});
+            expect(getFilterSectionLabel(SINGLE_SELECT_FILTER_OPTIONS[0].value)).toBe(SINGLE_SELECT_FILTER_OPTIONS[0].value);
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = SingleSelectFilter({ initialValue: '' }, {});
 
@@ -156,6 +163,7 @@ describe('SingleSelectFilter', () => {
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent',
             'getFilterValueFromApiPostBody',
@@ -171,6 +179,7 @@ describe('SingleSelectFilter', () => {
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent,
             getFilterValueFromApiPostBody,
@@ -196,6 +205,7 @@ describe('SingleSelectFilter', () => {
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
             expect(getFilterValueFromApiPostBody('a', {})).toBeNull();
 

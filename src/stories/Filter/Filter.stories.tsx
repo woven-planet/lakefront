@@ -5,7 +5,7 @@ import FilterComponent from 'src/Filter/Filter';
 import DocBlock from '.storybook/DocBlock';
 
 export default {
-    title: 'Lakefront/Filter',
+    title: 'Lakefront/Filter/AllFilters',
     component: FilterComponent,
     argTypes: {
         ContextSwitchMenu: {
@@ -66,9 +66,15 @@ export default {
 // All Filters
 const AllTemplate: Story = (args) => <FilterPage {...args} />;
 
-export const AllFilters = AllTemplate.bind({});
+export const NoFilterBar = AllTemplate.bind({});
+export const WithFilterBar = AllTemplate.bind({});
 
-AllFilters.args = {
+NoFilterBar.args = {
+    hideFilterBar: true,
+    isJSONInputAllowed: true
+};
+
+WithFilterBar.args = {
     hideFilterBar: false,
     isJSONInputAllowed: true
 };

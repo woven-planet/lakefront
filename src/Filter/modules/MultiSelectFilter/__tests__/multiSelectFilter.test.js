@@ -28,6 +28,15 @@ describe('MultiSelectFilter', () => {
         expect(MultiSelectFilter({ description }, {})).toMatchObject({ description });
     });
 
+    describe('getFilterCount', () => {
+        const { getFilterCount } = MultiSelectFilter({}, {});
+
+        it('returns length of provided array', () => {
+            expect(getFilterCount([1])).toBe(1);
+            expect(getFilterCount([1, 2])).toBe(2);
+        });
+    });
+
     describe('getApiQueryUrl', () => {
         const { getApiQueryUrl } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS }, {});
 
@@ -138,6 +147,46 @@ describe('MultiSelectFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        describe('when values is falsy', () => {
+            it('returns empty array', () => {
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS }, {});
+                expect(getFilterSectionLabel()).toMatchObject([]);
+            });
+        });
+
+        describe('when values is truthy', () => {
+            it('returns empty array if values is not an array', () => {
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS }, {});
+                expect(getFilterSectionLabel('a')).toMatchObject([]);
+                expect(getFilterSectionLabel({})).toMatchObject([]);
+            });
+ 
+            it('returns values array when provided values do not exist in provided options', () => {
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS, label: 'label' }, {});
+                expect(getFilterSectionLabel(['a', 'b', 'c'])).toMatchObject(['a', 'b', 'c']);
+            });
+ 
+            it('returns labels array when provided values exist in provided options', () => {
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
+                expect(getFilterSectionLabel(['a', 'b', 'c'])).toMatchObject(['A', 'B', 'C']);
+            });
+ 
+            it('returns mixed label of labels and values array when some values exist in provided options', () => {
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
+                expect(getFilterSectionLabel(['a', 'b', 'd', 'e'])).toMatchObject(['A', 'B', 'd', 'e']);
+            });
+ 
+            it('properly formats labels with "["', () => {
+                const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }]
+                const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
+                expect(getFilterSectionLabel(['a', 'b'])).toMatchObject(['A', 'B']);
+            });
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         describe('when value is truthy', () => {
             const { parseInitialFilterValue } = MultiSelectFilter({ initialValue: '' }, {});
@@ -179,12 +228,14 @@ describe('MultiSelectFilter', () => {
         const filterModuleKeys = [
             'label',
             'description',
+            'getFilterCount',
             'getApiQueryUrl',
             'getApiPostBody',
             'getBrowserQueryUrlValue',
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent'
         ];
@@ -192,12 +243,14 @@ describe('MultiSelectFilter', () => {
         const {
             label,
             description,
+            getFilterCount,
             getApiQueryUrl,
             getApiPostBody,
             getBrowserQueryUrlValue,
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent
         } = MultiSelectFilter(
@@ -214,12 +267,14 @@ describe('MultiSelectFilter', () => {
         });
 
         it('overrides default methods', () => {
+            expect(getFilterCount('a')).toBeNull();
             expect(getApiQueryUrl('a', 'b')).toBeNull();
             expect(getApiPostBody('a', 'b')).toBeNull();
             expect(getBrowserQueryUrlValue('a')).toBeNull();
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
 
             const update = () => null;

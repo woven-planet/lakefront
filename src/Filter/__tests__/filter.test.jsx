@@ -61,7 +61,8 @@ describe('Filter', () => {
     it('toggles the active section', () => {
         const { getByText } = render(<TestComponent />);
 
-        const keywordSection = getByText(FILTERS.keywords.label);
+        const keywordSection = getByText(FILTERS.keywords.label).parentElement;
+    
         expect(keywordSection.querySelector('svg[aria-label="add"]')).toBeInTheDocument();
         expect(keywordSection.querySelector('svg[aria-label="remove"]')).not.toBeInTheDocument();
 

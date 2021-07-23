@@ -31,6 +31,7 @@ const ListFilter = (
     listFilterOptions: ListFilterOptions = {},
     listFilterOverrides: ListFilterOverrides = {}
 ): FilterModule<Set<string>> => ({
+    getFilterCount: (value) => value.size,
     getApiQueryUrl: (key, value) => {
         if (value) {
             return getUrlFromList(key, value, options.length);
@@ -66,6 +67,16 @@ const ListFilter = (
                 .toString();
         }
         return '';
+    },
+    getFilterSectionLabel: value => {
+        if (value) {
+            return Array.from(value)
+                .map(item => {
+                    const itemLabel = options.find(i => i.value === item);
+                    return String(itemLabel?.label);
+                })
+        }
+        return [];
     },
     parseInitialFilterValue: browserQueryUrlValue => {
         if (browserQueryUrlValue) {

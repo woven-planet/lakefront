@@ -28,6 +28,7 @@ const TextFilter = (
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: (value) => value === '',
     getFilterBarLabel: (value) => value,
+    getFilterSectionLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || '',
     renderComponent: ({ name, value, update }) => <TextSearch key={name} onChange={update} value={value} />,
     ...textFilterOptions,

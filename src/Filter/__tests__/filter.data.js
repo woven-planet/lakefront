@@ -11,6 +11,7 @@ export const BASE_FILTER = {
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: (value) => value === '',
     getFilterBarLabel: (value) => value,
+    getFilterSectionLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
     renderComponent: ({ name, value, update }) => <input key={name} onChange={update} value={value} />
 };
