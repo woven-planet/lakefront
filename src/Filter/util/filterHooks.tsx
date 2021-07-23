@@ -18,7 +18,7 @@ import {
  * The state as it applies to the current url and a dynamic api post body
  * can be updated and/or cleared using this hook.
  */
-export const useFilter = <T extends unknown>(
+export const useFilter = <T extends FilterPostBody>(
     userFilters: FilterSet,
     supportJSON = false,
     location: Location,
@@ -30,7 +30,7 @@ export const useFilter = <T extends unknown>(
 
     const [filterValues, setFilterValues] = useState(parseInitialFilterValues(location, filters));
     const filterUrl = useMemo(() => getApiQueryUrl(filters, filterValues), [filters, filterValues]);
-    const filterPostBody = useMemo(() => getApiPostBody(filters, filterValues), [filters, filterValues]);
+    const filterPostBody = useMemo(() => getApiPostBody<T>(filters, filterValues), [filters, filterValues]);
 
     // initialize the filter values based on url params and default values
     useEffect(() => {
@@ -81,7 +81,7 @@ export const useFilter = <T extends unknown>(
         updateFilterValues(newFilterValues);
     };
 
-    const applyApiPostBody = (apiPostBody: FilterPostBody) => {
+    const applyApiPostBody = (apiPostBody: T) => {
         if (supportJSON) {
             const newFilterValues: FilterValues = {};
 

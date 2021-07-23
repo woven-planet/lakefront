@@ -18,14 +18,14 @@ export const getApiQueryUrl = (filters: FilterSet, filterValues: FilterValues): 
 /**
  * Return the filter post body to be passed for POST api calls.
  */
-export const getApiPostBody = (filters: FilterSet, filterValues: FilterValues): FilterPostBody => {
+export const getApiPostBody = <T extends FilterPostBody = {}>(filters: FilterSet, filterValues: FilterValues): T => {
     return Object.entries(filters).reduce(
         (body, [key, filter]) => ({
             ...body,
             ...filter.getApiPostBody(key, filterValues[key])
         }),
         {}
-    );
+    ) as T;
 };
 
 /**

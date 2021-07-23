@@ -111,7 +111,7 @@ export interface FilterHooks<T = FilterPostBody> {
     /**
      * The current post body after filters applied.
      */
-    filterPostBody: T | FilterPostBody;
+    filterPostBody: T;
     /**
      * The current filter values.
      */
@@ -131,7 +131,7 @@ export interface FilterHooks<T = FilterPostBody> {
     /**
      * The function to determine how filters update the post body.
      */
-    applyApiPostBody(apiPostBody: T | FilterPostBody): void;
+    applyApiPostBody(apiPostBody: T): void;
 }
 
 /**
