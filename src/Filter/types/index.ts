@@ -184,14 +184,19 @@ export interface UrlParameters {
 export type UpdateHistory = ({ search, hash }: LocationState) => void;
 
 /**
+ * ContextSwitchMenuValue is the type of possible Context
+ * Switch Menu values.
+ */
+export type ContextSwitchMenuValue = FilterMode | string;
+/**
  * ContextSwitchMenuProps is the structure of the ContextSwitchMenu
  * component that can be used to toggle Filter component
  * views.
  */
 export interface ContextSwitchMenuProps {
-    options: Map<FilterMode, string>;
-    value: FilterMode;
-    onChange?: (filterMode: FilterMode) => void;
+    options: Map<ContextSwitchMenuValue, string>;
+    value: ContextSwitchMenuValue;
+    onChange?: (filterMode: ContextSwitchMenuValue) => void;
     triggerClassName?: string;
 }
 
