@@ -23,6 +23,7 @@ const AdditionalJSONFilter = (additionalJSONFilterOptions: AdditionalJSONFilterO
     getDefaultFilterValue: () => undefined,
     isDefaultFilterValue: value => !isActualValue(value),
     getFilterBarLabel: value => (value ? ADDITIONAL_JSON_FILTER_BAR_LABEL : ''),
+    getFilterSectionLabel: value => (value ? ADDITIONAL_JSON_FILTER_BAR_LABEL : ''),
     parseInitialFilterValue: (browserQueryUrlValue: string) => {
         return browserQueryUrlValue ? JSON.parse(browserQueryUrlValue) : undefined;
     },

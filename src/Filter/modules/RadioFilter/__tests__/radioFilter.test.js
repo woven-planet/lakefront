@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import RadioFilter from '../RadioFilter';
 
 const RADIO_FILTER_OPTIONS = [
@@ -109,6 +109,21 @@ describe('RadioFilter', () => {
         });
     });
 
+    describe('getFilterSectionLabel', () => {
+        const { getFilterSectionLabel } = RadioFilter({ options: RADIO_FILTER_OPTIONS }, {});
+
+        it('returns the associated label if value exists in options list', () => {
+            expect(getFilterSectionLabel(RADIO_FILTER_OPTIONS[0].value)).toBe(RADIO_FILTER_OPTIONS[0].label);
+            expect(getFilterSectionLabel(RADIO_FILTER_OPTIONS[1].value)).toBe(RADIO_FILTER_OPTIONS[1].label);
+        });
+
+        it('returns empty string if value does not exist in options list', () => {
+            expect(getFilterSectionLabel('a')).toBe('');
+            expect(getFilterSectionLabel('west2')).toBe('');
+            expect(getFilterSectionLabel()).toBe('');
+        });
+    });
+
     describe('parseInitialFilterValue', () => {
         const { parseInitialFilterValue } = RadioFilter({ initialValue: '' }, {});
 
@@ -145,6 +160,7 @@ describe('RadioFilter', () => {
             'getDefaultFilterValue',
             'isDefaultFilterValue',
             'getFilterBarLabel',
+            'getFilterSectionLabel',
             'parseInitialFilterValue',
             'renderComponent'
         ];
@@ -158,6 +174,7 @@ describe('RadioFilter', () => {
             getDefaultFilterValue,
             isDefaultFilterValue,
             getFilterBarLabel,
+            getFilterSectionLabel,
             parseInitialFilterValue,
             renderComponent
         } = RadioFilter(
@@ -180,6 +197,7 @@ describe('RadioFilter', () => {
             expect(getDefaultFilterValue('a')).toBeNull();
             expect(isDefaultFilterValue('a')).toBeNull();
             expect(getFilterBarLabel('a')).toBeNull();
+            expect(getFilterSectionLabel('a')).toBeNull();
             expect(parseInitialFilterValue('a')).toBeNull();
 
             const { queryByRole } = render(
