@@ -1,4 +1,4 @@
-import typescript from 'rollup-plugin-typescript2';
+import ts from 'rollup-plugin-ts';
 import del from 'rollup-plugin-delete';
 import pkg from './package.json';
 import svgr from '@svgr/rollup';
@@ -9,14 +9,14 @@ export default [
         input: 'src/index.ts',
         output: [
             { file: pkg.main, format: 'cjs' },
-            { file: pkg.module, format: 'esm' },
+            { file: pkg.module, format: 'esm' }
         ],
         plugins: [
             del({ targets: ['dist/*'] }),
-            typescript(),
+            ts(),
             url(),
             svgr()
         ],
-        external: Object.keys(pkg.peerDependencies || {}),
+        external: Object.keys(pkg.peerDependencies || {})
     },
 ];
