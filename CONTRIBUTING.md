@@ -14,6 +14,9 @@ Currently there is no automated solution to verify components are exported and a
  
     Note: You can find the the `path--to-your-component` to your component by running the project locally, navigating to your component, and copying it from the url.
 
+## Using SVGs
+Although the project supports absolute paths, SVGs need to be imported with a relative path, e.g., <br />`import { ReactComponent as MySVG } from ../assets/MySVG.svg`
+
 ## Adding New Github Workflow Files
 ❗❗**Caution:** When adding new workflow files, note that github may attempt to run the workflow as soon as you push it up to github.
 
