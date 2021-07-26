@@ -36,7 +36,7 @@ export const StyledLabel = styled.label<StyledLabelProps>(
 );
 
 export const StyledCheckbox = styled.input<CheckboxProps>(
-  ({ theme, checked, indeterminate, disabled }) => {
+  ({ theme, checked, indeterminate, disabled, color }) => {
     const backgroundColor =
       indeterminate || checked ? theme?.colors?.storm : theme?.colors?.white;
     const disabledBackgroundColor = indeterminate
@@ -45,11 +45,11 @@ export const StyledCheckbox = styled.input<CheckboxProps>(
 
     return {
       border: `2px solid ${
-        disabled ? theme?.colors?.mercury : theme?.colors?.storm
+        color || (disabled ? theme?.colors?.mercury : theme?.colors?.storm)
       }`,
       borderRadius: 2,
       WebkitAppearance: 'none',
-      backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
+      backgroundColor: color || (disabled ? disabledBackgroundColor : backgroundColor),
       fontSize: 16,
       outline: 'none',
       height: 20,
