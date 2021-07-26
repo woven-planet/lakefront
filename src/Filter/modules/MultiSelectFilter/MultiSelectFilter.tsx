@@ -28,7 +28,7 @@ const MultiSelectFilter = (
     }: MultiSelectFilterProps,
     multiSelectFilterOptions: MultiSelectFilterOptions = {}
 ): FilterModule<string[]> => ({
-    getFilterCount: (value) => value.length,
+    getFilterCount: (value) => value?.length || 0,
     getApiQueryUrl: (key, value) => {
         if (value) {
             return getUrlFromList(key, value, options.length);

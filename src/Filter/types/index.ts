@@ -44,7 +44,7 @@ export interface FilterModule<T> {
      * Gets the number of filter values this filter applies. If not supplied (and filter is not default value),
      * the count will be assumed to be `1`.
      */
-    getFilterCount?(value: T): number;
+    getFilterCount?(value?: T): number;
     /**
      * Generates filter url query param in API calls (&key=valueString).
      */
