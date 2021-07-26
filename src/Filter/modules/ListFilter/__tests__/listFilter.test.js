@@ -30,6 +30,11 @@ describe('ListFilter', () => {
         it('returns the the value size', () => {
             expect(getFilterCount(new Set([1,2,3]))).toBe(3);
         });
+
+        it('returns 0 when a falsy value is provided', () => {
+            expect(getFilterCount(null)).toBe(0);
+            expect(getFilterCount()).toBe(0);
+        });
     });
 
     describe('getApiQueryUrl', () => {
