@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler } from 'react';
 import { FilterModule } from 'src/Filter/types';
-import { ReactComponent as Add } from 'src/Filter/assets/add.svg';
-import { ReactComponent as Remove } from 'src/Filter/assets/remove.svg';
+import { ReactComponent as Add } from '../../assets/add.svg';
+import { ReactComponent as Remove } from '../../assets/remove.svg';
 import {
     ClearButton,
     FilterActions,
