@@ -1,7 +1,9 @@
 import colors from './cloudColors';
 import borders from './borders';
 
-export default {
+const THEME = {
     colors,
     borders
 };
+
+export default THEME;
