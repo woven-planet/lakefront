@@ -94,16 +94,18 @@ describe('SingleSelectFilter', () => {
             expect(getFilterBarLabel(SINGLE_SELECT_FILTER_OPTIONS[0].value)).toBe(`value: ${SINGLE_SELECT_FILTER_OPTIONS[0].value}`);
         });
         
-        it('returns value when filterLabelPrefix is falsy', () => {
+        it('returns stringified value when filterLabelPrefix is falsy', () => {
             const { getFilterBarLabel } = SingleSelectFilter({ options: SINGLE_SELECT_FILTER_OPTIONS }, {});
             expect(getFilterBarLabel(SINGLE_SELECT_FILTER_OPTIONS[0].value)).toBe(SINGLE_SELECT_FILTER_OPTIONS[0].value);
+            expect(getFilterBarLabel(1)).toBe('1');
         });
     });
 
     describe('getFilterSectionLabel', () => {
-        it('returns value provided', () => {
+        it('returns stringified value provided', () => {
             const { getFilterSectionLabel } = SingleSelectFilter({ options: SINGLE_SELECT_FILTER_OPTIONS, filterLabelPrefix: 'value' }, {});
             expect(getFilterSectionLabel(SINGLE_SELECT_FILTER_OPTIONS[0].value)).toBe(SINGLE_SELECT_FILTER_OPTIONS[0].value);
+            expect(getFilterSectionLabel(1)).toBe('1');
         });
     });
 

@@ -5,7 +5,7 @@ import theme from 'src/styles/theme';
 import { SelectOption } from 'src/types/global';
 import { ThemeProvider } from '@emotion/react';
 
-export type SelectOverlayOption = SelectOption<string>;
+export type SelectOverlayOption = SelectOption<string | number>;
 
 /**
  * `SelectProps` are the props to be provided to the Select
