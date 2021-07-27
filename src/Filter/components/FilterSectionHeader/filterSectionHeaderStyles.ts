@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ReactComponent as CloseLabel } from 'src/Filter/assets/closeLabel.svg';
+import { ReactComponent as CloseLabel } from '../../assets/closeLabel.svg';
 
 export const FilterValueChip = styled.div(({ theme }) => ({
     display: 'flex',

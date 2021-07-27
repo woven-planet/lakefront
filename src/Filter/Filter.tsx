@@ -21,7 +21,7 @@ import { FilterSectionHeader } from './components';
  * The Filter component can be used to display the effects
  * the `useFilter` hook (or other filter state manager) has on
  * a given page. Various components can be provided to increase/limit
- * what changes are diplayed.
+ * what changes are displayed.
  */
 export const Filter: FC<FilterComponentProps> = ({
     ContextSwitchMenu,
