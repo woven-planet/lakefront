@@ -1,9 +1,7 @@
 import { Bar, Icon, IconWrapper, Label, ToggleWrapper } from './toggleStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-import { SelectOption as ToggleOption } from 'src/types/global';
-
-export { ToggleOption };
+import { SelectOption } from 'src/types/global';
 
 export interface ToggleProps<T> {
     /**
@@ -17,7 +15,7 @@ export interface ToggleProps<T> {
     /**
      * Options for the labels and their values. It should only contain two objects.
      */
-    options: ToggleOption<T>[];
+    options: SelectOption<T>[];
     /**
      * This is called whenever the switch toggles with the value of the option.
      * Clicking the label also toggles the switch.
