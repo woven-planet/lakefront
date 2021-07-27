@@ -27,6 +27,7 @@ export const FilterValueChip = styled.div(({ theme }) => ({
 export const FilterValueChipsContainer = styled.div({
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 2
 });

@@ -35,6 +35,11 @@ describe('MultiSelectFilter', () => {
             expect(getFilterCount([1])).toBe(1);
             expect(getFilterCount([1, 2])).toBe(2);
         });
+
+        it('returns 0 when a falsy value is provided', () => {
+            expect(getFilterCount(null)).toBe(0);
+            expect(getFilterCount()).toBe(0);
+        });
     });
 
     describe('getApiQueryUrl', () => {

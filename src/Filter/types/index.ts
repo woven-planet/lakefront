@@ -44,7 +44,7 @@ export interface FilterModule<T> {
      * Gets the number of filter values this filter applies. If not supplied (and filter is not default value),
      * the count will be assumed to be `1`.
      */
-    getFilterCount?(value: T): number;
+    getFilterCount?(value?: T): number;
     /**
      * Generates filter url query param in API calls (&key=valueString).
      */
@@ -108,7 +108,7 @@ export interface FilterValues {
 /**
  * FilterHooks is the available values and functions returned from the useFilter hook.
  */
-export interface FilterHooks {
+export interface FilterHooks<T = FilterPostBody> {
     /**
      * The currently available filter set.
      */
@@ -120,7 +120,7 @@ export interface FilterHooks {
     /**
      * The current post body after filters applied.
      */
-    filterPostBody: FilterPostBody;
+    filterPostBody: T;
     /**
      * The current filter values.
      */
@@ -140,7 +140,7 @@ export interface FilterHooks {
     /**
      * The function to determine how filters update the post body.
      */
-    applyApiPostBody(apiPostBody: FilterPostBody): void;
+    applyApiPostBody(apiPostBody: T): void;
 }
 
 /**
@@ -193,14 +193,19 @@ export interface UrlParameters {
 export type UpdateHistory = ({ search, hash }: LocationState) => void;
 
 /**
+ * ContextSwitchMenuValue is the type of possible Context
+ * Switch Menu values.
+ */
+export type ContextSwitchMenuValue = FilterMode | string;
+/**
  * ContextSwitchMenuProps is the structure of the ContextSwitchMenu
  * component that can be used to toggle Filter component
  * views.
  */
 export interface ContextSwitchMenuProps {
-    options: Map<FilterMode, string>;
-    value: FilterMode;
-    onChange?: (filterMode: FilterMode) => void;
+    options: Map<ContextSwitchMenuValue, string>;
+    value: ContextSwitchMenuValue;
+    onChange?: (filterMode: ContextSwitchMenuValue) => void;
     triggerClassName?: string;
 }
 

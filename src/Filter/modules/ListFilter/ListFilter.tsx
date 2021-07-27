@@ -31,7 +31,7 @@ const ListFilter = (
     listFilterOptions: ListFilterOptions = {},
     listFilterOverrides: ListFilterOverrides = {}
 ): FilterModule<Set<string>> => ({
-    getFilterCount: (value) => value.size,
+    getFilterCount: (value) => value?.size ?? 0,
     getApiQueryUrl: (key, value) => {
         if (value) {
             return getUrlFromList(key, value, options.length);

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import queryString from 'query-string';
-import { FilterComponentProps, FilterMode } from './types';
+import { ContextSwitchMenuValue, FilterComponentProps, FilterMode } from './types';
 import { FILTER_MODE_OPTIONS, getCurrentBrowserQueryParams, getDefaultJsonViewValue } from './util';
 import { ThemeProvider } from '@emotion/react';
 import {
@@ -80,7 +80,7 @@ export const Filter: FC<FilterComponentProps> = ({
     const setJsonViewParam = (jsonView: boolean) => {
         setJsonQueryParams((params) => ({ ...params, jsonView }));
     };
-    const toggleJsonView = (mode: FilterMode) => {
+    const toggleJsonView = (mode: ContextSwitchMenuValue) => {
         const jsonView = mode === FilterMode.JSON;
 
         // if switching back to the filter UI but there is unapplied JSON, show confirmation modal before proceeding
