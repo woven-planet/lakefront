@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import ToggleComponent, { ToggleOption, ToggleProps } from 'src/Toggle/Toggle';
+import ToggleComponent, { ToggleProps } from 'src/Toggle/Toggle';
+import { SelectOption } from 'src/types/global';
 
 export default {
     title: 'Lakefront/Toggle',
@@ -22,7 +23,7 @@ export default {
     }
 } as Meta;
 
-const toggleOptions: ToggleOption<string>[] = [
+const toggleOptions: SelectOption<string>[] = [
     {
         label: 'First',
         value: 'first'
