@@ -19,7 +19,7 @@ export const StackBannerStoryContent = {
 export type StackBannerIcon = ReactElement<SVGElement> | boolean | undefined;
 
 interface SeverityColors {
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 export const getSeverityColor = (severity: string | undefined, theme?: Theme) => {
