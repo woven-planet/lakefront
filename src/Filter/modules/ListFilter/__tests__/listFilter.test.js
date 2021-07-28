@@ -73,10 +73,14 @@ describe('ListFilter', () => {
     describe('getBrowserQueryUrlValue', () => {
         const { getBrowserQueryUrlValue } = ListFilter(options, '', '');
 
-        it('returns the value provided', () => {
-            expect(getBrowserQueryUrlValue(new Set(['a']))).toStrictEqual(['a']);
-            expect(getBrowserQueryUrlValue(new Set([1]))).toStrictEqual([1]);
-            expect(getBrowserQueryUrlValue()).toBeUndefined();
+        it('returns a stringified array when truthy value is provided', () => {
+            expect(getBrowserQueryUrlValue(new Set(['a']))).toBe('a');
+            expect(getBrowserQueryUrlValue(new Set([1, 2]))).toBe('1,2');
+            expect(getBrowserQueryUrlValue(new Set([]))).toBe('');
+        });
+
+        it('returns an empty string when falsy value is provided', () => {
+            expect(getBrowserQueryUrlValue()).toBe('');
         });
     });
 

@@ -21,14 +21,14 @@ import {
      * and whether the individual option is `disabled`.
      */
     options: {
-        value: string;
+        value: string | number;
         label: string | ReactElement;
         disabled?: boolean;
     }[];
     /**
      * The value of the selected radio button.
      */
-    value: string;
+    value: string | number;
     /**
      * HTML input element disabled prop.
      */

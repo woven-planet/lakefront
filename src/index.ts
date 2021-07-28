@@ -1,3 +1,4 @@
+// Components
 export { default as Button } from './Button/Button';
 
 export { default as Checkbox } from './Checkbox/Checkbox';
@@ -27,9 +28,12 @@ export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
 
 export { default as TextArea } from'./TextArea/TextArea';
 
-export { default as Toggle, ToggleOption } from './Toggle/Toggle';
+export { default as Toggle } from './Toggle/Toggle';
 
+// Theme
 export { default as colors } from './styles/lakefrontColors';
 
 export { default as theme } from './styles/theme';
 
+// Types
+export { SelectOption } from './types/global';
