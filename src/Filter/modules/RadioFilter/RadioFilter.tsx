@@ -19,12 +19,12 @@ import { RadioGroupContainer } from './radioFilterStyles';
 const RadioFilter = (
     { initialValue, defaultValue, options, label, description }: RadioFilterProps,
     radioFilterOptions: RadioFilterOptions = {}
-): FilterModule<string> => ({
+): FilterModule<string | number> => ({
     getApiQueryUrl: (key, value) => {
         return value !== defaultValue ? `&${key}=${value}` : '';
     },
     getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: (value) => value,
+    getBrowserQueryUrlValue: (value) => value ? String(value) : '',
     getDefaultFilterValue: () => defaultValue,
     isDefaultFilterValue: (value) => value === defaultValue,
     getFilterBarLabel: (value) => {

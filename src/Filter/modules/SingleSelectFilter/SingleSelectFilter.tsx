@@ -27,16 +27,16 @@ const SingleSelectFilter = (
         required
     }: SingleSelectFilterProps,
     singleSelectFilterOptions: SingleSelectFilterOptions = {}
-): FilterModule<string> => ({
+): FilterModule<string | number> => ({
     getApiQueryUrl: (key, value) => {
         return value ? `&${key}=${encodeURIComponent(value)}` : '';
     },
     getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: value => value,
+    getBrowserQueryUrlValue: value => value ? String(value) : '',
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: value => value === '',
-    getFilterBarLabel: value => (filterLabelPrefix ? `${filterLabelPrefix}: ${value}` : value),
-    getFilterSectionLabel: value => value,
+    getFilterBarLabel: value => (filterLabelPrefix ? `${filterLabelPrefix}: ${value}` : String(value)),
+    getFilterSectionLabel: value => String(value),
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || (initialValue ? String(initialValue) : ''),
     renderComponent: ({ name, value, update }) => {
         // shallow copy of options to not mutate the original
