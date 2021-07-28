@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import RadioGroup, { RadioGroupProps } from 'src/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';
-import { blue } from 'src/styles/cloudColors';
+import { blue } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/RadioGroup',

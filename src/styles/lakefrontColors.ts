@@ -40,7 +40,7 @@ export const saturatedTeal = '#36c7c4';
 export const saturatedBlue = '#378fee';
 export const saturatedLavender = '#625fe3';
 
-const CLOUD_COLORS = {
+const LAKEFRONT_COLORS = {
     white,
     akoya,
     selago,
@@ -83,4 +83,4 @@ const CLOUD_COLORS = {
 };
 
 // export the variables for javascript access
-export default CLOUD_COLORS;
+export default LAKEFRONT_COLORS;

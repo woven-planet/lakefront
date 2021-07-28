@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import SelectPopover, { SelectPopoverProps } from 'src/SelectPopover/SelectPopover';
 import DocBlock from '.storybook/DocBlock';
 import Button from 'src/Button/Button';
-import { blue } from 'src/styles/cloudColors';
+import { blue } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/SelectPopover',

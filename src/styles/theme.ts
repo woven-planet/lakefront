@@ -1,4 +1,4 @@
-import colors from './cloudColors';
+import colors from './lakefrontColors';
 import borders from './borders';
 
 const THEME = {
