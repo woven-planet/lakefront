@@ -41,10 +41,10 @@ describe('AdditionalJSONFilter', () => {
             expect(getBrowserQueryUrlValue([1])).toBe(JSON.stringify([1]));
         });
 
-        it('returns undefined if value is not an actual value', () => {
-            expect(getBrowserQueryUrlValue()).toBeUndefined();
-            expect(getBrowserQueryUrlValue(1)).toBeUndefined();
-            expect(getBrowserQueryUrlValue([])).toBeUndefined();
+        it('returns empty string if value is not an actual value', () => {
+            expect(getBrowserQueryUrlValue()).toBe('');
+            expect(getBrowserQueryUrlValue(1)).toBe('');
+            expect(getBrowserQueryUrlValue([])).toBe('');
         });
     });
 

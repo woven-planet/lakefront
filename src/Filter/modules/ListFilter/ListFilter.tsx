@@ -46,7 +46,7 @@ const ListFilter = (
             return undefined;
         }
     },
-    getBrowserQueryUrlValue: value => value && Array.from(value),
+    getBrowserQueryUrlValue: value => value ? Array.from(value).toString() : '',
     getDefaultFilterValue: () => new Set(options.map(item => item.value)),
     isDefaultFilterValue: value => {
         if (value) {

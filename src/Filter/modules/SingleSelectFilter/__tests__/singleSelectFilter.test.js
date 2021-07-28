@@ -61,10 +61,14 @@ describe('SingleSelectFilter', () => {
     describe('getBrowserQueryUrlValue', () => {
         const { getBrowserQueryUrlValue } = SingleSelectFilter({}, {});
 
-        it('returns the value provided', () => {
+        it('returns stringified value when truthy value is provided', () => {
             expect(getBrowserQueryUrlValue('a')).toBe('a');
-            expect(getBrowserQueryUrlValue(1)).toBe(1);
-            expect(getBrowserQueryUrlValue()).toBeUndefined();
+            expect(getBrowserQueryUrlValue(1)).toBe('1');
+        });
+
+        it('returns empty string when falsy value is provided', () => {
+            expect(getBrowserQueryUrlValue()).toBe('');
+            expect(getBrowserQueryUrlValue(false)).toBe('');
         });
     });
 

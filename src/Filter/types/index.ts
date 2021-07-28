@@ -56,7 +56,7 @@ export interface FilterModule<T> {
     /**
      * Generates the url query param value(s) for saving filter value(s) in the browser address bar (key is automatic).
      */
-    getBrowserQueryUrlValue(value: T): unknown;
+    getBrowserQueryUrlValue(value: T): string;
     /**
      * Returns filter value that is set when filter is cleared.
      */

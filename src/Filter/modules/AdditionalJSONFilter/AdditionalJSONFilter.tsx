@@ -19,7 +19,7 @@ const AdditionalJSONFilter = (additionalJSONFilterOptions: AdditionalJSONFilterO
     inputHidden: true,
     getApiQueryUrl: () => '',
     getApiPostBody: (_, value) => value,
-    getBrowserQueryUrlValue: value => (isActualValue(value) ? JSON.stringify(value) : undefined),
+    getBrowserQueryUrlValue: value => isActualValue(value) ? JSON.stringify(value) : '',
     getDefaultFilterValue: () => undefined,
     isDefaultFilterValue: value => !isActualValue(value),
     getFilterBarLabel: value => (value ? ADDITIONAL_JSON_FILTER_BAR_LABEL : ''),
