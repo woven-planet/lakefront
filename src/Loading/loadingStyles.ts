@@ -18,11 +18,11 @@ export const StyledLoadingContainer = styled.div<LoadingProps>(
             marginLeft: 5,
             marginRight: 10,
             path: {
-                ...(!svg && { fill: theme?.colors?.$akoya })
+                ...(!svg && { fill: theme?.colors?.akoya })
             }
         },
         div: {
-            color: theme?.colors?.$akoya,
+            color: theme?.colors?.akoya,
             paddingTop: labelPosition === 'BOTTOM' ? 8 : 0,
         }
     })

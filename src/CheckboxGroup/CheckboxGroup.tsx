@@ -1,7 +1,7 @@
 import { FC, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import Checkbox from 'src/Checkbox/Checkbox';
-import colors from 'src/styles/cloudColors';
+import colors from 'src/styles/lakefrontColors';
 
 const StyledDivider = styled.div({
     backgroundColor: colors.alto,

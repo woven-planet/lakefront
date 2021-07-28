@@ -31,7 +31,7 @@ export { default as TextArea } from'./TextArea/TextArea';
 export { default as Toggle } from './Toggle/Toggle';
 
 // Theme
-export { default as colors } from './styles/cloudColors';
+export { default as colors } from './styles/lakefrontColors';
 
 export { default as theme } from './styles/theme';
 
