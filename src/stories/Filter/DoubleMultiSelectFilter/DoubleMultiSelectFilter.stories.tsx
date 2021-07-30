@@ -1,0 +1,71 @@
+import { Meta, Story } from '@storybook/react/types-6-0';
+
+import FilterPage from '../components/FilterPage';
+import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';
+import DocBlock from '.storybook/DocBlock';
+import { DoubleMultiSelectFilter as DoubleMultiSelectFilterFunction } from 'src/Filter/modules';
+
+export default {
+    title: 'Lakefront/Filter/DoubleMultiSelectFilter',
+    component: DoubleMultiSelectFilterDocs,
+    argTypes: {
+        doubleMultiSelectFilterProps: {
+            control: {
+                type: 'object'
+            },
+            description: 'The props required to be supplied as the first argument of the DoubleMultiSelectFilter component.'
+        },
+        doubleMultiSelectFilterOptions: {
+            control: false,
+            description:
+                'Any valid `FilterModule` property (excluding label, description, and selectOptions) which will override default multi select filter behaviour.'
+        }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock,
+            source: {
+                code: MULTI_SELECT_FILTER_SOURCE_CODE
+            }
+        }
+    }
+} as Meta;
+
+// Double Multi Select Filter
+const DoubleMultiSelectFilterTemplate: Story = (args: DoubleMultiSelectFilterArgs) => {
+    const pageFilters = {
+        doubleMultiSelectFilter: DoubleMultiSelectFilterFunction(args.doubleMultiSelectFilterProps, args.doubleMultiSelectFilterOptions)
+    };
+
+    return <FilterPage pageFilters={pageFilters} />;
+};
+
+export const DoubleMultiSelectFilter = DoubleMultiSelectFilterTemplate.bind({});
+
+DoubleMultiSelectFilter.args = {
+    doubleMultiSelectFilterProps: {
+        label: 'Double Multi Select Filter',
+        selectOptions: {
+            firstSelect: {
+                apiField: 'first',
+                label: 'First Filter',
+                name: 'first',
+                creatable: true,
+                items: [],
+                placeholder: 'Type or paste',
+                disableMenu: true,
+                barLabel: 'First Filter'
+            },
+            secondSelect: {
+                apiField: 'second',
+                label: 'Second Filter',
+                name: 'second',
+                creatable: true,
+                items: [],
+                placeholder: 'Type or paste',
+                disableMenu: true,
+                barLabel: 'Second Filter'
+            }
+        }
+    }
+};

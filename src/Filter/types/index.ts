@@ -326,7 +326,40 @@ export interface FilterContainerProps {
  * `AdditionalJSONFilterOptions` is any valid `FilterModule` property
  * meant to override default additional JSON filter behaviour.
  */
- export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
+export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
+
+export interface DoubleMultiSelectOptions {
+    apiField: string;
+    label?: string;
+    name: string;
+    creatable: boolean;
+    items: MultiSelectOption[];
+    barLabel: string;
+    placeholder?: string;
+    disableMenu?: boolean;
+}
+
+export interface DoubleMultiSelectOptions {
+    firstSelect: DoubleMultiSelectOptions,
+    secondSelect: DoubleMultiSelectOptions
+}
+
+export interface DoubleMultiSelectValues {
+    firstSelect: string[];
+    secondSelect: string[];
+}
+
+export interface DoubleMultiSelectFilterProps {
+    label: string;
+    description?: string;
+    selectOptions: DoubleMultiSelectOptions;
+}
+
+/**
+ * `MultiSelectFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default multi select filter behaviour.
+ */
+export interface DoubleMultiSelectFilterOptions extends Omit<Partial<FilterModule<DoubleMultiSelectValues>>, 'label' | 'description' | 'selectOptions'> {}
 
 /**
  * `ListFilterOverrides` is any valid `FilterModule` property (excluding description and label)
