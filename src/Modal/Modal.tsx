@@ -1,10 +1,14 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect, useMemo, useState } from 'react';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 import Button from 'src/Button/Button';
+import theme from 'src/styles/theme';
+import { ThemeProvider } from '@emotion/react';
+import { createPortal } from 'react-dom';
 
 import {
     Dialog,
     DialogButtonContainer,
+    DialogContainer,
     DialogContent,
     DialogDividerBottom,
     DialogDividerTop,
@@ -65,6 +69,13 @@ export interface ModalProps {
      * of the screen. Setting to `false` will disable `maxWidth`.
      */
     dialogWidth?: false | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    /**
+     * When true, the component will mount a div to the body and render the dialogue through it.
+     * This is useful when the dialogue would be inside a scrollable container or one with "overflow: hidden"
+     * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
+     * defaults to `false`.
+     */
+    renderInPortal?: boolean;
 }
 
 const Modal: FC<ModalProps> = (props) => {
@@ -79,7 +90,8 @@ const Modal: FC<ModalProps> = (props) => {
         children,
         showTopDivider = false,
         showBottomDivider = false,
-        dialogWidth = 'sm'
+        dialogWidth = 'sm',
+        renderInPortal = false
     } = props;
 
     const handleOnClose = () => {
@@ -88,31 +100,102 @@ const Modal: FC<ModalProps> = (props) => {
         }
     };
 
+    const [portal, setPortal] = useState<HTMLElement | null>(null);
+    const [dialogElement, setDialogElement] = useState<HTMLElement | null>(null);
+    const [update, setUpdate] = useState<number>(0);
+
+    useEffect(() => {
+        const bodyElementHTMLCollection = document.getElementsByTagName('body');
+        const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
+        let observer: IntersectionObserver;
+
+        if (renderInPortal && bodyElement) {
+            const portalElement = document.createElement('div');
+
+            if (!portal) {
+                bodyElement.appendChild(portalElement);
+            }
+
+            if (!portal && dialogElement) {
+                observer = new IntersectionObserver(() => {
+                    setUpdate(new Date().getTime());
+                });
+
+                observer.observe(dialogElement);
+                setPortal(portalElement);
+            }
+        }
+
+        return () => {
+            if (dialogElement && observer) {
+                observer.unobserve(dialogElement);
+            }
+
+            if (portal && bodyElement && bodyElement.contains(portal)) {
+                bodyElement.removeChild(portal);
+            }
+        };
+    }, [dialogElement]);
+
+    useEffect(() => {
+        if (dialogElement && portal) {
+            portal.style.position = 'absolute';
+            portal.style.left = '50%';
+            portal.style.top = '50%';
+        }
+    }, [update]);
+
+    const dialogueNodeMounted = (node: HTMLDivElement) => {
+        setDialogElement(node);
+    };
+
+    const dialogue = useMemo(
+        () => (
+            <>
+                {isOpen && (
+                    <Dialog isOpen={isOpen} dialogWidth={dialogWidth}>
+                        <DialogTitleContainer>
+                            {headerText}
+                            {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
+                            {isCloseIconVisible ? (
+                                <Button aria-label="Close" onClick={handleOnClose} icon={<CloseIcon />} />
+                            ) : (
+                                <span />
+                            )}
+                            {showTopDivider && <DialogDividerTop />}
+                        </DialogTitleContainer>
+                        <DialogContent>
+                            {children}
+                            {showBottomDivider && <DialogDividerBottom />}
+                            {actionButton && (
+                                <DialogButtonContainer>
+                                    <Button color="secondary" onClick={handleOnClose}>
+                                        {cancelButtonText}
+                                    </Button>
+                                    {actionButton}
+                                </DialogButtonContainer>
+                            )}
+                        </DialogContent>
+                    </Dialog>
+                )}
+            </>
+        ),
+        [
+            children,
+            headerText,
+            subHeaderText,
+            isCloseIconVisible,
+            showTopDivider,
+            showBottomDivider,
+            actionButton,
+            cancelButtonText
+        ]
+    );
+
     return (
-        <Dialog isOpen={isOpen} dialogWidth={dialogWidth}>
-            <DialogTitleContainer>
-                {headerText}
-                {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
-                {isCloseIconVisible ? (
-                    <Button aria-label="Close" onClick={handleOnClose} icon={<CloseIcon />} />
-                ) : (
-                    <span />
-                )}
-                {showTopDivider && <DialogDividerTop />}
-            </DialogTitleContainer>
-            <DialogContent>
-                {children}
-                {showBottomDivider && <DialogDividerBottom />}
-                {actionButton && (
-                    <DialogButtonContainer>
-                        <Button color="secondary" onClick={handleOnClose}>
-                            {cancelButtonText}
-                        </Button>
-                        {actionButton}
-                    </DialogButtonContainer>
-                )}
-            </DialogContent>
-        </Dialog>
+        <ThemeProvider theme={theme}>
+            <DialogContainer ref={dialogueNodeMounted}>{portal ? createPortal(dialogue, portal) : dialogue}</DialogContainer>
+        </ThemeProvider>
     );
 };
 
