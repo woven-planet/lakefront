@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, MouseEventHandler, ReactElement, SetStateAction } from 'react';
 import { SelectOverlayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
@@ -80,7 +80,8 @@ export interface FilterModule<T> {
     /**
      * Renders the filter input controls in the left filter drawer.
      */
-    renderComponent(input: FilterRenderProps<T>): React.ReactElement;
+    renderComponent(input: FilterRenderProps<T>): ReactElement;
+    renderSectionHeader?(sectionHeaderParams: FilterSectionHeaderProps): ReactElement;
     /**
      * OPTIONAL (support direct JSON input) - extracts/parses the filter value from an API post body.
      * Note: should also delete this filter's key & value from the provided API post body, so that
@@ -149,6 +150,16 @@ export interface FilterHooks<T = FilterPostBody> {
  */
 export interface FilterMap {
     [key: string]: string;
+}
+
+export interface FilterSectionHeaderProps {
+    activeSection?: string;
+    filter: FilterModule<any>;
+    name: string;
+    value: any;
+    onClick?: MouseEventHandler<HTMLHeadingElement>;
+    clearFilter: (name: string) => void;
+    badgeThreshold: number;
 }
 
 /**

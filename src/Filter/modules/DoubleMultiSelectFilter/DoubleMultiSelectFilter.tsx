@@ -5,6 +5,8 @@ import {
     FilterModule
 } from 'src/Filter/types';
 import DoubleMultiSelect from './DoubleMultiSelect';
+import { FilterSectionHeader } from 'src/Filter/components';
+import FilterValueChips from 'src/Filter/components/FilterSectionHeader/FilterValueChips';
 
 export const getValuesFromKey = (key: string): DoubleMultiSelectValues | undefined => {
     const [first, second] = key.split('~');
@@ -97,6 +99,20 @@ const DoubleMultiSelectFilter = (
             options={selectOptions}
         />
     ),
+    renderSectionHeader: (sectionHeaderParams) => {
+        const { value } = sectionHeaderParams;
+        const {
+            firstSelect: { label: firstLabel },
+            secondSelect: { label: secondLabel }
+        } = selectOptions;
+
+        return (
+            <FilterSectionHeader {...sectionHeaderParams}>
+                {firstLabel} <FilterValueChips visible={true} value={value?.firstSelect}/>
+                {secondLabel} <FilterValueChips visible={true} value={value?.secondSelect}/>
+            </FilterSectionHeader>
+        );
+    },
     ...doubleMultiSelectOptions,
     label,
     description
