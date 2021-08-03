@@ -38,7 +38,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additionalText?: string }> = (args) => {
     const [visible, setVisible] = useState(false);
 
     const updateModalVisibility = () => {
@@ -47,7 +47,7 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (args) => 
 
     return (
         <div>
-            <Button onClick={updateModalVisibility}>Launch Modal</Button>
+            <Button onClick={updateModalVisibility}>Open {args.headerText}</Button>
             <ModalComponent
                 {...args}
                 handleClose={updateModalVisibility}
@@ -61,6 +61,7 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (args) => 
                             <br />
                             You can use this for various purposes like confirmation.
                         </p>
+                        {args.additionalText && (<p>{args.additionalText}</p>)}
                     </span>
                     <p>
                         Confirm that this is the <strong>{args.headerText}</strong> modal?
@@ -73,20 +74,34 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (args) => 
 
 export const SimpleModal = Template.bind({});
 SimpleModal.args = {
-    headerText: 'Simple Modal',
+    headerText: 'Small Basic Modal',
     subHeaderText: 'Created with simplicity in mind.',
     isCloseIconVisible: true,
-    // cancelButtonText: 'Cancel',
-    // showTopDivider: true,
-    // showBottomDivider: true
-    dialogWidth: 'md',
-    renderInPortal: false
+    dialogWidth: 'xs',
+    renderInPortal: false,
+    additionalText: 'If you have a really long statement and a smaller dialogWidth is specified, the dialogue won\'t be as long. Longer statements or content will wrap.'
 };
 
-// export const NonCollapsible = Template.bind({});
-// NonCollapsible.args = {
-//   expanded: true,
-//   title: 'Non Collapsible Component',
-//   subtitle: <div>Additional Info | <strong>100</strong> Count | Updated <strong>Today</strong></div>,
-//   collapsible: false
-// };
+export const PortalModal = Template.bind({});
+PortalModal.args = {
+    headerText: 'Medium Portal Modal',
+    subHeaderText: 'Rendered via a portal.',
+    isCloseIconVisible: true,
+    cancelButtonText: 'Close Portal',
+    dialogWidth: 'md',
+    renderInPortal: true,
+    additionalText: 'If you have a really long statement and a medium sized dialogWidth is specified, the dialogue area will adjust. Statements or content that take up a lot of room will adjust as needed.'
+
+};
+
+export const WideDivideModal = Template.bind({});
+WideDivideModal.args = {
+    headerText: 'Wide Divide Modal',
+    subHeaderText: 'Includes wide length and dividers.',
+    isCloseIconVisible: true,
+    showTopDivider: true,
+    showBottomDivider: true,
+    dialogWidth: 'xl',
+    renderInPortal: false,
+    additionalText: 'If you have a really long statement and a large dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.'
+};
