@@ -105,3 +105,25 @@ WideDivideModal.args = {
     renderInPortal: false,
     additionalText: 'If you have a really long statement and a large dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.'
 };
+
+export const LongDivideModal = Template.bind({});
+LongDivideModal.args = {
+    headerText: 'Long Divider Modal',
+    subHeaderText: 'Includes long length and dividers.',
+    isCloseIconVisible: true,
+    showTopDivider: true,
+    showBottomDivider: true,
+    dialogWidth: 'xs',
+    renderInPortal: false,
+    additionalText: `If you have a really long statement and a large 
+dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
+dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
+dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
+dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
+dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+In order to make this fairly clear, let's repeat this statement again.`
+};

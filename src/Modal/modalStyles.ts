@@ -24,8 +24,8 @@ export const DialogContainer = styled.div<Pick<ModalProps, 'isOpen'>>(({ isOpen,
 
 export const Dialog = styled.div<Pick<ModalProps, 'dialogWidth'>>(({ dialogWidth, theme }) => ({
     maxWidth: dialogWidth ? DIALOG_WIDTHS[dialogWidth] : undefined,
+    maxHeight: '90%',
     padding: '2em',
-    overflow: 'auto',
     backgroundColor: theme?.colors?.white,
     position: 'relative',
     boxShadow: '0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%)',
@@ -60,7 +60,9 @@ export const DialogDivider = styled.div(({ theme }) => ({
 }));
 
 export const DialogContent = styled.div<Pick<ModalProps, 'showTopDivider'>>(({ showTopDivider }) => ({
-    marginTop: showTopDivider ? 0 : '1em'
+    marginTop: showTopDivider ? 0 : '1em',
+    maxHeight: 400,
+    overflowY: 'auto'
 }));
 
 export const DialogButtonContainer = styled.div({

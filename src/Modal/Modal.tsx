@@ -196,18 +196,16 @@ const Modal: FC<ModalProps> = (props) => {
                             )}
                             {showTopDivider && <DialogDivider />}
                         </DialogTitleContainer>
-                        <DialogContent>
-                            {children}
-                            {showBottomDivider && <DialogDivider />}
-                            {actionButton && (
-                                <DialogButtonContainer>
-                                    <Button color="secondary" onClick={handleOnClose}>
-                                        {cancelButtonText}
-                                    </Button>
-                                    {actionButton}
-                                </DialogButtonContainer>
-                            )}
-                        </DialogContent>
+                        <DialogContent>{children}</DialogContent>
+                        {showBottomDivider && <DialogDivider />}
+                        {actionButton && (
+                            <DialogButtonContainer>
+                                <Button color="secondary" onClick={handleOnClose}>
+                                    {cancelButtonText}
+                                </Button>
+                                {actionButton}
+                            </DialogButtonContainer>
+                        )}
                     </Dialog>
                 )}
             </>
