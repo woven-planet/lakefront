@@ -49,7 +49,7 @@ describe('MultiSelectFilter', () => {
             expect(getApiQueryUrl('a', ['first name'])).toBe('&a=first+name');
             expect(getApiQueryUrl('a', ['first', 'last'])).toBe('&a=first&a=last');
         });
-        
+
         it('returns an empty string when value has no length', () => {
             expect(getApiQueryUrl('a', [])).toBe('');
         });
@@ -102,15 +102,15 @@ describe('MultiSelectFilter', () => {
     describe('isDefaultFilterValue', () => {
         const { isDefaultFilterValue } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS }, {});
 
-        it(`returns true if value has no length`, () => {
+        it('returns true if value has no length', () => {
             expect(isDefaultFilterValue([])).toBe(true);
         });
 
-        it(`returns true if value length matches option length`, () => {
+        it('returns true if value length matches option length', () => {
             expect(isDefaultFilterValue(['a', 'b', 'c'])).toBe(true);
         });
 
-        it(`returns false if value has non-zero length unequal to options length`, () => {
+        it('returns false if value has non-zero length unequal to options length', () => {
             expect(isDefaultFilterValue(['a'])).toBe(false);
         });
     });
@@ -129,26 +129,26 @@ describe('MultiSelectFilter', () => {
                 expect(getFilterBarLabel('a')).toBe('');
                 expect(getFilterBarLabel({})).toBe('');
             });
- 
+
             it('returns label of values array when provided values do not exist in provided options', () => {
                 const { getFilterBarLabel } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS, label: 'label' }, {});
                 expect(getFilterBarLabel(['a', 'b', 'c'])).toBe('label: a,b,c');
             });
- 
+
             it('returns label of labels array when provided values exist in provided options', () => {
-                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }];
                 const { getFilterBarLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterBarLabel(['a', 'b', 'c'])).toBe('label: A,B,C');
             });
- 
+
             it('returns mixed label of labels and values array when some values exist in provided options', () => {
-                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }];
                 const { getFilterBarLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterBarLabel(['a', 'b', 'd', 'e'])).toBe('label: A,B,d,e');
             });
- 
+
             it('properly formats labels with "["', () => {
-                const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }]
+                const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }];
                 const { getFilterBarLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterBarLabel(['a', 'b'])).toBe('label: A,B');
             });
@@ -169,26 +169,26 @@ describe('MultiSelectFilter', () => {
                 expect(getFilterSectionLabel('a')).toMatchObject([]);
                 expect(getFilterSectionLabel({})).toMatchObject([]);
             });
- 
+
             it('returns values array when provided values do not exist in provided options', () => {
                 const { getFilterSectionLabel } = MultiSelectFilter({ options: MULTI_SELECT_FILTER_OPTIONS, label: 'label' }, {});
                 expect(getFilterSectionLabel(['a', 'b', 'c'])).toMatchObject(['a', 'b', 'c']);
             });
- 
+
             it('returns labels array when provided values exist in provided options', () => {
-                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }];
                 const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterSectionLabel(['a', 'b', 'c'])).toMatchObject(['A', 'B', 'C']);
             });
- 
+
             it('returns mixed label of labels and values array when some values exist in provided options', () => {
-                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }]
+                const options = [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }];
                 const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterSectionLabel(['a', 'b', 'd', 'e'])).toMatchObject(['A', 'B', 'd', 'e']);
             });
- 
+
             it('properly formats labels with "["', () => {
-                const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }]
+                const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }];
                 const { getFilterSectionLabel } = MultiSelectFilter({ options: options, label: 'label' }, {});
                 expect(getFilterSectionLabel(['a', 'b'])).toMatchObject(['A', 'B']);
             });
@@ -213,7 +213,7 @@ describe('MultiSelectFilter', () => {
                 const { parseInitialFilterValue } = MultiSelectFilter({ initialValue: 'a' }, {});
                 expect(parseInitialFilterValue()).toMatchObject(['a']);
             });
-            
+
             it('returns value if value is not a string', () => {
                 const { parseInitialFilterValue } = MultiSelectFilter({ initialValue: ['a', 'b'] }, {});
                 expect(parseInitialFilterValue()).toMatchObject(['a', 'b']);
@@ -287,7 +287,7 @@ describe('MultiSelectFilter', () => {
 
             const update = () => null;
             const { queryByRole, queryByText } = render(<div>{renderComponent({ name: 'name', value: ['colors'], update })}</div>);
-            
+
             expect(queryByRole('textbox')).not.toBeInTheDocument();
             expect(queryByText('colors')).not.toBeInTheDocument();
         });
