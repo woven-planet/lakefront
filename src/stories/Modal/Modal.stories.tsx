@@ -9,27 +9,26 @@ export default {
     title: 'Lakefront/Modal',
     component: ModalComponent,
     argTypes: {
-        // title: {
-        //     control: {
-        //         type: 'text'
-        //     }
-        // },
-        // subtitle: {
-        //     control: {
-        //         type: 'text'
-        //     }
-        // },
-        // onChange: {
-        //     action: 'changed',
-        //     table: {
-        //         disable: true
-        //     }
-        // },
-        // children: {
-        //     table: {
-        //         disable: true
-        //     }
-        // }
+        additionalText: {
+            table: {
+                disable: true
+            }
+        },
+        actionButton: {
+            table: {
+                disable: true
+            }
+        },
+        children: {
+            table: {
+                disable: true
+            }
+        },
+        className: {
+            table: {
+                disable: true
+            }
+        }
     },
     parameters: {
         docs: {
@@ -61,7 +60,7 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
                             <br />
                             You can use this for various purposes like confirmation.
                         </p>
-                        {args.additionalText && (<p>{args.additionalText}</p>)}
+                        {args.additionalText && <p>{args.additionalText}</p>}
                     </span>
                     <p>
                         Confirm that this is the <strong>{args.headerText}</strong> modal?
@@ -79,7 +78,8 @@ SimpleModal.args = {
     isCloseIconVisible: true,
     dialogWidth: 'xs',
     renderInPortal: false,
-    additionalText: 'If you have a really long statement and a smaller dialogWidth is specified, the dialogue won\'t be as long. Longer statements or content will wrap.'
+    additionalText:
+        "If you have a really long statement and a smaller dialogWidth is specified, the dialogue won't be as long. Longer statements or content will wrap."
 };
 
 export const PortalModal = Template.bind({});
@@ -90,8 +90,8 @@ PortalModal.args = {
     cancelButtonText: 'Close Portal',
     dialogWidth: 'md',
     renderInPortal: true,
-    additionalText: 'If you have a really long statement and a medium sized dialogWidth is specified, the dialogue area will adjust. Statements or content that take up a lot of room will adjust as needed.'
-
+    additionalText:
+        'If you have a really long statement and a medium sized dialogWidth is specified, the dialogue area will adjust. Statements or content that take up a lot of room will adjust as needed.'
 };
 
 export const WideDivideModal = Template.bind({});
@@ -103,7 +103,8 @@ WideDivideModal.args = {
     showBottomDivider: true,
     dialogWidth: 'xl',
     renderInPortal: false,
-    additionalText: 'If you have a really long statement and a large dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.'
+    additionalText:
+        'If you have a really long statement and a large dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.'
 };
 
 export const LongDivideModal = Template.bind({});
