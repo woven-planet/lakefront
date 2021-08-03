@@ -85,8 +85,8 @@ export interface ModalProps {
  * Modal Component
  *
  * The Modal component is a UI blocking dialogue overlay.
- * The state is not managed inside this component and `isOpen` needs to be maintained in the parent component.
- * While the default rendering behavior is often suffient, the `renderInPortal` prop can be used
+ * The state is not managed inside this component and visibility (via the `isOpen` prop) needs to be maintained in the parent component.
+ * While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used
  * to append a div to the body.
  *
  */
