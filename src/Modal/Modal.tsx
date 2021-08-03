@@ -10,8 +10,7 @@ import {
     DialogButtonContainer,
     DialogContainer,
     DialogContent,
-    DialogDividerBottom,
-    DialogDividerTop,
+    DialogDivider,
     DialogSubHeader,
     DialogTitleContainer
 } from './modalStyles';
@@ -195,11 +194,11 @@ const Modal: FC<ModalProps> = (props) => {
                             ) : (
                                 <span />
                             )}
-                            {showTopDivider && <DialogDividerTop />}
+                            {showTopDivider && <DialogDivider />}
                         </DialogTitleContainer>
                         <DialogContent>
                             {children}
-                            {showBottomDivider && <DialogDividerBottom />}
+                            {showBottomDivider && <DialogDivider />}
                             {actionButton && (
                                 <DialogButtonContainer>
                                     <Button color="secondary" onClick={handleOnClose}>

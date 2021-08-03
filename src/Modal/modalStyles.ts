@@ -54,18 +54,18 @@ export const DialogSubHeader = styled.div(({ theme }) => ({
     padding: 0
 }));
 
-export const DialogDividerTop = styled.div({});
+export const DialogDivider = styled.div(({ theme }) => ({
+    borderBottom: `1px solid ${theme?.colors?.mercury}`,
+    margin: '1em 0'
+}));
 
-export const DialogContent = styled.div({
-    marginTop: '1em'
-});
-
-export const DialogDividerBottom = styled.div({});
+export const DialogContent = styled.div<Pick<ModalProps, 'showTopDivider'>>(({ showTopDivider }) => ({
+    marginTop: showTopDivider ? 0 : '1em'
+}));
 
 export const DialogButtonContainer = styled.div({
     display: 'flex',
     justifyContent: 'flex-end',
-    marginTop: '1em',
     'button:first-of-type': {
         marginRight: 2
     },

@@ -96,7 +96,7 @@ PortalModal.args = {
 
 export const WideDivideModal = Template.bind({});
 WideDivideModal.args = {
-    headerText: 'Wide Divide Modal',
+    headerText: 'Wide Divider Modal',
     subHeaderText: 'Includes wide length and dividers.',
     isCloseIconVisible: true,
     showTopDivider: true,
