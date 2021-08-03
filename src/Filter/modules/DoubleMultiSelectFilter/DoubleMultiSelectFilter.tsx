@@ -1,7 +1,7 @@
 import {
-    DoubleMultiSelectFilterOptions,
     DoubleMultiSelectFilterProps,
     DoubleMultiSelectValues,
+    DoubleMultiSelectFilterOptions,
     FilterModule
 } from 'src/Filter/types';
 import DoubleMultiSelect from './DoubleMultiSelect';

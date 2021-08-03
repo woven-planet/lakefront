@@ -339,7 +339,7 @@ export interface FilterContainerProps {
  */
 export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
 
-export interface DoubleMultiSelectOptions {
+export interface DoubleMultiSelectData {
     apiField: string;
     label?: string;
     name: string;
@@ -351,8 +351,8 @@ export interface DoubleMultiSelectOptions {
 }
 
 export interface DoubleMultiSelectOptions {
-    firstSelect: DoubleMultiSelectOptions,
-    secondSelect: DoubleMultiSelectOptions
+    firstSelect: DoubleMultiSelectData,
+    secondSelect: DoubleMultiSelectData
 }
 
 export interface DoubleMultiSelectValues {
