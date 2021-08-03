@@ -57,9 +57,10 @@ const SelectPopover: FC<SelectPopoverProps> = (
         const bodyElementHTMLCollection = document.getElementsByTagName('body');
         const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
         let observer: IntersectionObserver;
+        let portalElement: HTMLElement;
 
         if (renderInPortal && bodyElement) {
-            const portalElement = document.createElement('div');
+            portalElement = document.createElement('div');
 
             if (!portal) {
                 bodyElement.appendChild(portalElement);
@@ -82,8 +83,8 @@ const SelectPopover: FC<SelectPopoverProps> = (
                 observer.unobserve(popoverElement);
             }
 
-            if (portal && bodyElement && bodyElement.contains(portal)) {
-                bodyElement.removeChild(portal);
+            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
+                bodyElement.removeChild(portalElement);
             }
         };
     }, [popoverElement]);

@@ -76,6 +76,10 @@ export interface ModalProps {
      * defaults to `false`.
      */
     renderInPortal?: boolean;
+    /**
+     * The classes to pass to the modal.
+     */
+     className: string;
 }
 
 const Modal: FC<ModalProps> = (props) => {
@@ -91,7 +95,8 @@ const Modal: FC<ModalProps> = (props) => {
         showTopDivider = false,
         showBottomDivider = false,
         dialogWidth = 'sm',
-        renderInPortal = false
+        renderInPortal = false,
+        className
     } = props;
 
     const handleOnClose = () => {
@@ -108,9 +113,10 @@ const Modal: FC<ModalProps> = (props) => {
         const bodyElementHTMLCollection = document.getElementsByTagName('body');
         const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
         let observer: IntersectionObserver;
+        let portalElement: HTMLElement;
 
         if (renderInPortal && bodyElement) {
-            const portalElement = document.createElement('div');
+            portalElement = document.createElement('div');
 
             if (!portal) {
                 bodyElement.appendChild(portalElement);
@@ -131,17 +137,24 @@ const Modal: FC<ModalProps> = (props) => {
                 observer.unobserve(dialogElement);
             }
 
-            if (portal && bodyElement && bodyElement.contains(portal)) {
-                bodyElement.removeChild(portal);
+            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
+                bodyElement.removeChild(portalElement);
             }
         };
     }, [dialogElement]);
 
     useEffect(() => {
         if (dialogElement && portal) {
-            portal.style.position = 'absolute';
-            portal.style.left = '50%';
-            portal.style.top = '50%';
+            portal.style.display = isOpen ? 'flex' : 'none';
+            portal.style.backgroundColor = 'rgb(0,0,0), rgba(0,0,0,0.4)';
+            portal.style.width = '100%';
+            portal.style.height = '100%';
+            portal.style.justifyContent = 'space-around';
+            portal.style.alignItems = 'center';
+            portal.style.position = 'fixed';
+            portal.style.top = '0';
+            portal.style.left = '0';
+            portal.style.zIndex = `${theme?.zIndex?.modal}`;
         }
     }, [update]);
 
@@ -153,7 +166,7 @@ const Modal: FC<ModalProps> = (props) => {
         () => (
             <>
                 {isOpen && (
-                    <Dialog isOpen={isOpen} dialogWidth={dialogWidth}>
+                    <Dialog dialogWidth={dialogWidth}>
                         <DialogTitleContainer>
                             {headerText}
                             {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
@@ -194,7 +207,9 @@ const Modal: FC<ModalProps> = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <DialogContainer ref={dialogueNodeMounted}>{portal ? createPortal(dialogue, portal) : dialogue}</DialogContainer>
+            <DialogContainer ref={dialogueNodeMounted} isOpen={isOpen} className={className}>
+                {portal ? createPortal(dialogue, portal) : dialogue}
+            </DialogContainer>
         </ThemeProvider>
     );
 };

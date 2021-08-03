@@ -1,9 +1,5 @@
-import styled from "@emotion/styled";
-
-interface DialogProps {
-    isOpen: boolean;
-    dialogWidth: false | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-}
+import styled from '@emotion/styled';
+import { ModalProps } from './Modal';
 
 const DIALOG_WIDTHS = {
     xs: '20%',
@@ -13,14 +9,39 @@ const DIALOG_WIDTHS = {
     xl: '80%'
 };
 
-export const Dialog = styled.div<DialogProps>(({ isOpen, dialogWidth, theme }) => ({
-    display: isOpen ? 'block' : 'none',
-    maxWidth: dialogWidth ? DIALOG_WIDTHS[dialogWidth] : undefined,
-    paddingTop: '100px',
+export const DialogContainer = styled.div<Pick<ModalProps, 'isOpen'>>(({ isOpen, theme }) => ({
+    display: isOpen ? 'flex' : 'none',
+    backgroundColor: ['rgb(0,0,0)', 'rgba(0,0,0,0.4)'],
     width: '100%',
     height: '100%',
-    overflow: 'auto',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: theme?.zIndex?.modal
 }));
+
+export const Dialog = styled.div<Pick<ModalProps, 'dialogWidth'>>(({ dialogWidth, theme }) => ({
+    maxWidth: dialogWidth ? DIALOG_WIDTHS[dialogWidth] : undefined,
+    paddingTop: '100px',
+    overflow: 'auto'
+}));
+
+export const DialogTitleContainer = styled.div({});
+
+export const DialogSubHeader = styled.div({});
+
+export const DialogDividerTop = styled.div({});
+
+export const DialogContent = styled.div({
+    margin: '10% auto auto',
+    padding: '20px',
+    border: '1px solid #888',
+    width: '80%'
+});
+
+export const DialogDividerBottom = styled.div({});
 
 export const DialogButtonContainer = styled.div({
     display: 'flex',
@@ -34,39 +55,5 @@ export const DialogButtonContainer = styled.div({
     },
     'button:last-of-type': {
         marginLeft: 2
-    }
-});
-
-export const DialogContainer = styled.div({
-    backgroundColor: ['rgb(0,0,0)', 'rgba(0,0,0,0.4)'],
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    zIndex: 1
-});
-
-export const DialogContent = styled.div({
-    margin: '10% auto auto',
-    padding: '20px',
-    border: '1px solid #888',
-    width: '80%'
-});
-
-export const DialogDividerBottom = styled.div({
-
-});
-
-export const DialogDividerTop = styled.div({
-
-});
-
-export const DialogSubHeader = styled.div({
-
-});
-
-export const DialogTitleContainer = styled.div({
-    '.subHeader': {
-
     }
 });
