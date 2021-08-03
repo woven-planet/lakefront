@@ -7,6 +7,20 @@ import {
 import DoubleMultiSelect from './DoubleMultiSelect';
 import { FilterSectionHeader } from 'src/Filter/components';
 import FilterValueChips from 'src/Filter/components/FilterSectionHeader/FilterValueChips';
+import { FilterBadge } from 'src/Filter/components/FilterSectionHeader/filterSectionHeaderStyles';
+import styled from '@emotion/styled';
+
+const FilterCount = styled.div(({ theme }) => ({
+    alignItems: 'center',
+    display: 'flex',
+    span: {
+        color: theme?.colors?.dolphin
+    }
+}));
+
+const FilterSection = styled.div({
+    margin: '16px 0'
+});
 
 export const getValuesFromKey = (key: string): DoubleMultiSelectValues | undefined => {
     const [first, second] = key.split('~');
@@ -100,16 +114,57 @@ const DoubleMultiSelectFilter = (
         />
     ),
     renderSectionHeader: (sectionHeaderParams) => {
-        const { value } = sectionHeaderParams;
+        const { badgeThreshold, value } = sectionHeaderParams;
         const {
             firstSelect: { label: firstLabel },
             secondSelect: { label: secondLabel }
         } = selectOptions;
 
+        const firstLength = value?.firstSelect?.length;
+        const secondLength = value?.secondSelect?.length;
+        const firstVisible = firstLength > 0;
+        const secondVisible = secondLength > 0;
+        const firstBadge = firstLength >= badgeThreshold && (
+            <FilterBadge>
+                <div>{firstLength}</div>
+            </FilterBadge>
+        );
+        const secondBadge = secondLength >= badgeThreshold && (
+            <FilterBadge>
+                <div>{secondLength}</div>
+            </FilterBadge>
+        );
+
         return (
             <FilterSectionHeader {...sectionHeaderParams}>
-                {firstLabel} <FilterValueChips visible={true} value={value?.firstSelect}/>
-                {secondLabel} <FilterValueChips visible={true} value={value?.secondSelect}/>
+                {
+                    firstVisible && (
+                        <FilterSection>
+                            <FilterCount>
+                                <span>{firstLabel}</span>&nbsp;
+                                { firstBadge }
+                            </FilterCount>
+                            <FilterValueChips
+                                visible={firstVisible && firstLength < badgeThreshold}
+                                value={value?.firstSelect}
+                            />
+                        </FilterSection>
+                    )
+                }
+                {
+                    secondVisible && (
+                        <FilterSection>
+                            <FilterCount>
+                                <span>{secondLabel}</span>&nbsp;
+                                { secondBadge }
+                            </FilterCount>
+                            <FilterValueChips
+                                visible={secondVisible && secondLength < badgeThreshold}
+                                value={value?.secondSelect}
+                            />
+                        </FilterSection>
+                    )
+                }
             </FilterSectionHeader>
         );
     },
