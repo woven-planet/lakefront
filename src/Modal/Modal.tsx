@@ -126,6 +126,12 @@ const Modal: FC<ModalProps> = (props) => {
 
         if (renderInPortal && bodyElement) {
             portalElement = document.createElement('div');
+            portalElement.onclick = (e) => {
+                if (e.target !== portalElement) {
+                    return;
+                }
+                handleOnClose();
+            };
 
             if (!portal) {
                 bodyElement.appendChild(portalElement);
