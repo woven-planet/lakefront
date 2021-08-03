@@ -15,6 +15,8 @@ import {
     DialogTitleContainer
 } from './modalStyles';
 
+export const CANCEL_BUTTON_TEXT = 'Cancel';
+
 export interface ModalProps {
     /**
      * The action to run when close of the modal is triggered
@@ -78,7 +80,7 @@ export interface ModalProps {
     /**
      * The classes to pass to the modal.
      */
-    className: string;
+    className?: string;
 }
 
 /**
@@ -97,7 +99,7 @@ const Modal: FC<ModalProps> = (props) => {
         headerText = '',
         isCloseIconVisible = true,
         actionButton,
-        cancelButtonText = 'Cancel',
+        cancelButtonText = CANCEL_BUTTON_TEXT,
         subHeaderText = '',
         children,
         showTopDivider = false,
@@ -194,10 +196,10 @@ const Modal: FC<ModalProps> = (props) => {
                             ) : (
                                 <span />
                             )}
-                            {showTopDivider && <DialogDivider />}
+                            {showTopDivider && <DialogDivider className="dialogDivider" />}
                         </DialogTitleContainer>
                         <DialogContent>{children}</DialogContent>
-                        {showBottomDivider && <DialogDivider />}
+                        {showBottomDivider && <DialogDivider className="dialogDivider" />}
                         {actionButton && (
                             <DialogButtonContainer>
                                 <Button color="secondary" onClick={handleOnClose}>
