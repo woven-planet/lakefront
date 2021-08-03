@@ -11,10 +11,10 @@ const DIALOG_WIDTHS = {
 
 export const DialogContainer = styled.div<Pick<ModalProps, 'isOpen'>>(({ isOpen, theme }) => ({
     display: isOpen ? 'flex' : 'none',
-    backgroundColor: ['rgb(0,0,0)', 'rgba(0,0,0,0.4)'],
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
     height: '100%',
-    justifyContent: 'space-around',
+    justifyContent: 'center', 
     alignItems: 'center',
     position: 'fixed',
     top: 0,
@@ -24,32 +24,48 @@ export const DialogContainer = styled.div<Pick<ModalProps, 'isOpen'>>(({ isOpen,
 
 export const Dialog = styled.div<Pick<ModalProps, 'dialogWidth'>>(({ dialogWidth, theme }) => ({
     maxWidth: dialogWidth ? DIALOG_WIDTHS[dialogWidth] : undefined,
-    paddingTop: '100px',
-    overflow: 'auto'
+    padding: '2em',
+    overflow: 'auto',
+    backgroundColor: theme?.colors?.white,
+    position: 'relative',
+    boxShadow: '0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%)',
+    borderRadius: 4
 }));
 
-export const DialogTitleContainer = styled.div({});
+export const DialogTitleContainer = styled.div(({ theme }) => ({
+    fontSize: '1.25rem',
+    fontWeight: 500,
+    lineHeight: 1.6,
+    letterSpacing: '0.0076em',
+    'button.closeIcon': {
+        position: 'absolute',
+        top: '1em',
+        right: '1em',
+        svg: {
+            fill: theme?.colors?.pavement
+        }
+    }
+}));
 
-export const DialogSubHeader = styled.div({});
+export const DialogSubHeader = styled.div(({ theme }) => ({
+    color: theme?.colors?.dolphin,
+    fontSize: 16,
+    margin: 0,
+    padding: 0
+}));
 
 export const DialogDividerTop = styled.div({});
 
 export const DialogContent = styled.div({
-    margin: '10% auto auto',
-    padding: '20px',
-    border: '1px solid #888',
-    width: '80%'
+    marginTop: '1em'
 });
 
 export const DialogDividerBottom = styled.div({});
 
 export const DialogButtonContainer = styled.div({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     marginTop: '1em',
-    button: {
-        flex: 1
-    },
     'button:first-of-type': {
         marginRight: 2
     },

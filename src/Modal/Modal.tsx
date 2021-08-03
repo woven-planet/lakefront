@@ -79,9 +79,18 @@ export interface ModalProps {
     /**
      * The classes to pass to the modal.
      */
-     className: string;
+    className: string;
 }
 
+/**
+ * Modal Component
+ *
+ * The Modal component is a UI blocking dialogue overlay.
+ * The state is not managed inside this component and `isOpen` needs to be maintained in the parent component.
+ * While the default rendering behavior is often suffient, the `renderInPortal` prop can be used
+ * to append a div to the body.
+ *
+ */
 const Modal: FC<ModalProps> = (props) => {
     const {
         handleClose,
@@ -166,12 +175,17 @@ const Modal: FC<ModalProps> = (props) => {
         () => (
             <>
                 {isOpen && (
-                    <Dialog dialogWidth={dialogWidth}>
+                    <Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
                         <DialogTitleContainer>
                             {headerText}
                             {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
                             {isCloseIconVisible ? (
-                                <Button aria-label="Close" onClick={handleOnClose} icon={<CloseIcon />} />
+                                <Button
+                                    className="closeIcon"
+                                    aria-label="Close"
+                                    onClick={handleOnClose}
+                                    icon={<CloseIcon />}
+                                />
                             ) : (
                                 <span />
                             )}
@@ -207,7 +221,7 @@ const Modal: FC<ModalProps> = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <DialogContainer ref={dialogueNodeMounted} isOpen={isOpen} className={className}>
+            <DialogContainer ref={dialogueNodeMounted} isOpen={isOpen} className={className} onClick={handleOnClose}>
                 {portal ? createPortal(dialogue, portal) : dialogue}
             </DialogContainer>
         </ThemeProvider>

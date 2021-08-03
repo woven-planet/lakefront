@@ -38,42 +38,49 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (
-  args
-) => {
-  const [visible, setVisible] = useState(false);
+const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+    const [visible, setVisible] = useState(false);
 
-  const updateModalVisibility = () => {
-    setVisible(isVisible => !isVisible);
-  };
+    const updateModalVisibility = () => {
+        setVisible((isVisible) => !isVisible);
+    };
 
-  return (
-    <div>
-      <Button onClick={updateModalVisibility}>Launch Modal</Button>
-      <ModalComponent
-        {...args}
-        handleClose={updateModalVisibility}
-        isOpen={visible}
-        actionButton={<Button onClick={updateModalVisibility}>Confirm</Button>}
-      >
-          <div>
-            Confirm that this is the <strong>{args.headerText}</strong> modal?
-          </div>
-      </ModalComponent>
-    </div>
-  );
+    return (
+        <div>
+            <Button onClick={updateModalVisibility}>Launch Modal</Button>
+            <ModalComponent
+                {...args}
+                handleClose={updateModalVisibility}
+                isOpen={visible}
+                actionButton={<Button onClick={updateModalVisibility}>Confirm</Button>}
+            >
+                <div>
+                    <span style={{ fontStyle: 'italic' }}>
+                        <p>
+                            The Modal component is a UI blocking dialogue overlay.
+                            <br />
+                            You can use this for various purposes like confirmation.
+                        </p>
+                    </span>
+                    <p>
+                        Confirm that this is the <strong>{args.headerText}</strong> modal?
+                    </p>
+                </div>
+            </ModalComponent>
+        </div>
+    );
 };
 
 export const SimpleModal = Template.bind({});
 SimpleModal.args = {
-  headerText: 'Simple Modal',
-  subHeaderText: 'Created with simplicity in mind.',
-  isCloseIconVisible: true,
-  // cancelButtonText: 'Cancel',
-  // showTopDivider: true,
-  // showBottomDivider: true
-  dialogWidth: 'md',
-  renderInPortal: false
+    headerText: 'Simple Modal',
+    subHeaderText: 'Created with simplicity in mind.',
+    isCloseIconVisible: true,
+    // cancelButtonText: 'Cancel',
+    // showTopDivider: true,
+    // showBottomDivider: true
+    dialogWidth: 'md',
+    renderInPortal: false
 };
 
 // export const NonCollapsible = Template.bind({});
