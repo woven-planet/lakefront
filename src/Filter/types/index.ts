@@ -82,7 +82,7 @@ export interface FilterModule<T> {
      */
     renderComponent(input: FilterRenderProps<T>): ReactElement;
     /**
-     * Overrides the default FilterSectionHeader for a filter module. Recommended usage is the provide a customized
+     * Overrides the default FilterSectionHeader for a filter module. Recommended usage is to provide a customized
      * FilterSectionHeader component.
      */
     renderSectionHeader?(sectionHeaderParams: FilterSectionHeaderProps): ReactElement;

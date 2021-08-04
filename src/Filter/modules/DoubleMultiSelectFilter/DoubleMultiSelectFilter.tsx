@@ -8,19 +8,7 @@ import DoubleMultiSelect from './DoubleMultiSelect';
 import { FilterSectionHeader } from 'src/Filter/components';
 import FilterValueChips from 'src/Filter/components/FilterSectionHeader/FilterValueChips';
 import { FilterBadge } from 'src/Filter/components/FilterSectionHeader/filterSectionHeaderStyles';
-import styled from '@emotion/styled';
-
-const FilterCount = styled.div(({ theme }) => ({
-    alignItems: 'center',
-    display: 'flex',
-    span: {
-        color: theme?.colors?.dolphin
-    }
-}));
-
-const FilterSection = styled.div({
-    margin: '16px 0'
-});
+import { FilterCount, FilterSection } from './doubleMultiSelectFilterStyles';
 
 export const getValuesFromKey = (key: string): DoubleMultiSelectValues | undefined => {
     const [first, second] = key.split('~');
