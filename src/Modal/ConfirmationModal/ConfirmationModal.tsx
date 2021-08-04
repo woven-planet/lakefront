@@ -39,8 +39,24 @@ export interface ConfirmationModalProps {
      * The classes to pass to the modal.
      */
     className: string;
+    /**
+     * When true, the component will mount a div to the body and render the dialogue through it.
+     * This is useful when the dialogue would be inside a scrollable container or one with "overflow: hidden"
+     * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
+     * defaults to `false`.
+     */
+     renderInPortal?: boolean;
 }
 
+/**
+ * Confirmation Modal Component
+ *
+ * The Confirmation modal component is a UI blocking dialogue meant to handle yes/no responses.
+ * The state is not managed inside this component and visibility (via the `modalVisible` prop) needs to be maintained in the parent component.
+ * While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used
+ * to append a div to the body.
+ *
+ */
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
     modalVisible,
     title,
@@ -49,7 +65,8 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
     no = 'No',
     onYes,
     onNo,
-    className
+    className,
+    renderInPortal
 }) => {
     const yesButton = (
         <Button onClick={onYes} color="destructive">
@@ -65,6 +82,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
                 actionButton={yesButton}
                 cancelButtonText={no}
                 className={className}
+                renderInPortal={renderInPortal}
             >
                 <ConfirmationTitleDiv>
                     <ErrorIcon style={{ color: theme?.colors?.watermelon }} />

@@ -38,6 +38,11 @@ export default {
             table: {
                 disable: true
             }
+        },
+        renderInPortal: {
+            table: {
+                disable: true
+            }
         }
     },
     parameters: {
@@ -85,4 +90,12 @@ CustomizedConfirm.args = {
     ),
     yes: 'Accept',
     no: "Decline"
+};
+
+export const PortalConfirm = Template.bind({});
+PortalConfirm.args = {
+    buttonLabel: 'Portal Confirm',
+    title: 'Was this rendered in a portal?',
+    message: '"Yes" or "No" will close this modal.',
+    renderInPortal: true
 };
