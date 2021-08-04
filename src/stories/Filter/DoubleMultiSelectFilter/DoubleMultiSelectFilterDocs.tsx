@@ -21,7 +21,7 @@ export interface DoubleMultiSelectFilterArgs {
 /**
  * Example of double multi select filter source code.
  */
- export const MULTI_SELECT_FILTER_SOURCE_CODE = createFilterSourceCode(`{
+ export const DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE = createFilterSourceCode(`{
     doubleMultiSelectFilter: DoubleMultiSelectFilterArgs(
         {
             label: 'Double Multi Select Filter',

@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import FilterPage from '../components/FilterPage';
-import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';
+import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';
 import DocBlock from '.storybook/DocBlock';
 import { DoubleMultiSelectFilter as DoubleMultiSelectFilterFunction } from 'src/Filter/modules';
 
@@ -18,14 +18,14 @@ export default {
         doubleMultiSelectFilterOptions: {
             control: false,
             description:
-                'Any valid `FilterModule` property (excluding label, description, and selectOptions) which will override default multi select filter behaviour.'
+                'Any valid `FilterModule` property (excluding label, description, and selectOptions) which will override default double multi select filter behaviour.'
         }
     },
     parameters: {
         docs: {
             page: DocBlock,
             source: {
-                code: MULTI_SELECT_FILTER_SOURCE_CODE
+                code: DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE
             }
         }
     }
