@@ -1,4 +1,11 @@
-import { ListFilter, MultiSelectFilter, RadioFilter, SingleSelectFilter, TextFilter } from 'src/Filter/modules';
+import {
+    DoubleMultiSelectFilter,
+    ListFilter,
+    MultiSelectFilter,
+    RadioFilter,
+    SingleSelectFilter,
+    TextFilter
+} from 'src/Filter/modules';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 export const MULTI_SELECT_FILTER_OPTIONS = [
@@ -51,6 +58,33 @@ const RADIO_FILTER_OPTIONS = [
 ];
 
 export const FILTERS = {
+    doubleMultiSelectFilter: DoubleMultiSelectFilter(
+        {
+            label: 'Double Multi Select Filter',
+            selectOptions: {
+                firstSelect: {
+                    apiField: 'first',
+                    label: 'First Filter',
+                    name: 'first',
+                    creatable: true,
+                    items: [],
+                    placeholder: 'Type or paste',
+                    disableMenu: true,
+                    barLabel: 'First Filter'
+                },
+                secondSelect: {
+                    apiField: 'second',
+                    label: 'Second Filter',
+                    name: 'second',
+                    creatable: true,
+                    items: [],
+                    placeholder: 'Type or paste',
+                    disableMenu: true,
+                    barLabel: 'Second Filter'
+                }
+            }
+        }
+    ),
     multiSelectFilter: MultiSelectFilter(
         {
             label: 'Multi Select Filter',
