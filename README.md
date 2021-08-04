@@ -55,6 +55,7 @@ We've added storybook pages to show how each component can be used.
   * [TextFilter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter-textfilter--text-filter)
 * [Input](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-input--placeholder)
 * [Loading](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-loading--loading)
+* [Modal](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modal--portal-modal)
 * [RadioGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-radiogroup--standard-radio-group)
 * [SelectPopover](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-selectpopover--popover)
 * [StackBanner](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stack-banner--stack-banner)
