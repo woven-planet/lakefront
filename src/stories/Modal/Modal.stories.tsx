@@ -9,12 +9,12 @@ export default {
     title: 'Lakefront/Modal',
     component: ModalComponent,
     argTypes: {
-        additionalText: {
+        actionButton: {
             table: {
                 disable: true
             }
         },
-        actionButton: {
+        additionalText: {
             table: {
                 disable: true
             }
@@ -25,6 +25,11 @@ export default {
             }
         },
         className: {
+            table: {
+                disable: true
+            }
+        },
+        isOpen: {
             table: {
                 disable: true
             }
