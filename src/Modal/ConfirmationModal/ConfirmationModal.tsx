@@ -85,7 +85,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
                 renderInPortal={renderInPortal}
             >
                 <ConfirmationTitleDiv>
-                    <ErrorIcon style={{ color: theme?.colors?.watermelon }} />
+                    <ErrorIcon style={{ fill: theme?.colors?.watermelon }} />
                     {title ? <ConfirmationTitle>{title}</ConfirmationTitle> : ''}
                 </ConfirmationTitleDiv>
                 <ConfirmationDiv>
