@@ -57,12 +57,12 @@ export interface ModalProps {
     children?: ReactNode;
     /**
      * The boolean value to determine whether a top divider shows
-     * between the header and the dialogue main body.
+     * between the header and the dialog main body.
      */
     showTopDivider?: boolean;
     /**
      * The boolean value to determine whether a bottom divider shows
-     * between the dialogue main body and the action and cancel buttons.
+     * between the dialog main body and the action and cancel buttons.
      */
     showBottomDivider?: boolean;
     /**
@@ -71,8 +71,8 @@ export interface ModalProps {
      */
     dialogWidth?: false | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     /**
-     * When true, the component will mount a div to the body and render the dialogue through it.
-     * This is useful when the dialogue would be inside a scrollable container or one with "overflow: hidden"
+     * When true, the component will mount a div to the body and render the dialog through it.
+     * This is useful when the dialog would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
      * defaults to `false`.
      */
@@ -86,7 +86,7 @@ export interface ModalProps {
 /**
  * Modal Component
  *
- * The Modal component is a UI blocking dialogue overlay.
+ * The Modal component is a UI blocking dialog overlay.
  * The state is not managed inside this component and visibility (via the `isOpen` prop) needs to be maintained in the parent component.
  * While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used
  * to append a div to the body.
@@ -174,11 +174,11 @@ const Modal: FC<ModalProps> = (props) => {
         }
     }, [update]);
 
-    const dialogueNodeMounted = (node: HTMLDivElement) => {
+    const dialogNodeMounted = (node: HTMLDivElement) => {
         setDialogElement(node);
     };
 
-    const dialogue = useMemo(
+    const dialog = useMemo(
         () => (
             <>
                 {isOpen && (
@@ -226,8 +226,8 @@ const Modal: FC<ModalProps> = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <DialogContainer ref={dialogueNodeMounted} isOpen={isOpen} className={className} onClick={handleOnClose}>
-                {portal ? createPortal(dialogue, portal) : dialogue}
+            <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className} onClick={handleOnClose}>
+                {portal ? createPortal(dialog, portal) : dialog}
             </DialogContainer>
         </ThemeProvider>
     );

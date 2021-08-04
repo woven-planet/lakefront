@@ -56,7 +56,7 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
                 <div>
                     <span style={{ fontStyle: 'italic' }}>
                         <p>
-                            The Modal component is a UI blocking dialogue overlay.
+                            The Modal component is a UI blocking dialog overlay.
                             <br />
                             You can use this for various purposes like confirmation.
                         </p>
@@ -79,7 +79,7 @@ SimpleModal.args = {
     dialogWidth: 'xs',
     renderInPortal: false,
     additionalText:
-        "If you have a really long statement and a smaller dialogWidth is specified, the dialogue won't be as long. Longer statements or content will wrap."
+        "If you have a really long statement and a smaller dialogWidth is specified, the dialog won't be as long. Longer statements or content will wrap."
 };
 
 export const PortalModal = Template.bind({});
@@ -91,7 +91,7 @@ PortalModal.args = {
     dialogWidth: 'md',
     renderInPortal: true,
     additionalText:
-        'If you have a really long statement and a medium sized dialogWidth is specified, the dialogue area will adjust. Statements or content that take up a lot of room will adjust as needed.'
+        'If you have a really long statement and a medium sized dialogWidth is specified, the dialog area will adjust. Statements or content that take up a lot of room will adjust as needed.'
 };
 
 export const WideDivideModal = Template.bind({});
@@ -104,7 +104,7 @@ WideDivideModal.args = {
     dialogWidth: 'xl',
     renderInPortal: false,
     additionalText:
-        'If you have a really long statement and a large dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.'
+        'If you have a really long statement and a large dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.'
 };
 
 export const LongDivideModal = Template.bind({});
@@ -117,14 +117,14 @@ LongDivideModal.args = {
     dialogWidth: 'xs',
     renderInPortal: false,
     additionalText: `If you have a really long statement and a large 
-dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.
 In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
-dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.
 In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
-dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.
 In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
-dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.
 In order to make this fairly clear, let's repeat this statement again. In order to make this fairly clear, let's repeat this statement again. If you have a really long statement and a large 
-dialogWidth is specified, the dialogue area will expand quite a bit. This is great for statements or content that take up a lot of room.
+dialogWidth is specified, the dialog area will expand quite a bit. This is great for statements or content that take up a lot of room.
 In order to make this fairly clear, let's repeat this statement again.`
 };
