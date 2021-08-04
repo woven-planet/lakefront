@@ -40,8 +40,8 @@ export interface ConfirmationModalProps {
      */
     className: string;
     /**
-     * When true, the component will mount a div to the body and render the dialogue through it.
-     * This is useful when the dialogue would be inside a scrollable container or one with "overflow: hidden"
+     * When true, the component will mount a div to the body and render the dialog through it.
+     * This is useful when the dialog would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
      * defaults to `false`.
      */
@@ -51,7 +51,7 @@ export interface ConfirmationModalProps {
 /**
  * Confirmation Modal Component
  *
- * The Confirmation modal component is a UI blocking dialogue meant to handle yes/no responses.
+ * The Confirmation modal component is a UI blocking dialog meant to handle yes/no responses.
  * The state is not managed inside this component and visibility (via the `modalVisible` prop) needs to be maintained in the parent component.
  * While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used
  * to append a div to the body.

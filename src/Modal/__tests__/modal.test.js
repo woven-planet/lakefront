@@ -185,36 +185,36 @@ describe('Modal', () => {
             expect(handleClose).toHaveBeenCalled();
         });
 
-        it('calls handleClose when dialogue container is clicked', () => {
+        it('calls handleClose when dialog container is clicked', () => {
             const handleClose = jest.fn();
             const { container } = render(
                 <Modal
                     isOpen
                     handleClose={handleClose}
-                    className="dialogueContainer"
+                    className="dialogContainer"
                 >
                <div>modalText</div>
             </Modal>
             );
 
-            fireEvent.click(container.querySelector('div.dialogueContainer'));
+            fireEvent.click(container.querySelector('div.dialogContainer'));
 
             expect(handleClose).toHaveBeenCalled();
         });
 
-        it('does not call handleClose when dialogue is clicked', () => {
+        it('does not call handleClose when dialog is clicked', () => {
             const handleClose = jest.fn();
             const { container } = render(
                 <Modal
                     isOpen
                     handleClose={handleClose}
-                    className="dialogueContainer"
+                    className="dialogContainer"
                 >
                <div>modalText</div>
             </Modal>
             );
 
-            fireEvent.click(container.querySelector('div.dialogueContainer').firstChild);
+            fireEvent.click(container.querySelector('div.dialogContainer').firstChild);
 
             expect(handleClose).not.toHaveBeenCalled();
         });
