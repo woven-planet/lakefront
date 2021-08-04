@@ -19,23 +19,34 @@ export interface DoubleMultiSelectFilterArgs {
 }
 
 /**
- * Example of multi select filter source code.
+ * Example of double multi select filter source code.
  */
  export const MULTI_SELECT_FILTER_SOURCE_CODE = createFilterSourceCode(`{
     doubleMultiSelectFilter: DoubleMultiSelectFilterArgs(
         {
-            label: 'Multi Select Filter',
-            creatable: true,
-            initialValue = ['colors'],
-            options: [
-                { label: 'Colors', value: 'colors' },
-                ...additionalSelectOptions
-            ],
-            description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
-        },
-        {
-            getDefaultFilterValue: () => ['colors']
-            ...additionalMultiSelectFilterOptions
+            label: 'Double Multi Select Filter',
+            selectOptions: {
+                firstSelect: {
+                    apiField: 'first',
+                    label: 'First Filter',
+                    name: 'first',
+                    creatable: true,
+                    items: [],
+                    placeholder: 'Type or paste',
+                    disableMenu: true,
+                    barLabel: 'First Filter'
+                },
+                secondSelect: {
+                    apiField: 'second',
+                    label: 'Second Filter',
+                    name: 'second',
+                    creatable: true,
+                    items: [],
+                    placeholder: 'Type or paste',
+                    disableMenu: true,
+                    barLabel: 'Second Filter'
+                }
+            }
         }
     )
 }`);
@@ -43,15 +54,15 @@ export interface DoubleMultiSelectFilterArgs {
 /**
  * DoubleMultiSelectFilter Component
  *
- * The DoubleMultiSelectFilter component is a multi select dropdown filter. While the default
+ * The DoubleMultiSelectFilter component is a pair of multi select dropdown filters. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
- * be supplied via the `multiSelectFilterOptions` parameter to change how the filter looks and acts.
+ * be supplied via the `doubleMultiSelectFilterOptions` parameter to change how the filter looks and acts.
  * DoubleMultiSelectFilter arguments include:
  *
- * `multiSelectFilterProps` - The props required to be supplied as the first argument of
- * the MultiSelectFilter component.
+ * `doubleMultiSelectFilterProps` - The props required to be supplied as the first argument of
+ * the DoubleMultiSelectFilter component.
  *
- * `multiSelectFilterOptions` - Any valid `FilterModule` property (excluding description and label)
+ * `doubleMultiSelectFilterOptions` - Any valid `FilterModule` property (excluding description and label)
  * meant to override default text filter behaviour.
  */
 const DoubleMultiSelectFilterDocs: FC<DoubleMultiSelectFilterArgs> = () => null;
