@@ -16,7 +16,7 @@ export { default as Input } from './Input/Input';
 
 export { default as Loading } from'./Loading/Loading';
 
-export { default as Modal } from'./Modal/Modal';
+export { default as Modal, ConfirmationModal } from'./Modal';
 
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 
