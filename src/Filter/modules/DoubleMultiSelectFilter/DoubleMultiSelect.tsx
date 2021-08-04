@@ -74,7 +74,6 @@ const DoubleMultiSelect: FC<DoubleMultiSelectProps> = ({ value, onChange, option
 
     return (
         <div>
-
             <FilterTitle>
                 <FilterLabel>{options.firstSelect.label}</FilterLabel>
                 <FilterClear onClick={() => handleClear('firstSelect')}>clear all</FilterClear>

@@ -56,7 +56,7 @@ const DoubleMultiSelectFilter = (
         return urlString;
     },
     getApiPostBody: (key, value) => {
-        if (value) {
+        if (value && (value?.firstSelect?.length > 0 || value?.secondSelect?.length > 0)) {
             const { firstSelect, secondSelect } = selectOptions;
             const postBody: {[key: string]: string[]} = {
                 [firstSelect.apiField]: [],
