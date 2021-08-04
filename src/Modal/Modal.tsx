@@ -165,7 +165,7 @@ const Modal: FC<ModalProps> = (props) => {
             portal.style.backgroundColor = 'rgb(0,0,0), rgba(0,0,0,0.4)';
             portal.style.width = '100%';
             portal.style.height = '100%';
-            portal.style.justifyContent = 'space-around';
+            portal.style.justifyContent = 'center';
             portal.style.alignItems = 'center';
             portal.style.position = 'fixed';
             portal.style.top = '0';
