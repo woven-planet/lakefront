@@ -87,7 +87,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
                 bodyElement.removeChild(portalElement);
             }
         };
-    }, [popoverElement]);
+    }, [popoverElement, renderInPortal]);
 
     useEffect(() => {
         if (popoverElement && portal) {

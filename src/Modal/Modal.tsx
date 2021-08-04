@@ -157,7 +157,7 @@ const Modal: FC<ModalProps> = (props) => {
                 bodyElement.removeChild(portalElement);
             }
         };
-    }, [dialogElement]);
+    }, [dialogElement, renderInPortal]);
 
     useEffect(() => {
         if (dialogElement && portal) {
