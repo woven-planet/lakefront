@@ -4,7 +4,7 @@ import { ReactComponent as ErrorIcon } from './assets/errorIcon.svg';
 import Button from 'src/Button/Button';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-import { ConfirmationContentSpan, ConfirmationDiv, ConfirmationTitleDiv } from './confirmationModalStyles';
+import { ConfirmationContentSpan, ConfirmationDiv, ConfirmationTitle, ConfirmationTitleDiv } from './confirmationModalStyles';
 
 export interface ConfirmationModalProps {
     /**
@@ -68,7 +68,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
             >
                 <ConfirmationTitleDiv>
                     <ErrorIcon style={{ color: theme?.colors?.watermelon }} />
-                    {title ? <h4>{title}</h4> : ''}
+                    {title ? <ConfirmationTitle>{title}</ConfirmationTitle> : ''}
                 </ConfirmationTitleDiv>
                 <ConfirmationDiv>
                     <ConfirmationContentSpan>{message}</ConfirmationContentSpan>

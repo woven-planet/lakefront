@@ -4,18 +4,15 @@ export const ConfirmationDiv = styled.div({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'left',
-
     span: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left'
     },
-
     a: {
         display: 'inline-block',
         marginBottom: '40px'
     },
-
     h4: {
         marginBlockStart: 0,
         marginBlockEnd: 0,
@@ -25,12 +22,19 @@ export const ConfirmationDiv = styled.div({
     }
 });
 
+export const ConfirmationTitle = styled.div({
+    fontWeight: 700,
+    fontSize: 18,
+    marginLeft: '0.5em'
+});
+
 export const ConfirmationTitleDiv = styled.div({
     display: 'inline-flex',
-
+    alignItems: 'center',
+    marginTop: '0.5em',
     svg: {
-        height: '45px',
-        width: '45px'
+        height: '2.5em',
+        width: '2.5em'
     }
 });
 
