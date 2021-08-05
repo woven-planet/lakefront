@@ -1,12 +1,14 @@
 import { Component } from 'react';
 
-import Select, { OptionsType } from 'react-select';
+import Select, { OptionsType, InputProps } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { SelectOption } from 'src/types/global';
 import { MULTI_SELECT_STYLES } from './multiSelectStyles';
 import { createOption } from './multiSelectUtil';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
+import { ParseMultiValue } from 'src/Filter/types';
+import { MultiValueInput, MultiValueInputContainer } from './multiSelectStyles';
 
 export type MultiSelectOption = SelectOption<string>;
 
@@ -24,6 +26,7 @@ interface MultiSelectProps {
     handleCreateItem?: (item: string) => void;
     disableMenu?: boolean;
     autoFocus?: boolean;
+    parseMultiValue?: ParseMultiValue;
 }
 
 /**
@@ -56,14 +59,23 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
     };
 
     handleCreate = (item: string) => {
+        const { parseMultiValue } = this.props;
         const { items, selected } = this.state;
-        const newOption = createOption(item);
+
+        let parsedItems = [item];
+
+        if (parseMultiValue?.enabled && item.includes(parseMultiValue.delimiter)) {
+            parsedItems = item.split(parseMultiValue.delimiter).filter((a) => a.trim());
+        }
+
+        const newOptions = [...new Set(parsedItems)].map(createOption);
+
         this.setState({
-            items: [...items, newOption],
-            selected: [...selected, item]
+            items: [...items, ...newOptions],
+            selected: [...selected, ...parsedItems]
         });
 
-        this.props.selectItem([...selected, item]);
+        this.props.selectItem([...selected, ...parsedItems]);
 
         if (this.props.handleCreateItem) {
             this.props.handleCreateItem(item);
@@ -71,19 +83,51 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
     };
 
     render() {
-        const { items, placeholder, value, title, creatable, disableMenu = false, autoFocus = true } = this.props;
+        const {
+            items,
+            placeholder,
+            value,
+            title,
+            creatable,
+            disableMenu = false,
+            autoFocus = true,
+            parseMultiValue
+        } = this.props;
+        
+        const Input = (props: Omit<InputProps, 'theme'>) => (
+            <MultiValueInputContainer>
+                <MultiValueInput
+                    {...props}
+                    autoFocus
+                    onPaste={(e) => {
+                        e.preventDefault();
+                        this.handleCreate(e.clipboardData.getData('Text'));
+                    }}
+                />
+            </MultiValueInputContainer>
+        );
+
         const disabledMenuComponents = disableMenu
             ? {
                   DropdownIndicator: null,
                   Menu: () => <></>
               }
-            : undefined;
+            : {};
+
+        const parseMultiValueComponents = parseMultiValue
+            ? {
+                  Input
+              }
+            : {};
 
         return (
             <ThemeProvider theme={theme}>
                 {creatable ? (
                     <CreatableSelect
-                        components={disabledMenuComponents}
+                        components={{
+                            ...disabledMenuComponents,
+                            ...parseMultiValueComponents
+                        }}
                         autoFocus={autoFocus}
                         value={value}
                         isMulti

@@ -24,7 +24,8 @@ const MultiSelectFilter = (
         initialValue = [],
         creatable = false,
         disableMenu = false,
-        handleCreateItem
+        handleCreateItem,
+        parseMultiValue
     }: MultiSelectFilterProps,
     multiSelectFilterOptions: MultiSelectFilterOptions = {}
 ): FilterModule<string[]> => ({
@@ -126,6 +127,7 @@ const MultiSelectFilter = (
                 selectItem={update}
                 title={name}
                 disableMenu={disableMenu}
+                parseMultiValue={parseMultiValue}
             />
         );
     },
