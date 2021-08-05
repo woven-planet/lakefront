@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, MouseEventHandler, ReactElement, SetStateAction } from 'react';
 import { SelectOverlayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
@@ -80,7 +80,12 @@ export interface FilterModule<T> {
     /**
      * Renders the filter input controls in the left filter drawer.
      */
-    renderComponent(input: FilterRenderProps<T>): React.ReactElement;
+    renderComponent(input: FilterRenderProps<T>): ReactElement;
+    /**
+     * Overrides the default FilterSectionHeader for a filter module. Recommended usage is to provide a customized
+     * FilterSectionHeader component.
+     */
+    renderSectionHeader?(sectionHeaderParams: FilterSectionHeaderProps): ReactElement;
     /**
      * OPTIONAL (support direct JSON input) - extracts/parses the filter value from an API post body.
      * Note: should also delete this filter's key & value from the provided API post body, so that
@@ -149,6 +154,16 @@ export interface FilterHooks<T = FilterPostBody> {
  */
 export interface FilterMap {
     [key: string]: string;
+}
+
+export interface FilterSectionHeaderProps {
+    activeSection?: string;
+    filter: FilterModule<any>;
+    name: string;
+    value: any;
+    onClick?: MouseEventHandler<HTMLHeadingElement>;
+    clearFilter: (name: string) => void;
+    badgeThreshold: number;
 }
 
 /**
@@ -309,7 +324,7 @@ export interface FilterComponentProps {
      * This is the max number of chips to display before switching to
      * a badge displaying the number of applied filters.
      */
-     badgeThreshold?: number;
+    badgeThreshold?: number;
 }
 
 /**
@@ -326,7 +341,53 @@ export interface FilterContainerProps {
  * `AdditionalJSONFilterOptions` is any valid `FilterModule` property
  * meant to override default additional JSON filter behaviour.
  */
- export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
+export interface AdditionalJSONFilterOptions extends Partial<FilterModule<JSONObject>> {}
+
+/**
+ * `DoubleMultiSelectData` is the definition for each select in the DoubleMultiSelect, such as `firstSelect` and `secondSelect`.
+ */
+export interface DoubleMultiSelectData {
+    apiField: string;
+    label?: string;
+    name: string;
+    creatable: boolean;
+    items: MultiSelectOption[];
+    barLabel: string;
+    placeholder?: string;
+    disableMenu?: boolean;
+}
+
+/**
+ * `DoubleMultiSelectOptions` defines both multi selects in the DoubleMultiSelect component.
+ */
+export interface DoubleMultiSelectOptions {
+    firstSelect: DoubleMultiSelectData,
+    secondSelect: DoubleMultiSelectData
+}
+
+/**
+ * `DoubleMultiSelectValues` is an object used in the DoubleMultiSelect onChange which contains an array of values
+ *  stored for each MultiSelect.
+ */
+export interface DoubleMultiSelectValues {
+    firstSelect: string[];
+    secondSelect: string[];
+}
+
+/**
+ * `DoubleMultiSelectFilterProps` defines the props for the DoubleMultiSelectFilter module.
+ */
+export interface DoubleMultiSelectFilterProps {
+    label: string;
+    description?: string;
+    selectOptions: DoubleMultiSelectOptions;
+}
+
+/**
+ * `MultiSelectFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * meant to override default multi select filter behaviour.
+ */
+export interface DoubleMultiSelectFilterOptions extends Omit<Partial<FilterModule<DoubleMultiSelectValues>>, 'label' | 'description' | 'selectOptions'> {}
 
 /**
  * `ListFilterOverrides` is any valid `FilterModule` property (excluding description and label)

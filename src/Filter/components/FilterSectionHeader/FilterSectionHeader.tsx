@@ -1,5 +1,5 @@
 import { FC, MouseEventHandler } from 'react';
-import { FilterModule } from 'src/Filter/types';
+import { FilterSectionHeaderProps } from 'src/Filter/types';
 import { ReactComponent as Add } from '../../assets/add.svg';
 import { ReactComponent as Remove } from '../../assets/remove.svg';
 import {
@@ -14,16 +14,6 @@ import theme from 'src/styles/theme';
 import FilterValueChips from './FilterValueChips';
 import { getFilterCount } from './filterSectionHeaderUtil';
 
-interface FilterSectionHeaderProps {
-    activeSection?: string;
-    filter: FilterModule<any>;
-    name: string;
-    value: any;
-    onClick?: MouseEventHandler<HTMLHeadingElement>;
-    clearFilter: (name: string) => void;
-    badgeThreshold: number;
-}
-
 const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     activeSection = '',
     clearFilter,
@@ -31,7 +21,8 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     name,
     onClick,
     value,
-    badgeThreshold
+    badgeThreshold,
+    children
 }) => {
     const handleClear: MouseEventHandler<SVGElement> = (event) => {
         event.stopPropagation();
@@ -58,7 +49,11 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
                     {activeSection !== name ? <Add aria-label="add" /> : <Remove aria-label="remove" />}
                 </FilterActions>
             </FilterSectionHeaderContainer>
-            <FilterValueChips visible={showChips} value={filter.getFilterSectionLabel(value)} />
+            {
+                children ?? (
+                    <FilterValueChips visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                )
+            }
         </ThemeProvider>
     );
 };
