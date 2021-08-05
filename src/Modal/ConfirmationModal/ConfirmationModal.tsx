@@ -38,7 +38,7 @@ export interface ConfirmationModalProps {
     /**
      * The classes to pass to the modal.
      */
-    className: string;
+    className?: string;
     /**
      * When true, the component will mount a div to the body and render the dialog through it.
      * This is useful when the dialog would be inside a scrollable container or one with "overflow: hidden"
@@ -85,7 +85,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
                 renderInPortal={renderInPortal}
             >
                 <ConfirmationTitleDiv>
-                    <ErrorIcon style={{ color: theme?.colors?.watermelon }} />
+                    <ErrorIcon style={{ fill: theme?.colors?.watermelon }} />
                     {title ? <ConfirmationTitle>{title}</ConfirmationTitle> : ''}
                 </ConfirmationTitleDiv>
                 <ConfirmationDiv>

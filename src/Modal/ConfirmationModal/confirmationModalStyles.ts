@@ -29,8 +29,9 @@ export const ConfirmationTitle = styled.div({
 });
 
 export const ConfirmationTitleDiv = styled.div({
-    display: 'inline-flex',
+    display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: '0.5em',
     svg: {
         height: '2.5em',
