@@ -1,11 +1,20 @@
-import { JSONBuilderUtil } from './JSONBuilder.util';
+import { JSONBuilderUtil, StepFunctionJSON } from './JSONBuilder.util';
+import Digraph from '../../Digraph';
+import { generateStepFunctionGraph } from '../../StepFunctionUtil';
 
-export const setupGraph = () => {
-    const stepFunctionJSON = new JSONBuilderUtil()
-        .addTask('StartNode', 'NodeTwo')
-        .addTask('NodeTwo', 'EndNode')
-        .addTask('EndNode', undefined, true)
-        .toString();
+export const CANVAS_DEFAULTS = {
+    pan: {
+        offset: {
+            x: 0,
+            y: 0
+        }
+    },
+    scale: 2,
+    height: 1000,
+    width: 1000
+};
 
-    console.log(stepFunctionJSON);
+export const generateGraph = (json: StepFunctionJSON): Digraph => {
+    const digraph = new Digraph();
+    return generateStepFunctionGraph(json, digraph);
 };

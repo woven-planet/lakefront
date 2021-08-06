@@ -16,10 +16,12 @@ export interface StepFunctionJSON {
 }
 
 export class JSONBuilderUtil {
-    json: StepFunctionJSON;
+    json: StepFunctionJSON = { States: {} };
 
-    constructor() {
-        this.json = { States: {} };
+    constructor(json?: StepFunctionJSON) {
+        if (json) {
+            this.json = json;
+        }
     }
 
     addTask(state: string, next?: string, end?: boolean): JSONBuilderUtil {
@@ -35,8 +37,8 @@ export class JSONBuilderUtil {
     addChoice(state: string, choices: JSONState[], next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Choice',
-            ...(next && { Next: next }),
             Choices: choices,
+            ...(next && { Next: next }),
             ...(end && { End: end })
         };
 
@@ -46,8 +48,8 @@ export class JSONBuilderUtil {
     addMap(state: string, iterator: StepFunctionJSON, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Map',
-            ...(next && { Next: next }),
             Iterator: iterator,
+            ...(next && { Next: next }),
             ...(end && { End: end })
         };
 
@@ -57,8 +59,8 @@ export class JSONBuilderUtil {
     addParallel(state: string, branches: StepFunctionJSON[], next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Parallel',
-            ...(next && { Next: next }),
             Branches: branches,
+            ...(next && { Next: next }),
             ...(end && { End: end })
         };
 
