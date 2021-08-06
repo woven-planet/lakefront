@@ -14,7 +14,6 @@ import {
     getNearestDrawn,
     getNextVertex,
     getRange,
-    isInParallel,
     isSameLevelType,
     NodeDimensions,
     redrawNode
@@ -25,7 +24,7 @@ export const Y_OFFSET = 75;
 const TERMINAL_ARROW_OFFSET = 12;
 const STEP_ARROW_OFFSET = -5;
 
-const handleMap = (
+export const handleMap = (
     ctx: CanvasRenderingContext2D,
     vertex: number,
     endVertex: number,
@@ -154,7 +153,7 @@ const handleMap = (
 };
 
 // Draws Parallel nodes specially, drawing the box around the nodes a Parallel vertex points to
-const handleParallel = (
+export const handleParallel = (
     ctx: CanvasRenderingContext2D,
     graph: Digraph,
     vertex: number,
@@ -253,7 +252,7 @@ const handleParallel = (
 
 // Returns the furthest left range if no preceding node is drawn, otherwise it draws under the Parent node
 // by using the node's indegree and looking it up in the Map
-const getX = (
+export const getX = (
     groups: number[][],
     drawableVertices: number[],
     vertex: number,
@@ -371,7 +370,6 @@ const getX = (
         }
     }
 
-
     let calculatedX;
 
     if (isEnd) {
@@ -388,7 +386,7 @@ const getX = (
 };
 
 // Calculates the Y for each node based on depth in the depth matrix
-const getY = (depth: number, nodeHeight: number): number => {
+export const getY = (depth: number, nodeHeight: number): number => {
     return (depth * (nodeHeight + Y_OFFSET)) + Y_OFFSET;
 };
 
@@ -408,7 +406,7 @@ interface RenderVertexParams {
 }
 
 // Renders a vertex from the main draw function
-function renderVertex(
+export function renderVertex(
     depthWithoutParallel: number[],
     index: number,
     drawn: Map<number, NodeDimensions>,
