@@ -1,7 +1,7 @@
-import { GroupTypeBase, InputProps, Styles } from 'react-select';
+import styled from '@emotion/styled';
+import { GroupTypeBase, Styles } from 'react-select';
 import { MultiSelectOption } from './MultiSelect';
 import { lightenDarkenColor } from 'src/styles/stylesUtil';
-import styled from '@emotion/styled';
 import TextArea from 'src/TextArea/TextArea';
 
 const DARKEN_LEAST = -10;
@@ -39,18 +39,18 @@ export const MULTI_SELECT_STYLES: Partial<Styles<MultiSelectOption, true, GroupT
 export const MultiValueInputContainer = styled.div({
     'textarea + div': {
         minHeight: 0,
-        marginTop: 0 
-     }
+        marginTop: 0
+    }
 });
 
-    export const MultiValueInput = styled(TextArea)({
-        height: 20,
-        width: '125%',
-        borderColor: 'transparent',
-        ':focus': {
-            borderColor: 'transparent'
-        },
-        backgroundColor: 'transparent',
-        margin: '-8px 0 0 0',
-        textIndent: -10
-    });
+export const StyledMultiValueInput = styled(TextArea)({
+    height: 20,
+    width: '125%',
+    borderColor: 'transparent',
+    ':focus': {
+        borderColor: 'transparent'
+    },
+    backgroundColor: 'transparent',
+    margin: '-8px 0 0 0',
+    textIndent: -10
+});

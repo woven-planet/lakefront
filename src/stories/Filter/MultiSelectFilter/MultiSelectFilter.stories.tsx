@@ -57,7 +57,6 @@ MultiValueParsing.args = {
     multiSelectFilterProps: {
         label: 'Multi Value Parsing',
         creatable: true,
-        initialValue: ['colors'],
         options: MULTI_SELECT_FILTER_OPTIONS,
         description: `Multi Value Parsing allows pasting in multiple values seperated
 by a chosen delimiter. The "\\n" (e.g. new line) has been set as the delimiter here by default.`,
