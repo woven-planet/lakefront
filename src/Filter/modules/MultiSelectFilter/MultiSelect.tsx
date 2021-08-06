@@ -7,7 +7,6 @@ import { MULTI_SELECT_STYLES } from './multiSelectStyles';
 import { createUniqueOptions, parseItems } from './multiSelectUtil';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-import { ParseMultiValue } from 'src/Filter/types';
 import MultiValueInput from './MultiValueInput';
 
 export type MultiSelectOption = SelectOption<string>;
@@ -26,7 +25,7 @@ interface MultiSelectProps {
     handleCreateItem?: (item: string) => void;
     disableMenu?: boolean;
     autoFocus?: boolean;
-    parseMultiValue?: ParseMultiValue;
+    delimiter?: string;
 }
 
 /**
@@ -59,10 +58,10 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
     };
 
     handleCreate = (item: string) => {
-        const { handleCreateItem, parseMultiValue, selectItem } = this.props;
+        const { handleCreateItem, delimiter, selectItem } = this.props;
         const { items, selected } = this.state;
 
-        const parsedItems = parseItems(item, parseMultiValue);
+        const parsedItems = parseItems(item, delimiter);
         const newOptions = createUniqueOptions(parsedItems);
 
         this.setState({
@@ -86,7 +85,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
             creatable,
             disableMenu = false,
             autoFocus = true,
-            parseMultiValue
+            delimiter
         } = this.props;
 
         const disabledMenuComponents = disableMenu
@@ -96,7 +95,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
               }
             : {};
 
-        const parseMultiValueComponents = parseMultiValue
+        const parseMultiValueComponents = delimiter
             ? {
                   Input: (props: Omit<InputProps, 'theme'>) => (
                       <MultiValueInput {...props} handleCreate={this.handleCreate} />

@@ -1,5 +1,4 @@
 import { MultiSelectOption } from './MultiSelect';
-import { ParseMultiValue } from 'src/Filter/types';
 
 export const createOption = (label: string): MultiSelectOption => ({
     label,
@@ -8,10 +7,13 @@ export const createOption = (label: string): MultiSelectOption => ({
 
 export const createUniqueOptions = (parsedItems: string[]) => [...new Set(parsedItems)].map(createOption);
 
-export const parseItems = (item: string, parseMultiValue?: ParseMultiValue): string[] => {
-    if (!parseMultiValue?.enabled || !item.includes(parseMultiValue.delimiter)) {
+export const parseItems = (item: string, delimiter?: string): string[] => {
+    if (!delimiter || !item.includes(delimiter)) {
         return [item];
     }
-    
-    return item.split(parseMultiValue.delimiter).filter((a) => a.trim());
+
+    return item
+        .split(delimiter)
+        .filter((a) => a.trim())
+        .map((a) => a.trim());
 };

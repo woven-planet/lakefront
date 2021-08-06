@@ -11,7 +11,8 @@ import { FilterModule, MultiSelectFilterProps, MultiSelectFilterOptions } from '
  * MultiSelectFilter arguments include:
  *
  * `multiSelectFilterProps` - The props required to be supplied as the first argument of
- * the MultiSelectFilter component.
+ * the MultiSelectFilter component. If the *optional* `delimiter` prop is provided, input parsing
+ * will be enabled to allow typing/pasting multiple values seperated by the chosen delimiter.
  *
  * `multiSelectFilterOptions` - Any valid `FilterModule` property (excluding description and label)
  * meant to override default text filter behaviour.
@@ -25,7 +26,7 @@ const MultiSelectFilter = (
         creatable = false,
         disableMenu = false,
         handleCreateItem,
-        parseMultiValue
+        delimiter
     }: MultiSelectFilterProps,
     multiSelectFilterOptions: MultiSelectFilterOptions = {}
 ): FilterModule<string[]> => ({
@@ -127,7 +128,7 @@ const MultiSelectFilter = (
                 selectItem={update}
                 title={name}
                 disableMenu={disableMenu}
-                parseMultiValue={parseMultiValue}
+                delimiter={delimiter}
             />
         );
     },

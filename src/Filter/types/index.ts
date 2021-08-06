@@ -407,7 +407,7 @@ export interface MultiSelectFilterProps {
     creatable?: boolean;
     handleCreateItem?: (item: string) => void;
     disableMenu?: boolean;
-    parseMultiValue?: ParseMultiValue;
+    delimiter?: string;
 }
 
 /**
@@ -415,14 +415,6 @@ export interface MultiSelectFilterProps {
  * meant to override default multi select filter behaviour.
  */
  export interface MultiSelectFilterOptions extends Omit<Partial<FilterModule<string[]>>, 'description' | 'label'> {}
-
-/**
- * `ParseMultiValue` is the structure of the option to allow parsing multiple values from a delimited list.
- */
-export interface ParseMultiValue {
-    enabled: boolean;
-    delimiter: string;
-}
 
 /**
  * `RadioFilterProps` are the props required to be supplied as the first argument of
