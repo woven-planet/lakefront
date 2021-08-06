@@ -15,14 +15,14 @@ export interface StepFunctionJSON {
     States: JSONState;
 }
 
-export class JSONBuilder {
+export class JSONBuilderUtil {
     json: StepFunctionJSON;
 
     constructor() {
         this.json = { States: {} };
     }
 
-    addTask(state: string, next?: string, end?: boolean): JSONBuilder {
+    addTask(state: string, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Task',
             ...(next && { Next: next }),
@@ -32,7 +32,7 @@ export class JSONBuilder {
         return this;
     }
 
-    addChoice(state: string, choices: JSONState[], next?: string, end?: boolean): JSONBuilder {
+    addChoice(state: string, choices: JSONState[], next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Choice',
             ...(next && { Next: next }),
@@ -43,7 +43,7 @@ export class JSONBuilder {
         return this;
     }
 
-    addMap(state: string, iterator: StepFunctionJSON, next?: string, end?: boolean): JSONBuilder {
+    addMap(state: string, iterator: StepFunctionJSON, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Map',
             ...(next && { Next: next }),
@@ -54,7 +54,7 @@ export class JSONBuilder {
         return this;
     }
 
-    addParallel(state: string, branches: StepFunctionJSON[], next?: string, end?: boolean): JSONBuilder {
+    addParallel(state: string, branches: StepFunctionJSON[], next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Parallel',
             ...(next && { Next: next }),
@@ -65,7 +65,7 @@ export class JSONBuilder {
         return this;
     }
 
-    editNode(state: string, content: JSONState): JSONBuilder {
+    editNode(state: string, content: JSONState): JSONBuilderUtil {
         const original = { ...this.json.States[state] };
 
         this.json.States[state] = {

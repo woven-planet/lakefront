@@ -1,5 +1,5 @@
 import 'jest-canvas-mock';
-import { setupGraph } from './graphTestUtils';
+import { setupGraph } from './utils/graphTestUtils.util';
 
 describe('graphRenderer', () => {
     let ctx;
