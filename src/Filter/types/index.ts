@@ -405,8 +405,9 @@ export interface MultiSelectFilterProps {
     description?: string;
     initialValue?: any[];
     creatable?: boolean;
-    handleCreateItem?: (item: string) => void;
+    handleCreateItem?: (item: string[]) => void;
     disableMenu?: boolean;
+    delimiter?: string;
 }
 
 /**

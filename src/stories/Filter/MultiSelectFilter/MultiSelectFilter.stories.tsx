@@ -13,7 +13,7 @@ export default {
             control: {
                 type: 'object'
             },
-            description: 'The props required to be supplied as the first argument of the MultiSelectFilter component.'
+            description: 'The props required to be supplied as the first argument of the MultiSelectFilter component. If the *optional* `delimiter` prop is provided, input parsing will be enabled to allow typing/pasting multiple values seperated by the chosen delimiter.'
         },
         multiSelectFilterOptions: {
             control: false,
@@ -49,5 +49,17 @@ MultiSelectFilter.args = {
         initialValue: ['colors'],
         options: MULTI_SELECT_FILTER_OPTIONS,
         description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
+    }
+};
+
+export const DelimiterParsing = MultiSelectFilterTemplate.bind({});
+DelimiterParsing.args = {
+    multiSelectFilterProps: {
+        label: 'Delimiter Parsing',
+        creatable: true,
+        options: MULTI_SELECT_FILTER_OPTIONS,
+        description: `Delimiter Parsing allows pasting in multiple values seperated
+by a chosen delimiter. The "\\n" (e.g. new line) has been set as the delimiter here by default.`,
+        delimiter: '\n'
     }
 };

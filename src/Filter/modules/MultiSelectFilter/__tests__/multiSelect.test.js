@@ -30,7 +30,7 @@ describe('MultiSelect', () => {
                 selectItem={() => null}
             />
         );
-        
+
         fireEvent.mouseDown(getByRole('textbox'));
 
         for (const option of MULTI_SELECT_FILTER_OPTIONS) {
@@ -51,14 +51,14 @@ describe('MultiSelect', () => {
                 creatable
             />
         );
-        
+
         fireEvent.mouseDown(getByRole('textbox'));
         expect(queryByText(newOption)).not.toBeInTheDocument();
 
-        fireEvent.change(getByRole('textbox'), { target: { value: newOption }});
+        fireEvent.change(getByRole('textbox'), { target: { value: newOption } });
         fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
         // Make sure to clear input text
-        fireEvent.change(getByRole('textbox'), { target: { value: '' }});
+        fireEvent.change(getByRole('textbox'), { target: { value: '' } });
         fireEvent.mouseDown(getByRole('textbox'));
 
         expect(queryByText(newOption)).toBeInTheDocument();
@@ -76,14 +76,14 @@ describe('MultiSelect', () => {
                 selectItem={() => null}
             />
         );
-        
+
         fireEvent.mouseDown(getByRole('textbox'));
         expect(queryByText(newOption)).not.toBeInTheDocument();
 
-        fireEvent.change(getByRole('textbox'), { target: { value: newOption }});
+        fireEvent.change(getByRole('textbox'), { target: { value: newOption } });
         fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
         // Make sure to clear input text
-        fireEvent.change(getByRole('textbox'), { target: { value: '' }});
+        fireEvent.change(getByRole('textbox'), { target: { value: '' } });
         fireEvent.mouseDown(getByRole('textbox'));
 
         expect(queryByText(newOption)).not.toBeInTheDocument();
@@ -103,7 +103,7 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 'text' }});
+        fireEvent.change(getByRole('textbox'), { target: { value: 'text' } });
         fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
 
         expect(handleCreateItem).toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 'text' }});
+        fireEvent.change(getByRole('textbox'), { target: { value: 'text' } });
         fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
 
         expect(selectItem).toHaveBeenCalledWith(['text']);
@@ -144,11 +144,32 @@ describe('MultiSelect', () => {
             />
         );
 
-
         fireEvent.mouseDown(getByRole('textbox'));
-        
+
         for (const option of MULTI_SELECT_FILTER_OPTIONS) {
             queryByText(option.label);
         }
+    });
+
+    it('renders textarea when delimiter is provided', () => {
+        const commonProps = {
+            key: NAME,
+            title: NAME,
+            handleCreateItem: () => null,
+            items: MULTI_SELECT_FILTER_OPTIONS,
+            value: [],
+            creatable: true,
+            disableMenu: true
+        };
+
+        const { container, rerender } = render(<MultiSelect {...commonProps} />);
+
+        expect(container.querySelector('input[type="text"]')).toBeInTheDocument();
+        expect(container.querySelector('textarea')).not.toBeInTheDocument();
+
+        rerender(<MultiSelect {...commonProps} delimiter="\n" />);
+
+        expect(container.querySelector('input[type="text"]')).not.toBeInTheDocument();
+        expect(container.querySelector('textarea')).toBeInTheDocument();
     });
 });
