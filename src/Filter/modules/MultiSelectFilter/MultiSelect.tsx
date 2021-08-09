@@ -22,7 +22,7 @@ interface MultiSelectProps {
     placeholder?: string;
     title: string;
     creatable?: boolean;
-    handleCreateItem?: (item: string) => void;
+    handleCreateItem?: (item: string[]) => void;
     disableMenu?: boolean;
     autoFocus?: boolean;
     delimiter?: string;
@@ -72,7 +72,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         selectItem([...selected, ...parsedItems]);
 
         if (handleCreateItem) {
-            handleCreateItem(item);
+            handleCreateItem(parsedItems);
         }
     };
 
