@@ -1,7 +1,6 @@
 import 'jest-canvas-mock';
-import { CANVAS_DEFAULTS, generateGraph } from './utils/graphTestUtils.util';
+import { CANVAS_DEFAULTS, graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
-import { NodeDimensions } from '../GraphUtil';
 import { getX } from '../GraphRenderer';
 
 describe('graphRenderer', () => {
@@ -19,13 +18,12 @@ describe('graphRenderer', () => {
                 .addTask('EndNode', undefined, true)
                 .getJson();
 
-            const graph = generateGraph(json);
-            const map = new Map<number, NodeDimensions>();
+            const { drawn, graph, groups } = graphContext(json);
+
             const center = CANVAS_DEFAULTS.width / 4;
 
             const x1 = getX(
-                [],
-                [1],
+                groups,
                 1,
                 50,
                 CANVAS_DEFAULTS.width,
@@ -33,15 +31,14 @@ describe('graphRenderer', () => {
                 -1,
                 0,
                 graph,
-                map,
+                drawn,
                 3,
                 [],
                 {}
             );
 
             const x2 = getX(
-                [],
-                [2],
+                groups,
                 2,
                 50,
                 CANVAS_DEFAULTS.width,
@@ -49,15 +46,14 @@ describe('graphRenderer', () => {
                 -1,
                 1,
                 graph,
-                map,
+                drawn,
                 3,
                 [],
                 {}
             );
 
             const x3 = getX(
-                [],
-                [3],
+                groups,
                 3,
                 50,
                 CANVAS_DEFAULTS.width,
@@ -65,7 +61,7 @@ describe('graphRenderer', () => {
                 -1,
                 2,
                 graph,
-                map,
+                drawn,
                 3,
                 [],
                 {}

@@ -254,7 +254,6 @@ export const handleParallel = (
 // by using the node's indegree and looking it up in the Map
 export const getX = (
     groups: number[][],
-    drawableVertices: number[],
     vertex: number,
     nodeWidth: number,
     canvasWidth: number,
@@ -440,7 +439,6 @@ export function renderVertex(
 
     const x = getX(
         groups,
-        depthWithoutParallel,
         vertex,
         nodeWidth,
         width,

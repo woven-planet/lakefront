@@ -200,7 +200,7 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
             }
         }, []);
 
-        adjustedMatrix.push(adjusted);
+        adjustedMatrix.push(Array.from(new Set(adjusted)));
     }
 
     adjustedMatrix = adjustedMatrix.filter(depth => depth.length > 0);

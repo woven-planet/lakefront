@@ -1,6 +1,8 @@
 import { JSONBuilderUtil, StepFunctionJSON } from './JSONBuilder.util';
 import Digraph from '../../Digraph';
 import { generateStepFunctionGraph } from '../../StepFunctionUtil';
+import { adjustDepthMatrix, getGroupsAtDepth, NodeDimensions } from '../../GraphUtil';
+import DigraphDFS from '../../DigraphDFS';
 
 export const CANVAS_DEFAULTS = {
     pan: {
@@ -14,7 +16,30 @@ export const CANVAS_DEFAULTS = {
     width: 1000
 };
 
-export const generateGraph = (json: StepFunctionJSON): Digraph => {
+interface GraphContext {
+    drawn: Map<number, NodeDimensions>;
+    graph: Digraph;
+    groups: number[][];
+    traversals: any[];
+    verticesAtDepth: number[][];
+}
+
+export const graphContext = (json: StepFunctionJSON): GraphContext => {
     const digraph = new Digraph();
-    return generateStepFunctionGraph(json, digraph);
+    const graph = generateStepFunctionGraph(json, digraph);
+    const drawn = new Map<number, NodeDimensions>();
+    const traversals = DigraphDFS.getAllDfsPaths(graph.getAdjacencyMatrix(), [0]);
+
+    let verticesAtDepth: number[][] = DigraphDFS.getVerticesAtDepthFromPaths(traversals, [], true);
+    verticesAtDepth = adjustDepthMatrix(verticesAtDepth, graph);
+
+    const groups: number[][] = getGroupsAtDepth(verticesAtDepth[0], graph);
+
+    return {
+        drawn,
+        graph,
+        groups,
+        traversals,
+        verticesAtDepth
+    };
 };
