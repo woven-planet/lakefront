@@ -220,7 +220,7 @@ export const getNextVertex = (vertex: number, graph: Digraph): number => {
     return graph.getVertexByData(nextVertexFindFn) || -1;
 };
 
-// Recurses from a vertex through its outdegrees to find a drawable node
+// Recurses from a vertex through its outdegrees to find a drawn node
 export const getNearestDrawn = (vertex: number, graph: Digraph, drawn: Map<number, NodeDimensions>): number => {
     const drawnNode = drawn.get(vertex);
 
@@ -228,7 +228,7 @@ export const getNearestDrawn = (vertex: number, graph: Digraph, drawn: Map<numbe
         return vertex;
     } else {
         const [outDegree] = graph.getOutdegree(vertex).outVertices;
-        return getNearestDrawn(outDegree, graph, drawn);
+        return typeof(outDegree) !== 'undefined' ? getNearestDrawn(outDegree, graph, drawn) : -1;
     }
 };
 

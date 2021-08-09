@@ -1,7 +1,7 @@
 import 'jest-canvas-mock';
 import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
-import { adjustDepthMatrix, getNextVertex } from '../GraphUtil';
+import { adjustDepthMatrix, getNearestDrawn, getNextVertex, NodeDimensions } from '../GraphUtil';
 
 describe('graphUtil', () => {
     let ctx;
@@ -78,6 +78,51 @@ describe('graphUtil', () => {
             expect(getNextVertex(0, graph)).toBe(-1);
             expect(getNextVertex(2, graph)).toBe(-1);
             expect(getNextVertex(10, graph)).toBe(-1);
+        });
+    });
+
+    describe('getNearestDrawn', () => {
+        it('should return the next node when evaluating two tasks with both drawn', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            drawn.set(2, {} as NodeDimensions);
+
+            const nearestDrawn = getNearestDrawn(1, graph, drawn);
+
+            expect(nearestDrawn).toBe(2);
+        });
+
+        it('should return the vertex it was called with if it has been drawn', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            drawn.set(1, {} as NodeDimensions);
+
+            const nearestDrawn = getNearestDrawn(1, graph, drawn);
+
+            expect(nearestDrawn).toBe(1);
+        });
+
+        it('should return -1 when a drawn node cannot be found', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+            const nearestDrawn = getNearestDrawn(1, graph, drawn);
+
+            // drawn is empty
+            expect(nearestDrawn).toBe(-1);
         });
     });
 });
