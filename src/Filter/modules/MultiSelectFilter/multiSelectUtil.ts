@@ -14,6 +14,6 @@ export const parseItems = (item: string, delimiter?: string): string[] => {
 
     return item
         .split(delimiter)
-        .filter((a) => a.trim())
-        .map((a) => a.trim());
+        .map((a) => a.trim())
+        .filter((a) => a);
 };
