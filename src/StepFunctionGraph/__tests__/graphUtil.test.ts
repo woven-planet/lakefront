@@ -30,7 +30,7 @@ describe('graphUtil', () => {
                 [5], // EndNode
                 [6] // End
             ];
-~
+
             expect(adjusted).toStrictEqual(expected);
         });
     });
