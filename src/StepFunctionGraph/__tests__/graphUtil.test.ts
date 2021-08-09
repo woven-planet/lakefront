@@ -1,7 +1,7 @@
 import 'jest-canvas-mock';
 import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
-import { adjustDepthMatrix, getNearestDrawn, getNextVertex, NodeDimensions } from '../GraphUtil';
+import { adjustDepthMatrix, getGroupIndex, getNearestDrawn, getNextVertex, NodeDimensions } from '../GraphUtil';
 
 describe('graphUtil', () => {
     let ctx;
@@ -123,6 +123,21 @@ describe('graphUtil', () => {
 
             // drawn is empty
             expect(nearestDrawn).toBe(-1);
+        });
+    });
+
+    describe('getGroupIndex', () => {
+        it('should return the index from the groups matrix when a vertex is present', () => {
+            const groups = [[1], [2, 3]];
+
+            expect(getGroupIndex(groups, 1)).toBe(0);
+            expect(getGroupIndex(groups, 2)).toBe(1);
+        });
+
+        it('should return -1 when a vertex is not present', () => {
+            const groups = [[1], [2, 3]];
+
+            expect(getGroupIndex(groups, 5)).toBe(-1);
         });
     });
 });

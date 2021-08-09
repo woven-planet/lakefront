@@ -233,8 +233,8 @@ export const getNearestDrawn = (vertex: number, graph: Digraph, drawn: Map<numbe
 };
 
 export const getGroupIndex = (groups: number[][], vertex: number): number => {
-    return groups.reduce((group: number, current: number[]) => {
-        return current.includes(vertex) ? vertex : group;
+    return groups.reduce((group: number, current: number[], index: number) => {
+        return current.includes(vertex) ? index : group;
     }, -1);
 };
 
