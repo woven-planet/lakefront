@@ -33,5 +33,25 @@ describe('graphUtil', () => {
 
             expect(adjusted).toStrictEqual(expected);
         });
+
+        it('should shift a Map node up one depth level', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'MapNode')
+                .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const adjusted = adjustDepthMatrix(verticesAtDepth, graph);
+            const expected: number[][] = [
+                [0], // Start
+                [1], // StartNode
+                [3, 2], // M1, MapNode
+                [4], // EndNode
+                [5] // End
+            ];
+
+            expect(adjusted).toStrictEqual(expected);
+        });
     });
 });
