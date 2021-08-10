@@ -65,14 +65,10 @@ describe('RadioFilter', () => {
     describe('getBrowserQueryUrlValue', () => {
         const { getBrowserQueryUrlValue } = RadioFilter({}, {});
 
-        it('returns the stringified value when truthy value is provided', () => {
+        it('returns the value provided', () => {
             expect(getBrowserQueryUrlValue('a')).toBe('a');
-            expect(getBrowserQueryUrlValue(1)).toBe('1');
-        });
-
-        it('returns empty string when falsy value is provided', () => {
-            expect(getBrowserQueryUrlValue()).toBe('');
-            expect(getBrowserQueryUrlValue(false)).toBe('');
+            expect(getBrowserQueryUrlValue(1)).toBe(1);
+            expect(getBrowserQueryUrlValue()).toBe(undefined);
         });
     });
 

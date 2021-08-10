@@ -78,14 +78,10 @@ describe('MultiSelectFilter', () => {
     describe('getBrowserQueryUrlValue', () => {
         const { getBrowserQueryUrlValue } = MultiSelectFilter({}, {});
 
-        it('returns the stringified value when truthy value is provided', () => {
-            expect(getBrowserQueryUrlValue([])).toBe('');
-            expect(getBrowserQueryUrlValue(1)).toBe('1');
-        });
-
-        it('returns empty string when falsy value is provided', () => {
-            expect(getBrowserQueryUrlValue()).toBe('');
-            expect(getBrowserQueryUrlValue(false)).toBe('');
+        it('returns the provided value when truthy value is provided', () => {
+            expect(getBrowserQueryUrlValue([])).toMatchObject([]);
+            expect(getBrowserQueryUrlValue(1)).toBe(1);
+            expect(getBrowserQueryUrlValue()).toBeUndefined();
         });
     });
 

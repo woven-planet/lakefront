@@ -32,7 +32,7 @@ const SingleSelectFilter = (
         return value ? `&${key}=${encodeURIComponent(value)}` : '';
     },
     getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: value => value ? String(value) : '',
+    getBrowserQueryUrlValue: value => value,
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: value => value === '',
     getFilterBarLabel: value => (filterLabelPrefix ? `${filterLabelPrefix}: ${value}` : String(value)),
