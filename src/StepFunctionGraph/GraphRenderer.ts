@@ -19,7 +19,7 @@ import {
     redrawNode
 } from './GraphUtil';
 
-const X_OFFSET = 30;
+export const X_OFFSET = 30;
 export const Y_OFFSET = 75;
 const TERMINAL_ARROW_OFFSET = 12;
 const STEP_ARROW_OFFSET = -5;

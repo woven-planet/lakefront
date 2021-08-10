@@ -7,6 +7,7 @@ import {
     getGroupsAtDepth,
     getNearestDrawn,
     getNextVertex,
+    getRange,
     isInParallel,
     isSameLevelType,
     NodeDimensions,
@@ -14,6 +15,8 @@ import {
 } from '../GraphUtil';
 import * as CanvasUtilModule from '../canvasUtil';
 import { WorkFlowType } from '../StepFunctionUtil';
+import { getNodeDimensions } from '../canvasUtil';
+import { X_OFFSET } from '../GraphRenderer';
 
 describe('graphUtil', () => {
     let ctx: CanvasRenderingContext2D | null;
@@ -182,6 +185,39 @@ describe('graphUtil', () => {
             const expected = [[3], [2]];
 
             expect(groupsAtDepth).toStrictEqual(expected);
+        });
+    });
+
+    describe('getRange', () => {
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'ChoiceNode')
+            .addChoice('ChoiceNode', [
+                JSONBuilderUtil.getChoiceForAdd('ParallelNode')
+            ])
+            .addParallel('ParallelNode', [
+                new JSONBuilderUtil()
+                    .addTask('P1')
+                    .addTask('P2')
+                    .getJson()
+            ], 'MapNode')
+            .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
+            .addSuccess('EndNode', undefined, true)
+            .getJson();
+
+        const { graph } = graphContext(json);
+
+        it('should return the node width when only one node is in a row', () => {
+            const expected = getNodeDimensions('StartNode').width;
+
+            expect(getRange([1], 0, graph)).toBe(expected);
+        });
+
+        it('should return 0 if no vertices are in the array', () => {
+            expect(getRange([], 0, graph)).toBe(0);
+        });
+
+        it('should not add a Parallel node in the range calculation', () => {
+            expect(getRange([3], 0, graph)).toBe(0);
         });
     });
 
