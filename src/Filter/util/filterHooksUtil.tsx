@@ -59,7 +59,9 @@ export const getCurrentBrowserQueryParams = (location: Location, excludeKeys?: s
 
 /**
  * Get browser query params to save in browser address bar
- * using current filter values.
+ * using current filter values. **Note: Each filter value can be any valid object
+ * of type `Record<string, any>` as it will be stringified in the useFilter hook using the query-string library
+ * defaults (https://github.com/sindresorhus/query-string)**.
  */
 export const getFilterBrowserQueryParams = (filters: FilterSet, values: FilterValues): ParsedQuery => {
     const urlValues: FilterValues = {};

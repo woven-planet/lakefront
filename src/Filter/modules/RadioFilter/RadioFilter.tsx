@@ -24,7 +24,7 @@ const RadioFilter = (
         return value !== defaultValue ? `&${key}=${value}` : '';
     },
     getApiPostBody: (key, value) => (value ? { [key]: value } : undefined),
-    getBrowserQueryUrlValue: (value) => value ? String(value) : '',
+    getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => defaultValue,
     isDefaultFilterValue: (value) => value === defaultValue,
     getFilterBarLabel: (value) => {

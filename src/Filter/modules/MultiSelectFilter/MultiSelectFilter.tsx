@@ -45,7 +45,7 @@ const MultiSelectFilter = (
             return undefined;
         }
     },
-    getBrowserQueryUrlValue: (value) => value ? String(value) : '',
+    getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => [],
     isDefaultFilterValue: (value) => {
         if (value) {

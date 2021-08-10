@@ -55,8 +55,11 @@ export interface FilterModule<T> {
     getApiPostBody(key: string, value: T): FilterPostBody | null | undefined;
     /**
      * Generates the url query param value(s) for saving filter value(s) in the browser address bar (key is automatic).
+     * **Note: The output value here can be any valid object
+     * of type `Record<string, any>` as it will be stringified in the useFilter hook using the query-string library
+     * defaults (https://github.com/sindresorhus/query-string)**.
      */
-    getBrowserQueryUrlValue(value: T): string;
+    getBrowserQueryUrlValue(value: T): unknown;
     /**
      * Returns filter value that is set when filter is cleared.
      */
