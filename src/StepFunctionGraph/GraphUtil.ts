@@ -314,7 +314,12 @@ export const isInParallel = (vertex: number, graph: Digraph): boolean => {
         const parent = graph.getDataByVertex(node);
         const [key] = Object.keys(parent);
         const { Type } = parent[key];
-        const nextVertex = getNextVertex(parent, graph);
+        const parentVertexFindFn = (datum: any) => {
+            const [dataKey] = Object.keys(datum);
+            return dataKey === key;
+        };
+        const parentVertex = graph.getVertexByData(parentVertexFindFn) ?? -1;
+        const nextVertex = getNextVertex(parentVertex, graph);
 
         return Type === WorkFlowType.PARALLEL && vertex !== nextVertex;
     } else {

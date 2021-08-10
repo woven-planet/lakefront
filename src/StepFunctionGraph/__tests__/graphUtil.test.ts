@@ -7,6 +7,7 @@ import {
     getGroupsAtDepth,
     getNearestDrawn,
     getNextVertex,
+    isInParallel,
     isSameLevelType,
     NodeDimensions,
     redrawNode
@@ -254,6 +255,61 @@ describe('graphUtil', () => {
             // End
             redrawNode(8, ctx as CanvasRenderingContext2D, drawn, graph, []);
             expect(drawStepNodeSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('isInParallel', () => {
+        it('should return true if a vertex is inside a Parallel node (direct parent)', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil()
+                        .addTask('P1')
+                        .addTask('P2')
+                        .getJson()
+                ], 'MapNode')
+                .getJson();
+
+            const { graph } = graphContext(json);
+
+            // P1
+            expect(isInParallel(3, graph)).toBe(true);
+            // P2
+            expect(isInParallel(4, graph)).toBe(true);
+        });
+
+        it('should return false if a vertex is not inside a Parallel node (direct parent)', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ChoiceNode')
+                .addChoice('ChoiceNode', [
+                    JSONBuilderUtil.getChoiceForAdd('ParallelNode')
+                ])
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil()
+                        .addTask('P1')
+                        .addTask('P2')
+                        .getJson()
+                ], 'MapNode')
+                .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
+                .addSuccess('EndNode', undefined, true)
+                .getJson();
+
+            const { graph } = graphContext(json);
+
+            // Start
+            expect(isInParallel(0, graph)).toBe(false);
+            // StartNode
+            expect(isInParallel(1, graph)).toBe(false);
+            // ChoiceNode
+            expect(isInParallel(2, graph)).toBe(false);
+            // ParallelNode
+            expect(isInParallel(3, graph)).toBe(false);
+            // MapNode
+            expect(isInParallel(6, graph)).toBe(false);
+            // EndNode
+            expect(isInParallel(7, graph)).toBe(false);
+            // End
+            expect(isInParallel(8, graph)).toBe(false);
         });
     });
 });
