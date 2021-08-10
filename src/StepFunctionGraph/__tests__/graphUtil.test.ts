@@ -7,8 +7,10 @@ import {
     getGroupsAtDepth,
     getNearestDrawn,
     getNextVertex,
+    isSameLevelType,
     NodeDimensions
 } from '../GraphUtil';
+import { WorkFlowType } from '../StepFunctionUtil';
 
 describe('graphUtil', () => {
     let ctx;
@@ -177,5 +179,20 @@ describe('graphUtil', () => {
 
             expect(groupsAtDepth).toStrictEqual(expected);
         });
+    });
+
+    describe('isSameLevelType', () => {
+       it('should return true if the workflow is a PARALLEL or MAP', () => {
+           expect(isSameLevelType(WorkFlowType.PARALLEL)).toBe(true);
+           expect(isSameLevelType(WorkFlowType.MAP)).toBe(true);
+       });
+
+       it('should return false if the workflow is not a PARALLEL or MAP', () => {
+           expect(isSameLevelType(WorkFlowType.START)).toBe(false);
+           expect(isSameLevelType(WorkFlowType.CHOICE)).toBe(false);
+           expect(isSameLevelType(WorkFlowType.SUCCEED)).toBe(false);
+           expect(isSameLevelType(WorkFlowType.TASK)).toBe(false);
+           expect(isSameLevelType(WorkFlowType.END)).toBe(false);
+       });
     });
 });
