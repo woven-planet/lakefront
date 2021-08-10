@@ -1,7 +1,14 @@
 import 'jest-canvas-mock';
 import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
-import { adjustDepthMatrix, getGroupIndex, getNearestDrawn, getNextVertex, NodeDimensions } from '../GraphUtil';
+import {
+    adjustDepthMatrix,
+    getGroupIndex,
+    getGroupsAtDepth,
+    getNearestDrawn,
+    getNextVertex,
+    NodeDimensions
+} from '../GraphUtil';
 
 describe('graphUtil', () => {
     let ctx;
@@ -138,6 +145,37 @@ describe('graphUtil', () => {
             const groups = [[1], [2, 3]];
 
             expect(getGroupIndex(groups, 5)).toBe(-1);
+        });
+    });
+
+    describe('getGroupsAtDepth', () => {
+        it('should return a matrix with a single group when given no Parallel nodes', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const groupsAtDepth = getGroupsAtDepth(verticesAtDepth[1], graph);
+            const expected = [[1]];
+
+            expect(groupsAtDepth).toStrictEqual(expected);
+        });
+
+        it('should return a matrix with a two groups when given a Parallel node and a task', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil().addTask('P1').getJson()
+                ], 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const groupsAtDepth = getGroupsAtDepth(verticesAtDepth[2], graph);
+            const expected = [[3], [2]];
+
+            expect(groupsAtDepth).toStrictEqual(expected);
         });
     });
 });

@@ -251,7 +251,9 @@ export const getGroupsAtDepth = (depthArray: number[], graph: Digraph): number[]
         const { Type } = node[key];
 
         if (Type === WorkFlowType.PARALLEL) {
-            const outDegree = graph.getOutdegree(vertex).outVertices;
+            const nextVertex = getNextVertex(vertex, graph);
+            const outDegree = graph.getOutdegree(vertex).outVertices
+                .filter(v => v !== nextVertex);
             group.push(...outDegree);
             groups.push(group);
         }
