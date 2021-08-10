@@ -1,14 +1,16 @@
-export type NodeType = 'Task' | 'Choice' | 'Map' | 'Parallel';
+export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel';
+
+export interface JSONStateObject {
+    Type?: NodeType;
+    Next?: string;
+    End?: boolean;
+    Branches?: StepFunctionJSON[];
+    Choices?: JSONStateObject[];
+    Iterator?: StepFunctionJSON;
+}
 
 export interface JSONState {
-    [key: string]: {
-        Type: NodeType;
-        Next?: string;
-        End?: boolean;
-        Branches?: StepFunctionJSON[];
-        Choices?: JSONState[];
-        Iterator?: StepFunctionJSON;
-    }
+    [key: string]: JSONStateObject
 }
 
 export interface StepFunctionJSON {
@@ -24,6 +26,12 @@ export class JSONBuilderUtil {
         }
     }
 
+    static getChoiceForAdd(next: string): JSONStateObject {
+        return {
+            Next: next
+        };
+    }
+
     addTask(state: string, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Task',
@@ -34,7 +42,17 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    addChoice(state: string, choices: JSONState[], next?: string, end?: boolean): JSONBuilderUtil {
+    addSuccess(state: string, next?: string, end?: boolean): JSONBuilderUtil {
+        this.json.States[state] = {
+            Type: 'Success',
+            ...(next && { Next: next }),
+            ...(end && { End: end })
+        };
+
+        return this;
+    }
+
+    addChoice(state: string, choices: JSONStateObject[], next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Choice',
             Choices: choices,
@@ -80,6 +98,10 @@ export class JSONBuilderUtil {
 
     getJson() {
         return this.json;
+    }
+
+    getNodeJson(state: string): JSONStateObject {
+        return this.json.States[state];
     }
 
     toString() {

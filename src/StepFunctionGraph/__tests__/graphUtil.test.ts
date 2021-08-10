@@ -8,12 +8,14 @@ import {
     getNearestDrawn,
     getNextVertex,
     isSameLevelType,
-    NodeDimensions
+    NodeDimensions,
+    redrawNode
 } from '../GraphUtil';
+import * as CanvasUtilModule from '../canvasUtil';
 import { WorkFlowType } from '../StepFunctionUtil';
 
 describe('graphUtil', () => {
-    let ctx;
+    let ctx: CanvasRenderingContext2D | null;
 
     beforeEach(() => {
         ctx = document.createElement('canvas').getContext('2d');
@@ -158,6 +160,7 @@ describe('graphUtil', () => {
                 .getJson();
 
             const { graph, verticesAtDepth } = graphContext(json);
+            // verticesAtDepth[0] contains the start node, not StartNode
             const groupsAtDepth = getGroupsAtDepth(verticesAtDepth[1], graph);
             const expected = [[1]];
 
@@ -194,5 +197,63 @@ describe('graphUtil', () => {
            expect(isSameLevelType(WorkFlowType.TASK)).toBe(false);
            expect(isSameLevelType(WorkFlowType.END)).toBe(false);
        });
+    });
+
+    describe('redrawNode', () => {
+        it('should draw a choice, task, or succeed (default case) node', () => {
+            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'Choice')
+                .addChoice('ChoiceNode', [
+                    JSONBuilderUtil.getChoiceForAdd('EndNode')
+                ])
+                .addSuccess('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            // StartNode (Task)
+            redrawNode(1, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).toHaveBeenCalledTimes(1);
+
+            // ChoiceNode (Choice)
+            redrawNode(2, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).toHaveBeenCalledTimes(2);
+
+            //EndNode (Success)
+            redrawNode(3, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).toHaveBeenCalledTimes(3);
+        });
+
+        it('should not draw a Parallel, Map, Start, or End node', () => {
+            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil().addTask('P1').getJson(),
+                    new JSONBuilderUtil().addTask('P2').getJson()
+                ], 'MapNode')
+                .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
+                .addSuccess('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            // Start
+            redrawNode(0, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).not.toHaveBeenCalled();
+
+            // ParallelNode (Parallel)
+            redrawNode(2, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).not.toHaveBeenCalled();
+
+            // MapNode (Map)
+            redrawNode(5, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).not.toHaveBeenCalled();
+
+            // End
+            redrawNode(8, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).not.toHaveBeenCalled();
+        });
     });
 });
