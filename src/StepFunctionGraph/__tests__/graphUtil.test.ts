@@ -3,6 +3,8 @@ import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
 import {
     adjustDepthMatrix,
+    adjustMatrixForArrows,
+    findNearestArrowNode,
     generateMountingPoints,
     getDrawnRange,
     getDrawnRangeMiddleX,
@@ -71,6 +73,104 @@ describe('graphUtil', () => {
             ];
 
             expect(adjusted).toStrictEqual(expected);
+        });
+    });
+
+    describe('adjustMatrixForArrows', () => {
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'ParallelNode')
+            .addParallel('ParallelNode', [
+                new JSONBuilderUtil().addTask('P1').getJson(),
+                new JSONBuilderUtil().addTask('P2').getJson()
+            ], 'MapNode')
+            .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'ChoiceNode')
+            .addChoice('ChoiceNode', [
+                JSONBuilderUtil.getChoiceForAdd('EndNode')
+            ])
+            .addSuccess('EndNode', undefined, true)
+            .getJson();
+
+        it('should return an empty matrix when given an empty matrix', () => {
+            const { drawn, graph } = graphContext(json);
+
+            const matrix: number[][] = [];
+            const expected: number[][] = [];
+
+            expect(adjustMatrixForArrows(matrix, graph, drawn)).toStrictEqual(expected);
+        });
+
+        it('should remove Parallel and Map nodes from the matrix', () => {
+            const { drawn, graph } = graphContext(json);
+            drawn.set(2, { nodeType: WorkFlowType.PARALLEL } as NodeDimensions);
+            drawn.set(5, { nodeType: WorkFlowType.MAP } as NodeDimensions);
+
+            const matrix: number[][] = [[2], [5]];
+            const expected: number[][] = [[], []];
+
+            expect(adjustMatrixForArrows(matrix, graph, drawn)).toStrictEqual(expected);
+        });
+
+        it('should not remove Task, Choice, Start, End, or Succeed nodes from the matrix', () => {
+            const { drawn, graph } = graphContext(json);
+            drawn.set(0, { nodeType: WorkFlowType.START } as NodeDimensions);
+            drawn.set(1, { nodeType: WorkFlowType.TASK } as NodeDimensions);
+            drawn.set(3, { nodeType: WorkFlowType.TASK } as NodeDimensions);
+            drawn.set(4, { nodeType: WorkFlowType.TASK } as NodeDimensions);
+            drawn.set(6, { nodeType: WorkFlowType.TASK } as NodeDimensions);
+            drawn.set(7, { nodeType: WorkFlowType.CHOICE } as NodeDimensions);
+            drawn.set(8, { nodeType: WorkFlowType.SUCCEED } as NodeDimensions);
+            drawn.set(9, { nodeType: WorkFlowType.TASK } as NodeDimensions);
+
+            const matrix: number[][] = [[0], [1], [3, 4], [6], [7, 8], [9]];
+            const expected: number[][] = [[0], [1], [3, 4], [6], [7, 8], [9]];
+
+            expect(adjustMatrixForArrows(matrix, graph, drawn)).toStrictEqual(expected);
+        });
+    });
+
+    describe('findNearestArrowNode', () => {
+        // Traversals: [[0,1,2,3],[0,1,2,4],[0,1,2,5,6],[0,1,2,5,7,8]]
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'ParallelNode')
+            .addParallel('ParallelNode', [
+                new JSONBuilderUtil().addTask('P1').getJson(),
+                new JSONBuilderUtil().addTask('P2').getJson()
+            ], 'MapNode')
+            .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
+            .addSuccess('EndNode', undefined, true)
+            .getJson();
+
+        it('should return the node and next node data for the first index of the first path from the start node', () => {
+            const { drawn, traversals } = graphContext(json);
+            const [firstPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.START } as NodeDimensions;
+            const nodeTask = { nodeType: WorkFlowType.TASK } as NodeDimensions;
+
+            drawn.set(0, nodeStart);
+            drawn.set(1, nodeTask);
+
+            const node = findNearestArrowNode(firstPath, 0, 0, drawn, true);
+            const nextNode = findNearestArrowNode(firstPath, 0, 0, drawn, false);
+            expect(node).toStrictEqual(nodeStart);
+            expect(nextNode).toStrictEqual(nodeTask);
+        });
+
+        it('should return the node and next node data for a Parallel Node', () => {
+            const { drawn, traversals } = graphContext(json);
+            const [firstPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.PARALLEL } as NodeDimensions;
+            const nodeTask = { nodeType: WorkFlowType.TASK } as NodeDimensions;
+
+            drawn.set(2, nodeStart);
+            drawn.set(3, nodeTask);
+
+            const node = findNearestArrowNode(firstPath, 2, 2, drawn, true);
+            const nextNode = findNearestArrowNode(firstPath, 2, 2, drawn, false);
+
+            expect(node).toStrictEqual(nodeStart);
+            expect(nextNode).toStrictEqual(nodeTask);
         });
     });
 
