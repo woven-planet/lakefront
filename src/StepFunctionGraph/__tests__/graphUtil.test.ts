@@ -3,6 +3,7 @@ import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
 import {
     adjustDepthMatrix,
+    generateMountingPoints,
     getDrawnRange,
     getDrawnRangeMiddleX,
     getGroupIndex,
@@ -12,12 +13,13 @@ import {
     getRange,
     isInParallel,
     isSameLevelType,
+    MountingPoints,
     NodeDimensions,
     redrawNode
 } from '../GraphUtil';
 import * as CanvasUtilModule from '../canvasUtil';
-import { WorkFlowType } from '../StepFunctionUtil';
 import { getNodeDimensions } from '../canvasUtil';
+import { WorkFlowType } from '../StepFunctionUtil';
 import { X_OFFSET } from '../GraphRenderer';
 
 describe('graphUtil', () => {
@@ -69,6 +71,99 @@ describe('graphUtil', () => {
             ];
 
             expect(adjusted).toStrictEqual(expected);
+        });
+    });
+
+    describe('generateMountingPoints', () => {
+        it('should generate all mounting points for a non-parallel node', () => {
+            const node = {
+                x: 100,
+                y: 200,
+                height: 50,
+                width: 150
+            } as NodeDimensions;
+            const mountingPoints = generateMountingPoints(node, 0, 0, 0, 0);
+            const expected: MountingPoints = {
+                bottom: {
+                    x: 100,
+                    y: 225
+                },
+                top: {
+                    x: 100,
+                    y: 175
+                },
+                left: {
+                    x: 25,
+                    y: 200
+                },
+                right: {
+                    x: 175,
+                    y: 200
+                }
+            };
+
+            expect(mountingPoints).toStrictEqual(expected);
+        });
+
+        it('should factor in offsets properly into calculations', () => {
+            const node = {
+                x: 100,
+                y: 200,
+                height: 50,
+                width: 150
+            } as NodeDimensions;
+            const mountingPoints = generateMountingPoints(node, 10, 20, 30, 40);
+            const expected: MountingPoints = {
+                bottom: {
+                    x: 100,
+                    y: 235
+                },
+                top: {
+                    x: 100,
+                    y: 170
+                },
+                left: {
+                    x: -5,
+                    y: 200
+                },
+                right: {
+                    x: 215,
+                    y: 200
+                }
+            };
+
+            expect(mountingPoints).toStrictEqual(expected);
+        });
+
+        it('should generate all mounting points for a parallel node', () => {
+            const node = {
+                nodeType: WorkFlowType.PARALLEL,
+                x: 100,
+                y: 200,
+                height: 50,
+                width: 150
+            } as NodeDimensions;
+            const mountingPoints = generateMountingPoints(node, 10, 20, 30, 40);
+            const expected: MountingPoints = {
+                bottom: {
+                    x: 175,
+                    y: 260
+                },
+                top: {
+                    x: 175,
+                    y: 200
+                },
+                left: {
+                    x: 70,
+                    y: 225
+                },
+                right: {
+                    x: 290,
+                    y: 225
+                }
+            };
+
+            expect(mountingPoints).toStrictEqual(expected);
         });
     });
 
