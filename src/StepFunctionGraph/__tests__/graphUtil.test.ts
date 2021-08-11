@@ -3,6 +3,7 @@ import { graphContext } from './utils/graphTestUtils.util';
 import { JSONBuilderUtil } from './utils/JSONBuilder.util';
 import {
     adjustDepthMatrix,
+    getDrawnRange,
     getGroupIndex,
     getGroupsAtDepth,
     getNearestDrawn,
@@ -67,6 +68,67 @@ describe('graphUtil', () => {
             ];
 
             expect(adjusted).toStrictEqual(expected);
+        });
+    });
+
+    describe('getDrawnRange', () => {
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'ParallelNode')
+            .addParallel('ParallelNode', [
+                new JSONBuilderUtil().addTask('P1').getJson(),
+                new JSONBuilderUtil().addTask('P2').getJson(),
+                new JSONBuilderUtil().addTask('P3').getJson()
+            ], 'EndNode')
+            .addTask('EndNode', undefined, true)
+            .getJson();
+
+        it('should return 0 with a range of one node', () => {
+            const { drawn, graph } = graphContext(json);
+
+            expect(getDrawnRange([1], graph, drawn)).toBe(0);
+        });
+
+        it('should calculate using the leftMostX when a first is not drawn', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensions = { mountingPoints: { right: { x: 0 }}} as NodeDimensions;
+            drawn.set(1, nodeDimensions);
+
+            expect(getDrawnRange([0, 1], graph, drawn, -100)).toBe(100);
+        });
+
+        it('should return the drawn range between two nodes', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { mountingPoints: { left: { x: 100 }}} as NodeDimensions;
+            const nodeDimensionsRight = { mountingPoints: { right: { x: 250 }}} as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+            drawn.set(4, nodeDimensionsRight);
+
+            expect(getDrawnRange([3, 4], graph, drawn)).toBe(150);
+        });
+
+        it('should return the drawn range between leftMostX and another node even when the first node is drawn', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { mountingPoints: { left: { x: -100 }}} as NodeDimensions;
+            const nodeDimensionsMiddle = { mountingPoints: { left: { x: 125 }, right: { x: 175 }}} as NodeDimensions;
+            const nodeDimensionsRight = { mountingPoints: { right: { x: 250 }}} as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+            drawn.set(4, nodeDimensionsMiddle);
+            drawn.set(5, nodeDimensionsRight);
+
+            expect(getDrawnRange([3, 4, 5], graph, drawn)).toBe(350);
+        });
+
+        it('should return the drawn range between three nodes', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { mountingPoints: { left: { x: 100 }}} as NodeDimensions;
+            const nodeDimensionsRight = { mountingPoints: { right: { x: 250 }}} as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+            drawn.set(4, nodeDimensionsRight);
+
+            expect(getDrawnRange([3, 4], graph, drawn, 0)).toBe(250);
         });
     });
 
@@ -210,6 +272,14 @@ describe('graphUtil', () => {
             const expected = getNodeDimensions('StartNode').width;
 
             expect(getRange([1], 0, graph)).toBe(expected);
+        });
+
+        it('should add two nodes that are next to each other with two X_OFFSETs', () => {
+            const expected = getNodeDimensions('P1').width +
+                getNodeDimensions('P2').width +
+                X_OFFSET +
+                X_OFFSET;
+            expect(getRange([4, 5], X_OFFSET, graph)).toBe(expected);
         });
 
         it('should return 0 if no vertices are in the array', () => {
