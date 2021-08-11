@@ -65,12 +65,13 @@ export const getDrawnRangeMiddleX = (
 ): number => {
     const xValues: number[] = vertices.reduce((accum: number[], vertex) => {
         const xVal = drawn.get(vertex)?.x;
-        if (xVal) {
+        if (typeof(xVal) === 'number') {
             accum.push(xVal);
         }
 
         return accum;
     }, []);
+
     const left = Math.min(...xValues);
     const right = Math.max(...xValues);
 

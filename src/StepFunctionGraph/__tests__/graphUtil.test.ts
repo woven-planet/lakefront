@@ -4,6 +4,7 @@ import { JSONBuilderUtil } from './utils/JSONBuilder.util';
 import {
     adjustDepthMatrix,
     getDrawnRange,
+    getDrawnRangeMiddleX,
     getGroupIndex,
     getGroupsAtDepth,
     getNearestDrawn,
@@ -129,6 +130,47 @@ describe('graphUtil', () => {
             drawn.set(4, nodeDimensionsRight);
 
             expect(getDrawnRange([3, 4], graph, drawn, 0)).toBe(250);
+        });
+    });
+
+    describe('getDrawnRangeMiddleX', function () {
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'ParallelNode')
+            .addParallel('ParallelNode', [
+                new JSONBuilderUtil().addTask('P1').getJson(),
+                new JSONBuilderUtil().addTask('P2').getJson(),
+                new JSONBuilderUtil().addTask('P3').getJson()
+            ], 'EndNode')
+            .addTask('EndNode', undefined, true)
+            .getJson();
+
+        it('should return the x value of one node', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { x: 100 } as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+
+            expect(getDrawnRangeMiddleX([3], graph, drawn)).toBe(100);
+        });
+
+        it('should return the middle x value between two vertices', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { x: 0 } as NodeDimensions;
+            const nodeDimensionsRight = { x: 100 } as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+            drawn.set(4, nodeDimensionsRight);
+
+            expect(getDrawnRangeMiddleX([3, 4], graph, drawn)).toBe(50);
+        });
+
+        it('should not consider nodes that have not been drawn', () => {
+            const { drawn, graph } = graphContext(json);
+            const nodeDimensionsLeft = { x: 100 } as NodeDimensions;
+
+            drawn.set(3, nodeDimensionsLeft);
+
+            expect(getDrawnRangeMiddleX([3, 4], graph, drawn)).toBe(100);
         });
     });
 
