@@ -1,4 +1,4 @@
-import { JSONBuilderUtil, StepFunctionJSON } from './JSONBuilder.util';
+import { StepFunctionJSON } from './JSONBuilder.util';
 import Digraph from '../../Digraph';
 import { generateStepFunctionGraph } from '../../StepFunctionUtil';
 import { adjustDepthMatrix, getGroupsAtDepth, NodeDimensions } from '../../GraphUtil';
