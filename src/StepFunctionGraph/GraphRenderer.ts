@@ -94,7 +94,8 @@ export const handleMap = (
 
     // Calculate the lower bounds of the Parallel content
     const lastDepth = mapNodeMatrix[mapNodeMatrix.length - 1];
-    const topLeftNode = mapNodeMatrix[0][0];
+    const flatMatrix: number[] = mapNodeMatrix.flat();
+    const topLeftNode = flatMatrix.find(vertex => drawn.get(vertex)) ?? flatMatrix[0];
     const bottomRightNode = lastDepth[lastDepth.length - 1];
 
     const topLeft = drawn.get(topLeftNode);
@@ -583,8 +584,10 @@ export const drawGraph = (
         });
     });
 
+    const sortedVertices = [...allVertices].sort();
+
     // Go back and draw all the Parallel and Map boxes we skipped earlier now that we can determine the height and width
-    allVertices.forEach((vertex) => {
+    sortedVertices.forEach((vertex) => {
         // At this point, any un-drawn vertices should be Parallel and Map type nodes
         const node = graph.getDataByVertex(vertex);
         const [key] = Object.keys(node);
