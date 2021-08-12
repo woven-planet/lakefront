@@ -128,15 +128,29 @@ export const Filter: FC<FilterComponentProps> = ({
                                 .filter(([, f]) => !f.inputHidden)
                                 .map(([key, filter]) => (
                                     <section key={key}>
-                                        <FilterSectionHeader
-                                            activeSection={activeSection}
-                                            filter={filter}
-                                            name={key}
-                                            onClick={() => toggleSection(key)}
-                                            clearFilter={clearFilter}
-                                            value={filterValues[key]}
-                                            badgeThreshold={badgeThreshold}
-                                        />
+                                        {
+                                            filter.renderSectionHeader ? (
+                                                filter.renderSectionHeader({
+                                                    activeSection,
+                                                    filter,
+                                                    name: key,
+                                                    onClick: () => toggleSection(key),
+                                                    clearFilter,
+                                                    value: filterValues[key],
+                                                    badgeThreshold
+                                                })
+                                            ) : (
+                                                <FilterSectionHeader
+                                                    activeSection={activeSection}
+                                                    filter={filter}
+                                                    name={key}
+                                                    onClick={() => toggleSection(key)}
+                                                    clearFilter={clearFilter}
+                                                    value={filterValues[key]}
+                                                    badgeThreshold={badgeThreshold}
+                                                />
+                                            )
+                                        }
                                         {activeSection === key && (
                                             <>
                                                 <FilterSectionDescription>
