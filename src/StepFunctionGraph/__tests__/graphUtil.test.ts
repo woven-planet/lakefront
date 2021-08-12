@@ -155,6 +155,27 @@ describe('graphUtil', () => {
             expect(nextNode).toStrictEqual(nodeTask);
         });
 
+        it('should return undefined when either node is not drawn', () => {
+            const { drawn, traversals } = graphContext(json);
+            const [firstPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.START } as NodeDimensions;
+            const nodeTask = { nodeType: WorkFlowType.TASK } as NodeDimensions;
+
+            drawn.set(0, nodeStart);
+
+            const node = findNearestArrowNode(firstPath, 0, 0, drawn, true);
+
+            expect(node).toStrictEqual(undefined);
+
+            drawn.set(1, nodeTask);
+            drawn.delete(0);
+
+            const nextNode = findNearestArrowNode(firstPath, 0, 0, drawn, true);
+
+            expect(nextNode).toStrictEqual(undefined);
+        });
+
         it('should return the node and next node data for a Parallel Node', () => {
             const { drawn, traversals } = graphContext(json);
             const [firstPath] = traversals;
@@ -181,7 +202,6 @@ describe('graphUtil', () => {
                     , 'T1').addTask('T1').getJson()
                 , undefined, true)
                 .getJson();
-            console.log(JSON.stringify(json));
 
             const { drawn, traversals } = graphContext(json);
             const [firstPath] = traversals;
@@ -242,6 +262,36 @@ describe('graphUtil', () => {
                 width: 150
             } as NodeDimensions;
             const mountingPoints = generateMountingPoints(node, 0, 0, 0, 0);
+            const expected: MountingPoints = {
+                bottom: {
+                    x: 100,
+                    y: 225
+                },
+                top: {
+                    x: 100,
+                    y: 175
+                },
+                left: {
+                    x: 25,
+                    y: 200
+                },
+                right: {
+                    x: 175,
+                    y: 200
+                }
+            };
+
+            expect(mountingPoints).toStrictEqual(expected);
+        });
+
+        it('should default leftOffset and rightOffset to 0', () => {
+            const node = {
+                x: 100,
+                y: 200,
+                height: 50,
+                width: 150
+            } as NodeDimensions;
+            const mountingPoints = generateMountingPoints(node, 0, 0);
             const expected: MountingPoints = {
                 bottom: {
                     x: 100,
@@ -429,7 +479,7 @@ describe('graphUtil', () => {
     });
 
     describe('getNextVertex', () => {
-       it('should return the next vertex by Next field given a valid vertex', () => {
+        it('should return the next vertex by Next field given a valid vertex', () => {
            const json = new JSONBuilderUtil()
                .addTask('StartNode', 'EndNode')
                .addTask('EndNode', undefined, true)
@@ -438,7 +488,7 @@ describe('graphUtil', () => {
            const { graph } = graphContext(json);
 
            expect(getNextVertex(1, graph)).toBe(2);
-       });
+        });
 
         it('should return -1 for the start, end, and a non-existent vertex', () => {
             const json = new JSONBuilderUtil()
@@ -451,6 +501,14 @@ describe('graphUtil', () => {
             expect(getNextVertex(0, graph)).toBe(-1);
             expect(getNextVertex(2, graph)).toBe(-1);
             expect(getNextVertex(10, graph)).toBe(-1);
+        });
+
+        it('should return -1 when vertex is not provided', () => {
+            const json = new JSONBuilderUtil()
+                .getJson();
+
+            const { graph } = graphContext(json);
+            expect(getNextVertex(undefined, graph)).toBe(-1);
         });
     });
 
@@ -657,6 +715,24 @@ describe('graphUtil', () => {
             // End
             redrawNode(8, ctx as CanvasRenderingContext2D, drawn, graph, []);
             expect(drawStepNodeSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not draw when a node cannot be found in the graph', () => {
+            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'Choice')
+                .addChoice('ChoiceNode', [
+                    JSONBuilderUtil.getChoiceForAdd('EndNode')
+                ])
+                .addSuccess('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+            graph.addVertex({ vertex: 5, data: null });
+
+            // StartNode (Task)
+            redrawNode(5, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawStepNodeSpy).toHaveBeenCalledTimes(0);
         });
     });
 

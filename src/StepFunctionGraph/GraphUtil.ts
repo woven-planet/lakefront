@@ -37,7 +37,7 @@ export const getRange = (vertices: number[], xOffset: number, graph: Digraph): n
 
         return accum +
             (Type === WorkFlowType.PARALLEL ? 0 : currentWidth) +
-            (index < vertices.length ? xOffset : 0);
+            xOffset;
     }, 0);
 };
 
@@ -200,16 +200,20 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
 };
 
 // Finds the Vertex number of a vertex's Next field's node
-export const getNextVertex = (vertex: number, graph: Digraph): number => {
-    const mapData = graph.getDataByVertex(vertex) || {};
-    const [node] = Object.keys(mapData);
-    const { Next = null } = node ? mapData[node] : {};
+export const getNextVertex = (vertex: number | undefined, graph: Digraph): number => {
+    if (typeof vertex === 'number') {
+        const mapData = graph.getDataByVertex(vertex) || {};
+        const [node] = Object.keys(mapData);
+        const { Next = null } = node ? mapData[node] : {};
 
-    const nextVertexFindFn = (datum: any) => {
-        const [dataKey] = Object.keys(datum);
-        return dataKey === Next;
-    };
-    return graph.getVertexByData(nextVertexFindFn) || -1;
+        const nextVertexFindFn = (datum: any) => {
+            const [dataKey] = Object.keys(datum);
+            return dataKey === Next;
+        };
+        return graph.getVertexByData(nextVertexFindFn) || -1;
+    }
+
+    return -1;
 };
 
 // Recurses from a vertex through its outdegrees to find a drawn node
@@ -273,35 +277,39 @@ export const redrawNode = (
 ) => {
     const dimensions = drawn.get(vertex);
     const node = graph.getDataByVertex(vertex);
-    const [key] = Object.keys(node) || '';
-    const { Type } = node[key];
-    const { x = 0, y = 0 } = dimensions || {};
-    const highlight = highlighted.includes(vertex);
 
-    switch (Type) {
-        case WorkFlowType.CHOICE:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
-        case WorkFlowType.TASK:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
-        case WorkFlowType.PARALLEL:
-            break;
-        case WorkFlowType.MAP:
-            break;
-        case WorkFlowType.START:
-            break;
-        case WorkFlowType.END:
-            break;
-        default:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
+    if (node) {
+        const [key] = Object.keys(node);
+        const { Type } = node[key];
+        const { x = 0, y = 0 } = dimensions || {};
+        const highlight = highlighted.includes(vertex);
+
+        switch (Type) {
+            case WorkFlowType.CHOICE:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.TASK:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.PARALLEL:
+                break;
+            case WorkFlowType.MAP:
+                break;
+            case WorkFlowType.START:
+                break;
+            case WorkFlowType.END:
+                break;
+            default:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+        }
     }
 };
 
 // All nodes inside a Parallel are an outdegree from that node
 export const isInParallel = (vertex: number, graph: Digraph): boolean => {
-    const [node] = graph.getIndegree(vertex) ?? [];
+    const [node] = graph.getIndegree(vertex);
+
     if (node) {
         const parent = graph.getDataByVertex(node);
         const [key] = Object.keys(parent);
@@ -310,7 +318,7 @@ export const isInParallel = (vertex: number, graph: Digraph): boolean => {
             const [dataKey] = Object.keys(datum);
             return dataKey === key;
         };
-        const parentVertex = graph.getVertexByData(parentVertexFindFn) ?? -1;
+        const parentVertex = graph.getVertexByData(parentVertexFindFn);
         const nextVertex = getNextVertex(parentVertex, graph);
 
         return Type === WorkFlowType.PARALLEL && vertex !== nextVertex;
