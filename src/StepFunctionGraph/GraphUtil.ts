@@ -146,14 +146,11 @@ export const findNearestArrowNode = (
 ): NodeDimensions | undefined => {
     const node = drawn.get(vertex);
     const nextNode = drawn.get(path[index + 1]);
-    if ((node && node.nodeType === WorkFlowType.MAP)) {
-        if ((nextNode && nextNode.nodeType === WorkFlowType.END) || (node && nextNode)) {
-            return isStart ? node : nextNode;
-        } else if (nextNode && nextNode.nodeType !== WorkFlowType.MAP) {
-            return nextNode;
-        } else if (nextNode && nextNode.nodeType === WorkFlowType.MAP) {
-            return findNearestArrowNode(path, vertex, index + 1, drawn, isStart);
-        }
+    if (
+        (node && node.nodeType === WorkFlowType.MAP) &&
+        ((nextNode && nextNode.nodeType === WorkFlowType.END) || (node && nextNode))
+    ) {
+        return isStart ? node : nextNode;
     } else if (node && node.nodeType === WorkFlowType.PARALLEL) {
         return isStart ? node : nextNode;
     } else {
