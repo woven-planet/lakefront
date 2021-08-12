@@ -136,8 +136,7 @@ describe('graphUtil', () => {
                 new JSONBuilderUtil().addTask('P1').getJson(),
                 new JSONBuilderUtil().addTask('P2').getJson()
             ], 'MapNode')
-            .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), 'EndNode')
-            .addSuccess('EndNode', undefined, true)
+            .addMap('MapNode', new JSONBuilderUtil().addTask('M1').getJson(), undefined, true)
             .getJson();
 
         it('should return the node and next node data for the first index of the first path from the start node', () => {
@@ -171,6 +170,66 @@ describe('graphUtil', () => {
 
             expect(node).toStrictEqual(nodeStart);
             expect(nextNode).toStrictEqual(nodeTask);
+        });
+
+        it('should return node and next node data for Map nodes when the next node is a Map', () => {
+            // Traversals: [[0,1,2,3],[0,1,4]]
+            const json = new JSONBuilderUtil()
+                .addMap('MapNode',
+                    new JSONBuilderUtil().addMap('InnerMap',
+                        new JSONBuilderUtil().addTask('M1').getJson()
+                    , 'T1').addTask('T1').getJson()
+                , undefined, true)
+                .getJson();
+            console.log(JSON.stringify(json));
+
+            const { drawn, traversals } = graphContext(json);
+            const [firstPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.MAP } as NodeDimensions;
+            const nodeTask = { nodeType: WorkFlowType.MAP } as NodeDimensions;
+
+            drawn.set(1, nodeStart);
+            drawn.set(2, nodeTask);
+
+            const node = findNearestArrowNode(firstPath, 1, 1, drawn, true);
+            const nextNode = findNearestArrowNode(firstPath, 1, 1, drawn, false);
+
+            expect(node).toStrictEqual(nodeStart);
+        });
+
+        it('should return node and next node data for Map nodes when the next node is not a Map', () => {
+            const { drawn, traversals } = graphContext(json);
+            const [,, thirdPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.MAP } as NodeDimensions;
+            const nodeTask = { nodeType: WorkFlowType.TASK } as NodeDimensions;
+
+            drawn.set(5, nodeStart);
+            drawn.set(6, nodeTask);
+
+            const node = findNearestArrowNode(thirdPath, 5, 3, drawn, true);
+            const nextNode = findNearestArrowNode(thirdPath, 5, 3, drawn, false);
+
+            expect(node).toStrictEqual(nodeStart);
+            expect(nextNode).toStrictEqual(nodeTask);
+        });
+
+        it('should return node and next node data for Map nodes when the next node is an End node', () => {
+            const { drawn, traversals } = graphContext(json);
+            const [,,, fourthPath] = traversals;
+
+            const nodeStart = { nodeType: WorkFlowType.MAP } as NodeDimensions;
+            const nodeEnd = { nodeType: WorkFlowType.END } as NodeDimensions;
+
+            drawn.set(5, nodeStart);
+            drawn.set(7, nodeEnd);
+
+            const node = findNearestArrowNode(fourthPath, 5, 3, drawn, true);
+            const nextNode = findNearestArrowNode(fourthPath, 5, 3, drawn, false);
+
+            expect(node).toStrictEqual(nodeStart);
+            expect(nextNode).toStrictEqual(nodeEnd);
         });
     });
 
