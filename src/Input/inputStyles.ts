@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { InputProps } from './Input';
 
+export const INPUT_WIDTH = 300;
+
 export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     color: theme?.colors?.cinder,
     display: 'flex',
@@ -30,7 +32,7 @@ export const StyledInput = styled.input<InputProps>(({ error, theme, disabled })
     paddingLeft: 12,
     paddingTop: 0,
     height: 40,
-    width: 300,
+    width: INPUT_WIDTH,
     cursor: disabled ? 'not-allowed' : undefined,
     ':focus': {
         border: `1px solid ${theme?.colors?.cinder}`
