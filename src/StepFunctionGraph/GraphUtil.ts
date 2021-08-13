@@ -37,7 +37,7 @@ export const getRange = (vertices: number[], xOffset: number, graph: Digraph): n
 
         return accum +
             (Type === WorkFlowType.PARALLEL ? 0 : currentWidth) +
-            (index < vertices.length ? xOffset : 0);
+            xOffset;
     }, 0);
 };
 
@@ -65,12 +65,13 @@ export const getDrawnRangeMiddleX = (
 ): number => {
     const xValues: number[] = vertices.reduce((accum: number[], vertex) => {
         const xVal = drawn.get(vertex)?.x;
-        if (xVal) {
+        if (typeof(xVal) === 'number') {
             accum.push(xVal);
         }
 
         return accum;
     }, []);
+
     const left = Math.min(...xValues);
     const right = Math.max(...xValues);
 
@@ -145,17 +146,8 @@ export const findNearestArrowNode = (
 ): NodeDimensions | undefined => {
     const node = drawn.get(vertex);
     const nextNode = drawn.get(path[index + 1]);
-    if ((node && node.nodeType === WorkFlowType.MAP)) {
-        if ((nextNode && nextNode.nodeType === WorkFlowType.END) || (node && nextNode)) {
-            return isStart ? node : nextNode;
-        } else if (nextNode && nextNode.nodeType !== WorkFlowType.MAP) {
-            return nextNode;
-        } else if (nextNode && nextNode.nodeType === WorkFlowType.MAP) {
-            return findNearestArrowNode(path, vertex, index + 1, drawn, isStart);
-        }
-    } else if (node && node.nodeType === WorkFlowType.PARALLEL) {
-        return isStart ? node : nextNode;
-    } else {
+
+    if (node && nextNode) {
         return isStart ? node : nextNode;
     }
 };
@@ -200,7 +192,7 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
             }
         }, []);
 
-        adjustedMatrix.push(adjusted);
+        adjustedMatrix.push(Array.from(new Set(adjusted)));
     }
 
     adjustedMatrix = adjustedMatrix.filter(depth => depth.length > 0);
@@ -208,19 +200,23 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
 };
 
 // Finds the Vertex number of a vertex's Next field's node
-export const getNextVertex = (vertex: number, graph: Digraph): number => {
-    const mapData = graph.getDataByVertex(vertex) || {};
-    const [node] = Object.keys(mapData);
-    const { Next = null } = node ? mapData[node] : {};
+export const getNextVertex = (vertex: number | undefined, graph: Digraph): number => {
+    if (typeof vertex === 'number') {
+        const mapData = graph.getDataByVertex(vertex) || {};
+        const [node] = Object.keys(mapData);
+        const { Next = null } = node ? mapData[node] : {};
 
-    const nextVertexFindFn = (datum: any) => {
-        const [dataKey] = Object.keys(datum);
-        return dataKey === Next;
-    };
-    return graph.getVertexByData(nextVertexFindFn) || -1;
+        const nextVertexFindFn = (datum: any) => {
+            const [dataKey] = Object.keys(datum);
+            return dataKey === Next;
+        };
+        return graph.getVertexByData(nextVertexFindFn) || -1;
+    }
+
+    return -1;
 };
 
-// Recurses from a vertex through its outdegrees to find a drawable node
+// Recurses from a vertex through its outdegrees to find a drawn node
 export const getNearestDrawn = (vertex: number, graph: Digraph, drawn: Map<number, NodeDimensions>): number => {
     const drawnNode = drawn.get(vertex);
 
@@ -228,13 +224,13 @@ export const getNearestDrawn = (vertex: number, graph: Digraph, drawn: Map<numbe
         return vertex;
     } else {
         const [outDegree] = graph.getOutdegree(vertex).outVertices;
-        return getNearestDrawn(outDegree, graph, drawn);
+        return typeof(outDegree) !== 'undefined' ? getNearestDrawn(outDegree, graph, drawn) : -1;
     }
 };
 
 export const getGroupIndex = (groups: number[][], vertex: number): number => {
-    return groups.reduce((group: number, current: number[]) => {
-        return current.includes(vertex) ? vertex : group;
+    return groups.reduce((group: number, current: number[], index: number) => {
+        return current.includes(vertex) ? index : group;
     }, -1);
 };
 
@@ -251,7 +247,9 @@ export const getGroupsAtDepth = (depthArray: number[], graph: Digraph): number[]
         const { Type } = node[key];
 
         if (Type === WorkFlowType.PARALLEL) {
-            const outDegree = graph.getOutdegree(vertex).outVertices;
+            const nextVertex = getNextVertex(vertex, graph);
+            const outDegree = graph.getOutdegree(vertex).outVertices
+                .filter(v => v !== nextVertex);
             group.push(...outDegree);
             groups.push(group);
         }
@@ -279,40 +277,49 @@ export const redrawNode = (
 ) => {
     const dimensions = drawn.get(vertex);
     const node = graph.getDataByVertex(vertex);
-    const [key] = Object.keys(node) || '';
-    const { Type } = node[key];
-    const { x = 0, y = 0 } = dimensions || {};
-    const highlight = highlighted.includes(vertex);
 
-    switch (Type) {
-        case WorkFlowType.CHOICE:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
-        case WorkFlowType.TASK:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
-        case WorkFlowType.PARALLEL:
-            break;
-        case WorkFlowType.MAP:
-            break;
-        case WorkFlowType.START:
-            break;
-        case WorkFlowType.END:
-            break;
-        default:
-            drawStepNode({ ctx, x, y, text: key, highlight });
-            break;
+    if (node) {
+        const [key] = Object.keys(node);
+        const { Type } = node[key];
+        const { x = 0, y = 0 } = dimensions || {};
+        const highlight = highlighted.includes(vertex);
+
+        switch (Type) {
+            case WorkFlowType.CHOICE:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.TASK:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.PARALLEL:
+                break;
+            case WorkFlowType.MAP:
+                break;
+            case WorkFlowType.START:
+                break;
+            case WorkFlowType.END:
+                break;
+            default:
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+        }
     }
 };
 
 // All nodes inside a Parallel are an outdegree from that node
 export const isInParallel = (vertex: number, graph: Digraph): boolean => {
-    const [node] = graph.getIndegree(vertex) ?? [];
+    const [node] = graph.getIndegree(vertex);
+
     if (node) {
         const parent = graph.getDataByVertex(node);
         const [key] = Object.keys(parent);
         const { Type } = parent[key];
-        const nextVertex = getNextVertex(parent, graph);
+        const parentVertexFindFn = (datum: any) => {
+            const [dataKey] = Object.keys(datum);
+            return dataKey === key;
+        };
+        const parentVertex = graph.getVertexByData(parentVertexFindFn);
+        const nextVertex = getNextVertex(parentVertex, graph);
 
         return Type === WorkFlowType.PARALLEL && vertex !== nextVertex;
     } else {

@@ -112,7 +112,7 @@ class Digraph {
     // Returns all vertices pointing to a vertex
     getIndegree(v: number): number[] {
         this.validateVertex(v);
-        return this.indegree[v];
+        return this.indegree[v] ?? [];
     }
 }
 

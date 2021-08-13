@@ -14,18 +14,17 @@ import {
     getNearestDrawn,
     getNextVertex,
     getRange,
-    isInParallel,
     isSameLevelType,
     NodeDimensions,
     redrawNode
 } from './GraphUtil';
 
-const X_OFFSET = 30;
+export const X_OFFSET = 30;
 export const Y_OFFSET = 75;
 const TERMINAL_ARROW_OFFSET = 12;
 const STEP_ARROW_OFFSET = -5;
 
-const handleMap = (
+export const handleMap = (
     ctx: CanvasRenderingContext2D,
     vertex: number,
     endVertex: number,
@@ -95,7 +94,8 @@ const handleMap = (
 
     // Calculate the lower bounds of the Parallel content
     const lastDepth = mapNodeMatrix[mapNodeMatrix.length - 1];
-    const topLeftNode = mapNodeMatrix[0][0];
+    const flatMatrix: number[] = mapNodeMatrix.flat();
+    const topLeftNode = flatMatrix.find(vertex => drawn.get(vertex)) ?? flatMatrix[0];
     const bottomRightNode = lastDepth[lastDepth.length - 1];
 
     const topLeft = drawn.get(topLeftNode);
@@ -154,7 +154,7 @@ const handleMap = (
 };
 
 // Draws Parallel nodes specially, drawing the box around the nodes a Parallel vertex points to
-const handleParallel = (
+export const handleParallel = (
     ctx: CanvasRenderingContext2D,
     graph: Digraph,
     vertex: number,
@@ -253,9 +253,8 @@ const handleParallel = (
 
 // Returns the furthest left range if no preceding node is drawn, otherwise it draws under the Parent node
 // by using the node's indegree and looking it up in the Map
-const getX = (
+export const getX = (
     groups: number[][],
-    drawableVertices: number[],
     vertex: number,
     nodeWidth: number,
     canvasWidth: number,
@@ -371,7 +370,6 @@ const getX = (
         }
     }
 
-
     let calculatedX;
 
     if (isEnd) {
@@ -388,7 +386,7 @@ const getX = (
 };
 
 // Calculates the Y for each node based on depth in the depth matrix
-const getY = (depth: number, nodeHeight: number): number => {
+export const getY = (depth: number, nodeHeight: number): number => {
     return (depth * (nodeHeight + Y_OFFSET)) + Y_OFFSET;
 };
 
@@ -408,7 +406,7 @@ interface RenderVertexParams {
 }
 
 // Renders a vertex from the main draw function
-function renderVertex(
+export function renderVertex(
     depthWithoutParallel: number[],
     index: number,
     drawn: Map<number, NodeDimensions>,
@@ -442,7 +440,6 @@ function renderVertex(
 
     const x = getX(
         groups,
-        depthWithoutParallel,
         vertex,
         nodeWidth,
         width,
@@ -587,8 +584,10 @@ export const drawGraph = (
         });
     });
 
+    const sortedVertices = [...allVertices].sort();
+
     // Go back and draw all the Parallel and Map boxes we skipped earlier now that we can determine the height and width
-    allVertices.forEach((vertex) => {
+    sortedVertices.forEach((vertex) => {
         // At this point, any un-drawn vertices should be Parallel and Map type nodes
         const node = graph.getDataByVertex(vertex);
         const [key] = Object.keys(node);
