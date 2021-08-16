@@ -18,13 +18,39 @@ import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 
 export interface TypeaheadSearchProps {
+    /**
+     * The callback to render search text (or asynchronous results using the search text).
+     */
     children: (debouncedSearchText: string) => ReactNode;
+    /**
+     * The action to run using the entered search text on submit.
+     */
     submitSearch: (searchText: string) => void;
+    /**
+     * The initial value of the search text input.
+     */
     initialSearchText?: string;
+    /**
+     * The time (in `ms`) to delay between keystrokes before updating the search value. `Default = 250ms`.
+     */
     inputDebounceMs?: number;
+    /**
+     * The placeholder text to display when the input is empty.
+     */
     placeholder?: string;
+    /**
+     * When true, the component will mount a div to the body and render the search results through it.
+     * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
+     * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
+     */
     renderInPortal?: boolean;
+    /**
+     * Whether the search input should be focused on initialization.
+     */
     autoFocus?: boolean;
+    /**
+     * Where the search results popover should render in relation to the search input.
+     */
     placement?: 'bottom-start' | 'bottom-end';
 }
 

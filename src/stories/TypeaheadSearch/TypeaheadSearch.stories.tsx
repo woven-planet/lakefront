@@ -8,7 +8,16 @@ export default {
     title: 'Lakefront/Input/TypeaheadSearch',
     component: TypeaheadSearch,
     argTypes: {
-        // TODO:
+        children: {
+            table: {
+                disable: true
+            }
+        },
+        submitSearch: {
+            table: {
+                disable: true
+            }
+        }
     },
     parameters: {
         docs: {
