@@ -175,8 +175,9 @@ export const handleParallel = (
 
     const paths = DigraphDFS.getAllDfsPaths(graph.getAdjacencyMatrix(), [vertex]);
     const parallelNodeMatrix = DigraphDFS.getVerticesAtDepthFromPaths(paths, exclusionArray);
-
-    const baselineNode = drawn.get(parallelNodeMatrix[0][0]);
+    const flatMatrix: number[] = parallelNodeMatrix.flat();
+    const topLeftNode = flatMatrix.find(vertex => drawn.get(vertex)) ?? flatMatrix[0];
+    const baselineNode = drawn.get(topLeftNode);
     const baselineX = baselineNode ? baselineNode.x : 0;
 
     // Calculate the start of the Parallel box's contents so we can position it
@@ -199,7 +200,6 @@ export const handleParallel = (
 
     // Calculate the lower bounds of the Parallel content
     const lastDepth = parallelNodeMatrix[parallelNodeMatrix.length - 1];
-    const topLeftNode = parallelNodeMatrix[0][0];
     const bottomRightNode = lastDepth[lastDepth.length - 1];
 
     const topLeft = drawn.get(topLeftNode);
@@ -283,7 +283,8 @@ export const getX = (
         false;
 
     // Helpful to know if we're in a group so we can try to determine if we're positioning by previous
-    const isInPreviousGroup = getGroupIndex(groups, vertex) === getGroupIndex(groups, previousVertex);
+    const currentGroupIndex = getGroupIndex(groups, vertex);
+    const isInPreviousGroup = currentGroupIndex === getGroupIndex(groups, previousVertex);
     const parentNode = indegrees[indegrees.length - 1];
     const flattened = ([] as number[]).concat(...groups);
 
@@ -315,15 +316,18 @@ export const getX = (
             isParallelNext
         );
 
+    const currentGroup = groups[currentGroupIndex];
+    const rangeLength = groups.length > 1 ? currentGroup.length : flattened.length;
+
     // The rangePosition tells us where we need to draw in a range when positioning by previous
     // eslint-disable-next-line no-nested-ternary
     let rangePosition = ~previousEnd ?
-        previousEnd + (range / flattened.length - 1) :
+        previousEnd + (range / rangeLength) :
         (flattened.length > 1) ?
             parentX - (range / 2) + (nodeWidth / 2):
-            (nodeWidth / 4);
+            (canvasWidth / centerDivision);
 
-    if (!~previousEnd && flattened.length > 2) {
+    if (!~previousEnd && groups.length > 1) {
         rangePosition /= 2;
     }
 
@@ -352,7 +356,7 @@ export const getX = (
         const drawnPreviousNode = drawn.get(previousVertex);
 
         if (
-            previousIndegreeType === WorkFlowType.PARALLEL &&
+            (previousIndegreeType === WorkFlowType.PARALLEL || previousIndegreeType === WorkFlowType.MAP) &&
             parentType !== WorkFlowType.PARALLEL ||
             isDelayed
         ) {
@@ -360,7 +364,7 @@ export const getX = (
             if (delayed.filter(d => d[4] === vertex).length > 0 && drawnPreviousIndegree) {
                 if (previousIndegreeType === WorkFlowType.PARALLEL) {
                     rangePosition = drawnPreviousIndegree.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
-                } else if(drawnPreviousNode) {
+                } else if (drawnPreviousNode) {
                     rangePosition = drawnPreviousNode.collisionBox.right.x + (nodeWidth / 2) + X_OFFSET;
                 }
             } else {
@@ -368,6 +372,10 @@ export const getX = (
                 return null;
             }
         }
+    }
+
+    if (positionByPrevious && parentType === WorkFlowType.MAP) {
+        positionByParent = false;
     }
 
     let calculatedX;
@@ -436,7 +444,9 @@ export function renderVertex(
 
     // We don't need to offset a lone node at any given depth
     const xOffset = flattened.length > 1 ? X_OFFSET : 0;
-    const range = getRange(flattened, xOffset, graph);
+    const currentGroupIndex = getGroupIndex(groups, vertex);
+    const currentGroup = groups[currentGroupIndex];
+    const range = getRange(currentGroup, xOffset, graph);
 
     const x = getX(
         groups,
