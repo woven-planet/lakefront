@@ -5,23 +5,15 @@ interface TypeaheadSearchContainerProps {
     placement?: 'bottom-start' | 'bottom-end'
 }
 
-interface SearchResultsPopoverProps {
-    leftPosition?: number;
-    placement?: 'bottom-start' | 'bottom-end';
-    topPosition?: number;
-}
-
 const POPOVER_WIDTH = INPUT_WIDTH * 2;
 
-export const SearchResultsPopover = styled.div<SearchResultsPopoverProps>(({ leftPosition = 0, placement = 'bottom-start', theme, topPosition = 0 }) => {
-    const leftOffset = placement === 'bottom-start' ? 0 : POPOVER_WIDTH;
-    const left = leftPosition + leftOffset;
-    const top = `${topPosition}px`
-    console.log({ topPosition, leftPosition })
+export const SearchResultsPopover = styled.div<TypeaheadSearchContainerProps>(({ placement = 'bottom-start', theme }) => {
+    const horizontalOffset = { [placement === 'bottom-start' ? 'left' : 'right']: 0 };
+
     return {
         position: 'absolute',
-        top,
-        left: 100,
+        marginTop: '-1em',
+        ...horizontalOffset,
         border: theme?.borders?.popover,
         borderRadius: 4,
         boxShadow: '0 2px 5px 1px rgb(0 0 0 / 20%)',
@@ -40,5 +32,8 @@ export const TypeaheadSearchContainer = styled.div<TypeaheadSearchContainerProps
         position: 'relative',
         top: -50,
         left: 15
+    },
+    'div.inputWrapper': {
+        position: 'relative'
     }
 }));

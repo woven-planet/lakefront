@@ -36,7 +36,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     inputDebounceMs = 250,
     renderInPortal = false,
     autoFocus,
-    placement,
+    placement = 'bottom-end',
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
@@ -132,7 +132,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
             const { left, bottom } = popoverElement.getBoundingClientRect();
 
             portal.style.position = 'absolute';
-            portal.style.left = `${left}px`;
+            portal.style[placement === 'bottom-start' ? 'left' : 'right'] = `${left}px`;
             portal.style.top = `${bottom + window.scrollY}px`;
         }
     }, [update]);
@@ -141,48 +141,41 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
         setPopoverElement(node);
     };
 
-    const popover = useMemo(
-        () => {
-            let leftPosition, topPosition;
-
-            if (popoverElement) {
-                const { left, bottom } = popoverElement.getBoundingClientRect();
-
-                leftPosition = left;
-                topPosition = bottom + window.scrollY;
-            }
-
-            return (
+    const popover = useMemo(() => {
+        return (
             <>
                 {resultsOpen && (
-                    <SearchResultsPopover className="searchResultsPopover" leftPosition={leftPosition} placement={placement} topPosition={topPosition}>
+                    <SearchResultsPopover
+                        className="searchResultsPopover"
+                        placement={placement}
+                    >
                         RESULTS HERE
                         {debouncedSearchText && children(debouncedSearchText)}
                     </SearchResultsPopover>
                 )}
             </>
-        )},
-        [children, resultsOpen, debouncedSearchText, popoverElement, placement]
-    );
+        );
+    }, [children, resultsOpen, debouncedSearchText, popoverElement, placement]);
 
     return (
         <ThemeProvider theme={theme}>
             <TypeaheadSearchContainer ref={searchInputContainerRef} placement={placement}>
                 <form onSubmit={handleSearchSubmit}>
-                    <Input
-                        {...restInputProps}
-                        type="text"
-                        placeholder={placeholder}
-                        autoComplete={'off'}
-                        onChange={handleInputChange}
-                        value={inputValue}
-                        autoFocus={autoFocus}
-                        className="typeaheadInput"
-                        ref={popoverNodeMounted}
-                    />
+                    <div className="inputWrapper" ref={popoverNodeMounted}>
+                        <Input
+                            {...restInputProps}
+                            type="text"
+                            placeholder={placeholder}
+                            autoComplete={'off'}
+                            onChange={handleInputChange}
+                            value={inputValue}
+                            autoFocus={autoFocus}
+                            className="typeaheadInput"
+                        />
+                        {portal ? createPortal(popover, portal) : popover}
+                    </div>
                 </form>
                 <SearchIcon className="typeaheadSearchIcon" />
-                {portal ? createPortal(popover, portal) : popover}
             </TypeaheadSearchContainer>
         </ThemeProvider>
     );

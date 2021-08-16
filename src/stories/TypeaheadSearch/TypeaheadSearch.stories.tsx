@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import TypeaheadSearch, { TypeaheadSearchProps } from 'src/Input/TypeaheadSearch';
@@ -36,20 +36,19 @@ const Template: Story<TypeaheadSearchProps> = (args) => {
 export const SearchBottomStart = Template.bind({});
 SearchBottomStart.args = {
     placeholder: 'Search',
-    autoFocus: true
+    autoFocus: true,
+    placement: 'bottom-start'
 };
 
 export const SearchBottomEnd = Template.bind({});
 SearchBottomEnd.args = {
     placeholder: 'Search',
-    placement: 'bottom-end'
 };
 
-export const InitialedSearch = Template.bind({});
-InitialedSearch.args = {
+export const InitializedSearch = Template.bind({});
+InitializedSearch.args = {
     initialSearchText: 'Lakefront',
     placeholder: 'Search',
-    placement: 'bottom-end'
 };
 
 export const PortalRendered = Template.bind({});
