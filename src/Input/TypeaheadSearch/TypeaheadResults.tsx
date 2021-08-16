@@ -13,9 +13,10 @@ export interface TypeaheadResultItem {
 interface TypeaheadResultsProps {
     debouncedText: string;
     fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
+    onResultSelect: (result: TypeaheadResultItem) => void;
 }
 
-const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResults }) => {
+const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResults, onResultSelect }) => {
     const [results, setResults] = useState<TypeaheadResultItem[]>([]);
     const [error, setError] = useState<string>('');
     const [fetching, setFetching] = useState<boolean>(false);
@@ -56,8 +57,10 @@ const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResul
         <TypeaheadResultsContainer>
             <div className="resultsHeader">Results</div>
             <ul className="resultsList">
-                {results.map(({ label }) => (
-                    <li className="resultItem">{label}</li>
+                {results.map((result) => (
+                    <li className="resultItem" onClick={() => onResultSelect(result)}>
+                        {result.label}
+                    </li>
                 ))}
             </ul>
         </TypeaheadResultsContainer>

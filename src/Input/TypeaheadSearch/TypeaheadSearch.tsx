@@ -18,16 +18,31 @@ import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import TypeaheadResults, { TypeaheadResultItem } from './TypeaheadResults';
 
+interface TypeaheadSearchResultOptions {
+    fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
+    onResultSelect: (result: TypeaheadResultItem) => void;
+}
+
+export interface TypeaheadResultProps {
+    searchText: string;
+    onResultSelect: (result: TypeaheadResultItem) => void;
+    fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
+}
+
 export interface TypeaheadSearchProps {
     /**
      * The callback to render search text and/or asynchronous search results.
      */
-    children?: (debouncedSearchText: string, fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>) => ReactNode;
+    children?: (debouncedSearchText: string, typeaheadSearchResultOptions: TypeaheadSearchResultOptions) => ReactNode;
     /**
      * The request to retrieve and format results using the search text. This is useful
      * if the user does not want to supply their own callback render function as children.
      */
-     fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
+    fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
+    /**
+     * The action to run on a selected result.
+     */
+    onResultSelect?: (result: TypeaheadResultItem) => void;
     /**
      * The action to run using the entered search text on submit.
      */
@@ -70,6 +85,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     autoFocus,
     placement = 'bottom-end',
     fetchResults,
+    onResultSelect,
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
@@ -111,6 +127,16 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     const handleInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
         setSearchTextChanged(true);
         setSearchText(value);
+    };
+
+    const handleResultSelect = (result: TypeaheadResultItem) => {
+        setSearchText(result.value);
+        setSearchTextChanged(false);
+        closeResultsPopover();
+
+        if (onResultSelect) {
+            onResultSelect(result);
+        }
     };
 
     useEffect(() => {
@@ -178,12 +204,17 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
         return (
             <>
                 {resultsOpen && (
-                    <SearchResultsPopover
-                        className="searchResultsPopover"
-                        placement={placement}
-                    >
-                        {(debouncedSearchText && children) && children(debouncedSearchText, fetchResults)}
-                        {(debouncedSearchText && !children) && <TypeaheadResults debouncedText={debouncedSearchText} fetchResults={fetchResults} />}
+                    <SearchResultsPopover className="searchResultsPopover" placement={placement}>
+                        {debouncedSearchText &&
+                            children &&
+                            children(debouncedSearchText, { fetchResults, onResultSelect: handleResultSelect })}
+                        {debouncedSearchText && !children && (
+                            <TypeaheadResults
+                                debouncedText={debouncedSearchText}
+                                fetchResults={fetchResults}
+                                onResultSelect={handleResultSelect}
+                            />
+                        )}
                     </SearchResultsPopover>
                 )}
             </>

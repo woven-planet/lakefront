@@ -1,15 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 
 import Loading from 'src/Loading/Loading';
+import { TypeaheadResultProps } from 'src/Input/TypeaheadSearch';
 import { TypeaheadResultItem } from 'src/Input/TypeaheadSearch/TypeaheadResults';
 import styled from '@emotion/styled';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-
-interface Props {
-    searchText: string;
-    resultsWidth?: number;
-}
 
 interface LoadingErrorProp {
     loading: boolean;
@@ -117,7 +113,7 @@ const fetchResults = (searchText: string) => {
     });
 };
 
-const TypeaheadSearchResults: FC<Props> = ({ searchText, resultsWidth = 500 }) => {
+const TypeaheadSearchResults: FC<TypeaheadResultProps> = ({ searchText, onResultSelect }) => {
     const [logs, setSessions] = useState<TypeaheadResultItem[]>([]);
     const [files, setFiles] = useState<TypeaheadResultItem[]>([]);
     const [fetching, setFetching] = useState<boolean>(false);
@@ -136,26 +132,28 @@ const TypeaheadSearchResults: FC<Props> = ({ searchText, resultsWidth = 500 }) =
             });
     }, [fetchResults, searchText]);
 
+    const handleResultSelect = (result: TypeaheadResultItem) => {
+        if (onResultSelect) {
+            onResultSelect(result);
+        }
+    };
+
     const logLoadingError = searchResultsLoadingError({ error: searchText === 'log-error', data: logs, loading: fetching });
     const fileLoadingError = searchResultsLoadingError({ error: searchText === 'file-error', data: files, loading: fetching });
 
     const logData = logs || [];
     const fileData = files || [];
 
-    const containerWidthStyle = resultsWidth ? { width: `${resultsWidth}px` } : undefined;
-    // link must have explicit width to properly handle overflow ellipses
-    const linkWidthStyle = resultsWidth ? { width: `${resultsWidth - 30}px` } : undefined;
-
     return (
         <ThemeProvider theme={theme}>
-            <TypeaheadSearchResultsContainer className="typeaheadSearchResultsContainer" style={containerWidthStyle}>
+            <TypeaheadSearchResultsContainer className="typeaheadSearchResultsContainer">
                 <section className="resultSection">
                     <div className="resultSectionLabel">Sessions</div>
                     {logLoadingError || (
                         <div className="resultList">
                             {logData.map((log) => log && (
                                 <li key={log.value} className="resultItem">
-                                    <div className="resultLink" style={linkWidthStyle}>
+                                    <div className="resultLink" onClick={() => handleResultSelect(log)}>
                                         {log.label}
                                     </div>
                                 </li>
@@ -169,7 +167,7 @@ const TypeaheadSearchResults: FC<Props> = ({ searchText, resultsWidth = 500 }) =
                         <div className="resultList">
                             {fileData.map((file) => file && (
                                 <li key={file.value} className="resultItem">
-                                    <div className="resultLink" style={linkWidthStyle}>
+                                    <div className="resultLink" onClick={() => handleResultSelect(file)}>
                                         {file.label}
                                     </div>
                                 </li>
