@@ -4,25 +4,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import TypeaheadSearch, { TypeaheadSearchProps } from 'src/Input/TypeaheadSearch';
 import DocBlock from '.storybook/DocBlock';
 import { TypeaheadResultItem } from 'src/Input/TypeaheadSearch/TypeaheadResults';
-
-const LAKEFRONT_NAMES = [
-    'L',
-    'La',
-    'Lak',
-    'Lake',
-    'Lakefront',
-    'Lakers',
-    'Lakes',
-    'Lakeside',
-    'l',
-    'la',
-    'lak',
-    'lake',
-    'lakefront',
-    'lakers',
-    'lakes',
-    'lakeside'
-];
+import TypeaheadCustom, { LAKEFRONT_NAMES } from './TypeaheadCustomDemo';
 
 export default {
     title: 'Lakefront/Input/TypeaheadSearch',
@@ -91,11 +73,28 @@ const Template: Story<TypeaheadSearchProps> = (args) => {
                     <div style={{ width: 300, marginBottom: 8 }}>
                         Type the word <strong>error</strong> to demo error state.
                     </div>
+                    <div style={{ height: 250, display: 'flex', justifyContent: 'center' }}>
+                        <TypeaheadSearch {...args} submitSearch={submitSearch} fetchResults={fetchResults} />
+                    </div>
                 </>
             )}
-            <div style={{ height: 250, display: 'flex', justifyContent: 'center' }}>
-                <TypeaheadSearch {...args} submitSearch={submitSearch} fetchResults={fetchResults} />
-            </div>
+            {args.children && (
+                <>
+                    <div style={{ width: 300, marginBottom: 8 }}>
+                        Type the word <strong>lake</strong> to demo results.
+                    </div>
+                    <div style={{ width: 300, marginBottom: 8 }}>
+                        Type the words <strong>session error</strong> or <strong>file error</strong> to demo error state.
+                    </div>
+                    <div style={{ height: 250, display: 'flex', justifyContent: 'center' }}>
+                        <TypeaheadSearch {...args} submitSearch={submitSearch}>
+                        {debouncedSearchText => (
+                            <TypeaheadCustom  searchText={debouncedSearchText} resultsWidth={500} />
+                        )}   
+                        </TypeaheadSearch>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
@@ -112,9 +111,8 @@ SearchBottomEnd.args = {
     placeholder: 'Search'
 };
 
-export const InitializedWithCustomSearch = Template.bind({});
-InitializedWithCustomSearch.args = {
-    initialSearchText: 'Lakefront',
+export const CustomSearch = Template.bind({});
+CustomSearch.args = {
     placeholder: 'Search',
     children: (debouncedText: string) => <div>{`Custom Search: ${debouncedText}`}</div>
 };

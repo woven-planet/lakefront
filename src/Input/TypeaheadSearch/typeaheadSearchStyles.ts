@@ -43,7 +43,7 @@ export const TypeaheadResultsContainer = styled.div(({ theme }) => ({
         marginBlockStart: 0,
         marginBlockEnd: 0,
         paddingInlineStart: 0,
-        maxHeight: 230,
+        maxHeight: 150,
         overflowY: 'auto',
         'li.resultItem': {
             marginTop: 4,

@@ -1,0 +1,180 @@
+import { FC, useEffect, useState } from 'react';
+
+import Loading from 'src/Loading/Loading';
+import { TypeaheadResultItem } from 'src/Input/TypeaheadSearch/TypeaheadResults';
+import styled from '@emotion/styled';
+import theme from 'src/styles/theme';
+import { ThemeProvider } from '@emotion/react';
+
+interface Props {
+    searchText: string;
+    resultsWidth?: number;
+}
+
+interface LoadingErrorProp {
+    loading: boolean;
+    error: any;
+    data: any;
+    useLoadingPlaceholder?: boolean;
+}
+
+const TypeaheadSearchResultsContainer = styled.div(({ theme }) => ({
+    'div.resultSectionLabel': {
+        textTransform: 'uppercase',
+        color: theme?.colors?.pavement
+    },
+    'div.resultList': {
+        display: 'flex',
+        flexDirection: 'column',
+        marginInlineStart: 0,
+        marginInlineEnd: 0,
+        marginBlockStart: 0,
+        marginBlockEnd: 0,
+        paddingInlineStart: 0,
+        marginBottom: 4,
+        'li.resultItem': {
+            marginTop: 1,
+            padding: '2px 4px',
+            display: 'block',
+            ':hover': {
+                textDecoration: 'underline',
+                color: theme?.colors?.saturatedBlue,
+                cursor: 'pointer'
+            }
+        }
+    }
+}));
+
+const searchResultsLoadingError: FC<LoadingErrorProp> = ({ loading, error, data }) => {
+    if (loading) {
+        return (
+            <div className="resultLoading">
+                <Loading
+                    height={14}
+                    label="Searching..."
+                    labelPosition="RIGHT"
+                    width={14}
+                    className="resultLoadingText"
+                />
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="resultMessage">Error encountered fetching results</div>;
+    }
+
+    if (!data || !data.length) {
+        return <div className="resultMessage">No results</div>;
+    }
+
+    return null;
+};
+
+export const LAKEFRONT_NAMES = [
+    'L',
+    'La',
+    'Lak',
+    'Lake',
+    'Lakefront',
+    'Lakers',
+    'Lakes',
+    'Lakeside',
+    'l',
+    'la',
+    'lak',
+    'lake',
+    'lakefront',
+    'lakers',
+    'lakes',
+    'lakeside'
+];
+
+const LOGS = LAKEFRONT_NAMES.map(name => `log-${name}.log`);
+const FILES = LAKEFRONT_NAMES.map(name => `file-${name}.txt`);
+
+const fetchResults = (searchText: string) => {
+    return new Promise<[TypeaheadResultItem[], TypeaheadResultItem[]]>((res, rej) => {
+        setTimeout(() => {
+            let response: [TypeaheadResultItem[], TypeaheadResultItem[]] = [[], []];
+
+            if (LOGS.join().includes(searchText) || FILES.join().includes(searchText)) {
+                response = [
+                    LOGS.map((value) => ({ label: value, value })).filter(({ value }) =>
+                        value.includes(searchText)
+                    ).slice(0,3),
+                    FILES.map((value) => ({ label: value, value })).filter(({ value }) => value.includes(searchText)).slice(0,3)
+                ];
+            }
+
+            res(response);
+        }, 100);
+    });
+};
+
+const TypeaheadSearchResults: FC<Props> = ({ searchText, resultsWidth = 500 }) => {
+    const [logs, setSessions] = useState<TypeaheadResultItem[]>([]);
+    const [files, setFiles] = useState<TypeaheadResultItem[]>([]);
+    const [fetching, setFetching] = useState<boolean>(false);
+
+    useEffect(() => {
+        setFetching(true);
+
+        fetchResults(searchText)
+            .then(([logResults, fileResults]) => {
+                setSessions(logResults);
+                setFiles(fileResults);
+                setFetching(false);
+            })
+            .catch(() => {
+                setFetching(false);
+            });
+    }, [fetchResults, searchText]);
+
+    const logLoadingError = searchResultsLoadingError({ error: searchText === 'log-error', data: logs, loading: fetching });
+    const fileLoadingError = searchResultsLoadingError({ error: searchText === 'file-error', data: files, loading: fetching });
+
+    const logData = logs || [];
+    const fileData = files || [];
+
+    const containerWidthStyle = resultsWidth ? { width: `${resultsWidth}px` } : undefined;
+    // link must have explicit width to properly handle overflow ellipses
+    const linkWidthStyle = resultsWidth ? { width: `${resultsWidth - 30}px` } : undefined;
+
+    return (
+        <ThemeProvider theme={theme}>
+            <TypeaheadSearchResultsContainer className="typeaheadSearchResultsContainer" style={containerWidthStyle}>
+                <section className="resultSection">
+                    <div className="resultSectionLabel">Sessions</div>
+                    {logLoadingError || (
+                        <div className="resultList">
+                            {logData.map((log) => log && (
+                                <li key={log.value} className="resultItem">
+                                    <div className="resultLink" style={linkWidthStyle}>
+                                        {log.label}
+                                    </div>
+                                </li>
+                            ))}
+                        </div>
+                    )}
+                </section>
+                <section className="resultSection">
+                    <div className="resultSectionLabel">Files</div>
+                    {fileLoadingError || (
+                        <div className="resultList">
+                            {fileData.map((file) => file && (
+                                <li key={file.value} className="resultItem">
+                                    <div className="resultLink" style={linkWidthStyle}>
+                                        {file.label}
+                                    </div>
+                                </li>
+                            ))}
+                        </div>
+                    )}
+                </section>
+            </TypeaheadSearchResultsContainer>
+        </ThemeProvider>
+    );
+};
+
+export default TypeaheadSearchResults;
