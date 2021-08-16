@@ -16,12 +16,18 @@ import Input from 'src/Input/Input';
 import { SearchResultsPopover, TypeaheadSearchContainer } from './typeaheadSearchStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
+import TypeaheadResults, { TypeaheadResultItem } from './TypeaheadResults';
 
 export interface TypeaheadSearchProps {
     /**
-     * The callback to render search text (or asynchronous results using the search text).
+     * The callback to render search text and/or asynchronous search results.
      */
-    children: (debouncedSearchText: string) => ReactNode;
+    children?: (debouncedSearchText: string, fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>) => ReactNode;
+    /**
+     * The request to retrieve and format results using the search text. This is useful
+     * if the user does not want to supply their own callback render function as children.
+     */
+     fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
     /**
      * The action to run using the entered search text on submit.
      */
@@ -63,6 +69,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     renderInPortal = false,
     autoFocus,
     placement = 'bottom-end',
+    fetchResults,
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
@@ -175,8 +182,8 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                         className="searchResultsPopover"
                         placement={placement}
                     >
-                        RESULTS HERE
-                        {debouncedSearchText && children(debouncedSearchText)}
+                        {(debouncedSearchText && children) && children(debouncedSearchText, fetchResults)}
+                        {(debouncedSearchText && !children) && <TypeaheadResults debouncedText={debouncedSearchText} fetchResults={fetchResults} />}
                     </SearchResultsPopover>
                 )}
             </>
