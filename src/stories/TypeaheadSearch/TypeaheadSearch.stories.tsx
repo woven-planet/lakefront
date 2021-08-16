@@ -84,7 +84,7 @@ const Template: Story<TypeaheadSearchProps> = (args) => {
                         Type the word <strong>lake</strong> to demo results.
                     </div>
                     <div style={{ width: 300, marginBottom: 8 }}>
-                        Type the words <strong>session error</strong> or <strong>file error</strong> to demo error state.
+                        Type the words <strong>log-error</strong> or <strong>file-error</strong> to demo error state.
                     </div>
                     <div style={{ height: 250, display: 'flex', justifyContent: 'center' }}>
                         <TypeaheadSearch {...args} submitSearch={submitSearch}>

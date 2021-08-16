@@ -19,6 +19,12 @@ interface LoadingErrorProp {
 }
 
 const TypeaheadSearchResultsContainer = styled.div(({ theme }) => ({
+    'section.resultSection': {
+        marginBottom: 8
+    },
+    'div.resultError': {
+        color: theme?.colors?.red
+    },
     'div.resultSectionLabel': {
         textTransform: 'uppercase',
         color: theme?.colors?.pavement
@@ -31,7 +37,6 @@ const TypeaheadSearchResultsContainer = styled.div(({ theme }) => ({
         marginBlockStart: 0,
         marginBlockEnd: 0,
         paddingInlineStart: 0,
-        marginBottom: 4,
         'li.resultItem': {
             marginTop: 1,
             padding: '2px 4px',
@@ -61,7 +66,7 @@ const searchResultsLoadingError: FC<LoadingErrorProp> = ({ loading, error, data 
     }
 
     if (error) {
-        return <div className="resultMessage">Error encountered fetching results</div>;
+        return <div className="resultError">Error encountered fetching results</div>;
     }
 
     if (!data || !data.length) {
