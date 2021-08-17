@@ -302,7 +302,20 @@ export const getX = (
     const parentOutdegree = parentNode ? graph.getOutdegree(parentNode).outVertices : [];
     const isParallelNext = nextVertex === vertex && parentType === WorkFlowType.PARALLEL;
     const parallelRange = getDrawnRangeMiddleX(parentOutdegree, graph, drawn);
-    const newPositionByPrevious = previousEnd + (nodeWidth / 2) + X_OFFSET;
+
+    let newPositionByPrevious = previousEnd + (nodeWidth / 2) + X_OFFSET;
+
+    // Gather information about the previous parent node to determine if it's a Map node
+    const [previousParent] = graph.getIndegree(previousVertex);
+    const previousParentVertexData = graph.getDataByVertex(previousParent) || {};
+    const [previousParentKey] = Object.keys(previousParentVertexData);
+    const { Type: previousParentType = '' } = previousParentKey ? previousParentVertexData[previousParentKey] : {};
+
+    // The x position will overlap a Map node drawn before it, so we need to check the previous node's parent
+    // and increase our current position if this node would be drawn over
+    if (previousParentType === WorkFlowType.MAP) {
+        newPositionByPrevious += X_OFFSET / 2;
+    }
 
     // Base this X value on where the parent is, or the center of the canvas if there is no parent (the start node)
     const parentX = parentPosition ? parentPosition.x : (canvasWidth / centerDivision);
@@ -331,10 +344,13 @@ export const getX = (
         rangePosition /= 2;
     }
 
+    // Make the range a bit wider if it's following a Choice node
     if (parentType === WorkFlowType.CHOICE && !isInPreviousGroup && flattened.length > 2) {
         rangePosition += X_OFFSET * 2;
     }
 
+    // When the logic evaluates both positionByPrevious and positionByParent as true,
+    // we can do additional checks to try forcing a positionByPrevious.
     if (
         positionByPrevious &&
         positionByParent &&
@@ -374,7 +390,11 @@ export const getX = (
         }
     }
 
-    if (positionByPrevious && parentType === WorkFlowType.MAP) {
+    // Additional checks for positionByParent to be set to false so it doesn't end up in the delayed queue
+    if (
+        (positionByPrevious && parentType === WorkFlowType.MAP) ||
+        (!positionByPrevious && groups.length > 1)
+    ) {
         positionByParent = false;
     }
 
@@ -388,6 +408,11 @@ export const getX = (
         calculatedX = isParallelNext ? parallelRange : parentX;
     } else {
         calculatedX = rangePosition;
+    }
+
+    // Catch any nodes that could overlap and force them to a new position
+    if (~previousEnd && calculatedX <= newPositionByPrevious) {
+        calculatedX = newPositionByPrevious;
     }
 
     return calculatedX;
