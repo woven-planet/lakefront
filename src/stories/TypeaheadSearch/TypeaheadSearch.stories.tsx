@@ -15,6 +15,16 @@ export default {
                 disable: true
             }
         },
+        fetchResults: {
+            table: {
+                disable: true
+            }
+        },
+        onResultSelect: {
+            table: {
+                disable: true
+            }
+        },
         submitSearch: {
             table: {
                 disable: true

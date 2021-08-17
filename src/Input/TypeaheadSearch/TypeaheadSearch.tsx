@@ -31,6 +31,10 @@ export interface TypeaheadResultProps {
 
 export interface TypeaheadSearchProps {
     /**
+     * Whether the search input should be focused on initialization.
+     */
+    autoFocus?: boolean;
+    /**
      * The callback to render search text and/or asynchronous search results.
      */
     children?: (debouncedSearchText: string, typeaheadSearchResultOptions: TypeaheadSearchResultOptions) => ReactNode;
@@ -40,14 +44,6 @@ export interface TypeaheadSearchProps {
      */
     fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
     /**
-     * The action to run on a selected result.
-     */
-    onResultSelect?: (result: TypeaheadResultItem) => void;
-    /**
-     * The action to run using the entered search text on submit.
-     */
-    submitSearch: (searchText: string) => void;
-    /**
      * The initial value of the search text input.
      */
     initialSearchText?: string;
@@ -56,9 +52,17 @@ export interface TypeaheadSearchProps {
      */
     inputDebounceMs?: number;
     /**
+     * The action to run on a selected result.
+     */
+    onResultSelect?: (result: TypeaheadResultItem) => void;
+    /**
      * The placeholder text to display when the input is empty.
      */
     placeholder?: string;
+    /**
+     * Where the search results popover should render in relation to the search input.
+     */
+    placement?: 'bottom-start' | 'bottom-end';
     /**
      * When true, the component will mount a div to the body and render the search results through it.
      * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
@@ -66,26 +70,56 @@ export interface TypeaheadSearchProps {
      */
     renderInPortal?: boolean;
     /**
-     * Whether the search input should be focused on initialization.
+     * The action to run using the entered search text on submit.
      */
-    autoFocus?: boolean;
-    /**
-     * Where the search results popover should render in relation to the search input.
-     */
-    placement?: 'bottom-start' | 'bottom-end';
+    submitSearch: (searchText: string) => void;
 }
 
+/**
+ * TypeaheadSearch Component
+ *
+ * The TypeaheadSearch component is a predictive search style input and especially useful
+ * when the result list needs to be fetched asynchronously. The component can be used as
+ * a stand-alone element (with no children) by providing a `fetchResults` function:
+ * 
+ * ```jsx
+ * <TypeaheadSearch
+ *   autoFocus
+ *   fetchResults={fetchResults}
+ *   inputDebounceMs={250}
+ *   onResultSelect={onResultSelect}
+ *   placeholder="Search"
+ *   placement="bottom-start"
+ *   submitSearch={submitSearch}
+ * />
+ * ```
+ * 
+ * If the default functionality needs to be extended to provide custom result rendering or
+ * to control when the result popover should close, the user can provide a render callback
+ * as follows:
+ * 
+ * ```jsx
+ * <TypeaheadSearch {...typeaheadSearchProps}>
+ *    {(debouncedSearchText, options) => (
+ *        <TypeaheadCustom searchText={debouncedSearchText} {...options} />
+ *    )}
+ * </TypeaheadSearch>
+ * ```
+ *
+ * ❗ **Note: In order to use the built in handler to close the popover when selecting a**
+ * **result from the list, you'll need to spread in the options (as shown above).**
+ */
 const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input'>> = ({
-    submitSearch,
-    children,
-    initialSearchText,
-    placeholder,
-    inputDebounceMs = 250,
-    renderInPortal = false,
     autoFocus,
-    placement = 'bottom-end',
+    children,
     fetchResults,
+    initialSearchText,
+    inputDebounceMs = 250,
     onResultSelect,
+    placeholder,
+    placement = 'bottom-end',
+    renderInPortal = false,
+    submitSearch,
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
