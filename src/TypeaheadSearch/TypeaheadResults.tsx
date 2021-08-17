@@ -1,9 +1,11 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { TypeaheadError, TypeaheadResultsContainer } from './typeaheadSearchStyles';
 import Loading from 'src/Loading/Loading';
 
-const NO_RESULTS_MESSAGE = 'No results were returned.';
-const ERROR_MESSAGE = 'An error occured when searching.';
+export const ERROR_MESSAGE = 'An error occured when searching.';
+export const HEADER_MESSAGE = 'Results';
+export const LOADING_MESSAGE = 'Searching...';
+export const NO_RESULTS_MESSAGE = 'No results were returned.';
 
 export interface TypeaheadResultItem {
     label: ReactNode;
@@ -20,6 +22,15 @@ const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResul
     const [results, setResults] = useState<TypeaheadResultItem[]>([]);
     const [error, setError] = useState<string>('');
     const [fetching, setFetching] = useState<boolean>(false);
+    const mountedRef = useRef(false);
+
+    useEffect(() => {
+        mountedRef.current = true;
+
+        return () => {
+            mountedRef.current = false;
+        };
+    }, []);
 
     useEffect(() => {
         setFetching(true);
@@ -28,12 +39,16 @@ const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResul
         if (fetchResults) {
             fetchResults(debouncedText)
                 .then((resultItems) => {
-                    setResults(resultItems);
-                    setFetching(false);
+                    if (mountedRef.current) {
+                        setResults(resultItems);
+                        setFetching(false);
+                    }
                 })
                 .catch(() => {
-                    setError(ERROR_MESSAGE);
-                    setFetching(false);
+                    if (mountedRef.current) {
+                        setError(ERROR_MESSAGE);
+                        setFetching(false);
+                    }
                 });
             return;
         }
@@ -42,7 +57,7 @@ const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResul
     }, [fetchResults, debouncedText]);
 
     if (fetching) {
-        return <Loading label="Searching..." />;
+        return <Loading label={LOADING_MESSAGE} />;
     }
 
     if (error) {
@@ -55,10 +70,10 @@ const TypeaheadResults: FC<TypeaheadResultsProps> = ({ debouncedText, fetchResul
 
     return (
         <TypeaheadResultsContainer>
-            <div className="resultsHeader">Results</div>
+            <div className="resultsHeader">{HEADER_MESSAGE}</div>
             <ul className="resultsList">
                 {results.map((result) => (
-                    <li className="resultItem" onClick={() => onResultSelect(result)}>
+                    <li key={result.value} className="resultItem" onClick={() => onResultSelect(result)}>
                         {result.label}
                     </li>
                 ))}
