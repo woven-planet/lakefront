@@ -35,6 +35,11 @@ export interface TypeaheadSearchProps {
      */
     autoFocus?: boolean;
     /**
+     * The minimum amount of characters a user must enter before a (non-submit triggered)
+     * search will be initiated. `Default = 1`.
+     */
+     characterMinimum?: number;
+    /**
      * The callback to render search text and/or asynchronous search results.
      */
     children?: (debouncedSearchText: string, typeaheadSearchResultOptions: TypeaheadSearchResultOptions) => ReactNode;
@@ -111,6 +116,7 @@ export interface TypeaheadSearchProps {
  */
 const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input'>> = ({
     autoFocus,
+    characterMinimum = 1,
     children,
     fetchResults,
     initialSearchText,
@@ -129,7 +135,8 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
 
     const [searchTextChanged, setSearchTextChanged] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const debouncedSearchText = useDebounce(searchText, inputDebounceMs);
+    const limitedText = characterMinimum <= searchText.length ? searchText : '';
+    const debouncedSearchText = useDebounce(limitedText, inputDebounceMs);
 
     const [resultsAnchorEl, setResultsAnchorEl] = useState<HTMLDivElement | null>(null);
     const resultsOpen = Boolean(resultsAnchorEl);
