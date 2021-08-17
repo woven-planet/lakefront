@@ -98,8 +98,8 @@ const Template: Story<TypeaheadSearchProps> = (args) => {
                     </div>
                     <div style={{ height: 250, display: 'flex', justifyContent: 'center' }}>
                         <TypeaheadSearch {...args} submitSearch={submitSearch}>
-                            {(debouncedSearchText, options) => (
-                                <TypeaheadCustom searchText={debouncedSearchText} {...options} />
+                            {(options) => (
+                                <TypeaheadCustom {...options} />
                             )}
                         </TypeaheadSearch>
                     </div>

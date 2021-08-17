@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 
 import Loading from 'src/Loading/Loading';
-import { TypeaheadResultProps } from 'src/TypeaheadSearch';
+import { TypeaheadSearchResultProps } from 'src/TypeaheadSearch';
 import { TypeaheadResultItem } from 'src/TypeaheadSearch/TypeaheadResults';
 import styled from '@emotion/styled';
 import theme from 'src/styles/theme';
@@ -113,7 +113,7 @@ const fetchResults = (searchText: string) => {
     });
 };
 
-const TypeaheadSearchResults: FC<TypeaheadResultProps> = ({ searchText, onResultSelect }) => {
+const TypeaheadSearchResults: FC<TypeaheadSearchResultProps> = ({ searchText, onResultSelect }) => {
     const [logs, setSessions] = useState<TypeaheadResultItem[]>([]);
     const [files, setFiles] = useState<TypeaheadResultItem[]>([]);
     const [fetching, setFetching] = useState<boolean>(false);

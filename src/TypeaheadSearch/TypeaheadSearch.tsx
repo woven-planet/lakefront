@@ -18,12 +18,7 @@ import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import TypeaheadResults, { TypeaheadResultItem } from './TypeaheadResults';
 
-interface TypeaheadSearchResultOptions {
-    fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
-    onResultSelect: (result: TypeaheadResultItem) => void;
-}
-
-export interface TypeaheadResultProps {
+export interface TypeaheadSearchResultProps {
     searchText: string;
     onResultSelect: (result: TypeaheadResultItem) => void;
     fetchResults?: (searchText: string) => Promise<TypeaheadResultItem[]>;
@@ -42,7 +37,7 @@ export interface TypeaheadSearchProps {
     /**
      * The callback to render search text and/or asynchronous search results.
      */
-    children?: (debouncedSearchText: string, typeaheadSearchResultOptions: TypeaheadSearchResultOptions) => ReactNode;
+    children?: (typeaheadSearchResultProps: TypeaheadSearchResultProps) => ReactNode;
     /**
      * The request to retrieve and format results using the search text. This is useful
      * if the user does not want to supply their own callback render function as children.
@@ -105,14 +100,14 @@ export interface TypeaheadSearchProps {
  * 
  * ```jsx
  * <TypeaheadSearch {...typeaheadSearchProps}>
- *    {(debouncedSearchText, options) => (
- *        <TypeaheadCustom searchText={debouncedSearchText} {...options} />
+ *    {(typeaheadSearchResultProps: TypeaheadSearchResultProps) => (
+ *        <TypeaheadCustom {...options} />
  *    )}
  * </TypeaheadSearch>
  * ```
  *
  * ❗ **Note: In order to use the built in handler to close the popover when selecting a**
- * **result from the list, you'll need to spread in the options (as shown above).**
+ * **result from the list, you'll need to spread in the props (as shown above).**
  */
 const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input'>> = ({
     autoFocus,
@@ -248,7 +243,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                     <SearchResultsPopover className="searchResultsPopover" placement={placement}>
                         {debouncedSearchText &&
                             children &&
-                            children(debouncedSearchText, { fetchResults, onResultSelect: handleResultSelect })}
+                            children({ searchText: debouncedSearchText, fetchResults, onResultSelect: handleResultSelect })}
                         {debouncedSearchText && !children && (
                             <TypeaheadResults
                                 debouncedText={debouncedSearchText}

@@ -1,4 +1,4 @@
-import TypeaheadSearch, { TypeaheadResultProps, TypeaheadSearchProps } from './TypeaheadSearch';
+import TypeaheadSearch, { TypeaheadSearchResultProps, TypeaheadSearchProps } from './TypeaheadSearch';
 
-export { TypeaheadResultProps, TypeaheadSearchProps };
+export { TypeaheadSearchResultProps, TypeaheadSearchProps };
 export default TypeaheadSearch;
