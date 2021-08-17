@@ -3,6 +3,7 @@ import { INPUT_WIDTH } from 'src/Input/inputStyles';
 
 interface TypeaheadSearchContainerProps {
     placement?: 'bottom-start' | 'bottom-end';
+    resultOpen: boolean;
 }
 
 const POPOVER_WIDTH = INPUT_WIDTH * 2;
@@ -20,7 +21,8 @@ export const SearchResultsPopover = styled.div<TypeaheadSearchContainerProps>(
             boxShadow: '0 2px 5px 1px rgb(0 0 0 / 20%)',
             padding: '1em',
             width: POPOVER_WIDTH,
-            backgroundColor: theme?.colors?.white
+            backgroundColor: theme?.colors?.white,
+            zIndex: theme?.zIndex.popover
         };
     }
 );
@@ -57,17 +59,28 @@ export const TypeaheadResultsContainer = styled.div(({ theme }) => ({
     }
 }));
 
-export const TypeaheadSearchContainer = styled.div<TypeaheadSearchContainerProps>(({ theme }) => ({
+export const TypeaheadSearchContainer = styled.div<TypeaheadSearchContainerProps>(({ theme, resultOpen }) => ({
     height: 40,
     'input.typeaheadInput': {
-        paddingLeft: 50
+        paddingLeft: 50,
+        ...(resultOpen && { zIndex: theme?.zIndex.popover - 1 })
     },
     'svg.typeaheadSearchIcon': {
         position: 'relative',
         top: -50,
-        left: 15
+        left: 15,
+        ...(resultOpen && { zIndex: theme?.zIndex.popover - 1 })
     },
     'div.inputWrapper': {
         position: 'relative'
+    },
+    'div.searchResultsPopoverBackground': {
+        zIndex: theme?.zIndex.popover - 2,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100%',
+        width: '100%',
+        backgroundColor: 'transparent'
     }
 }));

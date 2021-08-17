@@ -33,7 +33,7 @@ export interface TypeaheadSearchProps {
      * The minimum amount of characters a user must enter before a (non-submit triggered)
      * search will be initiated. `Default = 1`.
      */
-     characterMinimum?: number;
+    characterMinimum?: number;
     /**
      * The callback to render search text and/or asynchronous search results.
      */
@@ -81,7 +81,7 @@ export interface TypeaheadSearchProps {
  * The TypeaheadSearch component is a predictive search style input and especially useful
  * when the result list needs to be fetched asynchronously. The component can be used as
  * a stand-alone element (with no children) by providing a `fetchResults` function:
- * 
+ *
  * ```jsx
  * <TypeaheadSearch
  *   autoFocus
@@ -93,11 +93,11 @@ export interface TypeaheadSearchProps {
  *   submitSearch={submitSearch}
  * />
  * ```
- * 
+ *
  * If the default functionality needs to be extended to provide custom result rendering or
  * to control when the result popover should close, the user can provide a render callback
  * as follows:
- * 
+ *
  * ```jsx
  * <TypeaheadSearch {...typeaheadSearchProps}>
  *    {(typeaheadSearchResultProps: TypeaheadSearchResultProps) => (
@@ -243,7 +243,11 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                     <SearchResultsPopover className="searchResultsPopover" placement={placement}>
                         {debouncedSearchText &&
                             children &&
-                            children({ searchText: debouncedSearchText, fetchResults, onResultSelect: handleResultSelect })}
+                            children({
+                                searchText: debouncedSearchText,
+                                fetchResults,
+                                onResultSelect: handleResultSelect
+                            })}
                         {debouncedSearchText && !children && (
                             <TypeaheadResults
                                 debouncedText={debouncedSearchText}
@@ -259,7 +263,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
 
     return (
         <ThemeProvider theme={theme}>
-            <TypeaheadSearchContainer ref={searchInputContainerRef} placement={placement}>
+            <TypeaheadSearchContainer ref={searchInputContainerRef} placement={placement} resultOpen={resultsOpen}>
                 <form onSubmit={handleSearchSubmit}>
                     <div className="inputWrapper" ref={popoverNodeMounted}>
                         <Input
@@ -276,6 +280,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                     </div>
                 </form>
                 <SearchIcon className="typeaheadSearchIcon" />
+                {resultsOpen && <div className="searchResultsPopoverBackground" onClick={closeResultsPopover} />}
             </TypeaheadSearchContainer>
         </ThemeProvider>
     );
