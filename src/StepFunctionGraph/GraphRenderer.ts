@@ -335,11 +335,12 @@ export const getX = (
     // The rangePosition tells us where we need to draw in a range when positioning by previous
     // eslint-disable-next-line no-nested-ternary
     let rangePosition = ~previousEnd ?
-        previousEnd + X_OFFSET :
-        (flattened.length > 1) ?
-            parentX - (range / 2) + (nodeWidth / 2):
-            (canvasWidth / centerDivision);
+        previousEnd + X_OFFSET : // there is a previous end, we just need to add space between
+        (flattened.length > 1) ? // there is no previous end
+            parentX - (range / 2) + (nodeWidth / 2) : // no previous end and there is more than one total node in the row
+            (canvasWidth / centerDivision); // no previous end but there is one node in the row so the canvas center is used
 
+    // Adjust the start position for a row left if there are multiple groups and no starting position with which to position
     if (!~previousEnd && groups.length > 1) {
         rangePosition /= 2;
     }
