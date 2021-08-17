@@ -335,7 +335,7 @@ export const getX = (
     // The rangePosition tells us where we need to draw in a range when positioning by previous
     // eslint-disable-next-line no-nested-ternary
     let rangePosition = ~previousEnd ?
-        previousEnd + (range / rangeLength) :
+        previousEnd + X_OFFSET :
         (flattened.length > 1) ?
             parentX - (range / 2) + (nodeWidth / 2):
             (canvasWidth / centerDivision);
