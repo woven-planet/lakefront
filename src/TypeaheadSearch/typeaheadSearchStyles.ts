@@ -3,7 +3,7 @@ import { INPUT_WIDTH } from 'src/Input/inputStyles';
 
 interface TypeaheadSearchContainerProps {
     placement?: 'bottom-start' | 'bottom-end';
-    resultOpen: boolean;
+    resultOpen?: boolean;
 }
 
 const POPOVER_WIDTH = INPUT_WIDTH * 2;
