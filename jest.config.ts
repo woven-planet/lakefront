@@ -87,7 +87,7 @@ export default {
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-  modulePathIgnorePatterns: ['.*\\.data\\.[jt]s$'],
+  modulePathIgnorePatterns: ['.*\\.data\\.[jt]s$', '.*\\.util\\.[jt]s$'],
 
   // Activates notifications for test results
   // notify: false,
@@ -128,7 +128,7 @@ export default {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['jest-canvas-mock'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: ['<rootDir>/config/jest-setup.js'],

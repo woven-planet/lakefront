@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.60.15",
+  "version": "0.64.0",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -60,6 +60,7 @@
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
     "jest": "^26.6.3",
+    "jest-canvas-mock": "^2.3.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "rollup": "^2.40.0",
