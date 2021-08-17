@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import TypeaheadSearch, { TypeaheadSearchProps } from 'src/Input/TypeaheadSearch';
+import TypeaheadSearch, { TypeaheadSearchProps } from 'src/TypeaheadSearch';
 import DocBlock from '.storybook/DocBlock';
-import { TypeaheadResultItem } from 'src/Input/TypeaheadSearch/TypeaheadResults';
+import { TypeaheadResultItem } from 'src/TypeaheadSearch/TypeaheadResults';
 import TypeaheadCustom, { LAKEFRONT_NAMES } from './TypeaheadCustomDemo';
 
 export default {
-    title: 'Lakefront/Input/TypeaheadSearch',
+    title: 'Lakefront/TypeaheadSearch',
     component: TypeaheadSearch,
     argTypes: {
         children: {
