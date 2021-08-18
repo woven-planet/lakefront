@@ -490,7 +490,7 @@ describe('graphUtil', () => {
            expect(getNextVertex(1, graph)).toBe(2);
         });
 
-        it('should return -1 for the start, end, and a non-existent vertex', () => {
+        it('should return -1 for the start, and a non-existent vertex', () => {
             const json = new JSONBuilderUtil()
                 .addTask('StartNode', 'EndNode')
                 .addTask('EndNode', undefined, true)
@@ -499,8 +499,18 @@ describe('graphUtil', () => {
             const { graph } = graphContext(json);
 
             expect(getNextVertex(0, graph)).toBe(-1);
-            expect(getNextVertex(2, graph)).toBe(-1);
             expect(getNextVertex(10, graph)).toBe(-1);
+        });
+
+        it('should return the end vertex', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph } = graphContext(json);
+
+            expect(getNextVertex(2, graph)).toBe(3);
         });
 
         it('should return -1 when vertex is not provided', () => {
@@ -587,7 +597,7 @@ describe('graphUtil', () => {
             expect(groupsAtDepth).toStrictEqual(expected);
         });
 
-        it('should return a matrix with a two groups when given a Parallel node and a task', () => {
+        it('should return a matrix with one group when given a Parallel node and a task', () => {
             const json = new JSONBuilderUtil()
                 .addTask('StartNode', 'ParallelNode')
                 .addParallel('ParallelNode', [
@@ -598,7 +608,10 @@ describe('graphUtil', () => {
 
             const { graph, verticesAtDepth } = graphContext(json);
             const groupsAtDepth = getGroupsAtDepth(verticesAtDepth[2], graph);
-            const expected = [[3], [2]];
+
+            // Parallel nodes aren't included in the groups, but instead a group is made when
+            // a Parallel node is encountered
+            const expected = [[3]];
 
             expect(groupsAtDepth).toStrictEqual(expected);
         });
