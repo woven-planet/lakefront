@@ -675,7 +675,7 @@ describe('graphUtil', () => {
 
     describe('redrawNode', () => {
         it('should draw a choice, task, or succeed (default case) node', () => {
-            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const drawStepNodeSpy = jest.spyOn(CanvasUtilModule, 'drawStepNode');
             const json = new JSONBuilderUtil()
                 .addTask('StartNode', 'Choice')
                 .addChoice('ChoiceNode', [
@@ -700,7 +700,7 @@ describe('graphUtil', () => {
         });
 
         it('should not draw a Parallel, Map, Start, or End node', () => {
-            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const drawStepNodeSpy = jest.spyOn(CanvasUtilModule, 'drawStepNode');
             const json = new JSONBuilderUtil()
                 .addTask('StartNode', 'ParallelNode')
                 .addParallel('ParallelNode', [
@@ -731,7 +731,7 @@ describe('graphUtil', () => {
         });
 
         it('should not draw when a node cannot be found in the graph', () => {
-            const drawStepNodeSpy = spyOn(CanvasUtilModule, 'drawStepNode');
+            const drawStepNodeSpy = jest.spyOn(CanvasUtilModule, 'drawStepNode');
             const json = new JSONBuilderUtil()
                 .addTask('StartNode', 'Choice')
                 .addChoice('ChoiceNode', [

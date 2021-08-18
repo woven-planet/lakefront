@@ -1,4 +1,4 @@
-export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel';
+export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | string;
 
 export interface JSONStateObject {
     Type?: NodeType;
@@ -85,7 +85,7 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    editNode(state: string, content: JSONState): JSONBuilderUtil {
+    editNode(state: string, content: JSONStateObject): JSONBuilderUtil {
         const original = { ...this.json.States[state] };
 
         this.json.States[state] = {

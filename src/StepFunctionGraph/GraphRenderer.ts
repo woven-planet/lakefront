@@ -406,7 +406,7 @@ export const getX = (
     } else if (positionByPrevious && !positionByParent) {
         calculatedX = rangePosition;
     } else if (positionByParent) {
-        calculatedX = isParallelNext ? parallelRange : parentX;
+        calculatedX = isParallelNext && !isNaN(parallelRange) ? parallelRange : parentX;
     } else {
         calculatedX = rangePosition;
     }
@@ -471,7 +471,7 @@ export function renderVertex(
     // We don't need to offset a lone node at any given depth
     const xOffset = flattened.length > 1 ? X_OFFSET : 0;
     const currentGroupIndex = getGroupIndex(groups, vertex);
-    const currentGroup = groups[currentGroupIndex];
+    const currentGroup = groups[currentGroupIndex] ?? [];
     const range = getRange(currentGroup, xOffset, graph);
 
     const x = getX(
