@@ -182,7 +182,10 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
                 );
 
                 accum = accum.concat(outDegree).filter(v => v !== nextVertex);
-                removalArray = removalArray.concat(outDegree).filter(v => v !== nextVertex);
+
+                if (!vertices.some(v => outDegree.includes(v))) {
+                    removalArray = removalArray.concat(outDegree).filter(v => v !== nextVertex);
+                }
             }
 
             if (!removalArray.includes(vertex)) {
@@ -196,6 +199,12 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
     }
 
     adjustedMatrix = adjustedMatrix.filter(depth => depth.length > 0);
+
+    if (removalArray.length > 0) {
+        removalArray = [];
+        adjustedMatrix = adjustDepthMatrix(adjustedMatrix, graph);
+    }
+
     return adjustedMatrix;
 };
 
@@ -204,13 +213,14 @@ export const getNextVertex = (vertex: number | undefined, graph: Digraph): numbe
     if (typeof vertex === 'number') {
         const mapData = graph.getDataByVertex(vertex) || {};
         const [node] = Object.keys(mapData);
-        const { Next = null } = node ? mapData[node] : {};
+        const { Next = null, End = false } = node ? mapData[node] : {};
+        const defaultVertex = End ? graph.getVerticesCount() - 1 : -1;
 
         const nextVertexFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
             return dataKey === Next;
         };
-        return graph.getVertexByData(nextVertexFindFn) || -1;
+        return graph.getVertexByData(nextVertexFindFn) ?? defaultVertex;
     }
 
     return -1;
@@ -238,6 +248,7 @@ export const getGroupIndex = (groups: number[][], vertex: number): number => {
 // at each depth grouped such that all related Parallel vertices are in an array together
 export const getGroupsAtDepth = (depthArray: number[], graph: Digraph): number[][] => {
     const groups: number[][] = [];
+    const toFilter: number[] = [];
 
     // Create group arrays for each Parallel type at this depth
     depthArray.forEach((vertex: number) => {
@@ -252,12 +263,16 @@ export const getGroupsAtDepth = (depthArray: number[], graph: Digraph): number[]
                 .filter(v => v !== nextVertex);
             group.push(...outDegree);
             groups.push(group);
+            toFilter.push(vertex);
         }
     });
 
     const flattenedGroups: number[] = ([] as number[]).concat(...groups);
-    const notInGroups: number[] = depthArray.filter(v => !flattenedGroups.includes(v));
-    groups.push(notInGroups);
+    const notInGroups: number[] = depthArray.filter(v => !toFilter.includes(v) && !flattenedGroups.includes(v));
+
+    if (notInGroups.length > 0) {
+        groups.push(notInGroups);
+    }
 
     return groups;
 };
