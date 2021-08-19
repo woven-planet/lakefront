@@ -7,6 +7,7 @@ import {
     adjustDepthMatrix,
     findNearestArrowNode,
     generateMountingPoints,
+    getCatchVertices,
     getDrawnRange,
     getDrawnRangeMiddleX,
     getGroupIndex,
@@ -165,9 +166,12 @@ export const handleParallel = (
     const PARALLEL_PADDING = 20;
     const parallelNode = graph.getDataByVertex(vertex);
     const [key] = Object.keys(parallelNode);
-    const { End } = parallelNode[key];
+    const { Catch, End } = parallelNode[key];
     const nextVertex = getNextVertex(vertex, graph);
-    const exclusionArray: number[] = [vertex, endVertex];
+
+    const catchVertices = getCatchVertices(Catch, graph);
+
+    const exclusionArray: number[] = [vertex, endVertex, ...catchVertices];
 
     if (nextVertex !== -1) {
         exclusionArray.push(nextVertex);
@@ -724,26 +728,42 @@ export const drawGraph = (
                     const endOffset = hideArrow ? 5 : 0;
                     const parallelNode = graph.getDataByVertex(vertex);
                     const [parallelNodeKey] = Object.keys(parallelNode);
-                    const { End, Next } = parallelNode[parallelNodeKey];
+                    const { Catch, End, Next } = parallelNode[parallelNodeKey];
                     const nextVertexFindFn = (datum: any) => {
                         const [dataKey] = Object.keys(datum);
                         return dataKey === Next;
                     };
+                    const catchVertices = getCatchVertices(Catch, graph);
                     const connectingNode = graph.getVertexByData(nextVertexFindFn);
                     const bottomArrow = End || nextNode.vertex !== connectingNode ? mount0.top : mount0.bottom;
 
-                    drawArrow(
-                        ctx,
-                        drawn,
-                        bottomArrow,
-                        mount1.top,
-                        5,
-                        hideArrow,
-                        offsetArrowStart,
-                        nextEnd,
-                        endOffset
-                    );
-                    drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    if (catchVertices.includes(nextNode.vertex)) {
+                        drawArrow(
+                            ctx,
+                            drawn,
+                            mount0.bottom,
+                            mount1.top,
+                            5,
+                            hideArrow,
+                            offsetArrowStart,
+                            nextEnd,
+                            endOffset
+                        );
+                        drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    } else {
+                        drawArrow(
+                            ctx,
+                            drawn,
+                            bottomArrow,
+                            mount1.top,
+                            5,
+                            hideArrow,
+                            offsetArrowStart,
+                            nextEnd,
+                            endOffset
+                        );
+                        drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    }
                 }
             }
         });

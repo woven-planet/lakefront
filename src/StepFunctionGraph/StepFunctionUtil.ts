@@ -148,7 +148,18 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
 
         // eslint-disable-next-line dot-notation
         if (node[key]['Type'] === WorkFlowType.CHOICE) {
-            const { Choices } = node[key];
+            const { Choices, Default } = node[key];
+
+            const choiceDefaultFindFn = (datum: any) => {
+                const [dataKey] = Object.keys(datum);
+                return dataKey === Default;
+            };
+
+            const choiceDefaultVertex = graph.getVertexByData(choiceDefaultFindFn);
+
+            if (typeof currentVertex === 'number' && typeof choiceDefaultVertex === 'number') {
+                graph.addEdge(currentVertex, choiceDefaultVertex);
+            }
 
             Choices.forEach((choice: any) => {
                 const { Next: choiceNext } = choice;
@@ -184,7 +195,8 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     nodes.forEach((node) => {
         const [key] = Object.keys(node);
         const d = node[key] || {};
-        const { Next } = d;
+        const { Catch, Next } = d;
+        const catchNodes = Catch?.map((e: any) => e.Next) ?? [];
 
         const currentFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
@@ -199,6 +211,19 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         const currentVertex = graph.getVertexByData(currentFindFn);
         const foundDestinationVertex = graph.getVertexByData(destinationFindFn);
         const destinationVertex = connectFrom ? currentVertex : foundDestinationVertex;
+
+        catchNodes.forEach((catchNext: string) => {
+            const catchFindFn = (datum: any) => {
+                const [dataKey] = Object.keys(datum);
+                return dataKey === catchNext;
+            };
+
+            const foundCatchVertex = graph.getVertexByData(catchFindFn);
+
+            if (foundCatchVertex && typeof currentVertex === 'number') {
+                graph.addEdge(currentVertex, foundCatchVertex);
+            }
+        });
 
         if (typeof destinationVertex === 'number' && typeof currentVertex === 'number') {
             const isVertexConnectedFromNext = connectedFromNext.includes(currentVertex);

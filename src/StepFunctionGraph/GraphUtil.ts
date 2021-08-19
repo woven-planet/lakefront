@@ -26,9 +26,22 @@ export interface MountingPoints {
     right: Point;
 }
 
+export const getCatchVertices = (catchArray: any[], graph: Digraph): number[] => {
+    const catchNodes = catchArray?.map((e: any) => e.Next) ?? [];
+
+    return catchNodes.map((catchNext: string) => {
+        const catchFindFn = (datum: any) => {
+            const [dataKey] = Object.keys(datum);
+            return dataKey === catchNext;
+        };
+
+        return graph.getVertexByData(catchFindFn) ?? -1;
+    }).filter((v: number) => v !== -1);
+};
+
 // Returns the total pixel width of all vertices in an array, meant for a graph depth
 export const getRange = (vertices: number[], xOffset: number, graph: Digraph): number => {
-    return vertices.reduce((accum, current, index) => {
+    return vertices.reduce((accum, current) => {
         const nodeData = graph.getDataByVertex(current);
         const [rangeKey] = Object.keys(nodeData);
         const { Type } = nodeData[rangeKey];
@@ -168,7 +181,7 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
         const adjusted = vertices.reduce((accum: number[], vertex: number) => {
             const node = graph.getDataByVertex(vertex);
             const [key] = Object.keys(node);
-            const { Type, Next } = node[key];
+            const { Catch, Next, Type } = node[key];
 
             if (Type === WorkFlowType.PARALLEL || Type === WorkFlowType.MAP) {
                 const nextVertexFindFn = (datum: any) => {
@@ -181,7 +194,14 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
                     v => v !== endVertex
                 );
 
-                accum = accum.concat(outDegree).filter(v => v !== nextVertex);
+                const catchVertices = getCatchVertices(Catch, graph);
+
+                if (catchVertices.length > 0) {
+                    const nextDepthIndex = workingMatrix.findIndex(depth => depth.includes(nextVertex || -1));
+                    workingMatrix[nextDepthIndex].push(...catchVertices);
+                }
+
+                accum = accum.concat(outDegree).filter(v => v !== nextVertex && !catchVertices.includes(v));
 
                 if (!vertices.some(v => outDegree.includes(v))) {
                     removalArray = removalArray.concat(outDegree).filter(v => v !== nextVertex);

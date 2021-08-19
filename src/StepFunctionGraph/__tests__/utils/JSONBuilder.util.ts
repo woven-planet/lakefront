@@ -10,7 +10,7 @@ export interface JSONStateObject {
 }
 
 export interface JSONState {
-    [key: string]: JSONStateObject
+    [key: string]: JSONStateObject;
 }
 
 export interface StepFunctionJSON {
