@@ -40,13 +40,13 @@ export const getCatchVertices = (catchArray: any[], graph: Digraph): number[] =>
 };
 
 // Returns the total pixel width of all vertices in an array, meant for a graph depth
-export const getRange = (vertices: number[], xOffset: number, graph: Digraph): number => {
+export const getRange = (vertices: number[], xOffset: number, graph: Digraph, ctx: CanvasRenderingContext2D): number => {
     return vertices.reduce((accum, current) => {
         const nodeData = graph.getDataByVertex(current);
         const [rangeKey] = Object.keys(nodeData);
         const { Type } = nodeData[rangeKey];
 
-        const { width: currentWidth } = getNodeDimensions(rangeKey);
+        const { width: currentWidth } = getNodeDimensions(rangeKey, ctx, nodeData, Type === WorkFlowType.CATCH);
 
         return accum +
             (Type === WorkFlowType.PARALLEL ? 0 : currentWidth) +

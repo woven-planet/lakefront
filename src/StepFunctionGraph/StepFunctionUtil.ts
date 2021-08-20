@@ -3,6 +3,7 @@ import DigraphDFS from './DigraphDFS';
 
 export enum WorkFlowType {
     TASK = 'Task',
+    CATCH = 'Catch',
     CHOICE = 'Choice',
     PARALLEL = 'Parallel',
     MAP = 'Map',
@@ -196,7 +197,6 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         const [key] = Object.keys(node);
         const d = node[key] || {};
         const { Catch, Next } = d;
-        const catchNodes = Catch?.map((e: any) => e.Next) ?? [];
 
         const currentFindFn = (datum: any) => {
             const [dataKey] = Object.keys(datum);
@@ -212,7 +212,8 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
         const foundDestinationVertex = graph.getVertexByData(destinationFindFn);
         const destinationVertex = connectFrom ? currentVertex : foundDestinationVertex;
 
-        catchNodes.forEach((catchNext: string) => {
+        Catch?.forEach((catchNode: any) => {
+            const catchNext = catchNode.Next;
             const catchFindFn = (datum: any) => {
                 const [dataKey] = Object.keys(datum);
                 return dataKey === catchNext;
@@ -221,6 +222,19 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
             const foundCatchVertex = graph.getVertexByData(catchFindFn);
 
             if (foundCatchVertex && typeof currentVertex === 'number') {
+                const catchData = graph.getDataByVertex(foundCatchVertex);
+                graph.setVertexData(
+                    {
+                        vertex: foundCatchVertex,
+                        data: {
+                            ...{ [catchNext]: {
+                                ...catchData[catchNext],
+                                    Type: WorkFlowType.CATCH,
+                                    ErrorEquals: catchNode.ErrorEquals
+                            }}
+                        }
+                    }
+                );
                 graph.addEdge(currentVertex, foundCatchVertex);
             }
         });

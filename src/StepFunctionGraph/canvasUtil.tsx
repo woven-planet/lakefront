@@ -1,11 +1,12 @@
 import { NodeDimensions } from './GraphUtil';
 import { Y_OFFSET } from './GraphRenderer';
 
-const NODE_HEIGHT = 38;
+export const NODE_HEIGHT = 38;
 const TEXT_WIDTH_MULTIPLIER = 12;
 const OUTLINE_STROKE_COLOR = '#16191f';
 const WHITE_COLOR = '#ffffff';
 const DEBUG_RED_COLOR = '#ff0000';
+const CATCH_RED_COLOR = '#cc0000';
 const HIGHLIGHT_BACKGROUND = '#d9e9fd';
 const HIGHLIGHT_COLOR = '#378fee';
 const HIGHLIGHTED_WIDTH = 2;
@@ -29,8 +30,18 @@ interface FunctionalDrawArgs extends BaseDrawArgs {
 
 type Point = { x: number, y: number };
 
-export const getNodeDimensions = (text: string): { height: number; width: number } => {
-    const width = text.length * TEXT_WIDTH_MULTIPLIER;
+export const getErrorEqualsText = (key: string, node: any) => {
+    const { ErrorEquals } = node[key];
+    const errorEquals = ErrorEquals.toString().replace(/,/g, ', ');
+
+    return errorEquals ? `Catch: ErrorEquals: ${errorEquals}` : '';
+};
+
+export const getNodeDimensions = (text: string, ctx?: CanvasRenderingContext2D, node?: any, isCatch = false): { height: number; width: number } => {
+    const textWidth = text.length * TEXT_WIDTH_MULTIPLIER;
+    const catchTextWidth = isCatch ? Math.max(ctx?.measureText(getErrorEqualsText(text, node)).width ?? 0, textWidth) : -1;
+    const width = isCatch ? catchTextWidth : textWidth;
+
     return { height: NODE_HEIGHT, width };
 };
 
@@ -59,6 +70,46 @@ export const drawStepNode = (
     ctx.font = '14px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(text, x, y);
+};
+
+export const drawCatchNode = (
+    { ctx, x, y, text, highlight = false, node }: FunctionalDrawArgs & { node: any }
+) => {
+    const TEXT_Y_OFFSET = 33;
+    const SUBTEXT_Y_OFFSET = 17;
+
+    const errorEqualText = getErrorEqualsText(text, node);
+
+    const textWidth = text.length * (TEXT_WIDTH_MULTIPLIER);
+    const errorTextWidth = ctx.measureText(errorEqualText).width;
+
+    // set the dimensions of the rectangle
+    const rectWidth = Math.max(textWidth, errorTextWidth);
+    const rectXPos = x - (rectWidth / 2);
+    const rectYPos = y - TEXT_Y_OFFSET;
+
+    // draw the white or blue rectangle
+    ctx.fillStyle = highlight ? HIGHLIGHT_BACKGROUND : WHITE_COLOR;
+    ctx.fillRect(rectXPos, rectYPos, rectWidth, NODE_HEIGHT * 1.5);
+
+    // draw the outline of the white rectangle
+    ctx.setLineDash([5, 2]);
+    ctx.strokeStyle = CATCH_RED_COLOR;
+    ctx.lineWidth = highlight ? HIGHLIGHTED_WIDTH : NORMAL_WIDTH;
+    ctx.strokeRect(rectXPos, rectYPos, rectWidth, NODE_HEIGHT * 1.5);
+
+    // draw the text
+    ctx.fillStyle = highlight ? HIGHLIGHT_COLOR : OUTLINE_STROKE_COLOR;
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, x, y);
+
+    // draw error text
+    const textXPos = x + (rectWidth / 2) - 10;
+
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(errorEqualText, textXPos, y - SUBTEXT_Y_OFFSET);
 };
 
 export const drawParallel = (

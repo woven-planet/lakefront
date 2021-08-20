@@ -1,4 +1,4 @@
-export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | string;
+export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | 'Catch' | string;
 
 export interface JSONStateObject {
     Type?: NodeType;
