@@ -270,7 +270,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                             {...restInputProps}
                             type="text"
                             placeholder={placeholder}
-                            autoComplete={'off'}
+                            autoComplete="off"
                             onChange={handleInputChange}
                             value={inputValue}
                             autoFocus={autoFocus}
