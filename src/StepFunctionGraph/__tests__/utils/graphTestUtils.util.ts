@@ -24,7 +24,7 @@ interface GraphContext {
     verticesAtDepth: number[][];
 }
 
-export const graphContext = (json: StepFunctionJSON): GraphContext => {
+export const graphContext = (json: StepFunctionJSON, groupDepth = 0): GraphContext => {
     const digraph = new Digraph();
     const graph = generateStepFunctionGraph(json, digraph);
     const drawn = new Map<number, NodeDimensions>();
@@ -33,7 +33,7 @@ export const graphContext = (json: StepFunctionJSON): GraphContext => {
     let verticesAtDepth: number[][] = DigraphDFS.getVerticesAtDepthFromPaths(traversals, [], true);
     verticesAtDepth = adjustDepthMatrix(verticesAtDepth, graph);
 
-    const groups: number[][] = getGroupsAtDepth(verticesAtDepth[0], graph);
+    const groups: number[][] = getGroupsAtDepth(verticesAtDepth[groupDepth], graph);
 
     return {
         drawn,
