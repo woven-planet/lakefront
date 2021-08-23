@@ -32,6 +32,8 @@ export { default as TextArea } from'./TextArea/TextArea';
 
 export { default as Toggle } from './Toggle/Toggle';
 
+export { default as TypeaheadSearch } from './TypeaheadSearch';
+
 // Theme
 export { default as colors } from './styles/lakefrontColors';
 
