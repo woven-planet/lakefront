@@ -4,13 +4,22 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import AnchorCopyComponent, { AnchorCopyProps } from 'src/AnchorCopy';
 import Input from 'src/Input/Input';
 import DocBlock from '.storybook/DocBlock';
-import { green, saturatedRed } from 'src/styles/lakefrontColors';
+import { green, saturatedRed, blue, storm } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/AnchorCopy',
     component: AnchorCopyComponent,
     argTypes: {
-        // TODO
+        AnchorContent: {
+            table: {
+                disable: true
+            }
+        },
+        onCopy: {
+            table: {
+                disable: true
+            }
+        }
     },
     parameters: {
         docs: {
@@ -41,7 +50,7 @@ const Template: Story<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args
                 hashId={args.hashId || title}
                 onCopy={handleCopy}
             />
-            <Input value={args.title || title} onChange={handleChange} style={{ marginTop: 8 }} />
+            <Input value={args.hashId || title} onChange={handleChange} style={{ marginTop: 8 }} />
             <div style={{ color: green, minHeight: 24 }}>
                 {copied}
                 <span style={{ color: saturatedRed, minHeight: 24 }}>
@@ -53,6 +62,26 @@ const Template: Story<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args
 };
 
 export const AnchorCopy = Template.bind({});
-AnchorCopy.args = {
-    disabled: false
+
+export const CustomAnchor = Template.bind({});
+CustomAnchor.args = {
+    AnchorContent: () => (
+        <div
+            style={{
+                fontWeight: 'bold',
+                marginRight: 8,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                borderRadius: 4,
+                backgroundColor: blue,
+                border: `1px solid ${storm}`,
+                width: 64,
+                height: 32
+            }}
+        >
+            <div style={{ fontSize: 8 }}>Copy</div>
+            <div style={{ paddingBottom: 4, fontSize: 40 }}>🚤</div>
+        </div>
+    )
 };
