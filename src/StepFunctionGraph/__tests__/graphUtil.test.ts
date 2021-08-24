@@ -6,6 +6,7 @@ import {
     adjustMatrixForArrows,
     findNearestArrowNode,
     generateMountingPoints,
+    getCatchVertices,
     getDrawnRange,
     getDrawnRangeMiddleX,
     getGroupIndex,
@@ -376,6 +377,39 @@ describe('graphUtil', () => {
         });
     });
 
+    describe('getCatchVertices', () => {
+        const catchArray = [{
+            ErrorEquals: ['States.ALL'],
+            Next: 'FailNode'
+        }];
+
+        const invalidNextCatchArray = [{
+            ErrorEquals: ['States.ALL'],
+            Next: 'NonExistingNode'
+        }];
+
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'FailNode')
+            .editNode('StartNode', { Catch: catchArray })
+            .addTask('FailNode', 'EndNode')
+            .addTask('EndNode', undefined, true)
+            .getJson();
+
+        it('should return an array of vertices given a valid Catch array', () => {
+            const { graph } = graphContext(json);
+
+            const catchVertices = getCatchVertices(catchArray,  graph);
+            expect(catchVertices).toStrictEqual([2]);
+        });
+
+        it('should return an empty array given a Catch array that points to an Next node that does not exist', () => {
+            const { graph } = graphContext(json);
+
+            const catchVertices = getCatchVertices(invalidNextCatchArray,  graph);
+            expect(catchVertices).toStrictEqual([]);
+        });
+    });
+
     describe('getDrawnRange', () => {
         const json = new JSONBuilderUtil()
             .addTask('StartNode', 'ParallelNode')
@@ -638,7 +672,7 @@ describe('graphUtil', () => {
         it('should return the node width when only one node is in a row', () => {
             const expected = getNodeDimensions('StartNode').width;
 
-            expect(getRange([1], 0, graph)).toBe(expected);
+            expect(getRange([1], 0, graph, ctx as CanvasRenderingContext2D)).toBe(expected);
         });
 
         it('should add two nodes that are next to each other with two X_OFFSETs', () => {
@@ -646,15 +680,15 @@ describe('graphUtil', () => {
                 getNodeDimensions('P2').width +
                 X_OFFSET +
                 X_OFFSET;
-            expect(getRange([4, 5], X_OFFSET, graph)).toBe(expected);
+            expect(getRange([4, 5], X_OFFSET, graph, ctx as CanvasRenderingContext2D)).toBe(expected);
         });
 
         it('should return 0 if no vertices are in the array', () => {
-            expect(getRange([], 0, graph)).toBe(0);
+            expect(getRange([], 0, graph, ctx as CanvasRenderingContext2D)).toBe(0);
         });
 
         it('should not add a Parallel node in the range calculation', () => {
-            expect(getRange([3], 0, graph)).toBe(0);
+            expect(getRange([3], 0, graph, ctx as CanvasRenderingContext2D)).toBe(0);
         });
     });
 
