@@ -6,11 +6,12 @@ import Button from 'src/Button/Button';
 import { ReactComponent as Link } from './assets/link.svg';
 
 export interface AnchorCopyProps {
-    title: string;
-    hashId?: string;
-    className?: string;
-    onCopy?: (scrollToUrl: string) => void;
     AnchorContent: FC;
+    className?: string;
+    disabled?: boolean;
+    hashId?: string;
+    onCopy?: (scrollToUrl: string) => void;
+    title: string;
 }
 
 const AnchorDiv = styled.div({
@@ -22,11 +23,12 @@ const AnchorDiv = styled.div({
 });
 
 const AnchorCopy: FC<AnchorCopyProps & Omit<ComponentPropsWithoutRef<'div'>, 'onCopy'>> = ({
-    title,
-    hashId,
-    className,
-    onCopy,
     AnchorContent = Button,
+    className,
+    disabled,
+    hashId,
+    onCopy,
+    title,
     ...props
 }) => {
     const hash = hashId || title;
@@ -35,14 +37,18 @@ const AnchorCopy: FC<AnchorCopyProps & Omit<ComponentPropsWithoutRef<'div'>, 'on
         <AnchorDiv
             className={className}
             {...props}
-            onClick={() => {
-                // copyClipboard(generateScrollToUrl(hash));
-                if (onCopy) {
-                    onCopy(generateScrollToUrl(hash));
-                }
-            }}
+            onClick={
+                disabled
+                    ? () => null
+                    : () => {
+                          copyClipboard(generateScrollToUrl(hash));
+                          if (onCopy) {
+                              onCopy(generateScrollToUrl(hash));
+                          }
+                      }
+            }
         >
-            <AnchorContent icon={<Link />} />
+            <AnchorContent disabled={disabled} icon={<Link />} />
             {title}
         </AnchorDiv>
     );
