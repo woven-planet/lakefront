@@ -1,5 +1,5 @@
 import Digraph from './Digraph';
-import { drawStepNode, getNodeDimensions } from './canvasUtil';
+import { drawCatchNode, drawStepNode, getNodeDimensions } from './canvasUtil';
 import { WorkFlowType } from './StepFunctionUtil';
 
 export interface NodeDimensions {
@@ -172,6 +172,7 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
     const workingMatrix = [...matrix];
     const endIndex = workingMatrix.length - 1;
     const [endVertex] = workingMatrix[endIndex];
+    const mapEnds: number[] = [];
     let adjustedMatrix: number[][] = [];
     let removalArray: number[] = [];
 
@@ -190,24 +191,33 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
                 };
                 const nextVertex: number | undefined = graph.getVertexByData(nextVertexFindFn);
 
+                // Keep track of any Map "Next" vertices to swap if they're out of order later
+                if (Type === WorkFlowType.MAP) {
+                    mapEnds.push(nextVertex ?? -1);
+                }
+
                 const outDegree = graph.getOutdegree(vertex).outVertices.filter(
                     v => v !== endVertex
                 );
 
                 const catchVertices = getCatchVertices(Catch, graph);
 
+                // Add any "Catch" vertices after this depth so they don't appear inside any boxes
                 if (catchVertices.length > 0) {
                     const nextDepthIndex = workingMatrix.findIndex(depth => depth.includes(nextVertex || -1));
                     workingMatrix[nextDepthIndex].push(...catchVertices);
                 }
 
+                // Remove any "Catch" vertices that were moved to the next depth as well as the "Next" vertex
                 accum = accum.concat(outDegree).filter(v => v !== nextVertex && !catchVertices.includes(v));
 
+                // When this row doesn't have any overlap with the outdegrees, add them to the removalArray
                 if (!vertices.some(v => outDegree.includes(v))) {
                     removalArray = removalArray.concat(outDegree).filter(v => v !== nextVertex);
                 }
             }
 
+            // Add any vertices not in the removalArray to the accumulator
             if (!removalArray.includes(vertex)) {
                 return accum.concat(vertex);
             } else {
@@ -215,15 +225,38 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
             }
         }, []);
 
+        // Add this row to the new Matrix with only unique vertices
         adjustedMatrix.push(Array.from(new Set(adjusted)));
     }
 
+    // We don't want any rows without values after moving vertices around
     adjustedMatrix = adjustedMatrix.filter(depth => depth.length > 0);
 
+    // This function is called recursively when there have been Parallel and Map nodes to make sure
+    // there aren't nested nodes of the same type to also shift up
     if (removalArray.length > 0) {
         removalArray = [];
         adjustedMatrix = adjustDepthMatrix(adjustedMatrix, graph);
     }
+
+    const flatMatrix = adjustedMatrix.flat();
+
+    // Map nodes can sometimes have their depth wrong for the Next node and need to be swapped so a node isn't drawn over
+    flatMatrix.forEach((v, index) => {
+        const next = flatMatrix[index + 1];
+
+        if (mapEnds.includes(v) && v > next) {
+            const largerDepth = adjustedMatrix.findIndex(depth => depth.includes(v));
+            const largerIndex = adjustedMatrix[largerDepth].indexOf(v);
+            const smallerDepth = adjustedMatrix.findIndex(depth => depth.includes(next));
+            const smallerIndex = adjustedMatrix[smallerDepth].indexOf(next);
+
+            if (largerDepth !== smallerDepth) {
+                adjustedMatrix[largerDepth][largerIndex] = next;
+                adjustedMatrix[smallerDepth][smallerIndex] = v;
+            }
+        }
+    });
 
     return adjustedMatrix;
 };
@@ -325,6 +358,9 @@ export const redrawNode = (
                 break;
             case WorkFlowType.TASK:
                 drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.CATCH:
+                drawCatchNode({ ctx, x, y, text: key, highlight, node });
                 break;
             case WorkFlowType.PARALLEL:
                 break;

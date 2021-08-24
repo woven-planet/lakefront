@@ -1,9 +1,15 @@
 export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | 'Catch' | string;
 
+export interface CatchJSON {
+    ErrorEquals: string[];
+    Next: string;
+}
+
 export interface JSONStateObject {
     Type?: NodeType;
     Next?: string;
     End?: boolean;
+    Catch?: CatchJSON[];
     Branches?: StepFunctionJSON[];
     Choices?: JSONStateObject[];
     Iterator?: StepFunctionJSON;
