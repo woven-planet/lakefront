@@ -75,6 +75,35 @@ describe('graphUtil', () => {
 
             expect(adjusted).toStrictEqual(expected);
         });
+
+        it('should adjust Catch vertices after a Parallel', () => {
+            const catchArray = [{
+                ErrorEquals: ['States.ALL'],
+                Next: 'EndNode'
+            }];
+
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil().addTask('P1').getJson(),
+                    new JSONBuilderUtil().addTask('P2').getJson()
+                ], 'EndNode')
+                .editNode('ParallelNode', { Catch: catchArray })
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const adjusted = adjustDepthMatrix(verticesAtDepth, graph);
+            const expected: number[][] = [
+                [0], // Start
+                [1], // StartNode
+                [3, 4, 2], // P1, P2, ParallelNode
+                [5], // EndNode
+                [6] // End
+            ];
+
+            expect(adjusted).toStrictEqual(expected);
+        });
     });
 
     describe('adjustMatrixForArrows', () => {
