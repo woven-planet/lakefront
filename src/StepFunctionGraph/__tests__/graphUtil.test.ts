@@ -104,6 +104,27 @@ describe('graphUtil', () => {
 
             expect(adjusted).toStrictEqual(expected);
         });
+
+        it('should swap out of order vertices after a Map node', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'MapNode')
+                .addMap('MapNode', new JSONBuilderUtil().addTask('M1', 'M2').addTask('M2').getJson(), 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const adjusted = adjustDepthMatrix(verticesAtDepth, graph);
+            const expected: number[][] = [
+                [0], // Start
+                [1], // StartNode
+                [3, 2], // M1, MapNode
+                [4], // M2
+                [5], // EndNode
+                [6] // End
+            ];
+
+            expect(adjusted).toStrictEqual(expected);
+        });
     });
 
     describe('adjustMatrixForArrows', () => {
@@ -760,6 +781,28 @@ describe('graphUtil', () => {
             //EndNode (Success)
             redrawNode(3, ctx as CanvasRenderingContext2D, drawn, graph, []);
             expect(drawStepNodeSpy).toHaveBeenCalledTimes(3);
+        });
+
+        it('should draw a Catch node', () => {
+            const catchArray = [{
+                ErrorEquals: ['States.ALL'],
+                Next: 'FailNode'
+            }];
+
+            const drawCatchNodeSpy = jest.spyOn(CanvasUtilModule, 'drawCatchNode');
+
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'FailNode')
+                .editNode('StartNode', { Catch: catchArray })
+                .addTask('FailNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            // FailNode (Catch)
+            redrawNode(2, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawCatchNodeSpy).toHaveBeenCalledTimes(1);
         });
 
         it('should not draw a Parallel, Map, Start, or End node', () => {

@@ -203,8 +203,8 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
                 const catchVertices = getCatchVertices(Catch, graph);
 
                 // Add any "Catch" vertices after this depth so they don't appear inside any boxes
-                if (catchVertices.length > 0) {
-                    const nextDepthIndex = workingMatrix.findIndex(depth => depth.includes(nextVertex || -1));
+                if (catchVertices.length > 0 && typeof(nextVertex) === 'number') {
+                    const nextDepthIndex = workingMatrix.findIndex(depth => depth.includes(nextVertex));
                     workingMatrix[nextDepthIndex].push(...catchVertices);
                 }
 
@@ -251,10 +251,8 @@ export const adjustDepthMatrix = (matrix: number[][], graph: Digraph): number[][
             const smallerDepth = adjustedMatrix.findIndex(depth => depth.includes(next));
             const smallerIndex = adjustedMatrix[smallerDepth].indexOf(next);
 
-            if (largerDepth !== smallerDepth) {
-                adjustedMatrix[largerDepth][largerIndex] = next;
-                adjustedMatrix[smallerDepth][smallerIndex] = v;
-            }
+            adjustedMatrix[largerDepth][largerIndex] = next;
+            adjustedMatrix[smallerDepth][smallerIndex] = v;
         }
     });
 
