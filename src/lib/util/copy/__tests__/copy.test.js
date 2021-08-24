@@ -1,5 +1,11 @@
 import copy from '../copy';
 
+const originalClipboard = { ...global.navigator.clipboard };
+
+afterEach(() => {
+    global.navigator.clipboard = originalClipboard;
+});
+
 describe('copy', () => {
     it('copies the provided text to the clipboard', () => {
         const writeText = jest.fn();

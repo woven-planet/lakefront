@@ -1,6 +1,12 @@
 import { fireEvent, render } from '@testing-library/react';
 import AnchorCopy from '../AnchorCopy';
 
+const originalClipboard = { ...global.navigator.clipboard };
+
+afterEach(() => {
+    global.navigator.clipboard = originalClipboard;
+});
+
 describe('AnchorCopy', () => {
     const title = 'Title Here';
 
