@@ -1,11 +1,12 @@
-import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
+import { ChangeEvent, ComponentPropsWithoutRef, useCallback, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/BoundingBoxes';
 import DocBlock from '.storybook/DocBlock';
-import { akoya, emerald, mediumPurple, pavement, saturatedOrange, saturatedYellow } from 'src/styles/lakefrontColors';
+import { emerald, mediumPurple, saturatedOrange, saturatedYellow } from 'src/styles/lakefrontColors';
 import styled from '@emotion/styled';
 import imageFile from './__assets__/ducks.jpg';
+import resizeObserver from 'src/lib/hooks/resizeObserver';
 
 const BOUNDING_BOXES: {
     name: string;
@@ -20,7 +21,10 @@ const BOUNDING_BOXES: {
         items: [
             {
                 confidence: 1,
-                bbox: [[665, 130], [595, 25]]
+                bbox: [
+                    [1390, 280],
+                    [1165, 25]
+                ]
             }
         ],
         color: mediumPurple
@@ -30,7 +34,10 @@ const BOUNDING_BOXES: {
         items: [
             {
                 confidence: 1,
-                bbox: [[780, 300], [710, 175]]
+                bbox: [
+                    [1620, 590],
+                    [1395, 335]
+                ]
             }
         ],
         color: saturatedOrange
@@ -40,7 +47,10 @@ const BOUNDING_BOXES: {
         items: [
             {
                 confidence: 1,
-                bbox: [[505, 400], [435, 275]]
+                bbox: [
+                    [1070, 810],
+                    [845, 555]
+                ]
             }
         ],
         color: emerald
@@ -50,28 +60,30 @@ const BOUNDING_BOXES: {
         items: [
             {
                 confidence: 1,
-                bbox: [[185, 445], [110, 320]]
+                bbox: [
+                    [405, 900],
+                    [190, 645]
+                ]
             }
         ],
         color: saturatedYellow
     }
 ];
 
-// This is the base64 for a 1x1 transparent pixel
-const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-
 const StoryContainer = styled.div({
     width: '100%',
     minHeight: 320,
     backgroundColor: 'transparent',
     position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    overflow: 'hidden',
     img: {
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
+        // intentional height over-adjustment helps contained content to fully fit width bounds for most 16:10 scenarios
+        // (e.g. hide small pixel value background that shows because of rounding applied to scaled size)
+        height: '100.5%',
         objectFit: 'contain'
     }
 });
@@ -100,39 +112,63 @@ export default {
                     .replace('onChange={function noRefCheck() {}}', '')
                     .replace(/\n/g, '')
                     .replace(/[ ]{2}/g, ' ');
-            },
+            }
         }
     }
 } as Meta;
 
 const Template: Story<BoundingBoxesProps> = (args) => {
     const [boundingBoxDimensions, setBoundingBoxDimensions] = useState({ width: 1920, height: 1280 });
+    // const [boundingBoxDimensions, setBoundingBoxDimensions] = useState<{ [key: string]: number }>({});
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [observedElement, setObservedElement] = useState(null);
+    const imageRef = useRef<HTMLImageElement>(null);
 
-   // Swap the transparent pixel image for the real one once loaded
-   const handleImageLoaded = () => {
-    setImageLoaded(true);
+    const containerRef = useCallback(
+        (node) => {
+            if (node) {
+                const { height, width } = node.getBoundingClientRect();
+                setBoundingBoxDimensions({ height, width });
+            }
+        },
+        [imageLoaded, observedElement]  
+    );
+
+    useEffect(() => {
+        if (imageRef.current) {
+            const resizeCallback = (entries) => {
+                setObservedElement(entries);
+            };
+            const boxResizeObserver = resizeObserver(resizeCallback);
+
+            boxResizeObserver.observe(imageRef.current as HTMLImageElement);
+
+            return () => {
+                boxResizeObserver.disconnect();
+            };
+        }
+    }, [imageLoaded]);
+
+    const handleImageLoaded = () => {
+        setImageLoaded(true);
     };
 
     return (
-        <StoryContainer>
-            {imageLoaded && (<BoundingBoxesComponent
-            activeBBox=''
-            boundingBoxItems={BOUNDING_BOXES}
-            imageHeight={1920}
-            imageWidth={1280}
-            outputHeight={boundingBoxDimensions.width}
-            outputWidth={boundingBoxDimensions.height}
-        />)}
-            <img
-                onLoad={handleImageLoaded}
-                src={imageFile}
-            />
+        <StoryContainer ref={containerRef}>
+            {imageLoaded && (
+                <BoundingBoxesComponent
+                    activeBBox=""
+                    boundingBoxItems={BOUNDING_BOXES}
+                    imageHeight={1280}
+                    imageWidth={1920}
+                    outputHeight={boundingBoxDimensions.height}
+                    outputWidth={boundingBoxDimensions.width}
+                />
+            )}
+            <img onLoad={handleImageLoaded} src={imageFile} ref={imageRef} />
         </StoryContainer>
     );
 };
 
 export const BoundingBoxes = Template.bind({});
-BoundingBoxes.args = {
-
-};
+BoundingBoxes.args = {};
