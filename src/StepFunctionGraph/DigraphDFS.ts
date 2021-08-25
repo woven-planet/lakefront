@@ -102,11 +102,9 @@ class DigraphDFS {
         // The end vertex should be at its own depth
         hasEndVertex && verticesAtDepth.push([endVertex]);
 
-        const filteredMatrix: number[][] = verticesAtDepth.map((depth: number[]) => {
+        return verticesAtDepth.map((depth: number[]) => {
             return depth.filter(v => !exclusionArray.includes(v));
-        });
-
-        return filteredMatrix.filter(depth => depth.length > 0);
+        }).filter(depth => depth.length > 0);
     }
 }
 
