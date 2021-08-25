@@ -6,7 +6,7 @@ import { BoundingBoxItemProp, drawSingleBox, getImageOffsetRatio } from './bound
 export interface BoundingBoxesProps {
     activeBBox: string;
     boundingBoxItems: BoundingBoxItemProp[];
-    className: string;
+    className?: string;
     imageWidth: number;
     imageHeight: number;
     outputWidth: number;
