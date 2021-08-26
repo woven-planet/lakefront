@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import StepFunctionGraph from '../StepFunctionGraph/Graph';
 import { JSONBuilderUtil } from '../StepFunctionGraph/utils/JSONBuilder.util';
 import styled from '@emotion/styled';
@@ -72,6 +72,7 @@ const StepFunctionAuthoring: FC = () => {
     const [contextNode, setContextNode] = useState<string | null>(null);
     const [showMenu, setShowMenu] = useState(false);
     const [menuCoordinates, setMenuCoordinates] = useState<[number, number]>([0, 0]);
+    const [formState, setFormState] = useState({ name: '', nodeType: '' });
 
     useEffect(() => {
         JSONBuilder.current.addTask('Task');
@@ -82,6 +83,8 @@ const StepFunctionAuthoring: FC = () => {
         if (node) {
             const [key] = Object.keys(node);
             setHighlighted(key);
+
+            setFormState(prevState => ({ ...prevState, ...{ name: key, nodeType: node[key].Type }}));
         } else {
             setHighlighted(null);
         }
@@ -97,6 +100,14 @@ const StepFunctionAuthoring: FC = () => {
     const handleCloseContextMenu = () => {
         setShowMenu(false);
         setContextNode(null);
+    };
+
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormState(prevState => ({...prevState, ...{ name: e.target.value }}));
+    };
+
+    const handleNodeTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormState(prevState => ({...prevState, ...{ nodeType: e.target.value }}));
     };
 
     const handleAddNode = () => {
@@ -138,10 +149,10 @@ const StepFunctionAuthoring: FC = () => {
             </div>
             <EditForm>
                 <h3>Edit Node</h3>
-                <Input label='Name' />
+                <Input onChange={handleNameChange} label='Name' value={formState.name} />
                 <label>
                     <TypeSpan>Type</TypeSpan>
-                    <StyledRadioGroup name='Type' options={typeOptions} value={''} />
+                    <StyledRadioGroup onChange={handleNodeTypeChange} name='Type' options={typeOptions} value={formState.nodeType} />
                 </label>
                 <SubmitWrapper>
                     <Button>Save</Button>
