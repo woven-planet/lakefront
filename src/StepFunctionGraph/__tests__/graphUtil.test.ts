@@ -6,6 +6,7 @@ import {
     adjustMatrixForArrows,
     findNearestArrowNode,
     generateMountingPoints,
+    getCatchVertices,
     getDrawnRange,
     getDrawnRangeMiddleX,
     getGroupIndex,
@@ -70,6 +71,56 @@ describe('graphUtil', () => {
                 [3, 2], // M1, MapNode
                 [4], // EndNode
                 [5] // End
+            ];
+
+            expect(adjusted).toStrictEqual(expected);
+        });
+
+        it('should adjust Catch vertices after a Parallel', () => {
+            const catchArray = [{
+                ErrorEquals: ['States.ALL'],
+                Next: 'EndNode'
+            }];
+
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'ParallelNode')
+                .addParallel('ParallelNode', [
+                    new JSONBuilderUtil().addTask('P1').getJson(),
+                    new JSONBuilderUtil().addTask('P2').getJson()
+                ], 'EndNode')
+                .editNode('ParallelNode', { Catch: catchArray })
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const adjusted = adjustDepthMatrix(verticesAtDepth, graph);
+            const expected: number[][] = [
+                [0], // Start
+                [1], // StartNode
+                [3, 4, 2], // P1, P2, ParallelNode
+                [5], // EndNode
+                [6] // End
+            ];
+
+            expect(adjusted).toStrictEqual(expected);
+        });
+
+        it('should swap out of order vertices after a Map node', () => {
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'MapNode')
+                .addMap('MapNode', new JSONBuilderUtil().addTask('M1', 'M2').addTask('M2').getJson(), 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { graph, verticesAtDepth } = graphContext(json);
+            const adjusted = adjustDepthMatrix(verticesAtDepth, graph);
+            const expected: number[][] = [
+                [0], // Start
+                [1], // StartNode
+                [3, 2], // M1, MapNode
+                [4], // M2
+                [5], // EndNode
+                [6] // End
             ];
 
             expect(adjusted).toStrictEqual(expected);
@@ -376,6 +427,39 @@ describe('graphUtil', () => {
         });
     });
 
+    describe('getCatchVertices', () => {
+        const catchArray = [{
+            ErrorEquals: ['States.ALL'],
+            Next: 'FailNode'
+        }];
+
+        const invalidNextCatchArray = [{
+            ErrorEquals: ['States.ALL'],
+            Next: 'NonExistingNode'
+        }];
+
+        const json = new JSONBuilderUtil()
+            .addTask('StartNode', 'FailNode')
+            .editNode('StartNode', { Catch: catchArray })
+            .addTask('FailNode', 'EndNode')
+            .addTask('EndNode', undefined, true)
+            .getJson();
+
+        it('should return an array of vertices given a valid Catch array', () => {
+            const { graph } = graphContext(json);
+
+            const catchVertices = getCatchVertices(catchArray,  graph);
+            expect(catchVertices).toStrictEqual([2]);
+        });
+
+        it('should return an empty array given a Catch array that points to an Next node that does not exist', () => {
+            const { graph } = graphContext(json);
+
+            const catchVertices = getCatchVertices(invalidNextCatchArray,  graph);
+            expect(catchVertices).toStrictEqual([]);
+        });
+    });
+
     describe('getDrawnRange', () => {
         const json = new JSONBuilderUtil()
             .addTask('StartNode', 'ParallelNode')
@@ -638,7 +722,7 @@ describe('graphUtil', () => {
         it('should return the node width when only one node is in a row', () => {
             const expected = getNodeDimensions('StartNode').width;
 
-            expect(getRange([1], 0, graph)).toBe(expected);
+            expect(getRange([1], 0, graph, ctx as CanvasRenderingContext2D)).toBe(expected);
         });
 
         it('should add two nodes that are next to each other with two X_OFFSETs', () => {
@@ -646,15 +730,15 @@ describe('graphUtil', () => {
                 getNodeDimensions('P2').width +
                 X_OFFSET +
                 X_OFFSET;
-            expect(getRange([4, 5], X_OFFSET, graph)).toBe(expected);
+            expect(getRange([4, 5], X_OFFSET, graph, ctx as CanvasRenderingContext2D)).toBe(expected);
         });
 
         it('should return 0 if no vertices are in the array', () => {
-            expect(getRange([], 0, graph)).toBe(0);
+            expect(getRange([], 0, graph, ctx as CanvasRenderingContext2D)).toBe(0);
         });
 
         it('should not add a Parallel node in the range calculation', () => {
-            expect(getRange([3], 0, graph)).toBe(0);
+            expect(getRange([3], 0, graph, ctx as CanvasRenderingContext2D)).toBe(0);
         });
     });
 
@@ -697,6 +781,28 @@ describe('graphUtil', () => {
             //EndNode (Success)
             redrawNode(3, ctx as CanvasRenderingContext2D, drawn, graph, []);
             expect(drawStepNodeSpy).toHaveBeenCalledTimes(3);
+        });
+
+        it('should draw a Catch node', () => {
+            const catchArray = [{
+                ErrorEquals: ['States.ALL'],
+                Next: 'FailNode'
+            }];
+
+            const drawCatchNodeSpy = jest.spyOn(CanvasUtilModule, 'drawCatchNode');
+
+            const json = new JSONBuilderUtil()
+                .addTask('StartNode', 'FailNode')
+                .editNode('StartNode', { Catch: catchArray })
+                .addTask('FailNode', 'EndNode')
+                .addTask('EndNode', undefined, true)
+                .getJson();
+
+            const { drawn, graph } = graphContext(json);
+
+            // FailNode (Catch)
+            redrawNode(2, ctx as CanvasRenderingContext2D, drawn, graph, []);
+            expect(drawCatchNodeSpy).toHaveBeenCalledTimes(1);
         });
 
         it('should not draw a Parallel, Map, Start, or End node', () => {
