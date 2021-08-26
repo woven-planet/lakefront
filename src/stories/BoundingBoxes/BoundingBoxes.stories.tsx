@@ -7,6 +7,7 @@ import { emerald, mediumPurple, saturatedOrange } from 'src/styles/lakefrontColo
 import styled from '@emotion/styled';
 import imageFile from './__assets__/ducks.jpg';
 import resizeObserver from 'src/lib/hooks/resizeObserver';
+import BOUNDING_BOXES_CODE from './boundingBoxesSourceCode';
 
 const BOUNDING_BOXES: {
     name: string;
@@ -104,11 +105,8 @@ export default {
     parameters: {
         docs: {
             page: DocBlock,
-            transformSource: (source: string) => {
-                return source
-                    .replace('onChange={function noRefCheck() {}}', '')
-                    .replace(/\n/g, '')
-                    .replace(/[ ]{2}/g, ' ');
+            source: {
+                code: BOUNDING_BOXES_CODE
             }
         }
     }
@@ -116,7 +114,6 @@ export default {
 
 const Template: Story<BoundingBoxesProps> = (args) => {
     const [boundingBoxDimensions, setBoundingBoxDimensions] = useState({ width: 1920, height: 1280 });
-    // const [boundingBoxDimensions, setBoundingBoxDimensions] = useState<{ [key: string]: number }>({});
     const [imageLoaded, setImageLoaded] = useState(false);
     const [observedElement, setObservedElement] = useState(null);
     const imageRef = useRef<HTMLImageElement>(null);
