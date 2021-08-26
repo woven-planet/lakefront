@@ -33,7 +33,7 @@ describe('getImageOffsetRatio', () => {
     const dimensions = { width: 1210, height: 418 };
 
     it('returns offset for a regular image', () => {
-        const imgDimensions = { width:1280, height: 768 };
+        const imgDimensions = { width: 1280, height: 768 };
 
         const offsetRatio = getImageOffsetRatio(
             imgDimensions.width,
@@ -48,7 +48,7 @@ describe('getImageOffsetRatio', () => {
     });
 
     it('returns offset for a wide image', () => {
-        const imgDimensions = { width:1920, height: 640 };
+        const imgDimensions = { width: 1920, height: 640 };
 
         const offsetRatio = getImageOffsetRatio(
             imgDimensions.width,
@@ -63,7 +63,7 @@ describe('getImageOffsetRatio', () => {
     });
 
     it('returns (non-adjusted) offset when image is the same size as container', () => {
-        const imgDimensions = { width:1210, height: 418 };
+        const imgDimensions = { width: 1210, height: 418 };
 
         const offsetRatio = getImageOffsetRatio(
             imgDimensions.width,
@@ -79,7 +79,7 @@ describe('getImageOffsetRatio', () => {
     });
 
     it('returns default values when dimensions are not set', () => {
-        const imgDimensions = { width:1210, height: 418 };
+        const imgDimensions = { width: 1210, height: 418 };
 
         const offsetRatio = getImageOffsetRatio(
             imgDimensions.width,
