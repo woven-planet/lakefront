@@ -1,9 +1,9 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/BoundingBoxes';
 import DocBlock from '.storybook/DocBlock';
-import { emerald, mediumPurple, saturatedOrange, saturatedYellow } from 'src/styles/lakefrontColors';
+import { emerald, mediumPurple, saturatedOrange } from 'src/styles/lakefrontColors';
 import styled from '@emotion/styled';
 import imageFile from './__assets__/ducks.jpg';
 import resizeObserver from 'src/lib/hooks/resizeObserver';
@@ -17,7 +17,7 @@ const BOUNDING_BOXES: {
     color: string;
 }[] = [
     {
-        name: 'duck',
+        name: 'First Duck',
         items: [
             {
                 confidence: 1,
@@ -27,10 +27,10 @@ const BOUNDING_BOXES: {
                 ]
             }
         ],
-        color: mediumPurple
+        color: emerald
     },
     {
-        name: 'duck',
+        name: 'Middle Duck',
         items: [
             {
                 confidence: 1,
@@ -38,13 +38,7 @@ const BOUNDING_BOXES: {
                     [1620, 590],
                     [1395, 335]
                 ]
-            }
-        ],
-        color: saturatedOrange
-    },
-    {
-        name: 'duck',
-        items: [
+            },
             {
                 confidence: 1,
                 bbox: [
@@ -53,10 +47,10 @@ const BOUNDING_BOXES: {
                 ]
             }
         ],
-        color: emerald
+        color: saturatedOrange
     },
     {
-        name: 'duck',
+        name: 'Last Duck',
         items: [
             {
                 confidence: 1,
@@ -66,7 +60,7 @@ const BOUNDING_BOXES: {
                 ]
             }
         ],
-        color: saturatedYellow
+        color: mediumPurple
     }
 ];
 
@@ -92,15 +86,18 @@ export default {
     title: 'Lakefront/BoundingBoxes',
     component: BoundingBoxesComponent,
     argTypes: {
-        checked: {
+        imageWidth: {
             control: false
         },
-        checkedIcon: {
+        imageHeight: {
             table: {
                 disable: true
             }
         },
-        onChange: {
+        outputWidth: {
+            control: false
+        },
+        outputHeight: {
             control: false
         }
     },
@@ -157,10 +154,7 @@ const Template: Story<BoundingBoxesProps> = (args) => {
         <StoryContainer ref={containerRef}>
             {imageLoaded && (
                 <BoundingBoxesComponent
-                    activeBBox=""
-                    boundingBoxItems={BOUNDING_BOXES}
-                    imageHeight={1280}
-                    imageWidth={1920}
+                    {...args}
                     outputHeight={boundingBoxDimensions.height}
                     outputWidth={boundingBoxDimensions.width}
                 />
@@ -171,4 +165,17 @@ const Template: Story<BoundingBoxesProps> = (args) => {
 };
 
 export const BoundingBoxes = Template.bind({});
-BoundingBoxes.args = {};
+BoundingBoxes.args = {
+    activeBBox: '',
+    imageHeight: 1280,
+    imageWidth: 1920,
+    boundingBoxItems: BOUNDING_BOXES
+};
+
+export const ActiveBoxes = Template.bind({});
+ActiveBoxes.args = {
+    activeBBox: 'Middle Duck',
+    imageHeight: 1280,
+    imageWidth: 1920,
+    boundingBoxItems: BOUNDING_BOXES
+};
