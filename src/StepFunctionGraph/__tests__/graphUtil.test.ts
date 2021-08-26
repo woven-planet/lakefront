@@ -1,6 +1,6 @@
 import 'jest-canvas-mock';
 import { graphContext } from './utils/graphTestUtils.util';
-import { JSONBuilderUtil } from './utils/JSONBuilder.util';
+import { JSONBuilderUtil } from '../utils/JSONBuilder.util';
 import {
     adjustDepthMatrix,
     adjustMatrixForArrows,
