@@ -110,6 +110,11 @@ export class JSONBuilderUtil {
         return this.json.States[state];
     }
     
+    setNodeStateName(state: string, newState: string) {
+        this.json.States[newState] = { ...this.json.States[state] };
+        delete this.json.States[state];
+    }
+    
     reset() {
         this.json = { States: {} };
     }

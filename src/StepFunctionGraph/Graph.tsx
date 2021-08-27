@@ -19,8 +19,8 @@ export interface GraphProps {
      * Sends data stored with each node from the parsing step on click inside of any drawn node. Use this data to
      * store the node key for the highlightedKey prop if node highlighting is desired.
      */
-    handleSelectedNode(node: any | null): void;
-    handleContextClickNode?(key: string, e: MouseEvent<HTMLCanvasElement>): void;
+    handleSelectedNode(node: any | null, vertex?: number): void;
+    handleContextClickNode?(key: string, vertex: number, e: MouseEvent<HTMLCanvasElement>): void;
     handleCloseContextMenu?(): void;
     /**
      * This should be the node key from the AWS JSON and if supplied, will highlight that node in the graph.
@@ -107,7 +107,7 @@ export const StepFunctionGraph: FC<GraphProps> = (
             const nodeData = graph.getDataByVertex(node.vertex);
             const [key] = Object.keys(nodeData);
 
-            typeof(handleContextClickNode) !== 'undefined' && handleContextClickNode(key, e);
+            typeof(handleContextClickNode) !== 'undefined' && handleContextClickNode(key, node.vertex, e);
         }
     };
 
@@ -389,7 +389,7 @@ export const StepFunctionGraph: FC<GraphProps> = (
                 panToNode(node);
             }
 
-            handleSelectedNode(node);
+            handleSelectedNode(node, clickedNode.vertex);
         } else {
             // When clicking blank space we should allow a node to unselect
             handleSelectedNode(null);
