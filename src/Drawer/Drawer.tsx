@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { DrawerState } from './drawerUtil';
 import { DrawerContainer } from './drawerStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
@@ -7,16 +6,43 @@ import Button from 'src/Button/Button';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 
 export interface DrawerProps {
+    /**
+     * This is the initial display state of the component. When true, the drawer will be displayed.
+     * When false, the drawer will be hidden.
+     */
     open: boolean;
+    /**
+     * This is an action to run when the drawer is closed.
+     */
     onClose(): void;
+    /**
+     * This is an action to run when the drawer size changes.
+     */
     onDrawerSizeChange(): void;
-    drawerState: DrawerState;
-    width?: string;
+    /**
+     * This is the width for the drawer.
+     */
+    width?: string | number;
+    /**
+     * These are the classes that would be applied to drawer.
+     */
     className?: string;
+    /**
+     * These are the classes for the toolbar.
+     */
     toolbarClasses?: string;
 }
 
-// Usage: Place this next to a flex container that has flex: 1
+/**
+ * Drawable Component
+ *
+ * The Drawable component can be used to open the draw and show the contents of the drawer.
+ * The component takes drawer props. The `open` prop
+ * controls the initial state of the component. Once initialized, the state is managed within this component.
+ * 
+ * Usage: Place this next to a flex container that has flex: 1
+ */
+
 const Drawer: FC<DrawerProps> = ({ children, className, open = false, onClose, width = '50%', toolbarClasses }) => {
     return (
         <ThemeProvider theme={theme}>

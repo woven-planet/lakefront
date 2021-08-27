@@ -4,14 +4,11 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import DrawerComponent, { DrawerProps } from 'src/Drawer';
 import DocBlock from '.storybook/DocBlock';
 import Button from 'src/Button/Button';
-import { emerald, white } from 'src/styles/lakefrontColors';
+import { emerald } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/Drawer',
     component: DrawerComponent,
-    argTypes: {
-        // TODO
-    },
     parameters: {
         docs: {
             page: DocBlock
