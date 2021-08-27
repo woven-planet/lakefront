@@ -109,6 +109,10 @@ export class JSONBuilderUtil {
     getNodeJson(state: string): JSONStateObject {
         return this.json.States[state];
     }
+    
+    reset() {
+        this.json = { States: {} };
+    }
 
     toString() {
         return JSON.stringify(this.json);

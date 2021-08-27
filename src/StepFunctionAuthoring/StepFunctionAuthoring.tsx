@@ -1,10 +1,11 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import StepFunctionGraph from '../StepFunctionGraph/Graph';
 import { JSONBuilderUtil } from '../StepFunctionGraph/utils/JSONBuilder.util';
-import styled from '@emotion/styled';
-import { Button, Input, RadioGroup, theme } from '../index';
+import { Button, Input, RadioGroup } from '../index';
 import Digraph from '../StepFunctionGraph/Digraph';
 import { generateStepFunctionGraph, WorkFlowType } from '../StepFunctionGraph/StepFunctionUtil';
+import { EditForm, Menu, SpacedButtons, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
+import copy from '../lib/util/copy';
 
 const typeOptions = [
     { label: WorkFlowType.TASK, value: WorkFlowType.TASK },
@@ -14,79 +15,42 @@ const typeOptions = [
     { label: WorkFlowType.PARALLEL, value: WorkFlowType.PARALLEL }
 ];
 
-const Wrapper = styled.div({
-    display: 'flex',
-    '& > div:first-of-type': {
-        height: 700,
-        width: '100%',
-        maxWidth: 1000
-    }
-});
-
-const SubmitWrapper = styled.div({
-    display: 'flex',
-    marginTop: 32,
-    'button:first-of-type': {
-        marginRight: 8
-    }
-});
-
-const EditForm = styled.div({
-    backgroundColor: theme.colors.selago,
-    borderLeft: theme.borders.primary,
-    padding: 8
-});
-
-const TypeSpan = styled.span({
-    display: 'block',
-    marginBottom: 8
-});
-
-const StyledRadioGroup = styled(RadioGroup)({
-   label: {
-       marginBottom: 8
-   }
-});
-
-const Menu = styled.ul({
-    backgroundColor: theme.colors.white,
-    border: theme.borders.primary,
-    padding: 0,
-    position: 'absolute',
-    transform: 'translateX(-30%)',
-    li: {
-        listStyle: 'none',
-        padding: '4px 8px',
-        ':hover': {
-            backgroundColor: theme.colors.mercury,
-            cursor: 'pointer'
-        }
-    }
-});
+const DEFAULT_FORM_STATE = { name: '', next: '', nodeType: '' };
+const DEFAULT_GRAPH_STATE = { States: {} };
 
 const StepFunctionAuthoring: FC = () => {
     const JSONBuilder = useRef(new JSONBuilderUtil());
-    const [json, setJson] = useState({ States: {} });
+    const [json, setJson] = useState(DEFAULT_GRAPH_STATE);
     const graph = useMemo(() => generateStepFunctionGraph(json, new Digraph()), [json]);
     const [highlighted, setHighlighted] = useState<string | null>(null);
+    const [selectedNode, setSelectedNode] = useState<any | null>();
     const [contextNode, setContextNode] = useState<string | null>(null);
     const [showMenu, setShowMenu] = useState(false);
     const [menuCoordinates, setMenuCoordinates] = useState<[number, number]>([0, 0]);
-    const [formState, setFormState] = useState({ name: '', nodeType: '' });
+    const [formState, setFormState] = useState(DEFAULT_FORM_STATE);
 
     useEffect(() => {
         JSONBuilder.current.addTask('Task');
         setJson(JSONBuilder.current.getJson());
     }, []);
-
+    
     const handleSelectedNode = (node: any) => {
         if (node) {
             const [key] = Object.keys(node);
             setHighlighted(key);
+            setSelectedNode(node);
 
-            setFormState(prevState => ({ ...prevState, ...{ name: key, nodeType: node[key].Type }}));
+            setFormState(prevState => (
+                {
+                    ...prevState,
+                    ...{ name: key, next: node[key].Next ?? '', nodeType: node[key].Type }
+                }
+            ));
         } else {
             setHighlighted(null);
+            setSelectedNode(null);
+    
+            setFormState(prevState => ({ ...prevState, ...DEFAULT_FORM_STATE}));
         }
     };
 
@@ -105,6 +69,10 @@ const StepFunctionAuthoring: FC = () => {
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormState(prevState => ({...prevState, ...{ name: e.target.value }}));
     };
+    
+    const handleNextChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormState(prevState => ({...prevState, ...{ next: e.target.value }}));
+    };
 
     const handleNodeTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormState(prevState => ({...prevState, ...{ nodeType: e.target.value }}));
@@ -117,19 +85,54 @@ const StepFunctionAuthoring: FC = () => {
                 return key === contextNode;
             }) ?? -1;
             const contextNodeOutdegrees = graph.getOutdegree(contextVertex);
+            
+            // Get nodes the right-clicked node points to via outdegrees instead of Next since not every node has a Next
             const nextNodes = contextNodeOutdegrees.outVertices.map((vertex) => {
                 const [key] = Object.keys(graph.getDataByVertex(vertex));
                 return key;
             }).filter((next) => next !== 'End'); // End is reserved
+            
+            // Generate a unique node name
             const newKey = `Node ${new Date().getTime().toString()}`;
+            
+            // Point the right-clicked node to the new node
             JSONBuilder.current.editNode(contextNode, {
                 Next: newKey
             });
+            
+            // Add the new node with a Next of what the right-clicked node pointed to so as to not orphan the rest of the graph
             JSONBuilder.current.addTask(newKey, nextNodes?.[0]);
 
+            // Replace the old graph JSON to redraw
             setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
             setShowMenu(false);
         }
+    };
+
+    const handleSave = () => {
+    
+    };
+    
+    const handleDelete = () => {
+    
+    };
+    
+    const handleCopy = () => {
+        copy(JSONBuilder.current.toString());
+    };
+    
+    const handleReset = () => {
+        JSONBuilder.current.reset();
+        JSONBuilder.current.addTask('Task');
+        setJson(JSONBuilder.current.getJson());
+    };
+    
+    const handleCancel = () => {
+        handleSelectedNode(selectedNode);
+    };
+    
+    const isFormValid = (): boolean => {
+        return formState.name !== '' && formState.name !== 'End';
     };
 
     return (
@@ -143,20 +146,26 @@ const StepFunctionAuthoring: FC = () => {
                     handleSelectedNode={handleSelectedNode}
                 />
                 <Menu style={{ left: menuCoordinates[0], top: menuCoordinates[1]}} hidden={!showMenu}>
-                    <li onClick={handleAddNode}>Add Node</li>
+                    <li onClick={handleAddNode}>Add Node After</li>
                     <li>Delete Node</li>
                 </Menu>
             </div>
             <EditForm>
+                <SpacedButtons>
+                    <Button color='secondary' onClick={handleCopy}>Copy JSON To Clipboard</Button>
+                    <Button color='destructive' onClick={handleReset}>Reset</Button>
+                </SpacedButtons>
+                <hr />
                 <h3>Edit Node</h3>
                 <Input onChange={handleNameChange} label='Name' value={formState.name} />
-                <label>
+                <Input onChange={handleNextChange} label='Next' value={formState.next} />
+                <StyledTypeLabel>
                     <TypeSpan>Type</TypeSpan>
-                    <StyledRadioGroup onChange={handleNodeTypeChange} name='Type' options={typeOptions} value={formState.nodeType} />
-                </label>
+                    <RadioGroup onChange={handleNodeTypeChange} name='Type' options={typeOptions} value={formState.nodeType} />
+                </StyledTypeLabel>
                 <SubmitWrapper>
-                    <Button>Save</Button>
-                    <Button color='destructive'>Cancel</Button>
+                    <Button disabled={isFormValid()}>Save</Button>
+                    <Button color='destructive' onClick={handleCancel}>Cancel</Button>
                 </SubmitWrapper>
             </EditForm>
         </Wrapper>
