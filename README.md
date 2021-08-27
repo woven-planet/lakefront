@@ -44,6 +44,7 @@ ReactDOM.render(<App />, document.querySelector('#app'));
 ## Components
 We've added storybook pages to show how each component can be used.
 * [AnchorCopy](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-anchorcopy--anchor-copy)
+* [BoundingBoxes](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-boundingboxes--bounding-boxes)
 * [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-button--all-buttons)
 * [Checkbox](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkbox--checkbox)
 * [Collapsible](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-collapsible--collapsible)
