@@ -38,29 +38,30 @@ export interface CopyButtonProps {
  */
 const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = ({
     buttonText = COPY_TEXT,
+    children,
     disabled,
     onCopy,
     valueToCopy,
-    children,
+    icon,
     ...props
 }) => {
     return (
         <Button
             disabled={disabled}
-            icon={<FileCopy aria-label="File Copy" />}
             onClick={
                 disabled
-                    ? undefined
-                    : () => {
-                          const success = copyClipboard(valueToCopy);
-
-                          if (onCopy && success) {
-                              onCopy(valueToCopy);
-                          }
-                      }
+                ? undefined
+                : () => {
+                    const success = copyClipboard(valueToCopy);
+                    
+                    if (onCopy && success) {
+                        onCopy(valueToCopy);
+                    }
+                }
             }
             type="button"
             {...props}
+            icon={icon || <FileCopy aria-label="File Copy" />}
         >
             {children || buttonText}
         </Button>
