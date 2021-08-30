@@ -54,7 +54,7 @@ export default {
 } as Meta;
 
 const Template: Story<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (args) => {
-    const [copyText, setCopyText] = useState('text');
+    const [copyText, setCopyText] = useState('Text to copy');
     const [copied, setCopied] = useState('');
 
     const handleChange = ({ target: { value } }) => {
@@ -68,6 +68,7 @@ const Template: Story<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = 
 
     return (
         <div>
+            <p>Modify text below and click the button to copy it.</p>
             <CopyButtonComponent
                 {...args}
                 valueToCopy={args.valueToCopy || copyText}
