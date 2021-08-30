@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import CopyButton from '../CopyButton';
+import CopyButton, { COPY_TEXT } from '../CopyButton';
 
 const originalClipboard = { ...global.navigator.clipboard };
 
@@ -7,73 +7,59 @@ afterEach(() => {
     global.navigator.clipboard = originalClipboard;
 });
 
-describe('AnchorCopy', () => {
-    // const title = 'Title Here';
+describe('CopyButton', () => {
+    it('renders properly with default text and icon', () => {
+        const { container, getByRole, getByText } = render(<CopyButton />);
 
-    // it('renders properly', () => {
-    //     const { getByRole, getByText } = render(<AnchorCopy title={title} />);
+        getByText(COPY_TEXT);
+        getByRole('button');
 
-    //     getByText(title);
-    //     getByRole('button');
-    // });
+        expect(container.querySelector('svg[aria-label="File Copy"]')).toBeInTheDocument();
+    });
 
-    // it('renders with provided anchor content when passed', () => {
-    //     const CONTENT = 'content';
-    //     const { queryByRole, getByText } = render(<AnchorCopy title={title} AnchorContent={() => <div>{CONTENT}</div>} />);
+    it('renders with provided custom text', () => {
+        const BUTTON_TEXT = 'buttonText';
+        const { getByRole, getByText } = render(<CopyButton buttonText={BUTTON_TEXT} />);
 
-    //     getByText(CONTENT);
-    //     expect(queryByRole('button')).not.toBeInTheDocument();
-    // });
+        getByText(BUTTON_TEXT);
+    });
 
-    // it('calls onCopy with correct payload when provided only title', () => {
-    //     const onCopy = jest.fn();
-    //     const { getByRole } = render(<AnchorCopy title={title} onCopy={onCopy} />);
+    it('calls onCopy with correct payload', () => {
+        const onCopy = jest.fn();
+        const { getByRole } = render(<CopyButton onCopy={onCopy} valueToCopy={COPY_TEXT} />);
 
-    //     global.navigator.clipboard = {
-    //         writeText: () => null
-    //     };
+        global.navigator.clipboard = {
+            writeText: () => null
+        };
 
-    //     fireEvent.click(getByRole('button'));
+        fireEvent.click(getByRole('button'));
 
-    //     expect(onCopy).toHaveBeenCalledWith(`http://localhost/#${title.replace(' ', '%20')}`);
-    // });
+        expect(onCopy).toHaveBeenCalledWith(COPY_TEXT);
+    });
 
-    // it('calls onCopy with correct payload when provided title and hashId', () => {
-    //     const onCopy = jest.fn();
-    //     const { getByRole } = render(<AnchorCopy title={title} hashId="go-here" onCopy={onCopy} />);
+    it('does not call onCopy when copy function fails', () => {
+        const onCopy = jest.fn();
+        const { getByRole } = render(<CopyButton onCopy={onCopy} valueToCopy={COPY_TEXT} />);
 
-    //     global.navigator.clipboard = {
-    //         writeText: () => null
-    //     };
+        global.navigator.clipboard = {
+            writeText: () => { throw new Error('error') }
+        };
 
-    //     fireEvent.click(getByRole('button'));
+        fireEvent.click(getByRole('button'));
 
-    //     expect(onCopy).toHaveBeenCalledWith('http://localhost/#go-here');
-    // });
+        expect(onCopy).not.toHaveBeenCalled();
+    });
 
-    // it('does not call onCopy when copy function fails', () => {
-    //     const onCopy = jest.fn();
-    //     const { getByRole } = render(<AnchorCopy title={title} hashId="go-here" onCopy={onCopy} disabled />);
+    it('does not call onCopy when disabled', () => {
+        const onCopy = jest.fn();
+        const { getByRole } = render(<CopyButton onCopy={onCopy} valueToCopy={COPY_TEXT} disabled />);
 
-    //     global.navigator.clipboard = {
-    //         writeText: () => { throw new Error('error') }
-    //     };
+        global.navigator.clipboard = {
+            writeText: () => null
+        };
 
-    //     fireEvent.click(getByRole('button'));
+        fireEvent.click(getByRole('button'));
 
-    //     expect(onCopy).not.toHaveBeenCalled();
-    // });
-
-    // it('does not call onCopy when disabled', () => {
-    //     const onCopy = jest.fn();
-    //     const { getByRole } = render(<AnchorCopy title={title} hashId="go-here" onCopy={onCopy} disabled />);
-
-    //     global.navigator.clipboard = {
-    //         writeText: () => null
-    //     };
-
-    //     fireEvent.click(getByRole('button'));
-
-    //     expect(onCopy).not.toHaveBeenCalled();
-    // });
+        expect(onCopy).not.toHaveBeenCalled();;
+    });
 });

@@ -4,6 +4,8 @@ import { ButtonComponentProps } from 'src/Button/buttonUtil';
 import copyClipboard from 'src/lib/util/copy';
 import { ReactComponent as FileCopy } from './assets/fileCopy.svg';
 
+export const COPY_TEXT = 'Copy';
+
 export interface CopyButtonProps {
     /**
      * `Default = "Copy"` The text to display within the button.
@@ -35,7 +37,7 @@ export interface CopyButtonProps {
  * due to the inheritance of many `ButtonComponentProps`.
  */
 const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = ({
-    buttonText = 'Copy',
+    buttonText = COPY_TEXT,
     disabled,
     onCopy,
     valueToCopy,
@@ -45,10 +47,10 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
     return (
         <Button
             disabled={disabled}
-            icon={<FileCopy />}
+            icon={<FileCopy aria-label="File Copy" />}
             onClick={
                 disabled
-                    ? () => null
+                    ? undefined
                     : () => {
                           const success = copyClipboard(valueToCopy);
 
