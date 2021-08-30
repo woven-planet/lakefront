@@ -50,14 +50,14 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
             disabled={disabled}
             onClick={
                 disabled
-                ? undefined
-                : () => {
-                    const success = copyClipboard(valueToCopy);
-                    
-                    if (onCopy && success) {
-                        onCopy(valueToCopy);
-                    }
-                }
+                    ? undefined
+                    : () => {
+                          const success = copyClipboard(valueToCopy);
+
+                          if (onCopy && success) {
+                              onCopy(valueToCopy);
+                          }
+                      }
             }
             type="button"
             {...props}
