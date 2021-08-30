@@ -3,6 +3,7 @@ import Button from 'src/Button/Button';
 import { ButtonComponentProps } from 'src/Button/buttonUtil';
 import copyClipboard from 'src/lib/util/copy';
 import { ReactComponent as FileCopy } from './assets/fileCopy.svg';
+import { CopyButtonContent } from './copyButtonStyles';
 
 export const COPY_TEXT = 'Copy';
 
@@ -63,7 +64,9 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
             {...props}
             icon={icon || <FileCopy aria-label="File Copy" />}
         >
-            {children || buttonText}
+            <CopyButtonContent hasContent={Boolean(children || buttonText)} className="copyButtonContent">
+                {children || buttonText}
+            </CopyButtonContent>
         </Button>
     );
 };
