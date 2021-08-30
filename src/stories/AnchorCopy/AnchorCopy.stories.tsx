@@ -29,7 +29,7 @@ export default {
 } as Meta;
 
 const Template: Story<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args) => {
-    const [title, setTitle] = useState(`anchor-copy`);
+    const [title, setTitle] = useState('anchor-copy');
     const [copied, setCopied] = useState('');
 
     const handleChange = ({ target: { value } }) => {
@@ -38,7 +38,7 @@ const Template: Story<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args
     };
 
     const handleCopy = (copiedHash: string) => {
-        setCopied(`Copied ${copiedHash}`);
+        setCopied(`Copied "${copiedHash}"`);
     };
 
     return (
