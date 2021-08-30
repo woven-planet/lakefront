@@ -28,6 +28,7 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
     disabled,
     onCopy,
     valueToCopy,
+    children,
     ...props
 }) => {
     return (
@@ -48,7 +49,7 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
             type="button"
             {...props}
         >
-            {buttonText}
+            {children || buttonText}
         </Button>
     );
 };
