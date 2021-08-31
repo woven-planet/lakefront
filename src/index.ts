@@ -11,6 +11,8 @@ export { default as Collapsible } from './Collapsible/Collapsible';
 
 export { default as CopyButton } from './CopyButton';
 
+export { default as Drawer } from './Drawer';
+
 export { default as Filter } from './Filter/Filter';
 export * from './Filter/util';
 export * from './Filter/types';
