@@ -32,7 +32,7 @@ describe('Drawer', () => {
                 <div>This is child component</div>
             </Drawer>
         );
-        expect(getByText("This is child component")).toBeInTheDocument();
+        expect(getByText('This is child component')).toBeInTheDocument();
     });
 
 });

@@ -30,11 +30,11 @@ export interface DrawerProps {
 }
 
 /**
- * Drawable Component
+ * The Drawer Component
  *
- * The Drawable component can be used to open the draw and show the contents of the drawer.
+ * The Drawer component can be used to open the drawer and show the contents of the drawer.
  * The component takes drawer props. The `open` prop
- * controls the initial state of the component. Once initialized, the state is managed within this component.
+ * controls the initial state of the component. The open prop controls the visibility of the component.
  * 
  * Usage: Place this next to a flex container that has flex: 1
  */
