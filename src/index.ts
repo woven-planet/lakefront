@@ -1,11 +1,15 @@
 // Components
 export { default as AnchorCopy } from './AnchorCopy';
 
+export { default as BoundingBoxes } from './BoundingBoxes';
+
 export { default as Button } from './Button/Button';
 
 export { default as Checkbox } from './Checkbox/Checkbox';
 
 export { default as Collapsible } from './Collapsible/Collapsible';
+
+export { default as CopyButton } from './CopyButton';
 
 export { default as Drawer } from './Drawer';
 

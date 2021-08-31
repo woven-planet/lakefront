@@ -1,12 +1,22 @@
 // Main draw function for the graph
 import Digraph from './Digraph';
 import DigraphDFS from './DigraphDFS';
-import { drawArrow, drawMap, drawParallel, drawStepNode, drawTerminalNode, getNodeDimensions } from './canvasUtil';
+import {
+    drawArrow,
+    drawCatchNode,
+    drawMap,
+    drawParallel,
+    drawStepNode,
+    drawTerminalNode,
+    getNodeDimensions,
+    NODE_HEIGHT
+} from './canvasUtil';
 import { WorkFlowType } from './StepFunctionUtil';
 import {
     adjustDepthMatrix,
     findNearestArrowNode,
     generateMountingPoints,
+    getCatchVertices,
     getDrawnRange,
     getDrawnRangeMiddleX,
     getGroupIndex,
@@ -165,9 +175,12 @@ export const handleParallel = (
     const PARALLEL_PADDING = 20;
     const parallelNode = graph.getDataByVertex(vertex);
     const [key] = Object.keys(parallelNode);
-    const { End } = parallelNode[key];
+    const { Catch, End } = parallelNode[key];
     const nextVertex = getNextVertex(vertex, graph);
-    const exclusionArray: number[] = [vertex, endVertex];
+
+    const catchVertices = getCatchVertices(Catch, graph);
+
+    const exclusionArray: number[] = [vertex, endVertex, ...catchVertices];
 
     if (nextVertex !== -1) {
         exclusionArray.push(nextVertex);
@@ -461,9 +474,10 @@ export function renderVertex(
     let previousEnd = previous ? previous.collisionBox.right.x : -1;
     const node = graph.getDataByVertex(vertex);
     const [key] = Object.keys(node);
-    const {Type, End} = node[key];
+    const { Type, End } = node[key];
+    const isCatch = Type === WorkFlowType.CATCH;
 
-    const {height: nodeHeight, width: nodeWidth} = getNodeDimensions(key);
+    const { height: nodeHeight, width: nodeWidth } = getNodeDimensions(key, ctx, node, isCatch);
 
     // Flattening the groups array since we sometimes need to work with the whole data set
     const flattened = ([] as number[]).concat(...groups);
@@ -472,7 +486,7 @@ export function renderVertex(
     const xOffset = flattened.length > 1 ? X_OFFSET : 0;
     const currentGroupIndex = getGroupIndex(groups, vertex);
     const currentGroup = groups[currentGroupIndex] ?? [];
-    const range = getRange(currentGroup, xOffset, graph);
+    const range = getRange(currentGroup, xOffset, graph, ctx);
 
     const x = getX(
         groups,
@@ -494,16 +508,19 @@ export function renderVertex(
     if (x) {
         switch (Type) {
             case WorkFlowType.START:
-                drawTerminalNode({ctx, x, y, text: key});
+                drawTerminalNode({ ctx, x, y, text: key });
                 break;
             case WorkFlowType.END:
-                drawTerminalNode({ctx, x, y, text: key});
+                drawTerminalNode({ ctx, x, y, text: key });
                 break;
             case WorkFlowType.TASK:
-                drawStepNode({ctx, x, y, text: key, highlight});
+                drawStepNode({ ctx, x, y, text: key, highlight });
                 break;
             case WorkFlowType.CHOICE:
-                drawStepNode({ctx, x, y, text: key, highlight});
+                drawStepNode({ ctx, x, y, text: key, highlight });
+                break;
+            case WorkFlowType.CATCH:
+                drawCatchNode({ ctx, x, y, text: key, highlight, node });
                 break;
             case WorkFlowType.MAP:
                 break;
@@ -535,10 +552,20 @@ export function renderVertex(
         TERMINAL_ARROW_OFFSET + CIRCLE_BOTTOM_OFFSET :
         STEP_ARROW_OFFSET;
 
+    const catchOffset = NODE_HEIGHT / 2;
+
     const drawnData = {
         ...nodeData,
-        ...{mountingPoints: generateMountingPoints(nodeData, topOffset, bottomOffset)},
-        ...{collisionBox: generateMountingPoints(nodeData, topOffset, bottomOffset)}
+        ...{mountingPoints: generateMountingPoints(
+            nodeData,
+                isCatch ? catchOffset * 2 : topOffset,
+                isCatch ? catchOffset : bottomOffset
+            )},
+        ...{collisionBox: generateMountingPoints(
+                nodeData,
+                isCatch ? catchOffset * 2 : topOffset,
+                isCatch ? catchOffset : bottomOffset
+            )}
     };
 
     // Store node data after drawing
@@ -724,26 +751,42 @@ export const drawGraph = (
                     const endOffset = hideArrow ? 5 : 0;
                     const parallelNode = graph.getDataByVertex(vertex);
                     const [parallelNodeKey] = Object.keys(parallelNode);
-                    const { End, Next } = parallelNode[parallelNodeKey];
+                    const { Catch, End, Next } = parallelNode[parallelNodeKey];
                     const nextVertexFindFn = (datum: any) => {
                         const [dataKey] = Object.keys(datum);
                         return dataKey === Next;
                     };
+                    const catchVertices = getCatchVertices(Catch, graph);
                     const connectingNode = graph.getVertexByData(nextVertexFindFn);
                     const bottomArrow = End || nextNode.vertex !== connectingNode ? mount0.top : mount0.bottom;
 
-                    drawArrow(
-                        ctx,
-                        drawn,
-                        bottomArrow,
-                        mount1.top,
-                        5,
-                        hideArrow,
-                        offsetArrowStart,
-                        nextEnd,
-                        endOffset
-                    );
-                    drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    if (catchVertices.includes(nextNode.vertex)) {
+                        drawArrow(
+                            ctx,
+                            drawn,
+                            mount0.bottom,
+                            mount1.top,
+                            5,
+                            hideArrow,
+                            offsetArrowStart,
+                            nextEnd,
+                            endOffset
+                        );
+                        drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    } else {
+                        drawArrow(
+                            ctx,
+                            drawn,
+                            bottomArrow,
+                            mount1.top,
+                            5,
+                            hideArrow,
+                            offsetArrowStart,
+                            nextEnd,
+                            endOffset
+                        );
+                        drawnArrowPairs.push([node.vertex, nextNode.vertex]);
+                    }
                 }
             }
         });
