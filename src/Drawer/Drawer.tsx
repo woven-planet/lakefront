@@ -16,10 +16,6 @@ export interface DrawerProps {
      */
     onClose(): void;
     /**
-     * This is an action to run when the drawer size changes.
-     */
-    onDrawerSizeChange(): void;
-    /**
      * This is the width for the drawer.
      */
     width?: string | number;

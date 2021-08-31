@@ -27,12 +27,12 @@ describe('Drawer', () => {
     });
 
     it('renders child component', () => {
-        const { container, getByText } = render(
+        const { getByText } = render(
             <Drawer {...PROPS} >
-            <div>This is child component</div>
+                <div>This is child component</div>
             </Drawer>
         );
         expect(getByText("This is child component")).toBeInTheDocument();
     });
-    
+
 });
