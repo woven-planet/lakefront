@@ -48,6 +48,7 @@ We've added storybook pages to show how each component can be used.
 * [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-button--all-buttons)
 * [Checkbox](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkbox--checkbox)
 * [Collapsible](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-collapsible--collapsible)
+* [CopyButton](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-copybutton--copy-button)
 * [Filter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter-allfilters--no-filter-bar)
   * [AdditionalJSONFilter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter-additionaljsonfilter--additional-json-filter)
   * [DoubleMultiSelectFilter](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-filter-doublemultiselectfilter--double-multi-select-filter)

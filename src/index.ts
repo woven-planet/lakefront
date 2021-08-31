@@ -9,6 +9,8 @@ export { default as Checkbox } from './Checkbox/Checkbox';
 
 export { default as Collapsible } from './Collapsible/Collapsible';
 
+export { default as CopyButton } from './CopyButton';
+
 export { default as Filter } from './Filter/Filter';
 export * from './Filter/util';
 export * from './Filter/types';
