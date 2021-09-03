@@ -101,7 +101,7 @@ const StepFunctionAuthoring: FC = () => {
             // This avoids orphaning the rest of the graph.
             let nextNode: string | undefined;
             if (pointsToEndNode) {
-                nextNode = pointsToEndNode;
+                nextNode = undefined;
             } else {
                 nextNode = isParallelOrMap ? undefined : nextNodes?.[0];
             }
