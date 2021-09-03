@@ -6,12 +6,13 @@ import Digraph from 'src/StepFunctionGraph/Digraph';
 import { generateStepFunctionGraph, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
 import { EditForm, Menu, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
 import { DEFAULT_FORM_STATE, DEFAULT_GRAPH_STATE, FORM_KEYS, TYPE_OPTIONS, generateNodeName, isComplexNode } from './util';
-import { StephFunctionAuthoringFormState } from './types';
+import { StephFunctionAuthoringFormState, StepFunctionAuthoringSnapshot, StephFunctionAuthoringChangeType } from './types';
 
 const StepFunctionAuthoring: FC = () => {
     // Graph State
     const JSONBuilder = useRef(new JSONBuilderUtil());
     const [json, setJson] = useState(DEFAULT_GRAPH_STATE);
+    const [snapshots, setSnapshots] = useState<StepFunctionAuthoringSnapshot[]>([]);
     const graph = useMemo(() => generateStepFunctionGraph(json, new Digraph()), [json]);
 
     // Node State
@@ -32,10 +33,39 @@ const StepFunctionAuthoring: FC = () => {
         setJson(JSONBuilder.current.getJson());
     }, []);
 
+    useEffect(() => {
+        // Update graph with any post draw configuration
+        if (!snapshots.length) {
+            return;
+        }
+
+        // Detect any stored changes
+        const [{ change }] = snapshots;
+
+        // Highlight and select added node for editing
+        if (change?.type === StephFunctionAuthoringChangeType.ADD) {
+            const vertex = graph.getVertexByKey(change.key);
+            handleSelectedNode({ [change.key]: change.data }, vertex);
+        }
+    }, [graph]);
+
     const makeFormUpdateHandler = (key: string) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             setFormState(prevState => ({...prevState, ...{ [key]: e.target.value }}));
         };
+    };
+    
+    // Create a snapshot of current step function state
+    const createSnapshot = (snapshotData: StepFunctionAuthoringSnapshot) => {
+        setSnapshots(prevState => [
+            {
+                json,
+                graph,
+                highlighted,
+                ...snapshotData
+            },
+            ...prevState
+        ]);
     };
     
     const handleSelectedNode = (node: any, vertex?: number) => {
@@ -107,9 +137,19 @@ const StepFunctionAuthoring: FC = () => {
             }
             JSONBuilder.current.addTask(newKey, nextNode);
 
+            // Store change in snapshot history
+            createSnapshot({
+                change: {
+                    type: StephFunctionAuthoringChangeType.ADD,
+                    key: newKey,
+                    data: JSONBuilder.current.getNodeJson(newKey)
+                }
+            });
+            
             // Replace the old graph JSON to redraw
             setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
             setShowMenu(false);
+
         }
         
         if (highlighted) {
