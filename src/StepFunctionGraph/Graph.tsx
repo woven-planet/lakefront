@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import { generateStepFunctionGraph, WorkFlowType } from './StepFunctionUtil';
 import { ReactComponent as GpsFixedIcon } from './assets/navigation.svg';
@@ -20,8 +20,15 @@ export interface GraphProps {
      * Sends data stored with each node from the parsing step on click inside of any drawn node. Use this data to
      * store the node key for the highlightedKey prop if node highlighting is desired.
      */
-    handleSelectedNode(node: any | null): void;
-
+    handleSelectedNode(node: any | null, vertex?: number): void;
+    /**
+     * Handle a right-click on any drawn node. This can be used to configure a context menu.
+     */
+    handleContextClickNode?(key: string, vertex: number, e: MouseEvent<HTMLCanvasElement>): void;
+    /**
+     * Action to run when a node context menu is closed.
+     */
+    handleCloseContextMenu?(): void;
     /**
      * This should be the node key from the AWS JSON and if supplied, will highlight that node in the graph.
      */
@@ -47,8 +54,15 @@ const REDRAW_THROTTLE_MS = 50;
  * the consuming application can use the "highlightedKey" prop to let it know to highlight a node.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
  */
-export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highlightedKey, json }) => {
-    const globalOffset = useMemo(() => ({
+export const StepFunctionGraph: FC<GraphProps> = ({
+    handleCloseContextMenu,
+    handleContextClickNode,
+    handleSelectedNode,
+    highlightedKey,
+    json
+}) => {
+    const globalOffset = useMemo(
+        () => ({
             scale: 1,
             offset: {
                 x: 0,
@@ -58,25 +72,31 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
                 x: 0,
                 y: 0
             }
-        }), []);
+        }),
+        []
+    );
 
-    const pan = useMemo(() => ({
-        start: {
-            x: null,
-            y: null
-        },
-        offset: {
-            x: 0,
-            y: 0
-        }
-    }), []);
+    const pan = useMemo(
+        () => ({
+            start: {
+                x: null,
+                y: null
+            },
+            offset: {
+                x: 0,
+                y: 0
+            }
+        }),
+        []
+    );
 
     const canvasContainer = useRef<HTMLCanvasElement>(null);
     const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
     const [observedElement, setObservedElement] = useState<any>(null);
     const [clickedNode, setClickedNode] = useState<NodeDimensions | null>(null);
     const [jsonHighlightedNode, setJsonHighlightedNode] = useState<NodeDimensions | null>(null);
-    const clickHandler = useRef<(any | null)>(null);
+    const clickHandler = useRef<any | null>(null);
+    const contextMenuHandler = useRef<(any | null)>(null);
 
     const graphRef = useRef<HTMLDivElement | null>(null);
     const initialDraw = useRef<boolean>(true);
@@ -89,6 +109,16 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
 
         if (node === null) {
             setJsonHighlightedNode(null);
+            handleCloseContextMenu && handleCloseContextMenu();
+        }
+    };
+
+    const handleContextMenuClick = (node: NodeDimensions | null, e: MouseEvent<HTMLCanvasElement>) => {
+        if (node) {
+            const nodeData = graph.getDataByVertex(node.vertex);
+            const [key] = Object.keys(nodeData);
+
+            typeof(handleContextClickNode) !== 'undefined' && handleContextClickNode(key, node.vertex, e);
         }
     };
 
@@ -134,28 +164,24 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     const getMousePos = (canvas: any, evt: any) => {
         const rect = canvas.getBoundingClientRect();
         return {
-            x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-            y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+            x: ((evt.clientX - rect.left) / (rect.right - rect.left)) * canvas.width,
+            y: ((evt.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height
         };
     };
 
-    const getClickHandler = (drawn: Map<number, NodeDimensions>, ctx: CanvasRenderingContext2D, canvasRef: any) => {
+    const getClickHandler = (drawn: Map<number, NodeDimensions>, ctx: CanvasRenderingContext2D, canvasRef: any, menuHandler = false) => {
         // This function checks for any clicks inside the bounds of any drawn rectangles
         return function nodeClickHandler(e: any) {
-            const { x: offsetX, y: offsetY } = getMousePos(canvasRef, e);
-            const rects = Array.from(drawn.values())
-                .filter(node =>
-                    node.nodeType !== WorkFlowType.START &&
-                    node.nodeType !== WorkFlowType.END
-                );
-            const collision: NodeDimensions | null = collides(
-                rects,
-                offsetX,
-                offsetY,
-                ctx
-            );
+            e.preventDefault();
+            e.stopPropagation();
 
-            handleNodeClick(collision);
+            const { x: offsetX, y: offsetY } = getMousePos(canvasRef, e);
+            const rects = Array.from(drawn.values()).filter(
+                (node) => node.nodeType !== WorkFlowType.START && node.nodeType !== WorkFlowType.END
+            );
+            const collision: NodeDimensions | null = collides(rects, offsetX, offsetY, ctx);
+
+            menuHandler && e.button === 2 ? handleContextMenuClick(collision, e) : handleNodeClick(collision);
         };
     };
 
@@ -165,7 +191,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
 
         if (ctx) {
             const center = {
-                x: -(zoom - 1) * ctx.canvas.width / 2,
+                x: (-(zoom - 1) * ctx.canvas.width) / 2,
                 y: -(zoom - 1) * (ctx.canvas.height / 2)
             };
 
@@ -187,10 +213,10 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
             const isParallel = node.nodeType === WorkFlowType.PARALLEL;
             const xOffset = isParallel ? node.x + node.width / 2 : node.x;
 
-            pan.offset.x = (globalOffset.defaultOffset.x * 2) - xOffset;
-            pan.offset.y = ((globalOffset.defaultOffset.y * 2) - (node.y));
-            globalOffset.offset.x = (globalOffset.defaultOffset.x * 2) - xOffset;
-            globalOffset.offset.y = ((globalOffset.defaultOffset.y * 2) - (node.y));
+            pan.offset.x = globalOffset.defaultOffset.x * 2 - xOffset;
+            pan.offset.y = globalOffset.defaultOffset.y * 2 - node.y;
+            globalOffset.offset.x = globalOffset.defaultOffset.x * 2 - xOffset;
+            globalOffset.offset.y = globalOffset.defaultOffset.y * 2 - node.y;
         }
     };
 
@@ -201,8 +227,9 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
     const stepGraph: Digraph = useMemo(() => json.States && generateStepFunctionGraph(json, graph), [graph]);
 
     // Store all possible traversals of the graph starting at the Start node, which is always 0
-    const paths: number[][] = useMemo(() =>
-        stepGraph && DigraphDFS.getAllDfsPaths(stepGraph.getAdjacencyMatrix(), [0]), [stepGraph]
+    const paths: number[][] = useMemo(
+        () => stepGraph && DigraphDFS.getAllDfsPaths(stepGraph.getAdjacencyMatrix(), [0]),
+        [stepGraph]
     );
 
     const calculateAndDraw = () => {
@@ -239,10 +266,13 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
                         // Remove any existing click handlers since this gets called a lot
                         if (clickHandler.current) {
                             canvasContainer.current.removeEventListener('click', clickHandler.current, false);
+                            canvasContainer.current.removeEventListener('contextmenu', contextMenuHandler.current, false);
                         }
 
                         clickHandler.current = getClickHandler(drawn, ctx, canvasContainer.current);
+                        contextMenuHandler.current = getClickHandler(drawn, ctx, canvasContainer.current, true);
                         canvasContainer.current.addEventListener('click', clickHandler.current, false);
+                        canvasContainer.current.addEventListener('contextmenu', contextMenuHandler.current, false);
 
                         drawGraph(
                             canvasContainer.current,
@@ -266,8 +296,8 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
                 };
 
                 const trackMouse = (e: any) => {
-                    const offsetX  = e.clientX - (pan.start.x || 0);
-                    const offsetY  = e.clientY - (pan.start.y || 0);
+                    const offsetX = e.clientX - (pan.start.x || 0);
+                    const offsetY = e.clientY - (pan.start.y || 0);
                     pan.offset.x = globalOffset.offset.x + offsetX;
                     pan.offset.y = globalOffset.offset.y + offsetY;
                 };
@@ -277,6 +307,8 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
                         canvasContainer.current.addEventListener('mousemove', trackMouse);
                         canvasContainer.current.addEventListener('mousemove', draw);
                     }
+
+                    handleCloseContextMenu && handleCloseContextMenu();
 
                     pan.start.x = e.clientX;
                     pan.start.y = e.clientY;
@@ -362,7 +394,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({ handleSelectedNode, highligh
                 panToNode(node);
             }
 
-            handleSelectedNode(node);
+            handleSelectedNode(node, clickedNode.vertex);
         } else {
             // When clicking blank space we should allow a node to unselect
             handleSelectedNode(null);
