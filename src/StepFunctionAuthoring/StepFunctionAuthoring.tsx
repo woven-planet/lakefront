@@ -248,6 +248,21 @@ const StepFunctionAuthoring: FC = () => {
             // Only update the name if it has changed
             if (name && name !== highlightedNodeState) {
                 JSONBuilder.current.setNodeStateName(highlightedNodeState, name);
+
+                // Get all parents of updated node
+                const indegrees = graph.getIndegree(highlightedNodeVertex);
+                const parentKeys = indegrees
+                    .map((vertex) => {
+                        const [key] = Object.keys(graph.getDataByVertex(vertex));
+                        return key;
+                    });
+
+                // Redirect each parent to the new key name
+                for (const parentKey of parentKeys) {
+                    JSONBuilder.current.editNode(parentKey, {
+                        Next: name
+                    });
+                }
             }
 
             // Store change in snapshot history
