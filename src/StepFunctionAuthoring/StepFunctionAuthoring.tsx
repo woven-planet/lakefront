@@ -239,6 +239,15 @@ const StepFunctionAuthoring: FC = () => {
             if (name && name !== highlightedNodeState) {
                 JSONBuilder.current.setNodeStateName(highlightedNodeState, name);
             }
+
+            // Store change in snapshot history
+            createSnapshot({
+                change: {
+                    type: StephFunctionAuthoringChangeType.UPDATE,
+                    key: name || highlightedNodeState,
+                    data: JSONBuilder.current.getNodeJson(name || highlightedNodeState)
+                }
+            });
     
             setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
         }
