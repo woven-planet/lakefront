@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import StepFunctionGraph from 'src/StepFunctionGraph/Graph';
-import { JSONBuilderUtil } from 'src/StepFunctionGraph/util/JSONBuilder.util';
+import { JSONBuilderUtil, JSONStateObject } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 import { Button, Input, RadioGroup } from '../index';
 import Digraph from 'src/StepFunctionGraph/Digraph';
 import { generateStepFunctionGraph, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
@@ -158,6 +158,15 @@ const StepFunctionAuthoring: FC = () => {
             handleSelectedNode({ [highlightedState]: JSONBuilder.current.getNodeJson(highlightedState) });
         }
     };
+
+    const addChoice = (parentKey: string, choiceKey: string = generateNodeName(), currentChoices: JSONStateObject[]) => {
+        // New Choices will always point to the End until edited
+        JSONBuilder.current.addTask(choiceKey, undefined, true);
+    
+        JSONBuilder.current.editNode(parentKey, {
+            Choices: [...currentChoices, JSONBuilderUtil.getChoiceForAdd(choiceKey)]
+        });
+    };
     
     const handleAddChoice = () => {
         if (contextNode) {
@@ -166,13 +175,8 @@ const StepFunctionAuthoring: FC = () => {
             const [key] = Object.keys(data);
             const { Choices = [] } = data[key];
             const newKey = generateNodeName();
-            
-            // New Choices will always point to the End until edited
-            JSONBuilder.current.addTask(newKey, undefined, true);
-    
-            JSONBuilder.current.editNode(contextNodeState, {
-                Choices: [...Choices, JSONBuilderUtil.getChoiceForAdd(newKey)]
-            });
+
+            addChoice(contextNodeState, newKey, Choices);
     
             setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
             setShowMenu(false);
@@ -192,7 +196,7 @@ const StepFunctionAuthoring: FC = () => {
             
             JSONBuilder.current.editNode(highlightedNodeState, {
                 Type: nodeType,
-                Next: next ? next : undefined
+                Next: next || undefined
             });
     
             // Complex nodes have unique fields in their objects and need to be handled separately
@@ -224,7 +228,7 @@ const StepFunctionAuthoring: FC = () => {
                     const outdegreeStates = outdegrees.outVertices.map((vertex) => {
                         const [key] = Object.keys(graph.getDataByVertex(vertex));
                         return JSONBuilderUtil.getChoiceForAdd(key);
-                    }).filter((next) => next !== 'End');
+                    }).filter(({ Next }) => Next !== 'End');
 
                     JSONBuilder.current.editNode(highlightedNodeState, {
                         Branches: undefined,
@@ -232,6 +236,12 @@ const StepFunctionAuthoring: FC = () => {
                         Iterator: undefined,
                         Next: undefined
                     });
+
+                    if (outdegreeStates.length === 0) {
+                        // Automatically add one choice if none exist to
+                        // avoid orphan graph
+                        addChoice(name || highlightedNodeState, undefined, outdegreeStates)
+                    } 
                 }
             }
     
