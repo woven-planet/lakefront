@@ -85,14 +85,15 @@ const StepFunctionAuthoring: FC = () => {
             setHighlighted(null);
             setSelectedNode(null);
     
-            setFormState(prevState => ({ ...prevState, ...DEFAULT_FORM_STATE}));
+            setFormState(prevState => ({ ...prevState, ...DEFAULT_FORM_STATE }));
         }
     };
 
-    const handleContextClickNode = (key: string, vertex: number, nodeClick: MouseEvent<HTMLCanvasElement>) => {
+    const handleContextClickNode = (key: string, vertex: number, nodeClick: MouseEvent<HTMLCanvasElement>, ctx: CanvasRenderingContext2D) => {
         const { clientX, clientY } = nodeClick;
+        const { left, top } = ctx.canvas.getBoundingClientRect();
 
-        setMenuCoordinates([clientX, clientY]);
+        setMenuCoordinates([clientX - left, clientY - top]);
         setContextNode([key, vertex]);
         setShowMenu(true);
     };

@@ -24,7 +24,7 @@ export interface GraphProps {
     /**
      * Handle a right-click on any drawn node. This can be used to configure a context menu.
      */
-    handleContextClickNode?(key: string, vertex: number, e: MouseEvent<HTMLCanvasElement>): void;
+    handleContextClickNode?(key: string, vertex: number, e: MouseEvent<HTMLCanvasElement>, ctx: CanvasRenderingContext2D): void;
     /**
      * Action to run when a node context menu is closed.
      */
@@ -113,12 +113,12 @@ export const StepFunctionGraph: FC<GraphProps> = ({
         }
     };
 
-    const handleContextMenuClick = (node: NodeDimensions | null, e: MouseEvent<HTMLCanvasElement>) => {
+    const handleContextMenuClick = (node: NodeDimensions | null, e: MouseEvent<HTMLCanvasElement>, ctx: CanvasRenderingContext2D) => {
         if (node) {
             const nodeData = graph.getDataByVertex(node.vertex);
             const [key] = Object.keys(nodeData);
 
-            typeof(handleContextClickNode) !== 'undefined' && handleContextClickNode(key, node.vertex, e);
+            typeof(handleContextClickNode) !== 'undefined' && handleContextClickNode(key, node.vertex, e, ctx);
         }
     };
 
@@ -181,7 +181,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({
             );
             const collision: NodeDimensions | null = collides(rects, offsetX, offsetY, ctx);
 
-            menuHandler && e.button === 2 ? handleContextMenuClick(collision, e) : handleNodeClick(collision);
+            menuHandler && e.button === 2 ? handleContextMenuClick(collision, e, ctx) : handleNodeClick(collision);
         };
     };
 
