@@ -48,6 +48,12 @@ export interface CheckboxGroupProps {
     allLabel?: string;
 }
 
+/**
+ * The Checkbox Group Component
+ *
+ * The CheckboxGroup component can be used to provide multiple checkbox options. The user can set default selection on
+ * the checkbox group render. The All option is provided to check or uncheck all the options.
+ */
 const CheckboxGroup: FC<CheckboxGroupProps> = (
     {
         allLabel,
