@@ -76,8 +76,13 @@ export const handleMap = (
 
     const exclusionArray: number[] = [vertex, endVertex];
     if (nextVertex !== -1) {
-        exclusionArray.push(nextVertex);
+        // Exclude all possible vertices that exist
+        // between the next vertex and the end vertex
+        for (let index = nextVertex; index < endVertex; index++) {
+            exclusionArray.push(index);  
+        }
     }
+
     const mapNodeMatrix = DigraphDFS.getVerticesAtDepthFromPaths(paths, exclusionArray);
     const baselineNode = drawn.get(mapNodeMatrix[0][0]);
     const baselineWidth = baselineNode ? baselineNode.width : 0;
@@ -183,7 +188,11 @@ export const handleParallel = (
     const exclusionArray: number[] = [vertex, endVertex, ...catchVertices];
 
     if (nextVertex !== -1) {
-        exclusionArray.push(nextVertex);
+        // Exclude all possible vertices that exist
+        // between the next vertex and the end vertex
+        for (let index = nextVertex; index < endVertex; index++) {
+            exclusionArray.push(index);  
+        }
     }
 
     const paths = DigraphDFS.getAllDfsPaths(graph.getAdjacencyMatrix(), [vertex]);
