@@ -99,9 +99,18 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     }
 
     const nodeKeys = Object.keys(json.States);
-    const nodes = nodeKeys.map((key) => ({
-        [key]: json.States[key]
-    }));
+    const nodes = nodeKeys
+        .map((key) => ({
+            [key]: json.States[key]
+        }))
+        .sort((nodeA, nodeB) => {
+            if (nodeA.SortOrder && nodeB.SortOrder) {
+                return nodeA.SortOrder - nodeB.SortOrder;
+            }
+
+            return 0;
+        });
+
     const lastNode = lastStateKey || nodeKeys[nodeKeys.length - 1];
 
     // Add vertices to graph and set the data for each

@@ -136,7 +136,14 @@ const StepFunctionAuthoring: FC = () => {
             } else {
                 nextNode = isParallelOrMap ? ContextNodeNext : nextNodes?.[0];
             }
-            JSONBuilder.current.addTask(newKey, nextNode);
+            JSONBuilder.current.addNode(
+                newKey,
+                {
+                    Type: 'Task',
+                    Next: nextNode
+                },
+                contextState
+            );
 
             // Store change in snapshot history
             createSnapshot({
