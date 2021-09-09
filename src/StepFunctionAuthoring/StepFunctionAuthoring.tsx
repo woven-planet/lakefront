@@ -109,7 +109,7 @@ const StepFunctionAuthoring: FC = () => {
             const contextNodeOutdegrees = graph.getOutdegree(contextVertex);
             const contextNodeData = graph.getDataByVertex(contextVertex);
             const [key] = Object.keys(contextNodeData);
-            const { Type } = contextNodeData[key];
+            const { Type: ContextNodeType, Next: ContextNodeNext } = contextNodeData[key];
             
             // Get nodes the right-clicked node points to via outdegrees instead of Next since not every node has a Next
             const nextNodes = contextNodeOutdegrees.outVertices.map((vertex) => {
@@ -126,7 +126,7 @@ const StepFunctionAuthoring: FC = () => {
             });
             
             const pointsToEndNode = contextNodeOutdegrees.outVertices.includes(graph.V - 1);
-            const isParallelOrMap = Type === WorkFlowType.PARALLEL || Type === WorkFlowType.PARALLEL;
+            const isParallelOrMap = ContextNodeType === WorkFlowType.PARALLEL || ContextNodeType === WorkFlowType.MAP;
             
             // Add the new node and set new node's "Next" property to context node's original "Next".
             // This avoids orphaning the rest of the graph.
@@ -134,7 +134,7 @@ const StepFunctionAuthoring: FC = () => {
             if (pointsToEndNode) {
                 nextNode = undefined;
             } else {
-                nextNode = isParallelOrMap ? undefined : nextNodes?.[0];
+                nextNode = isParallelOrMap ? ContextNodeNext : nextNodes?.[0];
             }
             JSONBuilder.current.addTask(newKey, nextNode);
 
