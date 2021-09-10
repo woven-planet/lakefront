@@ -71,7 +71,7 @@ const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = 
             >
                 Selected Values :    {getValue()}
             </div>}
-            <CheckboxGroup
+            <CheckboxGroupComponent
                 options={JOB_TYPES}
                 name='checkBoxGrp'
                 selected={value}

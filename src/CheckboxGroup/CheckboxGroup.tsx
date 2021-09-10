@@ -47,6 +47,10 @@ export interface CheckboxGroupProps {
      * Specify the name of the label to be displayed for checkbox.
      */
     allLabel?: string;
+    /**
+     * This option is used to set the color of the checkboxes.
+     */
+    allColor?: string;
 }
 
 /**
@@ -57,6 +61,7 @@ export interface CheckboxGroupProps {
  */
 const CheckboxGroup: FC<CheckboxGroupProps> = (
     {
+        allColor,
         allLabel,
         className,
         name,
@@ -102,6 +107,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                     <Checkbox
                         value="all"
                         label={allLabel}
+                        color={allColor}
                         id={`checkbox-${name}-all`}
                         onChange={onAllItemChange}
                         checked={isAllSelected}
