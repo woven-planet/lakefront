@@ -1,3 +1,5 @@
+import { assocPath } from 'ramda';
+
 export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | 'Catch' | string;
 
 export interface CatchJSON {
@@ -13,7 +15,10 @@ export interface JSONStateObject {
     Branches?: StepFunctionJSON[];
     Choices?: JSONStateObject[];
     Iterator?: StepFunctionJSON;
-    SortOrder?: number;
+    Metadata?: {
+        SortOrder?: number;
+        NodePath?: string;
+    }
 }
 
 export interface JSONState {
@@ -101,19 +106,29 @@ export class JSONBuilderUtil {
             if (k === after) {
                 return [
                     ...accum,
-                    [k, { ...v, SortOrder: idx }],
-                    [name, { ...value, SortOrder: idx + 0.1 }]
+                    [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }],
+                    [name, { ...value, Metadata: { ...value?.Metadata, SortOrder: idx + 0.1 } }]
                 ];
             }
 
             return [
                 ...accum,
-                [k, { ...v, SortOrder: idx }]
+                [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }]
             ];
         }, []);
         
         this.json.States = Object.fromEntries(newState)
         
+        return this;
+    }
+
+    editNodeAtPath(path: string[], content: JSONStateObject): JSONBuilderUtil {
+        const original = { ...this.json.States };
+
+        const newStates = assocPath(path, content, original);
+
+        this.json.States = newStates;
+
         return this;
     }
 

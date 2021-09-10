@@ -1,5 +1,6 @@
 import Digraph from './Digraph';
 import DigraphDFS from './DigraphDFS';
+import { JSONStateObject } from './util/JSONBuilder.util';
 
 export enum WorkFlowType {
     TASK = 'Task',
@@ -89,6 +90,60 @@ const handleMap = (node: any, graph: Digraph, addedVertex: number, lastStateKey:
     return graph;
 };
 
+const addMetadata = (parentPath: string, currentKey: string | number, state: JSONStateObject) => {
+    const { Type } = state;
+    const nodePath = `${parentPath}.${currentKey}`;
+
+    // Iterate over nested nodes
+    switch (Type) {
+        case 'Choice': {
+            if (state?.Choices) {
+                state.Choices.forEach((choiceState, choiceStateIdx) =>
+                    addMetadata(`${nodePath}.Choices`, choiceStateIdx, choiceState)
+                );
+            }
+            break;
+        }
+        case 'Parallel': {
+            if (state?.Branches) {
+                state.Branches.forEach((parallelBranch, parallelBranchIdx) => {
+                    const pbBranchStatekeys = Object.keys(parallelBranch.States);
+
+                    pbBranchStatekeys.forEach((key) => {
+                        const branchState = parallelBranch.States[key];
+                        addMetadata(`${nodePath}.Branches.${parallelBranchIdx}.States`, key, branchState);
+                    });
+                });
+            }
+            break;
+        }
+        case 'Map': {
+            if (state?.Iterator?.States) {
+                const mapIteratorStates = state.Iterator.States;
+                const mapIteratorStateKeys = Object.keys(state.Iterator.States);
+
+                mapIteratorStateKeys.forEach((key) => {
+                    const iteratorState = mapIteratorStates[key];
+                    addMetadata(`${nodePath}.Iterator.States`, key, iteratorState);
+                });
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    // Add/Update node path
+    if (state?.Metadata) {
+        state.Metadata.NodePath = nodePath;
+        return;
+    }
+
+    state.Metadata = {
+        NodePath: nodePath
+    };
+};
+
 // Main parsing function for populating a Digraph from a given step function JSON
 export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom?: number, lastStateKey?: string) => {
     let isLastNode = false;
@@ -100,12 +155,15 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
 
     const nodeKeys = Object.keys(json.States);
     const nodes = nodeKeys
-        .map((key) => ({
-            [key]: json.States[key]
-        }))
-        .sort((nodeA, nodeB) => {
-            if (nodeA.SortOrder && nodeB.SortOrder) {
-                return nodeA.SortOrder - nodeB.SortOrder;
+        .map((key) => {
+            addMetadata('States', key, json.States[key]);
+            return {
+                [key]: json.States[key]
+            };
+        })
+        .sort((nodeA: JSONStateObject, nodeB: JSONStateObject) => {
+            if (nodeA?.Metadata?.SortOrder && nodeB?.Metadata?.SortOrder) {
+                return nodeA.Metadata.SortOrder - nodeB.Metadata.SortOrder;
             }
 
             return 0;
