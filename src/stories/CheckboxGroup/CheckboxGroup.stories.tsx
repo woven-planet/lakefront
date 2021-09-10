@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
+import { ChangeEvent, ComponentPropsWithoutRef, useState, useEffect } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import CheckboxGroupComponent, { CheckboxGroupProps } from 'src/CheckboxGroup/CheckboxGroup';
@@ -13,11 +13,6 @@ export default {
             control: false
         },
         selected: {
-            table: {
-                disable: true
-            }
-        },
-        allLabel: {
             table: {
                 disable: true
             }
@@ -36,15 +31,15 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = (args) => {
-    const JOB_TYPES = [
-        { label: 'Finished', value: 'finished' },
-        { label: 'Cancelled', value: 'canceled' },
-        { label: 'Failed', value: 'failed' },
-        { label: 'Running', value: 'running' },
-        { label: 'Pending', value: 'enqueued' }
-    ];
+const JOB_TYPES = [
+    { label: 'Finished', value: 'finished' },
+    { label: 'Cancelled', value: 'canceled' },
+    { label: 'Failed', value: 'failed' },
+    { label: 'Running', value: 'running' },
+    { label: 'Pending', value: 'enqueued' }
+];
 
+const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = (args) => {
     const [value, setValue] = useState(new Set(JOB_TYPES.map(item => item.value)));
 
     const handleClick = (option: any) => {
@@ -59,6 +54,10 @@ const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = 
         return values;
     }
 
+    useEffect(() => {
+        setValue(new Set(args.options.map(item => item.value)));
+    }, [args.options]);
+
     return (
         <div>
             {value.size != 0 && <div
@@ -72,10 +71,12 @@ const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = 
                 Selected Values :    {getValue()}
             </div>}
             <CheckboxGroupComponent
-                options={JOB_TYPES}
-                name='checkBoxGrp'
+                options={args.options}
+                allLabel={args.allLabel}
+                className={args.className}
+                allColor={args.allColor}
+                name={args.name}
                 selected={value}
-                allLabel='All'
                 onHandleChange={handleClick}
             />
         </div>
@@ -83,3 +84,8 @@ const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = 
 };
 
 export const CheckboxGroup = Template.bind({});
+CheckboxGroup.args = {
+    options: JOB_TYPES,
+    allLabel: 'All',
+    name: 'checkBoxGrp'
+};

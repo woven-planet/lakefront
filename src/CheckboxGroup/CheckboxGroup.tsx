@@ -48,7 +48,7 @@ export interface CheckboxGroupProps {
      */
     allLabel?: string;
     /**
-     * This option is used to set the color of the checkboxes.
+     * This option is used to set the select all checkbox color.
      */
     allColor?: string;
 }
