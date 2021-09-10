@@ -90,9 +90,9 @@ const handleMap = (node: any, graph: Digraph, addedVertex: number, lastStateKey:
     return graph;
 };
 
-const addMetadata = (parentPath: string, currentKey: string | number, state: JSONStateObject) => {
+export const addMetadata = (parentPath: string, currentKey: string | number, state: JSONStateObject) => {
     const { Type } = state;
-    const nodePath = `${parentPath}.${currentKey}`;
+    const nodePath = `${parentPath}${parentPath ? '.' : ''}${currentKey}`;
 
     // Iterate over nested nodes
     switch (Type) {
@@ -156,7 +156,7 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     const nodeKeys = Object.keys(json.States);
     const nodes = nodeKeys
         .map((key) => {
-            addMetadata('States', key, json.States[key]);
+            addMetadata('', key, json.States[key]);
             return {
                 [key]: json.States[key]
             };

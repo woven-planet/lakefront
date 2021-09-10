@@ -3,10 +3,11 @@ import StepFunctionGraph from 'src/StepFunctionGraph/Graph';
 import { JSONBuilderUtil, JSONStateObject } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 import { Button, Input, RadioGroup } from '../index';
 import Digraph from 'src/StepFunctionGraph/Digraph';
-import { generateStepFunctionGraph, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
+import { addMetadata, generateStepFunctionGraph, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
 import { EditForm, Menu, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
 import { DEFAULT_FORM_STATE, DEFAULT_GRAPH_STATE, FORM_KEYS, TYPE_OPTIONS, generateNodeName, isComplexNode } from './util';
 import { StephFunctionAuthoringFormState, StepFunctionAuthoringSnapshot, StephFunctionAuthoringChangeType } from './types';
+import { omit } from 'ramda';
 
 const StepFunctionAuthoring: FC = () => {
     // Graph State
@@ -108,6 +109,9 @@ const StepFunctionAuthoring: FC = () => {
             const [contextState, contextVertex] = contextNode;
             const contextNodeOutdegrees = graph.getOutdegree(contextVertex);
             const contextNodeData = graph.getDataByVertex(contextVertex);
+            const nodePath =
+                contextNodeData[contextState]?.Metadata?.NodePath ||
+                contextState;
             const [key] = Object.keys(contextNodeData);
             const { Type: ContextNodeType, Next: ContextNodeNext } = contextNodeData[key];
             
@@ -121,7 +125,7 @@ const StepFunctionAuthoring: FC = () => {
             const newKey = generateNodeName();
             
             // Point the context (right-clicked) node to new target node
-            JSONBuilder.current.editNode(contextState, {
+            JSONBuilder.current.editNodeAtPath(nodePath, {
                 Next: newKey
             });
             
@@ -136,8 +140,8 @@ const StepFunctionAuthoring: FC = () => {
             } else {
                 nextNode = isParallelOrMap ? ContextNodeNext : nextNodes?.[0];
             }
-            JSONBuilder.current.addNode(
-                newKey,
+            JSONBuilder.current.addNodeAtPath(
+                nodePath,
                 {
                     Type: 'Task',
                     Next: nextNode
@@ -150,7 +154,7 @@ const StepFunctionAuthoring: FC = () => {
                 change: {
                     type: StephFunctionAuthoringChangeType.ADD,
                     key: newKey,
-                    data: JSONBuilder.current.getNodeJson(newKey)
+                    data: JSONBuilder.current.getNodeJsonAtPath(nodePath)
                 }
             });
             
@@ -170,7 +174,16 @@ const StepFunctionAuthoring: FC = () => {
         // New Choices will always point to the End until edited
         JSONBuilder.current.addTask(choiceKey, undefined, true);
     
-        JSONBuilder.current.editNode(parentKey, {
+        JSONBuilder.current.editNodeAtPath(parentKey, {
+            Choices: [...currentChoices, JSONBuilderUtil.getChoiceForAdd(choiceKey)]
+        });
+    };
+
+    const addChoiceAtPath = (path: string, choiceKey: string = generateNodeName(), currentChoices: JSONStateObject[]) => {
+        // New Choices will always point to the End until edited
+        JSONBuilder.current.addTaskAtPath(path, undefined, true);
+    
+        JSONBuilder.current.editNodeAtPath(path, {
             Choices: [...currentChoices, JSONBuilderUtil.getChoiceForAdd(choiceKey)]
         });
     };
@@ -201,7 +214,10 @@ const StepFunctionAuthoring: FC = () => {
             const [highlightedNodeState, highlightedNodeVertex] = highlighted;
             const { name, next, nodeType } = formState;
             
-            JSONBuilder.current.editNode(highlightedNodeState, {
+            const nodePath =
+                graph.getDataByVertex(highlightedNodeVertex)[highlightedNodeState]?.Metadata?.NodePath ||
+                highlightedNodeState;
+            JSONBuilder.current.editNodeAtPath(nodePath, {
                 Type: nodeType,
                 Next: next || undefined
             });
@@ -209,12 +225,16 @@ const StepFunctionAuthoring: FC = () => {
             // Complex nodes have unique fields in their objects and need to be handled separately
             if (isComplexNode(nodeType)) {
                 const newTask = generateNodeName();
-                const taskState = new JSONBuilderUtil().addTask(newTask, undefined, true).getJson();
-    
+                const taskBuilder = new JSONBuilderUtil().addTask(newTask, undefined, true);
+                const taskBase = {};
+                
                 // Parallel has Branches
                 if (nodeType === WorkFlowType.PARALLEL) {
-                    JSONBuilder.current.editNode(highlightedNodeState, {
-                        Branches: [taskState],
+                    addMetadata(`${nodePath}.Branches.0.States`, newTask, taskBase);
+                    taskBuilder.editNodeAtPath(newTask, taskBase);
+
+                    JSONBuilder.current.editNodeAtPath(nodePath, {
+                        Branches: [taskBuilder.getJson()],
                         Choices: undefined,
                         Iterator: undefined
                     });
@@ -222,22 +242,28 @@ const StepFunctionAuthoring: FC = () => {
                 
                 // Map has Iterator
                 if (nodeType === WorkFlowType.MAP) {
-                    JSONBuilder.current.editNode(highlightedNodeState, {
+                    addMetadata(`${nodePath}.Iterator.States`, newTask, taskBase);
+                    taskBuilder.editNodeAtPath(newTask, taskBase);
+
+                    JSONBuilder.current.editNodeAtPath(nodePath, {
                         Branches: undefined,
                         Choices: undefined,
-                        Iterator: taskState
+                        Iterator: taskBuilder.getJson()
                     });
                 }
                 
                 // Choice has Choices
                 if (nodeType === WorkFlowType.CHOICE) {
                     const outdegrees = graph.getOutdegree(highlightedNodeVertex);
-                    const outdegreeStates = outdegrees.outVertices.map((vertex) => {
+                    const outdegreeStates = outdegrees.outVertices.map((vertex, idx) => {
                         const [key] = Object.keys(graph.getDataByVertex(vertex));
-                        return JSONBuilderUtil.getChoiceForAdd(key);
+                        const choiceForAdd = JSONBuilderUtil.getChoiceForAdd(key);
+                        addMetadata(`${nodePath}.Choices`, idx, choiceForAdd);
+
+                        return choiceForAdd;
                     }).filter(({ Next }) => Next !== 'End');
 
-                    JSONBuilder.current.editNode(highlightedNodeState, {
+                    JSONBuilder.current.editNodeAtPath(nodePath, {
                         Branches: undefined,
                         Choices: outdegreeStates,
                         Iterator: undefined,
@@ -247,14 +273,14 @@ const StepFunctionAuthoring: FC = () => {
                     if (outdegreeStates.length === 0) {
                         // Automatically add one choice if none exist to
                         // avoid orphan graph
-                        addChoice(name || highlightedNodeState, undefined, outdegreeStates)
+                        addChoiceAtPath(nodePath, undefined, outdegreeStates)
                     } 
                 }
             }
     
             // Only update the name if it has changed
             if (name && name !== highlightedNodeState) {
-                JSONBuilder.current.setNodeStateName(highlightedNodeState, name);
+                JSONBuilder.current.editNameAtPath(nodePath, name);
 
                 // Get all parents of updated node
                 const indegrees = graph.getIndegree(highlightedNodeVertex);
@@ -266,7 +292,7 @@ const StepFunctionAuthoring: FC = () => {
 
                 // Redirect each parent to the new key name
                 for (const parentKey of parentKeys) {
-                    JSONBuilder.current.editNode(parentKey, {
+                    JSONBuilder.current.editNodeAtPath(parentKey, {
                         Next: name
                     });
                 }
@@ -277,11 +303,14 @@ const StepFunctionAuthoring: FC = () => {
                 change: {
                     type: StephFunctionAuthoringChangeType.UPDATE,
                     key: name || highlightedNodeState,
-                    data: JSONBuilder.current.getNodeJson(name || highlightedNodeState)
+                    data: JSONBuilder.current.getNodeJsonAtPath([
+                        ...JSONBuilder.current.getNodeParentPath(nodePath),
+                        name || highlightedNodeState
+                    ])
                 }
             });
     
-            setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
+            setJson(prevState => ({...omit(highlightedNodeState, prevState), ...JSONBuilder.current.getJson()}));
         }
     };
 
