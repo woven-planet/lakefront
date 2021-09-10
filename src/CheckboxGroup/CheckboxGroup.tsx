@@ -43,7 +43,8 @@ export interface CheckboxGroupProps {
      */
     selected: Set<string>;
     /**
-     * This option is to select or unselect all the checkbox. Specify the name of the label to be displayed for checkbox.
+     * This option is to select or unselect all the checkboxes. 
+     * Specify the name of the label to be displayed for checkbox.
      */
     allLabel?: string;
 }

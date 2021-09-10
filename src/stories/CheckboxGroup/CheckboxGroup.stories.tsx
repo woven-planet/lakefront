@@ -1,13 +1,13 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import CheckboxGroup, { CheckboxGroupProps } from 'src/CheckboxGroup/CheckboxGroup';
+import CheckboxGroupComponent, { CheckboxGroupProps } from 'src/CheckboxGroup/CheckboxGroup';
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/CheckboxGroup',
-    component: CheckboxGroup,
+    component: CheckboxGroupComponent,
     argTypes: {
         onHandleChange: {
             control: false
@@ -82,4 +82,4 @@ const Template: Story<CheckboxGroupProps & ComponentPropsWithoutRef<'input'>> = 
     );
 };
 
-export const CheckboxGroupTemplate = Template.bind({});
+export const CheckboxGroup = Template.bind({});
