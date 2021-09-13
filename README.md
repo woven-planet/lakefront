@@ -47,7 +47,7 @@ We've added storybook pages to show how each component can be used.
 * [BoundingBoxes](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-boundingboxes--bounding-boxes)
 * [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-button--all-buttons)
 * [Checkbox](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkbox--checkbox)
-* [CheckboxGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkboxgroup--checkbox-group
+* [CheckboxGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkboxgroup--checkbox-group)
 * [Collapsible](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-collapsible--collapsible)
 * [CopyButton](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-copybutton--copy-button)
 * [Drawer](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-drawer--drawer)
