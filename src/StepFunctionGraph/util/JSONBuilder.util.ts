@@ -1,4 +1,4 @@
-import { assocPath, has, last, omit, path as rPath, pipe } from 'ramda';
+import { assocPath, cond, identity, last, omit, path as RPath, T as RT } from 'ramda';
 
 export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | 'Catch' | string;
 
@@ -29,6 +29,22 @@ export interface StepFunctionJSON {
     States: JSONState;
 }
 
+/**
+ * Attempts to convert a value to a number. If that is not possible,
+ * the original value will be returned.
+ */
+const numberOrIdentity = cond([
+    [(a: any) => Number(a) === 0 || Boolean(Number(a)), Number],
+    [RT, identity]
+]);
+
+/**
+ * Converts a string with dot notation to an array.
+ * If the provided `path` is already an array, the original
+ * value will be returned.
+ */
+const convertToArrayPath = (path: string | (string | number)[]) => Array.isArray(path) ? path : path.split('.');
+
 export class JSONBuilderUtil {
     json: StepFunctionJSON = { States: {} };
 
@@ -56,10 +72,8 @@ export class JSONBuilderUtil {
 
     addTaskAtPath(path: string, next?: string, end?: boolean): JSONBuilderUtil {
         const original = { ...this.json.States };
-        const nodePath = Array.isArray(path) ? path : path.split('.');
 
-
-        this.json.States = assocPath(nodePath, {
+        this.json.States = this.updateAtPath<JSONState>(path, {
             Type: 'Task',
             ...(next && { Next: next }),
             ...(end && { End: end })
@@ -149,15 +163,18 @@ export class JSONBuilderUtil {
 
     addNodeAfterPath(name: string, value: JSONStateObject, afterPath: string): JSONBuilderUtil {
         const original = { ...this.json.States };
+        const nodePath = convertToArrayPath(afterPath);
+        const nodeValue = RPath<JSONStateObject>(nodePath, original);
         const parentPath = this.getNodeParentPath(afterPath);
-        const parentValue = rPath<JSONState>(parentPath, original);
+        const parentValue = RPath<JSONState>(parentPath, original);
+        const afterKey = last(nodePath);
 
-        if (parentValue) {
+        if (parentValue && nodeValue) {
             const newState = Object.entries(parentValue).reduce<[key: string, value: JSONStateObject][]>(
                 (accum, current, idx) => {
                     const [k, v] = current;
     
-                    if (k === afterPath) {
+                    if (k === afterKey) {
                         return [
                             ...accum,
                             [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }],
@@ -170,7 +187,7 @@ export class JSONBuilderUtil {
                 []
             );
     
-            this.json.States = assocPath(parentPath, Object.fromEntries(newState), original);
+            this.json.States = this.updateAtPath(parentPath, Object.fromEntries(newState), original);
         }
 
 
@@ -190,10 +207,10 @@ export class JSONBuilderUtil {
 
     editNameAtPath(path: string | string[], name: string): JSONBuilderUtil {
         const original = { ...this.json.States };
-        const nodePath = Array.isArray(path) ? path : path.split('.');
-        const nodeValue = rPath<JSONStateObject>(nodePath, original);
+        const nodePath = convertToArrayPath(path);
+        const nodeValue = RPath<JSONStateObject>(nodePath, original);
         const parentPath = this.getNodeParentPath(path);
-        const parentValue = rPath<JSONStateObject>(parentPath, original);
+        const parentValue = RPath<JSONStateObject>(parentPath, original);
         const oldName = last(nodePath);
 
         if (oldName && nodeValue) {
@@ -202,7 +219,7 @@ export class JSONBuilderUtil {
                 [name]: nodeValue
             };
 
-            this.json.States = assocPath(parentPath, newParentValue, original);
+            this.json.States = this.updateAtPath(parentPath, newParentValue, original);
         }
 
         return this;
@@ -210,10 +227,11 @@ export class JSONBuilderUtil {
 
     editNodeAtPath(path: string | string[], content: JSONStateObject): JSONBuilderUtil {
         const original = { ...this.json.States };
-        const nodePath = Array.isArray(path) ? path : path.split('.');
-        const nodeValue = rPath<JSONStateObject>(nodePath, original);
+        const rawPath = convertToArrayPath(path);
+        const nodePath = rawPath.map<(string | number)>(numberOrIdentity);
+        const nodeValue = RPath<JSONStateObject>(nodePath, original);
 
-        const newStates = assocPath(
+        const newStates = this.updateAtPath(
             nodePath,
             {
                 ...nodeValue,
@@ -231,8 +249,8 @@ export class JSONBuilderUtil {
         return this.json;
     }
 
-    getNodeParentPath(path: string | string[]): string[] {
-        const nodePath = Array.isArray(path) ? path : path.split('.');
+    getNodeParentPath(path: string | string[]): (string | number)[] {
+        const nodePath = convertToArrayPath(path);
         return nodePath.slice(0, nodePath.length - 1);
     }
 
@@ -241,8 +259,8 @@ export class JSONBuilderUtil {
     }
 
     getNodeJsonAtPath(path: string | string[]): JSONStateObject | undefined {
-        const nodePath = Array.isArray(path) ? path : path.split('.');
-        return rPath(nodePath, this.json.States);
+        const nodePath = convertToArrayPath(path);
+        return RPath(nodePath, this.json.States);
     }
 
     setNodeStateName(state: string, newState: string) {
@@ -256,5 +274,14 @@ export class JSONBuilderUtil {
 
     toString() {
         return JSON.stringify(this.json);
+    }
+
+    updateAtPath<T extends JSONState, V = JSONStateObject>(path: string | (string | number)[], content: V, jsonStateObj: T): T {
+        const rawPath = convertToArrayPath(path);
+        // Convert perceived indexes from strings to integers to
+        // ensure arrays are not converted to objects.
+        const nodePath = rawPath.map(numberOrIdentity);
+
+        return assocPath(nodePath, content, jsonStateObj);
     }
 }

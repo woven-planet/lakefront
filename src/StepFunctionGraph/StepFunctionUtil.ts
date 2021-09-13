@@ -75,7 +75,7 @@ const handleParallel = (node: any, graph: Digraph, addedVertex: number, lastStat
     const { Branches } = node[key];
 
     Branches.forEach((branch: any) => {
-        generateStepFunctionGraph(branch, graph, addedVertex, lastStateKey);
+        generateStepFunctionGraph(branch, graph, addedVertex, lastStateKey, false);
     });
 
     return graph;
@@ -85,7 +85,7 @@ const handleMap = (node: any, graph: Digraph, addedVertex: number, lastStateKey:
     const [key] = Object.keys(node);
     const { Iterator } = node[key];
 
-    generateStepFunctionGraph(Iterator, graph, addedVertex, lastStateKey);
+    generateStepFunctionGraph(Iterator, graph, addedVertex, lastStateKey, false);
 
     return graph;
 };
@@ -145,7 +145,7 @@ export const addMetadata = (parentPath: string, currentKey: string | number, sta
 };
 
 // Main parsing function for populating a Digraph from a given step function JSON
-export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom?: number, lastStateKey?: string) => {
+export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom?: number, lastStateKey?: string, updateMetaData: boolean = true) => {
     let isLastNode = false;
 
     // Add the start node if we don't have any vertices yet. V is the vertex count in the graph
@@ -156,7 +156,10 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
     const nodeKeys = Object.keys(json.States);
     const nodes = nodeKeys
         .map((key) => {
-            addMetadata('', key, json.States[key]);
+            if (updateMetaData) {
+                addMetadata('', key, json.States[key]);
+            };
+
             return {
                 [key]: json.States[key]
             };

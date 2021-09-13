@@ -627,6 +627,9 @@ export const drawGraph = (
 
     const delayed: any[] = [];
 
+    // Sort vertices to ensure drawing in order top to bottom.
+    verticesAtDepth.sort(([a], [b]) => a - b);
+
     // Main loop for drawing most nodes, outer loop iterating over each depth in the graph matrix
     verticesAtDepth.forEach((depth: number[], depthIndex: number) => {
         const groups: number[][] = getGroupsAtDepth(depth, graph);
@@ -656,7 +659,7 @@ export const drawGraph = (
         });
     });
 
-    const sortedVertices = [...allVertices].sort();
+    const sortedVertices = [...allVertices].sort((a, b) => a - b);
 
     // Go back and draw all the Parallel and Map boxes we skipped earlier now that we can determine the height and width
     sortedVertices.forEach((vertex) => {
