@@ -140,13 +140,15 @@ const StepFunctionAuthoring: FC = () => {
             } else {
                 nextNode = isParallelOrMap ? ContextNodeNext : nextNodes?.[0];
             }
-            JSONBuilder.current.addNodeAfterPath(
+            JSONBuilder.current.addOrderedNode(
                 newKey,
                 {
                     Type: 'Task',
                     Next: nextNode
                 },
-                nodePath
+                {
+                    siblingPath: nodePath
+                }
             );
 
             // Store change in snapshot history
@@ -204,7 +206,58 @@ const StepFunctionAuthoring: FC = () => {
     };
     
     const handleAddNodeInside = () => {
-         
+        setShowMenu(false);
+
+        if (contextNode) {
+            const [,contextNodeVertex] = contextNode;
+            const contextNodeData = graph.getDataByVertex(contextNodeVertex);
+            
+            const [key] = Object.keys(contextNodeData);
+            const { Type } = contextNodeData[key];
+
+            if (Type === WorkFlowType.MAP) {
+                const [[firstMapNodeKey]] = Object.entries<JSONStateObject>(contextNodeData[key].Iterator.States).sort(([, nodeA], [, nodeB]) => {
+                    {
+                        if (nodeA?.Metadata?.SortOrder && nodeB?.Metadata?.SortOrder) {
+                            return nodeA.Metadata.SortOrder - nodeB.Metadata.SortOrder;
+                        }
+            
+                        return 0;
+                    }
+                });
+                const firstMapNode = contextNodeData[key].Iterator.States[firstMapNodeKey];
+                
+                // Generate a unique node name
+                const newKey = generateNodeName();
+                
+                const newNode = {
+                    Type: 'Task',
+                    Next: firstMapNodeKey
+                };
+
+                JSONBuilder.current.addOrderedNode(
+                    newKey,
+                    newNode,
+                    {
+                        siblingPath: firstMapNode.Metadata.NodePath,
+                        after: false
+                    }
+                );
+
+                // Store change in snapshot history
+                createSnapshot({
+                    change: {
+                        type: StephFunctionAuthoringChangeType.ADD,
+                        key: newKey,
+                        data: newNode
+                    }
+                });
+            }
+
+
+            // setJson(JSONBuilder.current.getJson());
+            setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
+        }
     };
 
     const handleSave = () => {
