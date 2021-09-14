@@ -214,6 +214,9 @@ const StepFunctionAuthoring: FC = () => {
             
             const [key] = Object.keys(contextNodeData);
             const { Type } = contextNodeData[key];
+            
+            // Generate a unique node name
+            const newKey = generateNodeName();
 
             if (Type === WorkFlowType.MAP) {
                 const [[firstMapNodeKey]] = Object.entries<JSONStateObject>(contextNodeData[key].Iterator.States).sort(([, nodeA], [, nodeB]) => {
@@ -226,9 +229,6 @@ const StepFunctionAuthoring: FC = () => {
                     }
                 });
                 const firstMapNode = contextNodeData[key].Iterator.States[firstMapNodeKey];
-                
-                // Generate a unique node name
-                const newKey = generateNodeName();
                 
                 const newNode = {
                     Type: 'Task',
@@ -254,8 +254,30 @@ const StepFunctionAuthoring: FC = () => {
                 });
             }
 
+            if (Type === WorkFlowType.PARALLEL) {
+                const currentBranches = contextNodeData[key].Branches;   
+                const taskBuilder = new JSONBuilderUtil().addTask(newKey, undefined, true);  
+                const taskBase = {};
 
-            // setJson(JSONBuilder.current.getJson());
+                addMetadata(`${contextNodeData[key].Metadata.NodePath}.Branches.${currentBranches.length}.States`, newKey, taskBase);
+                taskBuilder.editNodeAtPath(newKey, taskBase);
+
+                JSONBuilder.current.editNodeAtPath(contextNodeData[key].Metadata.NodePath, {
+                    Branches: [...currentBranches, taskBuilder.getJson()],
+                    Choices: undefined,
+                    Iterator: undefined
+                });
+
+                // Store change in snapshot history
+                createSnapshot({
+                    change: {
+                        type: StephFunctionAuthoringChangeType.ADD,
+                        key: newKey,
+                        data: taskBuilder.getJson()
+                    }
+                });
+            }
+
             setJson(prevState => ({...prevState, ...JSONBuilder.current.getJson()}));
         }
     };

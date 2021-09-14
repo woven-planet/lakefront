@@ -21,6 +21,6 @@ export interface StepFunctionAuthoringSnapshot {
     change?: {
         type: StephFunctionAuthoringChangeType,
         key: string;
-        data?: JSONStateObject
+        data?: JSONStateObject | StepFunctionJSON
     };
 }
