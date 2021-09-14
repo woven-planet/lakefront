@@ -181,7 +181,7 @@ const StepFunctionAuthoring: FC = () => {
 
     const addChoiceAtPath = (path: string, choiceKey: string = generateNodeName(), currentChoices: JSONStateObject[]) => {
         // New Choices will always point to the End until edited
-        JSONBuilder.current.addTaskAtPath(path, undefined, true);
+        JSONBuilder.current.addTaskAtPath([...JSONBuilderUtil.getNodeParentPath(path), choiceKey], undefined, true);
     
         JSONBuilder.current.editNodeAtPath(path, {
             Choices: [...currentChoices, JSONBuilderUtil.getChoiceForAdd(choiceKey)]
@@ -303,10 +303,7 @@ const StepFunctionAuthoring: FC = () => {
                 change: {
                     type: StephFunctionAuthoringChangeType.UPDATE,
                     key: name || highlightedNodeState,
-                    data: JSONBuilder.current.getNodeJsonAtPath([
-                        ...JSONBuilder.current.getNodeParentPath(nodePath),
-                        name || highlightedNodeState
-                    ])
+                    data: JSONBuilder.current.getNodeJsonAtPath(nodePath)
                 }
             });
     
