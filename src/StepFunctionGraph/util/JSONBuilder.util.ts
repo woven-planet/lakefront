@@ -284,7 +284,7 @@ export class JSONBuilderUtil {
         return this.json.States[state];
     }
 
-    getNodeJsonAtPath(path: string | string[]): JSONStateObject | undefined {
+    getNodeJsonAtPath(path: string | (string | number)[]): JSONStateObject | undefined {
         const nodePath = convertToArrayPath(path);
         return RPath(nodePath, this.json.States);
     }

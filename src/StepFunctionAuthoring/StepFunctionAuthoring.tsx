@@ -359,17 +359,19 @@ const StepFunctionAuthoring: FC = () => {
 
                 // Get all parents of updated node
                 const indegrees = graph.getIndegree(highlightedNodeVertex);
-                const parentKeys = indegrees
+                const parentPaths = indegrees
                     .map((vertex) => {
                         const [key] = Object.keys(graph.getDataByVertex(vertex));
-                        return key;
+                        return graph.getDataByVertex(vertex)[key]?.Metadata?.NodePath;
                     });
 
                 // Redirect each parent to the new key name
-                for (const parentKey of parentKeys) {
-                    JSONBuilder.current.editNodeAtPath(parentKey, {
-                        Next: name
-                    });
+                for (const path of parentPaths) {
+                    if (path) {
+                        JSONBuilder.current.editNodeAtPath(path, {
+                            Next: name
+                        });
+                    }
                 }
             }
 
