@@ -1,6 +1,6 @@
 import 'jest-canvas-mock';
-import { CANVAS_DEFAULTS, graphContext } from './utils/graphTestUtils.util';
-import { JSONBuilderUtil } from './utils/JSONBuilder.util';
+import { CANVAS_DEFAULTS, graphContext } from './util/graphTestUtils.util';
+import { JSONBuilderUtil } from '../util/JSONBuilder.util';
 import { getX, getY, renderVertex, X_OFFSET } from '../GraphRenderer';
 import { WorkFlowType } from '../StepFunctionUtil';
 import { NodeDimensions } from '../GraphUtil';

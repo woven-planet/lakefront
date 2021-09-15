@@ -81,6 +81,16 @@ class Digraph {
         this.vertexDataMap.set(vertex.vertex, vertex.data);
     }
 
+    // Utility method to return a vertex with a provided key
+    getVertexByKey(vertexKey: string): number | undefined {
+        for (const [key, value] of this.vertexDataMap.entries()) {
+            const [name] = Object.keys(value);
+            if (name === vertexKey) {
+                return key;
+            }
+        }
+    }
+
     // Utility method to return a vertex with a provided find function that searches data stored for a given vertex
     getVertexByData(findFn: (any: any) => boolean): number | undefined {
         for (const [key, value] of this.vertexDataMap.entries()) {
