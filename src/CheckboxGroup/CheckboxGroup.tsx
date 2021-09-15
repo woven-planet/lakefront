@@ -21,17 +21,44 @@ export interface CheckboxGroupOption {
     color?: string;
 }
 
-interface CheckboxGroupProps {
+export interface CheckboxGroupProps {
+    /**
+     * The options that should be displayed in the checkbox group.
+     */
     options: CheckboxGroupOption[];
-    allColor?: string;
+    /**
+     * These are the classes that would be applied to the Checkbox group.
+     */
     className?: string;
-    classNameItem?: string;
+    /**
+     * The action that should be run when the checked state changes.
+     */
     onHandleChange(items: Set<string>): void;
+    /**
+     * The name of the Checkbox group.
+     */
     name: string;
+    /**
+     * The options that are checked when the control loads.
+     */
     selected: Set<string>;
+    /**
+     * This option is to select or unselect all the checkboxes. 
+     * Specify the name of the label to be displayed for checkbox.
+     */
     allLabel?: string;
+    /**
+     * This option is used to set the select all checkbox color.
+     */
+    allColor?: string;
 }
 
+/**
+ * The Checkbox Group Component
+ *
+ * The CheckboxGroup component can be used to provide multiple checkbox options. The user can set default selection on
+ * the checkbox group render. The All option is provided to check or uncheck all the options.
+ */
 const CheckboxGroup: FC<CheckboxGroupProps> = (
     {
         allColor,

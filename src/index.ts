@@ -7,6 +7,8 @@ export { default as Button } from './Button/Button';
 
 export { default as Checkbox } from './Checkbox/Checkbox';
 
+export { default as CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+
 export { default as Collapsible } from './Collapsible/Collapsible';
 
 export { default as CopyButton } from './CopyButton';
@@ -22,9 +24,9 @@ export { default as IconButton } from './Button/IconButton';
 
 export { default as Input } from './Input/Input';
 
-export { default as Loading } from'./Loading/Loading';
+export { default as Loading } from './Loading/Loading';
 
-export { default as Modal, ConfirmationModal } from'./Modal';
+export { default as Modal, ConfirmationModal } from './Modal';
 
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 
@@ -40,7 +42,7 @@ export * from './StepFunctionAuthoring/types';
 
 export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
 
-export { default as TextArea } from'./TextArea/TextArea';
+export { default as TextArea } from './TextArea/TextArea';
 
 export { default as Toggle } from './Toggle/Toggle';
 

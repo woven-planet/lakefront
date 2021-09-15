@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 import Button from 'src/Button/Button';
 import theme from 'src/styles/theme';
@@ -118,6 +118,8 @@ const Modal: FC<ModalProps> = (props) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [dialogElement, setDialogElement] = useState<HTMLElement | null>(null);
     const [update, setUpdate] = useState<number>(0);
+    const [bodyOverflow, setBodyOverflow] = useState<string>('');
+    const bodyOverflowRef = useRef(false);
 
     useEffect(() => {
         const bodyElementHTMLCollection = document.getElementsByTagName('body');
@@ -173,6 +175,21 @@ const Modal: FC<ModalProps> = (props) => {
             portal.style.zIndex = `${theme?.zIndex?.modal}`;
         }
     }, [update]);
+
+    useEffect(() => {
+        if (document) {
+            if (!bodyOverflowRef.current) {
+                setBodyOverflow(document.body.style.overflow);
+                bodyOverflowRef.current = true;
+            }
+
+            isOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = bodyOverflow;
+            return (() => {
+                document.body.style.overflow = bodyOverflow;
+            });
+        }
+    }, [isOpen]);
+
 
     const dialogNodeMounted = (node: HTMLDivElement) => {
         setDialogElement(node);
