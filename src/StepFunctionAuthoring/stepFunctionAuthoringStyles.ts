@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { theme } from '../index';
 
 export const Wrapper = styled.div({
     display: 'flex',
@@ -21,11 +20,11 @@ export const SubmitWrapper = styled(SpacedButtons)({
     marginTop: 32
 });
 
-export const EditForm = styled.div({
-    backgroundColor: theme.colors.selago,
-    borderLeft: theme.borders.primary,
+export const EditForm = styled.div(({ theme }) => ({
+    backgroundColor: theme?.colors?.selago,
+    borderLeft: theme?.borders?.primary,
     padding: 8
-});
+}));
 
 export const TypeSpan = styled.span({
     display: 'block',
@@ -38,9 +37,9 @@ export const StyledTypeLabel = styled.label({
     }
 });
 
-export const Menu = styled.ul({
-    backgroundColor: theme.colors.white,
-    border: theme.borders.primary,
+export const Menu = styled.ul(({ theme }) => ({
+    backgroundColor: theme?.colors?.white,
+    border: theme?.borders?.primary,
     padding: 0,
     position: 'absolute',
     transform: 'translateX(-30%)',
@@ -48,8 +47,8 @@ export const Menu = styled.ul({
         listStyle: 'none',
         padding: '4px 8px',
         ':hover': {
-            backgroundColor: theme.colors.mercury,
+            backgroundColor: theme?.colors?.mercury,
             cursor: 'pointer'
         }
     }
-});
+}));
