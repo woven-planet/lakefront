@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import StepFunctionGraph from 'src/StepFunctionGraph/Graph';
-import { JSONBuilderUtil, JSONStateObject } from 'src/StepFunctionGraph/util/JSONBuilder.util';
+import { JSONBuilderUtil, JSONStateObject, StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 import { Button, Input, RadioGroup } from '../index';
 import Digraph from 'src/StepFunctionGraph/Digraph';
 import { addMetadata, generateStepFunctionGraph, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
@@ -9,9 +9,25 @@ import { DEFAULT_FORM_STATE, DEFAULT_GRAPH_STATE, FORM_KEYS, TYPE_OPTIONS, gener
 import { StephFunctionAuthoringFormState, StepFunctionAuthoringSnapshot, StephFunctionAuthoringChangeType } from './types';
 import { omit } from 'ramda';
 
-const StepFunctionAuthoring: FC = () => {
+interface StepFunctionAuthoringProps {
+    /**
+     * The initial Step Function JSON to supply to the graph. If left empty,
+     * a configuration with a single task node will be used.
+     */
+    initialGraphState?: StepFunctionJSON;
+}
+
+/**
+ * Step Function Authoring Component
+ *
+ * The Step Function Authoring component can be used to build AWS Step Function JSON using an interactive 2D canvas and editing form.
+ * It is a layer on top of the [StepFunctionGraph Component](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctiongraph--simple-graph)
+ * and includes all of the panning and highlighting functionality. Added to that functionality is right-click actions allowing
+ * for contextual updates to the graph.
+ */
+const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphState }) => {
     // Graph State
-    const JSONBuilder = useRef(new JSONBuilderUtil());
+    const JSONBuilder = useRef(new JSONBuilderUtil(initialGraphState));
     const [json, setJson] = useState(DEFAULT_GRAPH_STATE);
     const [snapshots, setSnapshots] = useState<StepFunctionAuthoringSnapshot[]>([]);
     const graph = useMemo(() => generateStepFunctionGraph(json, new Digraph()), [json]);
@@ -30,7 +46,9 @@ const StepFunctionAuthoring: FC = () => {
 
     useEffect(() => {
         // Initialize Graph Render
-        JSONBuilder.current.addTask('Task');
+        if (!initialGraphState) {
+            JSONBuilder.current.addTask('Task');
+        }
         setJson(JSONBuilder.current.getJson());
     }, []);
 

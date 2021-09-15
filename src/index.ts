@@ -34,6 +34,10 @@ export { default as StackBannerRow } from './StackBanner/StackBannerRow';
 
 export { default as SelectPopover } from './SelectPopover/SelectPopover';
 
+export { default as StepFunctionAuthoring } from'./StepFunctionAuthoring';
+export * from './StepFunctionAuthoring/util';
+export * from './StepFunctionAuthoring/types';
+
 export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
 
 export { default as TextArea } from'./TextArea/TextArea';
