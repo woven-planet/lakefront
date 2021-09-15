@@ -1,5 +1,5 @@
 import 'jest-canvas-mock';
-import { graphContext } from './utils/graphTestUtils.util';
+import { graphContext } from './util/graphTestUtils.util';
 import { JSONBuilderUtil } from '../util/JSONBuilder.util';
 import {
     adjustDepthMatrix,
