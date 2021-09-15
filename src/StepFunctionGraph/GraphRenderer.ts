@@ -76,8 +76,13 @@ export const handleMap = (
 
     const exclusionArray: number[] = [vertex, endVertex];
     if (nextVertex !== -1) {
-        exclusionArray.push(nextVertex);
+        // Exclude all possible vertices that exist
+        // between the next vertex and the end vertex
+        for (let index = nextVertex; index < endVertex; index++) {
+            exclusionArray.push(index);  
+        }
     }
+
     const mapNodeMatrix = DigraphDFS.getVerticesAtDepthFromPaths(paths, exclusionArray);
     const baselineNode = drawn.get(mapNodeMatrix[0][0]);
     const baselineWidth = baselineNode ? baselineNode.width : 0;
@@ -183,7 +188,11 @@ export const handleParallel = (
     const exclusionArray: number[] = [vertex, endVertex, ...catchVertices];
 
     if (nextVertex !== -1) {
-        exclusionArray.push(nextVertex);
+        // Exclude all possible vertices that exist
+        // between the next vertex and the end vertex
+        for (let index = nextVertex; index < endVertex; index++) {
+            exclusionArray.push(index);  
+        }
     }
 
     const paths = DigraphDFS.getAllDfsPaths(graph.getAdjacencyMatrix(), [vertex]);
@@ -618,6 +627,9 @@ export const drawGraph = (
 
     const delayed: any[] = [];
 
+    // Sort vertices to ensure drawing in order top to bottom.
+    verticesAtDepth.sort(([a], [b]) => a - b);
+
     // Main loop for drawing most nodes, outer loop iterating over each depth in the graph matrix
     verticesAtDepth.forEach((depth: number[], depthIndex: number) => {
         const groups: number[][] = getGroupsAtDepth(depth, graph);
@@ -647,7 +659,7 @@ export const drawGraph = (
         });
     });
 
-    const sortedVertices = [...allVertices].sort();
+    const sortedVertices = [...allVertices].sort((a, b) => a - b);
 
     // Go back and draw all the Parallel and Map boxes we skipped earlier now that we can determine the height and width
     sortedVertices.forEach((vertex) => {
