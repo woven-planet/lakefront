@@ -1,4 +1,6 @@
-import { assocPath, cond, identity, last, omit, path as RPath, T as RT } from 'ramda';
+import * as R from 'ramda';
+
+const { assocPath, cond, identity, last, omit, path: RPath, T: RT } = R;
 
 export type NodeType = 'Task' | 'Success' | 'Choice' | 'Map' | 'Parallel' | 'Catch' | string;
 

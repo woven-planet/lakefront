@@ -7,7 +7,7 @@ import { addMetadata, generateStepFunctionGraph, WorkFlowType } from 'src/StepFu
 import { EditForm, Menu, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
 import { DEFAULT_FORM_STATE, DEFAULT_GRAPH_STATE, FORM_KEYS, TYPE_OPTIONS, generateNodeName, isComplexNode } from './util';
 import { StephFunctionAuthoringFormState, StepFunctionAuthoringSnapshot, StephFunctionAuthoringChangeType } from './types';
-import { omit } from 'ramda';
+import omit from 'ramda/src/omit';
 
 interface StepFunctionAuthoringProps {
     /**
