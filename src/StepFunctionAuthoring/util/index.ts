@@ -1,5 +1,6 @@
 import { WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
 import { StephFunctionAuthoringFormState } from 'src/StepFunctionAuthoring';
+import { StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 
 export const TYPE_OPTIONS = [
     { label: WorkFlowType.TASK, value: WorkFlowType.TASK },
@@ -17,7 +18,7 @@ export const FORM_KEYS = {
 
 export const DEFAULT_FORM_STATE: StephFunctionAuthoringFormState = { name: '', next: '', nodeType: '' };
 
-export const DEFAULT_GRAPH_STATE = { States: {} };
+export const DEFAULT_GRAPH_STATE: StepFunctionJSON = { States: {} };
 
 /**
  * Generates a unique node name.
