@@ -15,8 +15,7 @@ export interface PageProps {
  * 
  * The Page Component can be used to render other child components.
  */
-const Page: FC<PageProps> = props => {
-    const { children, className } = props;
+const Page: FC<PageProps> = ({ children, className }) => {
     return ( 
         <ThemeProvider theme={theme}>
             <StyledPage className={className}>

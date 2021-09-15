@@ -8,8 +8,7 @@ import theme from 'src/styles/theme';
  * 
  * The Header component is used to render the header.
  */
-const Header: FC = props => {
-    const { children } = props;
+const Header: FC = ({ children }) => {
     return ( 
         <ThemeProvider theme={theme}>
             <StyledHeader>
