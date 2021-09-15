@@ -7,9 +7,8 @@ export const StyledPage = styled.div<PageProps>(() => ({
 }));
 
 export const StyledHeader = styled.div(({ theme }) => ({
-    margin: '0 0 12px',
     color: theme?.colors?.storm,
     fontSize: 30,
     fontWeight: 600,
-    marginBottom: 0
+    margin: '0 0 12px'
 }));
