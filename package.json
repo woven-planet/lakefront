@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.77.2",
+  "version": "0.77.5",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -28,9 +28,12 @@
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "copyfiles": "^2.4.1",
+    "d3": "^7.0.1",
+    "dagre-d3": "^0.6.4",
     "query-string": "^7.0.0",
     "ramda": "^0.27.1",
-    "react-select": "^4.3.1"
+    "react-select": "^4.3.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
