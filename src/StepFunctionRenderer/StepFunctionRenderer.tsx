@@ -1,64 +1,18 @@
-import { useRef } from 'react';
-import styled from '@emotion/styled';
+import { FC, useRef } from 'react';
 import { useEffect } from 'react';
 import dagreD3 from 'dagre-d3';
-import * as d3 from 'd3';
-import { getStates } from './stepFunction';
-import { buildGraph } from './graph';
+import { select as d3Select, Selection } from 'd3-selection';
+import { curveBasis } from 'd3-shape';
+import { zoom as d3Zoom, zoomIdentity as d3ZoomIdentity } from 'd3-zoom';
+import { buildGraph, getStates, renderObject } from './util';
+import { StepFunctionRendererProps } from './types';
+import { StepFunctionRendererContainer, OuterSvg } from './stepFunctionRendererStyles';
 
-const StepFunctionRendererContainer = styled.div({
-    height: 700,
-    width: '100%',
-    maxWidth: 1000,
-    '.svgWrapper': { width: '100%', height: '100%', boxSizing: 'border-box' },
-    '.clusters rect': { fill: 'white', stroke: '#999', strokeWidth: '1.5px' },
-    text: {
-        fontWeight: 300,
-        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serf',
-        fontSize: '14px'
-    },
-    '.node rect, .node circle': {
-        stroke: '#999',
-        fill: '#fff',
-        strokeWidth: '1.5px'
-    },
-    '.edgePath path': { stroke: '#333', strokeWidth: '1.5px' },
-    '.tooltip': {
-        padding: '5px',
-        backgroundColor: 'white',
-        border: '1px solid grey',
-        borderRadius: '5px',
-        color: 'black'
-    },
-    'table, td, tr': { border: 'none', borderCollapse: 'collapse' },
-    td: { padding: '5px' },
-    '.tooltipTableRow:nth-child(odd)': { backgroundColor: '#DDD !important' }
-});
-
-function makeId() {
-    return `${Math.random()}`;
-}
-
-function renderObject(data, object) {
-    const rows = Object.keys(object).map((key) => {
-        const value = object[key];
-        const id = makeId();
-        return `
-        <tr class="tooltipTableRow">
-          <td>${key}</td>
-          <td>data: ${data}, key: ${key}, id: ${id}</td>
-          <td><input id="${id}" value="${value}" /></td>
-        </tr>
-      `;
-    });
-    return `<table>
-      ${rows.join('')}
-    </table>`;
-}
-
-const StepFunctionRenderer = ({ stepFunctionJSON }) => {
+const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON }) => {
+    const containerRef = useRef(null);
     const outerSvgRef = useRef(null);
     const innerGroupRef = useRef(null);
+    const toolTipsToRemove = useRef<Selection<any, any, any, any>[]>([]);
     const serializedGraph = buildGraph(stepFunctionJSON);
     const states = getStates(stepFunctionJSON);
     const data = {
@@ -67,103 +21,127 @@ const StepFunctionRenderer = ({ stepFunctionJSON }) => {
     };
 
     useEffect(() => {
-       if (innerGroupRef.current && outerSvgRef.current) {
-        const { serializedGraph, states } = data;
+        if (containerRef.current && innerGroupRef.current && outerSvgRef.current) {
+            const { serializedGraph, states } = data;
 
-        const enhanceWithCurvedEgdes = (graph) => {
-            (graph.edges || []).forEach((edge) => {
-                edge.value = {
-                    ...edge.value,
-                    curve: d3.curveBasis
-                };
-            });
-            return graph;
-        };
-
-        const g = new dagreD3.graphlib.json.read(enhanceWithCurvedEgdes(JSON.parse(serializedGraph)));
-
-        const svg = d3.select(outerSvgRef.current);
-        const inner = d3.select(innerGroupRef.current);
-
-        // Clear any old group content
-        inner.html('');
-
-        // Set up zoom support
-        const zoom = d3.zoom().on('zoom', function (event) {
-            inner.attr('transform', event.transform);
-        });
-
-        svg.call(zoom).on('dblclick.zoom', null);
-
-        // Create the renderer
-        const render = new dagreD3.render();
-
-        // Run the renderer. This is what draws the final graph.
-        try {
-            g.graph().transition = function (selection) {
-                return selection.transition().duration(500);
+            const enhanceWithCurvedEgdes = (graph) => {
+                (graph.edges || []).forEach((edge) => {
+                    edge.value = {
+                        ...edge.value,
+                        curve: curveBasis
+                    };
+                });
+                return graph;
             };
 
-            let isTooltipOpened = false;
+            const g = new dagreD3.graphlib.json.read(enhanceWithCurvedEgdes(JSON.parse(serializedGraph)));
 
-            // TODO.. tooltip should be done via react so it can be removed on unmount
-            const tooltip = d3
-                .select('body')
-                .append('div')
-                .style('position', 'absolute')
-                .style('z-index', '10')
-                .style('visibility', 'hidden')
-                .style('backgroung-color', 'green')
-                .attr('class', 'tooltip');
+            const container = d3Select<Element, HTMLElement>(containerRef.current);
+            const svg = d3Select<Element, HTMLElement>(outerSvgRef.current);
+            const inner = d3Select<Element, HTMLElement>(innerGroupRef.current);
 
-            render(inner, g);
+            // Clear any old group content
+            inner.html('');
 
-            inner
-                .selectAll('g.node')
-                .style('cursor', 'pointer')
-                .on('click', function (event, eventData) {
+            // Set up zoom support
+            const zoom = d3Zoom<Element, HTMLElement>().on('zoom', function (event) {
+                inner.attr('transform', event.transform);
+            });
+
+            svg.call(zoom).on('dblclick.zoom', null);
+
+            // Create the renderer
+            const render = new dagreD3.render();
+
+            // Run the renderer. This is what draws the final graph.
+            try {
+                g.graph().transition = function (selection: any) {
+                    return selection.transition().duration(500);
+                };
+
+                let isTooltipOpened = false;
+
+                // Create tooltip and store for unmount
+                const tooltip = d3Select('body')
+                    .append('div')
+                    .style('position', 'absolute')
+                    .style('z-index', '10')
+                    .style('visibility', 'hidden')
+                    .style('background-color', 'green')
+                    .attr('class', 'tooltip');
+                toolTipsToRemove.current.push(tooltip);
+
+                // Render graph
+                render(inner, g);
+
+                container.on('click', (event, eventData) => {
                     if (isTooltipOpened || !states[eventData]) {
                         tooltip.style('visibility', 'hidden');
 
                         isTooltipOpened = false;
                         return;
                     }
-
-                    tooltip
-                        .style('visibility', 'visible')
-                        .style('top', event.pageY - 10 + 'px')
-                        .style('left', event.pageX + 10 + 'px')
-                        .html(renderObject(eventData, states[eventData]));
-
-                    isTooltipOpened = true;
                 });
 
-            // Center the graph
-            const initialScale = 1;
+                inner
+                    .selectAll('g.node')
+                    .style('cursor', 'pointer')
+                    .on('click', function (event, eventData) {
+                        event.stopPropagation();
+                        if (isTooltipOpened || !states[eventData]) {
+                            tooltip.style('visibility', 'hidden');
 
-            const svgWidth = +svg.style('width').slice(0, -2);
-            const svgHeight = +svg.style('height').slice(0, -2);
+                            isTooltipOpened = false;
+                            return;
+                        }
+                    })
+                    .on('contextmenu', (event: PointerEvent, eventData: string) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        tooltip
+                            .style('visibility', 'visible')
+                            .style('top', event.pageY - 10 + 'px')
+                            .style('left', event.pageX + 10 + 'px')
+                            .html(renderObject(eventData, states[eventData]));
 
-            svg.call(
-                zoom.transform,
-                d3.zoomIdentity
-                    .translate(
-                        (svgWidth - g.graph().width * initialScale) / 2,
-                        (svgHeight - g.graph().height * initialScale) / 2
-                    )
-                    .scale(initialScale)
-            );
-        } catch (error) {
-            console.log(error);
+                        isTooltipOpened = true;
+
+                        return;
+                    });
+
+                // Center the graph
+                const initialScale = 1;
+
+                const svgWidth = +svg.style('width').slice(0, -2);
+                const svgHeight = +svg.style('height').slice(0, -2);
+
+                svg.call(
+                    zoom.transform,
+                    d3ZoomIdentity
+                        .translate(
+                            (svgWidth - g.graph().width * initialScale) / 2,
+                            (svgHeight - g.graph().height * initialScale) / 2
+                        )
+                        .scale(initialScale)
+                );
+            } catch (error) {
+                console.log(error);
+            }
         }
-       }
-    }, [innerGroupRef, outerSvgRef, stepFunctionJSON]);
+
+        return () => {
+            // Remove any remaining tooltips from document
+            toolTipsToRemove.current.forEach((tooltip) => {
+                tooltip.remove();
+            });
+        };
+    }, [containerRef, innerGroupRef, outerSvgRef, stepFunctionJSON]);
 
     return (
-        <StepFunctionRendererContainer>
-            <svg width="100%" height="100%" ref={outerSvgRef}>
+        <StepFunctionRendererContainer ref={containerRef}>
+            <OuterSvg ref={outerSvgRef}>
                 <g ref={innerGroupRef} />
-            </svg>
+            </OuterSvg>
         </StepFunctionRendererContainer>
     );
 };
