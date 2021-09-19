@@ -307,7 +307,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 taskBuilder.editNodeAtPath(newKey, taskBase);
 
                 JSONBuilder.current.editNodeAtPath(contextNodeData[key].Metadata.NodePath, {
-                    Branches: [...currentBranches, taskBuilder.getJson()],
+                    Branches: [...currentBranches, { ...taskBuilder.getJson(), StartAt: newKey }],
                     Choices: undefined,
                     Iterator: undefined
                 });
@@ -353,7 +353,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                     taskBuilder.editNodeAtPath(newTask, taskBase);
 
                     JSONBuilder.current.editNodeAtPath(nodePath, {
-                        Branches: [taskBuilder.getJson()],
+                        Branches: [{ ...taskBuilder.getJson(), StartAt: newTask }],
                         Choices: undefined,
                         Iterator: undefined
                     });
