@@ -296,7 +296,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
 
             if (Type === WorkFlowType.PARALLEL) {
                 const currentBranches = contextNodeData[key].Branches;
-                const taskBuilder = new JSONBuilderUtil().addTask(newKey, undefined, true);
+                const taskBuilder = new JSONBuilderUtil({ StartAt: '', States: {} }).addTask(newKey, undefined, true);
                 const taskBase = {};
 
                 addMetadata(
@@ -344,7 +344,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
             // Complex nodes have unique fields in their objects and need to be handled separately
             if (isComplexNode(nodeType)) {
                 const newTask = generateNodeName();
-                const taskBuilder = new JSONBuilderUtil().addTask(newTask, undefined, true);
+                const taskBuilder = new JSONBuilderUtil({ StartAt: '', States: {} }).addTask(newTask, undefined, true);
                 const taskBase = {};
 
                 // Parallel has Branches
@@ -367,7 +367,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                     JSONBuilder.current.editNodeAtPath(nodePath, {
                         Branches: undefined,
                         Choices: undefined,
-                        Iterator: taskBuilder.getJson()
+                        Iterator: { ...taskBuilder.getJson(), StartAt: newTask }
                     });
                 }
 
