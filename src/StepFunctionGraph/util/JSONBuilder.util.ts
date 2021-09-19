@@ -28,6 +28,7 @@ export interface JSONState {
 }
 
 export interface StepFunctionJSON {
+    StartAt: string;
     States: JSONState;
 }
 
@@ -58,8 +59,10 @@ const convertToArrayPath = (path: string | (string | number)[]) => {
     return Array.isArray(path) ? path : path.split('.');
 };
 
+const INITIAL_STATE = { StartAt: '', States: {} };
+
 export class JSONBuilderUtil {
-    json: StepFunctionJSON = { States: {} };
+    json: StepFunctionJSON = INITIAL_STATE;
 
     constructor(json?: StepFunctionJSON) {
         if (json) {
@@ -253,7 +256,7 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    editNodeAtPath(path: string | string[], content: JSONStateObject): JSONBuilderUtil {
+    editNodeAtPath(path: string | string[], content: { [key: string]: any }): JSONBuilderUtil {
         const original = { ...this.json.States };
         const rawPath = convertToArrayPath(path);
         const nodePath = rawPath.map<string | number>(numberOrIdentity);
@@ -269,6 +272,15 @@ export class JSONBuilderUtil {
         );
 
         this.json.States = newStates;
+
+        return this;
+    }
+
+    editRootJSON(content: StepFunctionJSON): JSONBuilderUtil {
+        this.json = {
+            ...this.json,
+            ...content
+        };
 
         return this;
     }
@@ -297,7 +309,7 @@ export class JSONBuilderUtil {
     }
 
     reset() {
-        this.json = { States: {} };
+        this.json = INITIAL_STATE;
     }
 
     toString() {

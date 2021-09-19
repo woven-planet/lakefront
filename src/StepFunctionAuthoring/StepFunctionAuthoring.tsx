@@ -60,7 +60,8 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
     useEffect(() => {
         // Initialize Graph Render
         if (!initialGraphState) {
-            JSONBuilder.current.addTask('Task');
+            JSONBuilder.current.addTask('Task', undefined, true);
+            JSONBuilder.current.editRootJSON({ ...JSONBuilder.current.json, StartAt: 'Task' });
         }
         setJson(JSONBuilder.current.getJson());
     }, []);
