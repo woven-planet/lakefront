@@ -200,7 +200,7 @@ const Modal: FC<ModalProps> = (props) => {
         () => (
             <>
                 {isOpen && (
-                    <Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()} >
+                    <Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
                         <DialogTitleContainer>
                             {headerText}
                             {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
