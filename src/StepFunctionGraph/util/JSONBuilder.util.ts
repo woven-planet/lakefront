@@ -207,10 +207,12 @@ export class JSONBuilderUtil {
                     }
 
                     if (after && k === siblingKey) {
+                        // Make sure End is updated for both nodes if needed.
+                        const { End } = v;
                         return [
                             ...accum,
-                            [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }],
-                            [name, { ...value, Metadata: { ...value?.Metadata, SortOrder: idx + 0.1 } }]
+                            [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx }, End: undefined }],
+                            [name, { ...value, Metadata: { ...value?.Metadata, SortOrder: idx + 0.1 }, End }]
                         ];
                     }
 

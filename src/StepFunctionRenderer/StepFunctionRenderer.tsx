@@ -4,11 +4,11 @@ import dagreD3 from 'dagre-d3';
 import { select as d3Select, Selection } from 'd3-selection';
 import { curveBasis } from 'd3-shape';
 import { zoom as d3Zoom, zoomIdentity as d3ZoomIdentity } from 'd3-zoom';
-import { buildGraph, getStates, renderObject } from './util';
+import { buildGraph, getStates } from './util';
 import { StepFunctionRendererProps } from './types';
 import { StepFunctionRendererContainer, OuterSvg } from './stepFunctionRendererStyles';
 
-const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON }) => {
+const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON, handleContextClickNode, handleCloseContextMenu, handleSelectedNode, onGraphCreate }) => {
     const containerRef = useRef(null);
     const outerSvgRef = useRef(null);
     const innerGroupRef = useRef(null);
@@ -35,6 +35,9 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON 
             };
 
             const g = new dagreD3.graphlib.json.read(enhanceWithCurvedEgdes(JSON.parse(serializedGraph)));
+            if (onGraphCreate) {
+                onGraphCreate(g, states);
+            }
 
             const container = d3Select<Element, HTMLElement>(containerRef.current);
             const svg = d3Select<Element, HTMLElement>(outerSvgRef.current);
@@ -75,20 +78,30 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON 
                 render(inner, g);
 
                 container.on('click', (event, eventData) => {
-                    if (isTooltipOpened || !states[eventData]) {
-                        tooltip.style('visibility', 'hidden');
-
-                        isTooltipOpened = false;
-                        return;
+                    if (handleCloseContextMenu) {
+                        handleCloseContextMenu();
                     }
+                    // if (isTooltipOpened || !states[eventData]) {
+                    //     tooltip.style('visibility', 'hidden');
+
+                    //     isTooltipOpened = false;
+                    //     return;
+                    // }
                 });
 
                 inner
                     .selectAll('g.node')
                     .style('cursor', 'pointer')
-                    .on('click', function (event, eventData) {
+                    .on('click', (event: PointerEvent, eventData: string) => {
+                        // Handle left-click actions
                         event.stopPropagation();
-                        if (isTooltipOpened || !states[eventData]) {
+                        const node = states[eventData];
+
+                        if (handleSelectedNode) {
+                            handleSelectedNode(eventData, node);
+                        }
+
+                        if (isTooltipOpened || !node) {
                             tooltip.style('visibility', 'hidden');
 
                             isTooltipOpened = false;
@@ -96,15 +109,22 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON 
                         }
                     })
                     .on('contextmenu', (event: PointerEvent, eventData: string) => {
+                        // Handle right-click actions
                         event.stopPropagation();
                         event.preventDefault();
-                        tooltip
-                            .style('visibility', 'visible')
-                            .style('top', event.pageY - 10 + 'px')
-                            .style('left', event.pageX + 10 + 'px')
-                            .html(renderObject(eventData, states[eventData]));
 
-                        isTooltipOpened = true;
+                        const node = states[eventData];
+
+                        if (handleContextClickNode && node) {
+                            handleContextClickNode(eventData, node, event, outerSvgRef.current);
+                        }
+                        // tooltip
+                        //     .style('visibility', 'visible')
+                        //     .style('top', event.pageY - 10 + 'px')
+                        //     .style('left', event.pageX + 10 + 'px')
+                        //     .html(renderObject(eventData, node));
+
+                        // isTooltipOpened = true;
 
                         return;
                     });

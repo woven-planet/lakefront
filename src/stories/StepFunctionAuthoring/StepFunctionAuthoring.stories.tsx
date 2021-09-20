@@ -21,5 +21,32 @@ export const NewStepFunction = Template.bind({});
 export const InitializedStepFunction = Template.bind({});
 
 InitializedStepFunction.args = {
-    initialGraphState: choiceJson
+    initialGraphState: {
+        "StartAt": "Task",
+        "States": {
+            "Task": {
+                "Type": "Choice",
+                "Metadata": {
+                    "NodePath": "Task"
+                },
+                "Choices": [
+                    {
+                        "Next": "node_1632319100805",
+                        "Metadata": {
+                            "NodePath": "Task.Choices.0"
+                        }
+                    }
+                ]
+            },
+            "node_1632319100805": {
+                "Type": "Task",
+                "End": true,
+                "Metadata": {
+                    "NodePath": "node_1632319100805"
+                }
+            }
+        }
+    }
+      
+      
 }

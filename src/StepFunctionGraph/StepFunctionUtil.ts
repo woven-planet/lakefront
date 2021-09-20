@@ -90,6 +90,10 @@ const handleMap = (node: any, graph: Digraph, addedVertex: number, lastStateKey:
     return graph;
 };
 
+/**
+ * The addMetadata function mutates the original provided state by
+ * adding metadata required for StepFunctionAuthoring operations.
+ */
 export const addMetadata = (parentPath: string, currentKey: string | number, state: JSONStateObject) => {
     const { Type } = state;
     const nodePath = `${parentPath}${parentPath ? '.' : ''}${currentKey}`;

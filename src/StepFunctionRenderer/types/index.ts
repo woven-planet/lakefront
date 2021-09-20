@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+
 export interface StepFunction {
     StartAt: string;
     States: Record<string, State>;
@@ -69,5 +71,35 @@ interface ParallelState extends BaseState {
 export type State = TaskState | FailState | SucceedState | MapState | ChoiceState | ParallelState;
 
 export interface StepFunctionRendererProps {
-  stepFunctionJSON: StepFunction;
+    /**
+     * Sends data stored with each node from the parsing step on click inside of any drawn node. Use this data to
+     * store the node key for the highlightedKey prop if node highlighting is desired.
+     */
+    handleSelectedNode(key: string, node: any | null): void;
+    /**
+     * Handle a right-click on any drawn node. This can be used to configure a context menu.
+     */
+    handleContextClickNode?(
+        key: string,
+        node: any,
+        e: PointerEvent,
+        graphContainer: SVGElement | null
+    ): void;
+    /**
+     * Action to run when a node context menu is closed.
+     */
+    handleCloseContextMenu?(): void;
+    /**
+     * Returns the graph object.
+     */
+    onGraphCreate?(graph: any, states: any): void;
+    /**
+     * This should be the node key from the AWS JSON and if supplied, will highlight that node in the graph.
+     */
+    highlightedKey: string | null;
+    /**
+     * This is AWS Step Function JSON contained in an object. See the Storybook Canvas for detailed examples of what
+     * should be provided.
+     */
+    stepFunctionJSON: StepFunction;
 }

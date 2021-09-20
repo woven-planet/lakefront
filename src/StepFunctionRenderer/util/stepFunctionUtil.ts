@@ -57,16 +57,35 @@ export function stringifyChoiceOperator(operator: Operator) {
 export function getStates(stepFunction: StepFunction): Record<string, State> {
     const states: any = {};
     traverseStepFunction(stepFunction, (stateName: string, state: State) => {
-        states[stateName] = oneLevelDeepClone(state);
+        states[stateName] = oneLevelDeepClone(state, true);
     });
     return states;
 }
 
-function oneLevelDeepClone(object: any) {
+const DIRECTIONAL_DATA_KEYS = ['Branches', 'Choices', 'Iterator', 'Metadata'];
+
+const isDirectionalData = (key: string) => DIRECTIONAL_DATA_KEYS.includes(key);
+
+function oneLevelDeepClone(object: any, includeAdditionalData = false) {
     return Object.keys(object).reduce<Record<string, State>>((acc, key) => {
-        if (Array.isArray(object[key]) || typeof object[key] === 'object') {
+        // Current key is not a directional data key
+        // and value at key is an object or array, don't clone it.
+        if ((Array.isArray(object[key]) || typeof object[key] === 'object') && !isDirectionalData(key)) {
             return acc;
         }
+
+        // Current key is directional data key, but includeAdditionalData is false, don't clone it.
+        if (!includeAdditionalData && isDirectionalData(key)) {
+            return acc;
+        }
+
+        // Current key is directional data key and includeAdditionalData is true, clone it.
+        if (isDirectionalData(key)) {
+            acc[key] = object[key];
+            return acc;
+        }
+
+        // Current value is not an object or array, shorten if needed and clone it.
         const shortenedValue = `${object[key]}`.length > 25 ? `${object[key]}`.slice(0, 25) + '...' : object[key];
 
         acc[key] = shortenedValue;
@@ -97,6 +116,7 @@ function traverseStepFunction(stepFunction: StepFunction, callback: (stateName: 
 
 export function renderObject(data: string, state: Record<string, State>) {
     const rows = Object.keys(state).map((key) => {
+        // TODO: Add logic here to handle Metadata object
         const value = state[key];
         const id = makeId();
         return `
