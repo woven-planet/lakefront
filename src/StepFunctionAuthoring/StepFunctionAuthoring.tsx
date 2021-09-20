@@ -284,6 +284,10 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                     after: false
                 });
 
+                JSONBuilder.current.editNodeAtPath(`${contextNodeData[key].Metadata.NodePath}.Iterator`, {
+                    StartAt: newKey
+                });
+
                 // Store change in snapshot history
                 createSnapshot({
                     change: {
