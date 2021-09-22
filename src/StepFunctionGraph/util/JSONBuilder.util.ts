@@ -258,7 +258,7 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    editNodeAtPath(path: string | string[], content: { [key: string]: any }): JSONBuilderUtil {
+    editNodeAtPath(path: string | (string | number)[], content: { [key: string]: any }): JSONBuilderUtil {
         const original = { ...this.json.States };
         const rawPath = convertToArrayPath(path);
         const nodePath = rawPath.map<string | number>(numberOrIdentity);
@@ -278,7 +278,7 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    editRootJSON(content: StepFunctionJSON): JSONBuilderUtil {
+    editRootJSON(content: Partial<StepFunctionJSON>): JSONBuilderUtil {
         this.json = {
             ...this.json,
             ...content
@@ -300,9 +300,13 @@ export class JSONBuilderUtil {
         return this.json.States[state];
     }
 
-    getNodeJsonAtPath(path: string | (string | number)[]): JSONStateObject | undefined {
+    getNodeJsonAtPath(path: string | (string | number)[], startAtStates: boolean = true): JSONStateObject | StepFunctionJSON | undefined {
         const nodePath = convertToArrayPath(path);
-        return RPath(nodePath, this.json.States);
+
+        if (startAtStates) {
+            return RPath(nodePath, this.json.States);
+        }
+        return RPath(nodePath, this.json);
     }
 
     setNodeStateName(state: string, newState: string) {

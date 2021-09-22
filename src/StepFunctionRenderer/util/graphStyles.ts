@@ -1,10 +1,11 @@
 import { State } from '../types';
+import { curveBasis } from 'd3-shape';
 
 const stroke = '#999';
 const red = '#a80d35';
 const green = '#2BD62E';
 
-export const getNodeOptions = (state) => {
+export const getNodeOptions = (state: State) => {
     switch (state.Type) {
         case 'Fail':
             return { style: `stroke: ${red};` };
@@ -43,3 +44,13 @@ export const getClusterOptions = (state: State) => {
 export const getEdgeOptions = () => ({ labelStyle: 'font-style: italic;' });
 
 export const getMissingStyle = () => 'fill: #ff0000;';
+
+export const enhanceWithCurvedEgdes = (graph: { edges: { value: any }[] }) => {
+    (graph.edges || []).forEach((edge) => {
+        edge.value = {
+            ...edge.value,
+            curve: curveBasis
+        };
+    });
+    return graph;
+};

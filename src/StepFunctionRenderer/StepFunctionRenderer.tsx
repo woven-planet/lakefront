@@ -1,12 +1,12 @@
 import { FC, useRef } from 'react';
 import { useEffect } from 'react';
-import dagreD3 from 'dagre-d3';
+import { graphlib, render } from 'dagre-d3';
 import { select as d3Select, Selection } from 'd3-selection';
-import { curveBasis } from 'd3-shape';
 import { zoom as d3Zoom, zoomIdentity as d3ZoomIdentity } from 'd3-zoom';
 import { buildGraph, getStates } from './util';
 import { StepFunctionRendererProps } from './types';
 import { StepFunctionRendererContainer, OuterSvg } from './stepFunctionRendererStyles';
+import { enhanceWithCurvedEgdes } from './util/graphStyles';
 
 const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON, handleContextClickNode, handleCloseContextMenu, handleSelectedNode, onGraphCreate }) => {
     const containerRef = useRef(null);
@@ -24,17 +24,9 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
         if (containerRef.current && innerGroupRef.current && outerSvgRef.current) {
             const { serializedGraph, states } = data;
 
-            const enhanceWithCurvedEgdes = (graph) => {
-                (graph.edges || []).forEach((edge) => {
-                    edge.value = {
-                        ...edge.value,
-                        curve: curveBasis
-                    };
-                });
-                return graph;
-            };
+            const g = graphlib.json.read(enhanceWithCurvedEgdes(JSON.parse(serializedGraph)));
+            const graph = g.graph() as any;
 
-            const g = new dagreD3.graphlib.json.read(enhanceWithCurvedEgdes(JSON.parse(serializedGraph)));
             if (onGraphCreate) {
                 onGraphCreate(g, states);
             }
@@ -54,11 +46,11 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
             svg.call(zoom).on('dblclick.zoom', null);
 
             // Create the renderer
-            const render = new dagreD3.render();
+            const graphRenderer = new render();
 
             // Run the renderer. This is what draws the final graph.
             try {
-                g.graph().transition = function (selection: any) {
+                graph.transition = function (selection: any) {
                     return selection.transition().duration(500);
                 };
 
@@ -75,18 +67,12 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                 toolTipsToRemove.current.push(tooltip);
 
                 // Render graph
-                render(inner, g);
+                graphRenderer(inner, g);
 
                 container.on('click', (event, eventData) => {
                     if (handleCloseContextMenu) {
                         handleCloseContextMenu();
                     }
-                    // if (isTooltipOpened || !states[eventData]) {
-                    //     tooltip.style('visibility', 'hidden');
-
-                    //     isTooltipOpened = false;
-                    //     return;
-                    // }
                 });
 
                 inner
@@ -99,6 +85,10 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
 
                         if (handleSelectedNode) {
                             handleSelectedNode(eventData, node);
+                        }
+
+                        if (handleCloseContextMenu) {
+                            handleCloseContextMenu();
                         }
 
                         if (isTooltipOpened || !node) {
@@ -118,13 +108,6 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                         if (handleContextClickNode && node) {
                             handleContextClickNode(eventData, node, event, outerSvgRef.current);
                         }
-                        // tooltip
-                        //     .style('visibility', 'visible')
-                        //     .style('top', event.pageY - 10 + 'px')
-                        //     .style('left', event.pageX + 10 + 'px')
-                        //     .html(renderObject(eventData, node));
-
-                        // isTooltipOpened = true;
 
                         return;
                     });
@@ -139,8 +122,8 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                     zoom.transform,
                     d3ZoomIdentity
                         .translate(
-                            (svgWidth - g.graph().width * initialScale) / 2,
-                            (svgHeight - g.graph().height * initialScale) / 2
+                            (svgWidth - graph.width * initialScale) / 2,
+                            (svgHeight - graph.height * initialScale) / 2
                         )
                         .scale(initialScale)
                 );

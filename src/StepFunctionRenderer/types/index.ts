@@ -1,5 +1,3 @@
-import { MouseEvent } from 'react';
-
 export interface StepFunction {
     StartAt: string;
     States: Record<string, State>;
@@ -35,7 +33,7 @@ interface MapState extends BaseState {
 
 interface ChoiceState extends BaseState {
     Type: 'Choice';
-    Choices?: Operator[];
+    Choices?: ChoiceOperator[];
     Default: string;
 }
 
@@ -61,6 +59,10 @@ export interface Operator {
     TimestampGreaterThanEquals?: string;
     TimestampLessThan?: string;
     TimestampLessThanEquals?: string;
+}
+
+export interface ChoiceOperator extends Operator {
+    Next: string;
 }
 
 interface ParallelState extends BaseState {

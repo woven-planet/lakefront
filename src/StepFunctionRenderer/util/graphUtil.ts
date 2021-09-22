@@ -1,7 +1,7 @@
 import { graphlib } from 'dagre-d3';
 import { v4 as uuidv4 } from 'uuid';
 import * as R from 'ramda';
-import { StepFunction, State, Operator } from '../types';
+import { StepFunction, State, Operator, ChoiceOperator } from '../types';
 import { stringifyChoiceOperator } from './stepFunctionUtil';
 import { getNodeOptions, getClusterOptions, getEdgeOptions, getMissingStyle } from './graphStyles';
 
@@ -10,7 +10,7 @@ const makeGroupName = () => `Group_${uuidv4()}`;
 const makeNodeName = () => `Node_${uuidv4()}`;
 
 const createMissingNodes = (g: graphlib.Graph) => {
-    const makeLabel = (edgePointer) => `${edgePointer} (Missing)`;
+    const makeLabel = (edgePointer: string) => `${edgePointer} (Missing)`;
     g.edges().forEach((edge) => {
         if (!g.node(edge.v)) {
             g.setNode(edge.v, { label: makeLabel(edge.v), style: getMissingStyle() });
@@ -43,7 +43,7 @@ const isTerminalState = (state: State) => {
 
 const serializeGraph = R.compose(JSON.stringify, graphlib.json.write);
 
-const makeCluster = (g: graphlib.Graph, state: State, parentClusterName: string) => {
+const makeCluster = (g: graphlib.Graph, state: State, parentClusterName?: string) => {
     const clusterName = makeGroupName();
     g.setNode(clusterName, getClusterOptions(state));
     if (parentClusterName) {
@@ -105,7 +105,7 @@ export const buildGraph = (stepFunction: StepFunction) => {
                     if (state.Choices) {
                         const clusterName = makeCluster(g, state, parentClusterName);
 
-                        state.Choices.forEach((choice: Operator) => {
+                        state.Choices.forEach((choice: ChoiceOperator) => {
                             const label = stringifyChoiceOperator(choice);
                             g.setEdge(stateName, choice.Next, { label, ...getEdgeOptions() });
                             g.setParent(choice.Next, clusterName);
@@ -153,4 +153,20 @@ export const buildGraph = (stepFunction: StepFunction) => {
     };
 
     return R.compose(serializeGraph, roundNodes, createMissingNodes, traverse)(stepFunction, g);
+};
+
+export type TerminalNodeType = 'Start' | 'End';
+
+export const findTerminalNodeKey = (type: TerminalNodeType, graph?: graphlib.Graph | null): string => {
+    if (!graph) {
+        return '';
+    }
+
+    const vertexKey = type === 'Start' ? 'v' : 'w';
+
+    const terminalEdge = graph.edges().find((edge) => {
+        return graph.node(edge[vertexKey]).label === type;
+    });
+
+    return terminalEdge ? terminalEdge[vertexKey] : '';
 };
