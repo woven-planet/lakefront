@@ -5,7 +5,6 @@ import { StepFunction, State, Operator, ChoiceOperator } from '../types';
 import { stringifyChoiceOperator } from './stepFunctionUtil';
 import { getNodeOptions, getClusterOptions, getEdgeOptions, getMissingStyle } from './graphStyles';
 
-export const makeId = () => `${Math.random()}`;
 const makeGroupName = () => `Group_${uuidv4()}`;
 const makeNodeName = () => `Node_${uuidv4()}`;
 

@@ -1,5 +1,4 @@
 import { Operator, State, StepFunction } from '../types';
-import { makeId } from './graphUtil';
 
 export function stringifyChoiceOperator(operator: Operator) {
     const isLeaf = (operator: Operator) => Boolean(operator.Variable);
@@ -112,22 +111,4 @@ function traverseStepFunction(stepFunction: StepFunction, callback: (stateName: 
             }
         }
     });
-}
-
-export function renderObject(data: string, state: Record<string, State>) {
-    const rows = Object.keys(state).map((key) => {
-        // TODO: Add logic here to handle Metadata object
-        const value = state[key];
-        const id = makeId();
-        return `
-        <tr class="tooltipTableRow">
-          <td>${key}</td>
-          <td>data: ${data}, key: ${key}, id: ${id}</td>
-          <td><input id="${id}" value="${value}" /></td>
-        </tr>
-      `;
-    });
-    return `<table>
-      ${rows.join('')}
-    </table>`;
 }

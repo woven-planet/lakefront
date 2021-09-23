@@ -173,6 +173,7 @@ const Modal: FC<ModalProps> = (props) => {
             portal.style.top = '0';
             portal.style.left = '0';
             portal.style.zIndex = `${theme?.zIndex?.modal}`;
+            portal.className = dialogElement.className;
         }
     }, [update]);
 

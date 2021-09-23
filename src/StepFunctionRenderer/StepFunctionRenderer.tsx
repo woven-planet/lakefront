@@ -1,25 +1,33 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { graphlib, render } from 'dagre-d3';
-import { select as d3Select, Selection } from 'd3-selection';
+import { select as d3Select } from 'd3-selection';
 import { zoom as d3Zoom, zoomIdentity as d3ZoomIdentity } from 'd3-zoom';
 import { buildGraph, getStates } from './util';
 import { StepFunctionRendererProps } from './types';
 import { StepFunctionRendererContainer, OuterSvg } from './stepFunctionRendererStyles';
 import { enhanceWithCurvedEgdes } from './util/graphStyles';
+import { ThemeProvider } from '@emotion/react';
+import theme from 'src/styles/theme';
 
 /**
  * Step Function Renderer Component
- * 
+ *
  * The Step Function Renderer takes AWS Step Function JSON and renders an interactive 2D visualization of how its states connect together.
  * It can be panned by clicking in empty space and moving the mouse. The scroll wheel can be used for zoom-in and zoom-out functionality.
  * This component does not allow cycles, or nodes that connect such that a circular path is formed.
  */
-const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON, handleContextClickNode, handleCloseContextMenu, handleSelectedNode, onGraphCreate }) => {
+const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({
+    stepFunctionJSON,
+    handleContextClickNode,
+    handleCloseContextMenu,
+    handleSelectedNode,
+    onGraphCreate
+}) => {
+    const [renderError, setRenderError] = useState(false);
     const containerRef = useRef(null);
     const outerSvgRef = useRef(null);
     const innerGroupRef = useRef(null);
-    const toolTipsToRemove = useRef<Selection<any, any, any, any>[]>([]);
     const serializedGraph = buildGraph(stepFunctionJSON);
     const states = getStates(stepFunctionJSON);
     const data = {
@@ -28,6 +36,8 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
     };
 
     useEffect(() => {
+        setRenderError(false);
+
         if (containerRef.current && innerGroupRef.current && outerSvgRef.current) {
             const { serializedGraph, states } = data;
 
@@ -38,15 +48,15 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                 onGraphCreate(g, states);
             }
 
-            const container = d3Select<Element, HTMLElement>(containerRef.current);
-            const svg = d3Select<Element, HTMLElement>(outerSvgRef.current);
-            const inner = d3Select<Element, HTMLElement>(innerGroupRef.current);
+            const container = d3Select<HTMLDivElement, any>(containerRef.current);
+            const svg = d3Select<SVGElement, any>(outerSvgRef.current);
+            const inner = d3Select<SVGGElement, any>(innerGroupRef.current);
 
             // Clear any old group content
             inner.html('');
 
             // Set up zoom support
-            const zoom = d3Zoom<Element, HTMLElement>().on('zoom', function (event) {
+            const zoom = d3Zoom<SVGElement, any>().on('zoom', function (event) {
                 inner.attr('transform', event.transform);
             });
 
@@ -61,20 +71,8 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                     return selection.transition().duration(500);
                 };
 
-                let isTooltipOpened = false;
-
-                // Create tooltip and store for unmount
-                const tooltip = d3Select('body')
-                    .append('div')
-                    .style('position', 'absolute')
-                    .style('z-index', '10')
-                    .style('visibility', 'hidden')
-                    .style('background-color', 'green')
-                    .attr('class', 'tooltip');
-                toolTipsToRemove.current.push(tooltip);
-
                 // Render graph
-                graphRenderer(inner, g);
+                graphRenderer(inner as any, g as any);
 
                 container.on('click', (event, eventData) => {
                     if (handleCloseContextMenu) {
@@ -85,38 +83,32 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                 inner
                     .selectAll('g.node')
                     .style('cursor', 'pointer')
-                    .on('click', (event: PointerEvent, eventData: string) => {
-                        // Handle left-click actions
-                        event.stopPropagation();
-                        const node = states[eventData];
+                    .on('click', (event: PointerEvent, eventData: unknown) => {
+                        if (typeof eventData === 'string') {
+                            // Handle left-click actions
+                            event.stopPropagation();
+                            const node = states[eventData];
 
-                        if (handleSelectedNode) {
-                            handleSelectedNode(eventData, node);
-                        }
+                            if (handleSelectedNode) {
+                                handleSelectedNode(eventData, node);
+                            }
 
-                        if (handleCloseContextMenu) {
-                            handleCloseContextMenu();
-                        }
-
-                        if (isTooltipOpened || !node) {
-                            tooltip.style('visibility', 'hidden');
-
-                            isTooltipOpened = false;
-                            return;
+                            if (handleCloseContextMenu) {
+                                handleCloseContextMenu();
+                            }
                         }
                     })
-                    .on('contextmenu', (event: PointerEvent, eventData: string) => {
-                        // Handle right-click actions
-                        event.stopPropagation();
-                        event.preventDefault();
+                    .on('contextmenu', (event: PointerEvent, eventData: unknown) => {
+                        if (typeof eventData === 'string') {
+                            // Handle right-click actions
+                            const node = states[eventData];
 
-                        const node = states[eventData];
-
-                        if (handleContextClickNode && node) {
-                            handleContextClickNode(eventData, node, event, outerSvgRef.current);
+                            if (handleContextClickNode && node) {
+                                event.stopPropagation();
+                                event.preventDefault();
+                                handleContextClickNode(eventData, node, event, outerSvgRef.current);
+                            }
                         }
-
-                        return;
                     });
 
                 // Center the graph
@@ -135,24 +127,22 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON,
                         .scale(initialScale)
                 );
             } catch (error) {
-                console.log(error);
+                setRenderError(true);
             }
         }
-
-        return () => {
-            // Remove any remaining tooltips from document
-            toolTipsToRemove.current.forEach((tooltip) => {
-                tooltip.remove();
-            });
-        };
     }, [containerRef, innerGroupRef, outerSvgRef, stepFunctionJSON]);
 
     return (
-        <StepFunctionRendererContainer ref={containerRef}>
-            <OuterSvg ref={outerSvgRef}>
-                <g ref={innerGroupRef} />
-            </OuterSvg>
-        </StepFunctionRendererContainer>
+        <ThemeProvider theme={theme}>
+            <StepFunctionRendererContainer ref={containerRef}>
+                {!renderError && (
+                    <OuterSvg ref={outerSvgRef}>
+                        <g ref={innerGroupRef} />
+                    </OuterSvg>
+                )}
+                {renderError && <div className="renderError">Error encountered rendering step function</div>}
+            </StepFunctionRendererContainer>
+        </ThemeProvider>
     );
 };
 

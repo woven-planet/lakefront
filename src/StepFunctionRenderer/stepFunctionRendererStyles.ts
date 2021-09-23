@@ -1,33 +1,32 @@
 import styled from '@emotion/styled';
 
-export const StepFunctionRendererContainer = styled.div({
+export const StepFunctionRendererContainer = styled.div(({ theme }) => ({
     height: 700,
     width: '100%',
     maxWidth: 1000,
     '.svgWrapper': { width: '100%', height: '100%', boxSizing: 'border-box' },
-    '.clusters rect': { fill: 'white', stroke: '#999', strokeWidth: '1.5px' },
+    '.clusters rect': { fill: theme?.colors?.white, stroke: theme?.colors?.bombay, strokeWidth: 1.5 },
     text: {
         fontWeight: 300,
-        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serf',
-        fontSize: '14px'
+        fontSize: 14
     },
     '.node rect, .node circle': {
-        stroke: '#999',
-        fill: '#fff',
-        strokeWidth: '1.5px'
+        stroke: theme?.colors?.bombay,
+        fill: theme?.colors?.white,
+        strokeWidth: 1.5
     },
-    '.edgePath path': { stroke: '#333', strokeWidth: '1.5px' },
-    '.tooltip': {
-        padding: '5px',
-        backgroundColor: 'white',
-        border: '1px solid grey',
-        borderRadius: '5px',
-        color: 'black'
-    },
+    '.edgePath path': { stroke: theme?.colors?.storm, strokeWidth: 1.5 },
     'table, td, tr': { border: 'none', borderCollapse: 'collapse' },
-    td: { padding: '5px' },
-    '.tooltipTableRow:nth-child(odd)': { backgroundColor: '#DDD !important' }
-});
+    td: { padding: 5 },
+    'div.renderError': {
+        color: theme?.colors?.red,
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+}));
 
 export const OuterSvg = styled.svg({
     width: '100%',
