@@ -194,6 +194,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 },
                 key
             } = contextNode;
+            const isParallelOrMap = ContextNodeType === WorkFlowType.PARALLEL || ContextNodeType === WorkFlowType.MAP;
 
             // Lookup nodes the right-clicked node points to
             const nextNodes = graph.successors(key) || [];
@@ -206,9 +207,19 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 Next: newKey
             });
 
+            // Redirect predecessor Map and Parallel children to new target node
+            if (isParallelOrMap && ContextNodeNext && states) {
+                const predecessors = graph.predecessors(ContextNodeNext) || [];
+                for (const predecessorKey of predecessors) {
+                    const predecessorPath = states[predecessorKey].Metadata?.NodePath;
+                    predecessorPath && JSONBuilder.current.editNodeAtPath(predecessorPath, {
+                        Next: newKey
+                    });
+                }
+            }
+
             const endNodeKey = findTerminalNodeKey('End', graph);
             const pointsToEndNode = nextNodes.includes(endNodeKey);
-            const isParallelOrMap = ContextNodeType === WorkFlowType.PARALLEL || ContextNodeType === WorkFlowType.MAP;
 
             // Add the new node and set new node's "Next" property to context node's original "Next".
             // This avoids orphaning the rest of the graph.
