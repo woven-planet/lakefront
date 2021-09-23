@@ -74,31 +74,22 @@ export type State = TaskState | FailState | SucceedState | MapState | ChoiceStat
 
 export interface StepFunctionRendererProps {
     /**
-     * Sends data stored with each node from the parsing step on click inside of any drawn node. Use this data to
-     * store the node key for the highlightedKey prop if node highlighting is desired.
+     * Handle a right-click on any drawn node. This will send data stored with each node from the parsing step on click inside of any drawn node.
+     * Use this to configure a context menu.
      */
-    handleSelectedNode(key: string, node: any | null): void;
-    /**
-     * Handle a right-click on any drawn node. This can be used to configure a context menu.
-     */
-    handleContextClickNode?(
-        key: string,
-        node: any,
-        e: PointerEvent,
-        graphContainer: SVGElement | null
-    ): void;
+    handleContextClickNode?(key: string, node: any, e: PointerEvent, graphContainer: SVGElement | null): void;
     /**
      * Action to run when a node context menu is closed.
      */
     handleCloseContextMenu?(): void;
     /**
+     * Handle a left-click on any drawn node. This will send data stored with each node from the parsing step on click inside of any drawn node.
+     */
+    handleSelectedNode?(key: string, node: any | null): void;
+    /**
      * Returns the graph object.
      */
     onGraphCreate?(graph: any, states: any): void;
-    /**
-     * This should be the node key from the AWS JSON and if supplied, will highlight that node in the graph.
-     */
-    highlightedKey: string | null;
     /**
      * This is AWS Step Function JSON contained in an object. See the Storybook Canvas for detailed examples of what
      * should be provided.

@@ -46,6 +46,8 @@ export * from './StepFunctionAuthoring/types';
 
 export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
 
+export { default as StepFunctionRenderer } from'./StepFunctionRenderer/StepFunctionRenderer';
+
 export { default as TextArea } from './TextArea/TextArea';
 
 export { default as Toggle } from './Toggle/Toggle';

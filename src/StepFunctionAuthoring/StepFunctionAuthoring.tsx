@@ -64,9 +64,13 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         if (!initialGraphState) {
             JSONBuilder.current.addTask('Task', undefined, true);
             JSONBuilder.current.editRootJSON({ ...JSONBuilder.current.json, StartAt: 'Task' });
+        } else {
+            // Force reset when new graph state provided
+            JSONBuilder.current = new JSONBuilderUtil(initialGraphState);
         }
+    
         updateJson(JSONBuilder.current.getJson());
-    }, []);
+    }, [initialGraphState]);
 
     useEffect(() => {
         // Update graph with any post draw configuration

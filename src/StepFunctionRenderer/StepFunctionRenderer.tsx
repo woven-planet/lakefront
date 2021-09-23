@@ -8,6 +8,13 @@ import { StepFunctionRendererProps } from './types';
 import { StepFunctionRendererContainer, OuterSvg } from './stepFunctionRendererStyles';
 import { enhanceWithCurvedEgdes } from './util/graphStyles';
 
+/**
+ * Step Function Renderer Component
+ * 
+ * The Step Function Renderer takes AWS Step Function JSON and renders an interactive 2D visualization of how its states connect together.
+ * It can be panned by clicking in empty space and moving the mouse. The scroll wheel can be used for zoom-in and zoom-out functionality.
+ * This component does not allow cycles, or nodes that connect such that a circular path is formed.
+ */
 const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({ stepFunctionJSON, handleContextClickNode, handleCloseContextMenu, handleSelectedNode, onGraphCreate }) => {
     const containerRef = useRef(null);
     const outerSvgRef = useRef(null);
