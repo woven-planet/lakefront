@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
@@ -15,11 +16,22 @@ export default {
     }
 } as Meta;
 
-const Template: Story = (args) => <StepFunctionAuthoring {...args} />;
+const Template: Story = (args) => {
+    const [json, setJson] = useState(args.initialGraphState);
+
+    useEffect(() => {
+        setJson(args.initialGraphState);
+    }, [args.initialGraphState]);
+
+    return <StepFunctionAuthoring initialGraphState={json} />;
+};
 
 export const NewStepFunction = Template.bind({});
-export const InitializedStepFunction = Template.bind({});
+NewStepFunction.args = {
+    initialGraphState: undefined
+}
 
+export const InitializedStepFunction = Template.bind({});
 InitializedStepFunction.args = {
     initialGraphState: choiceJson
 }

@@ -18,7 +18,7 @@ export const FORM_KEYS = {
 
 export const DEFAULT_FORM_STATE: StephFunctionAuthoringFormState = { name: '', next: '', nodeType: '' };
 
-export const DEFAULT_GRAPH_STATE: StepFunctionJSON = { States: {} };
+export const DEFAULT_GRAPH_STATE: StepFunctionJSON = { StartAt: '', States: {} };
 
 /**
  * Generates a unique node name.

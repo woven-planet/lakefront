@@ -90,6 +90,10 @@ const handleMap = (node: any, graph: Digraph, addedVertex: number, lastStateKey:
     return graph;
 };
 
+/**
+ * The addMetadata function mutates the original provided state by
+ * adding metadata required for StepFunctionAuthoring operations.
+ */
 export const addMetadata = (parentPath: string, currentKey: string | number, state: JSONStateObject) => {
     const { Type } = state;
     const nodePath = `${parentPath}${parentPath ? '.' : ''}${currentKey}`;
@@ -144,6 +148,17 @@ export const addMetadata = (parentPath: string, currentKey: string | number, sta
     };
 };
 
+const RESERVED_KEYS = ['StartAt', 'End'];
+
+/**
+ * Returns `true` if the name provided is a Reserved
+ * key name.
+ */
+export const isReservedKeyName = (name: string) => {
+    return RESERVED_KEYS.includes(name);
+};
+
+
 // Main parsing function for populating a Digraph from a given step function JSON
 export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom?: number, lastStateKey?: string, updateMetaData: boolean = true) => {
     let isLastNode = false;
@@ -155,6 +170,7 @@ export const generateStepFunctionGraph = (json: any, graph: Digraph, connectFrom
 
     const nodeKeys = Object.keys(json.States);
     const nodes = nodeKeys
+        .filter(key => !isReservedKeyName(key))
         .map((key) => {
             if (updateMetaData) {
                 addMetadata('', key, json.States[key]);

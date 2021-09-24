@@ -71,6 +71,7 @@ We've added storybook pages to show how each component can be used.
   * [StackBannerRow](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stack-banner-stack-banner-row--error)
 * [StepFunctionAuthoring](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctionauthoring--new-step-function)
 * [StepFunctionGraph](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctiongraph--simple-graph)
+* [StepFunctionRenderer](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctionrenderer--step-function-renderer)
 * [TextArea](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-textarea--placeholder)
 * [Toggle](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-toggle--toggle)
 * [TypeaheadSearch](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-typeaheadsearch--search-bottom-start)
