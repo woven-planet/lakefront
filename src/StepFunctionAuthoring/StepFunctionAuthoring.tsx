@@ -90,20 +90,16 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
     const updateJson = (origJson: StepFunctionJSON) => {
         // Add JSON Metadata
         const RESERVED_KEYS = ['StartAt', 'End'];
-        /**
-         * Returns `true` if the name provided is a Reserved
-         * key name.
-         */
+        const nodeKeys = Object.keys(origJson.States);
+
         const isReservedKeyName = (name: string) => {
             return RESERVED_KEYS.includes(name);
         };
-        const nodeKeys = Object.keys(origJson.States);
+        
         nodeKeys
             .filter((key) => !isReservedKeyName(key))
             .map((key) => {
-                // if (updateMetaData) {
                 addMetadata('', key, origJson.States[key]);
-                // }
 
                 return {
                     [key]: origJson.States[key]
