@@ -566,7 +566,6 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 <div>
                     <StepFunctionRenderer
                         stepFunctionJSON={json as StepFunction}
-                        highlightedKey={highlighted?.key ?? ''}
                         handleContextClickNode={handleContextClickNode}
                         handleCloseContextMenu={handleCloseContextMenu}
                         handleSelectedNode={handleSelectedNode}

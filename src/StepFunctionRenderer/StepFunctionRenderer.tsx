@@ -48,9 +48,9 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({
                 onGraphCreate(g, states);
             }
 
-            const container = d3Select<HTMLDivElement, any>(containerRef.current);
-            const svg = d3Select<SVGElement, any>(outerSvgRef.current);
-            const inner = d3Select<SVGGElement, any>(innerGroupRef.current);
+            const container = d3Select<any, any>(containerRef.current);
+            const svg = d3Select<any, any>(outerSvgRef.current);
+            const inner = d3Select<any, any>(innerGroupRef.current);
 
             // Clear any old group content
             inner.html('');
