@@ -59,10 +59,8 @@ const convertToArrayPath = (path: string | (string | number)[]) => {
     return Array.isArray(path) ? path : path.split('.');
 };
 
-const INITIAL_STATE = { StartAt: '', States: {} };
-
 export class JSONBuilderUtil {
-    json: StepFunctionJSON = { ...INITIAL_STATE };
+    json: StepFunctionJSON = { StartAt: '', States: {} };
 
     constructor(json?: StepFunctionJSON) {
         if (json) {
@@ -315,7 +313,7 @@ export class JSONBuilderUtil {
     }
 
     reset() {
-        this.json = { ...INITIAL_STATE };
+        this.json = { StartAt: '', States: {} };
     }
 
     toString() {
