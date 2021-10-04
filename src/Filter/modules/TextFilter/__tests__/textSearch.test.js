@@ -29,4 +29,13 @@ describe('<TextSearch />', () => {
         fireEvent.keyPress(getByRole('textbox'), { key: 'Enter', charCode: 13, target: { value: 'asdf' } });
         expect(changeCallback).toBeCalledWith('asdf');
     });
+
+    it('only accepts numbers when specified', () => {
+        const changeCallback = jest.fn();
+        const { getByRole } = render(<TextSearch onChange={changeCallback} type='number' />);
+        fireEvent.keyPress(getByRole('spinbutton'), { key: 'Enter', charCode: 13, target: { value: 'asdf' } });
+        expect(changeCallback).toBeCalledWith('');
+        fireEvent.keyPress(getByRole('spinbutton'), { key: 'Enter', charCode: 13, target: { value: '1' } });
+        expect(changeCallback).toBeCalledWith('1');
+    });
 });

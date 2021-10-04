@@ -17,9 +17,8 @@ export default {
             control: 'text',
             description: 'The description/help text to display above the text filter component.'
         },
-        textFilterOptions: {
-            control: false,
-            description: 'Any valid `FilterModule` property (excluding description and label) which will override default text filter behaviour.'
+        textFilterOverrides: {
+            control: false
         }
     },
     parameters: {
@@ -35,7 +34,13 @@ export default {
 // Text Filter
 const TextFilterTemplate: Story = (args: TextFilterArgs) => {
     const pageFilters = {
-        textFilter: TextFilterFunction(args.label, args.description, {})
+        textFilter: TextFilterFunction(args.label, args.description, {}),
+        numberFilter: TextFilterFunction(
+            'Number Filter',
+            'TextFilter input can be limited to accept numbers only.',
+            {},
+            { type: 'number' }
+        )
     };
 
     return <FilterPage pageFilters={pageFilters} />;

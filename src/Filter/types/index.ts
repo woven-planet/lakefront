@@ -461,7 +461,7 @@ export interface RadioFilterProps {
  export interface SingleSelectFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label' | 'required'> {}
 
 /**
- * `TextFilterOptions` is any valid `FilterModule` property (excluding description and label)
+ * `TextFilterOverrides` is any valid `FilterModule` property (excluding description and label)
  * meant to override default text filter behaviour.
  */
- export interface TextFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
+ export interface TextFilterOverrides extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
