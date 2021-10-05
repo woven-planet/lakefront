@@ -26,6 +26,8 @@ export { default as IconButton } from './Button/IconButton';
 
 export { default as Input } from './Input/Input';
 
+export { default as ItemGrid } from './ItemGrid/ItemGrid';
+
 export { default as Loading } from './Loading/Loading';
 
 export { default as Modal, ConfirmationModal } from './Modal';
@@ -40,13 +42,13 @@ export { default as StackBannerRow } from './StackBanner/StackBannerRow';
 
 export { default as SelectPopover } from './SelectPopover/SelectPopover';
 
-export { default as StepFunctionAuthoring } from'./StepFunctionAuthoring';
+export { default as StepFunctionAuthoring } from './StepFunctionAuthoring';
 export * from './StepFunctionAuthoring/util';
 export * from './StepFunctionAuthoring/types';
 
-export { default as StepFunctionGraph } from'./StepFunctionGraph/Graph';
+export { default as StepFunctionGraph } from './StepFunctionGraph/Graph';
 
-export { default as StepFunctionRenderer } from'./StepFunctionRenderer/StepFunctionRenderer';
+export { default as StepFunctionRenderer } from './StepFunctionRenderer/StepFunctionRenderer';
 
 export { default as TextArea } from './TextArea/TextArea';
 
