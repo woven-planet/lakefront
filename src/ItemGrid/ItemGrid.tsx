@@ -2,22 +2,27 @@ import React, { useCallback, useState } from 'react';
 import { ItemGridContainer } from './itemGridStyles';
 
 export interface ItemGridProps {
+
     /**
      * This is the max number of columns that populates in a row.
      */
     maxColumns: number;
+
     /**
      * This is to set the minimum width for each column.
      */
     columnWidthMin?: string;
+
     /**
      * This to set the gap between rows and columns.
      */
     gridGap?: { rowGap?: number; columnGap?: number };
+
     /**
      * This would recalculate the size if set to true.
      */
     shouldRecalculateSize?: boolean;
+
     /**
      * This is to set the inner width.
      */

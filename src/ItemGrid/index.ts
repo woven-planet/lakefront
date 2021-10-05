@@ -1,4 +1,4 @@
 import ItemGrid, { ItemGridProps } from './ItemGrid';
 
 export { ItemGridProps };
-export default ItemGrid;;
+export default ItemGrid;
