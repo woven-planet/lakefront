@@ -109,19 +109,30 @@ describe('TextFilter', () => {
         });
     });
 
-    describe('renderComponent', () => {
-        const { renderComponent } = TextFilter('', '');
-
+    describe('renderComponent', () => {    
         it('returns the expected component', () => {
+            const { renderComponent } = TextFilter('', '');
+            
             const update = jest.fn();
             const { getByRole } = render(<div>{renderComponent({ name: 'name', value: '1', update })}</div>);
             expect(getByRole('textbox')).toHaveValue('1');
             fireEvent.blur(getByRole('textbox'), { target: { value: 'asdf' } });
             expect(update).toBeCalledWith('asdf');
         });
+        
+        it('limits input to numbers only when specified', () => {
+            const { renderComponent } = TextFilter('', '', {}, { type: 'number' });
+
+            const update = jest.fn();
+            const { getByRole } = render(<div>{renderComponent({ name: 'name', value: '1', update })}</div>);
+            expect(getByRole('spinbutton')).toHaveValue(1);
+            fireEvent.blur(getByRole('spinbutton'), { target: { value: 'asdf' } });
+            expect(update).toBeCalledWith('');
+            expect(getByRole('spinbutton')).toHaveValue(null);
+        });
     });
 
-    describe('textFilterOptions', () => {
+    describe('textFilterOverrides', () => {
         const filterModuleKeys = [
             'label',
             'description',

@@ -3,10 +3,11 @@ import { StyledInput } from './textSearchStyles';
 
 interface TextSearchProps {
     onChange(text: string): void;
+    type?: 'text' | 'number';
     value: string;
 }
 
-const TextSearch: FC<TextSearchProps> = ({ onChange, value }) => {
+const TextSearch: FC<TextSearchProps> = ({ onChange, type = 'text', value }) => {
     const [text, setText] = useState('');
 
     useEffect(() => {
@@ -30,7 +31,7 @@ const TextSearch: FC<TextSearchProps> = ({ onChange, value }) => {
     return (
         <StyledInput
             id="keyword"
-            type="text"
+            type={type}
             onBlur={handleOnBlur}
             onKeyPress={handleKeyPress}
             onChange={(e) => {
