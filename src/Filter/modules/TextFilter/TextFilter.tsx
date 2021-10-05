@@ -1,23 +1,30 @@
 import TextSearch from './TextSearch';
-import { FilterModule, TextFilterOptions } from 'src/Filter/types';
+import { FilterModule, TextFilterOverrides } from 'src/Filter/types';
+
+export interface TextFilterOptions {
+    type?: 'text' | 'number';
+}
 
 /**
  * TextFilter Component
  * 
  * The TextFilter component is a text input control meant to be used as a keyword(s) search. While the default
  * behaviour should suffice, any valid `FilterModule` property (excluding description and label) can
- * be supplied via the `textFilterOptions` parameter to change how the filter looks and acts. TextFilter arguments include:
+ * be supplied via the `textFilterOverrides` parameter to change how the filter looks and acts. TextFilter arguments include:
  * 
  * `label` - The label to display for the text filter component.
  * 
  * `description` - The description/help text to display above the text filter component.
  * 
- * `textFilterOptions` - Any valid `FilterModule` property (excluding description and label)
+ * `textFilterOverrides` - Any valid `FilterModule` property (excluding description and label)
  * which will override default text filter behaviour.
+ * 
+ * `textFilterOptions` - Used to set additional textFilter options such as the type of text input.
  */
 const TextFilter = (
     label: string,
     description?: string,
+    textFilterOverrides: TextFilterOverrides = {},
     textFilterOptions: TextFilterOptions = {}
 ): FilterModule<string> => ({
     getApiQueryUrl: (key, value) => {
@@ -30,10 +37,12 @@ const TextFilter = (
     getFilterBarLabel: (value) => value,
     getFilterSectionLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue: string) => browserQueryUrlValue || '',
-    renderComponent: ({ name, value, update }) => <TextSearch key={name} onChange={update} value={value} />,
-    ...textFilterOptions,
+    renderComponent: ({ name, value, update }) => (
+        <TextSearch key={name} onChange={update} value={value} type={textFilterOptions.type} />
+    ),
+    ...textFilterOverrides,
     description,
-    label,
+    label
 });
 
 export default TextFilter;
