@@ -28,6 +28,8 @@ export { default as Input } from './Input/Input';
 
 export { default as ItemGrid } from './ItemGrid/ItemGrid';
 
+export { default as ItemResults } from './ItemResults/ItemResults';
+
 export { default as Loading } from './Loading/Loading';
 
 export { default as Modal, ConfirmationModal } from './Modal';
