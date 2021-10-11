@@ -1,4 +1,4 @@
-import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil } from '../JSONBuilder.util';
+import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil, StepFunctionJSON } from '../JSONBuilder.util';
 import { cleanup } from '@testing-library/react';
 import * as R from 'ramda';
 
@@ -59,6 +59,9 @@ describe('JSONBuilderUtil', () => {
         },
         MAP: {
             Type: 'Map'
+        },
+        PARALLEL: {
+            Type: 'Parallel'
         }
     }
 
@@ -85,7 +88,7 @@ describe('JSONBuilderUtil', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
         
-        it('Adds state at provided key of type "Task"', () => {
+        it('adds state at provided key of type "Task"', () => {
             jsonBuild.addTask(newTask);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
@@ -93,7 +96,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds provided next to added task', () => {
+        it('adds provided next to added task', () => {
             const next = 'Next';
             jsonBuild.addTask(newTask, next);
 
@@ -103,7 +106,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Sets end to true when provided truthy end value on added task', () => {
+        it('sets end to true when provided truthy end value on added task', () => {
             const truthyEndTask = 'TruthyEndTask';
             jsonBuild.addTask(newTask, undefined, false);
             jsonBuild.addTask(truthyEndTask, undefined, true);
@@ -122,7 +125,7 @@ describe('JSONBuilderUtil', () => {
         const jsonBuild = new JSONBuilderUtil();
         const nestedArrayPath = ['Nested' , 'String', 'Path'];
 
-        it('Adds state at provided rootPath of type "Task"', () => {
+        it('adds state at provided rootPath of type "Task"', () => {
             const rootPath = 'RootPath';
             jsonBuild.addTaskAtPath(rootPath);
 
@@ -131,7 +134,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds state at provided nested string path of type "Task"', () => {
+        it('adds state at provided nested string path of type "Task"', () => {
             const nestedStringPath = 'Nested.String.Path';
             jsonBuild.addTaskAtPath(nestedStringPath);
 
@@ -140,7 +143,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds state at provided nested array path of type "Task"', () => { 
+        it('adds state at provided nested array path of type "Task"', () => { 
             jsonBuild.addTaskAtPath(nestedArrayPath);
 
             expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
@@ -148,7 +151,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds provided next to added task', () => {
+        it('adds provided next to added task', () => {
             const next = 'Next';
             jsonBuild.addTaskAtPath(nestedArrayPath, next);
 
@@ -158,7 +161,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Sets end to true when provided truthy end value on added task', () => {
+        it('sets end to true when provided truthy end value on added task', () => {
             const truthyNestedArrayPath = [...nestedArrayPath];
             jsonBuild.addTaskAtPath(nestedArrayPath, undefined, false);
             jsonBuild.addTaskAtPath(truthyNestedArrayPath, undefined, true);
@@ -177,7 +180,7 @@ describe('JSONBuilderUtil', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
         
-        it('Adds state at provided key of type "Success"', () => {
+        it('adds state at provided key of type "Success"', () => {
             jsonBuild.addSuccess(newTask);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
@@ -185,7 +188,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds provided next to added task', () => {
+        it('adds provided next to added task', () => {
             const next = 'Next';
             jsonBuild.addSuccess(newTask, next);
 
@@ -195,7 +198,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Sets end to true when provided truthy end value on added task', () => {
+        it('sets end to true when provided truthy end value on added task', () => {
             const truthyEndTask = 'TruthyEndTask';
             jsonBuild.addSuccess(newTask, undefined, false);
             jsonBuild.addSuccess(truthyEndTask, undefined, true);
@@ -215,7 +218,7 @@ describe('JSONBuilderUtil', () => {
         const newTask = 'NewTask';
         const choices = [{ Next: 'One'}, { Next: 'Two'}, { Next: 'Three'}];
         
-        it('Adds state at provided key of type "Choice"', () => {
+        it('adds state at provided key of type "Choice"', () => {
             jsonBuild.addChoice(newTask, choices);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
@@ -224,7 +227,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds provided next to added task', () => {
+        it('adds provided next to added task', () => {
             const next = 'Next';
             jsonBuild.addChoice(newTask, choices, next);
 
@@ -235,7 +238,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Sets end to true when provided truthy end value on added task', () => {
+        it('sets end to true when provided truthy end value on added task', () => {
             const truthyEndTask = 'TruthyEndTask';
             jsonBuild.addChoice(newTask, choices, undefined, false);
             jsonBuild.addChoice(truthyEndTask, choices, undefined, true);
@@ -262,7 +265,7 @@ describe('JSONBuilderUtil', () => {
             }
         };
         
-        it('Adds state at provided key of type "Map"', () => {
+        it('adds state at provided key of type "Map"', () => {
             jsonBuild.addMap(newTask, iterator);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
@@ -271,7 +274,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Adds provided next to added task', () => {
+        it('adds provided next to added task', () => {
             const next = 'Next';
             jsonBuild.addMap(newTask, iterator, next);
 
@@ -282,7 +285,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('Sets end to true when provided truthy end value on added task', () => {
+        it('sets end to true when provided truthy end value on added task', () => {
             const truthyEndTask = 'TruthyEndTask';
             jsonBuild.addMap(newTask, iterator, undefined, false);
             jsonBuild.addMap(truthyEndTask, iterator, undefined, true);
@@ -294,6 +297,61 @@ describe('JSONBuilderUtil', () => {
             expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
                 ...BASE_TASK_TYPES.MAP,
                 Iterator: iterator,
+                End: true
+            });
+        });
+    });
+
+    describe('addParallel', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const newTask = 'NewTask';
+        const branches = [
+            {
+                StartAt: 'One',
+                States: {
+                    One: {}
+                }
+            },
+            {
+                StartAt: 'Two',
+                States: {
+                    Two: {}
+                }
+            }
+        ] as StepFunctionJSON[];
+        
+        it('adds state at provided key of type "Parallel"', () => {
+            jsonBuild.addParallel(newTask, branches);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.PARALLEL,
+                Branches: branches
+            });
+        });
+
+        it('adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addParallel(newTask, branches, next);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.PARALLEL,
+                Branches: branches,
+                Next: next
+            });
+        });
+
+        it('sets end to true when provided truthy end value on added task', () => {
+            const truthyEndTask = 'TruthyEndTask';
+            jsonBuild.addParallel(newTask, branches, undefined, false);
+            jsonBuild.addParallel(truthyEndTask, branches, undefined, true);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.PARALLEL,
+                Branches: branches
+            });
+            expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
+                ...BASE_TASK_TYPES.PARALLEL,
+                Branches: branches,
                 End: true
             });
         });
