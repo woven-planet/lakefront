@@ -63,7 +63,8 @@ describe('JSONBuilderUtil', () => {
         PARALLEL: {
             Type: 'Parallel'
         }
-    }
+    };
+    const NESTED_ARRAY_PATH = ['Nested' , 'String', 'Path'];
 
     it('sets initial json to proper StepFunction object when no json provided to constructor', () => {
         const jsonBuild = new JSONBuilderUtil();
@@ -123,7 +124,6 @@ describe('JSONBuilderUtil', () => {
 
     describe('addTaskAtPath', () => {
         const jsonBuild = new JSONBuilderUtil();
-        const nestedArrayPath = ['Nested' , 'String', 'Path'];
 
         it('adds state at provided rootPath of type "Task"', () => {
             const rootPath = 'RootPath';
@@ -144,29 +144,29 @@ describe('JSONBuilderUtil', () => {
         });
 
         it('adds state at provided nested array path of type "Task"', () => { 
-            jsonBuild.addTaskAtPath(nestedArrayPath);
+            jsonBuild.addTaskAtPath(NESTED_ARRAY_PATH);
 
-            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+            expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toMatchObject({
                 ...BASE_TASK_TYPES.TASK
             });
         });
 
         it('adds provided next to added task', () => {
             const next = 'Next';
-            jsonBuild.addTaskAtPath(nestedArrayPath, next);
+            jsonBuild.addTaskAtPath(NESTED_ARRAY_PATH, next);
 
-            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+            expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toMatchObject({
                 ...BASE_TASK_TYPES.TASK,
                 Next: next
             });
         });
 
         it('sets end to true when provided truthy end value on added task', () => {
-            const truthyNestedArrayPath = [...nestedArrayPath];
-            jsonBuild.addTaskAtPath(nestedArrayPath, undefined, false);
+            const truthyNestedArrayPath = [...NESTED_ARRAY_PATH];
+            jsonBuild.addTaskAtPath(NESTED_ARRAY_PATH, undefined, false);
             jsonBuild.addTaskAtPath(truthyNestedArrayPath, undefined, true);
 
-            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+            expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toMatchObject({
                 ...BASE_TASK_TYPES.TASK
             });
             expect(RPath(truthyNestedArrayPath, jsonBuild.json.States)).toMatchObject({
@@ -393,6 +393,68 @@ describe('JSONBuilderUtil', () => {
             const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
             expect(Object.keys(parentContent)[0]).toBe('AfterNode');
             expect(Object.keys(parentContent)[1]).toBe('Path');
+        });
+    });
+
+    describe('editNode', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const taskName = 'TaskName';
+        const metadata = {
+            Metadata: {
+                NodePath: 'TaskName'
+            }
+        };
+        jsonBuild.addTaskAtPath(taskName);
+
+        it('merges existing state with provided content', () => {
+            expect(jsonBuild.json.States[taskName]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.editNode(taskName, {
+                ...metadata
+            });
+
+            expect(jsonBuild.json.States[taskName]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK,
+                ...metadata
+            });
+        });
+
+        it('overwrites existing state when provided content includes existing state properties', () => {
+            expect(jsonBuild.json.States[taskName]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.editNode(taskName, {
+                ...BASE_TASK_TYPES.SUCCESS,
+                ...metadata
+            });
+
+            expect(jsonBuild.json.States[taskName]).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS,
+                ...metadata
+            });
+        });
+    });
+
+    describe('editNameAtPath', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        jsonBuild.addTaskAtPath(NESTED_ARRAY_PATH);
+
+        it('replaces state at path with same value under new name', () => {
+            expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.editNameAtPath(NESTED_ARRAY_PATH, 'NewPath');
+
+            expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toBeUndefined();
+
+            const newPath = [...JSONBuilderUtil.getNodeParentPath(NESTED_ARRAY_PATH), 'NewPath'];
+            expect(RPath(newPath, jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
         });
     });
 });
