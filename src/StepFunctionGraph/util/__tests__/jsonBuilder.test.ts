@@ -555,6 +555,16 @@ describe('JSONBuilderUtil', () => {
                 RPath(taskNamePath, jsonBuild.json.States) as any[]
             );
         });
+
+        it('returns value at provided path from root when startAtStates is false', () => {
+            const jsonBuild = new JSONBuilderUtil();
+            const taskNamePath = ['Task', 'Name'];
+            jsonBuild.addTaskAtPath(taskNamePath);
+
+            expect(jsonBuild.getNodeJsonAtPath(['States', ...taskNamePath], false)).toMatchObject(
+                RPath(['States', ...taskNamePath], jsonBuild.json) as any[]
+            );
+        });
     });
 
     describe('setNodeStateName', () => {
