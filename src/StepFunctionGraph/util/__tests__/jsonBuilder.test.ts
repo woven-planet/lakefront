@@ -47,6 +47,17 @@ describe('numberOrIdentity', () => {
 describe('JSONBuilderUtil', () => {
     beforeEach(cleanup);
     const INITIAL_JSON = { StartAt: '', States: {} };
+    const BASE_TASK_TYPES = {
+        TASK: {
+            Type: 'Task'
+        },
+        SUCCESS: {
+            Type: 'Success'
+        },
+        CHOICE: {
+            Type: 'Choice'
+        }
+    }
 
     it('sets initial json to proper StepFunction object when no json provided to constructor', () => {
         const jsonBuild = new JSONBuilderUtil();
@@ -69,36 +80,36 @@ describe('JSONBuilderUtil', () => {
 
     describe('addTask', () => {
         const jsonBuild = new JSONBuilderUtil();
-        const firstTask = 'FirstTask';
+        const newTask = 'NewTask';
         
         it('Adds state at provided key of type "Task"', () => {
-            jsonBuild.addTask(firstTask);
+            jsonBuild.addTask(newTask);
 
-            expect(jsonBuild.json.States[firstTask]).toMatchObject({
-                Type: 'Task'
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
             });
         });
 
         it('Adds provided next to added task', () => {
             const next = 'Next';
-            jsonBuild.addTask(firstTask, next);
+            jsonBuild.addTask(newTask, next);
 
-            expect(jsonBuild.json.States[firstTask]).toMatchObject({
-                Type: 'Task',
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK,
                 Next: next
             });
         });
 
         it('Sets end to true when provided truthy end value on added task', () => {
             const truthyEndTask = 'TruthyEndTask';
-            jsonBuild.addTask(firstTask, undefined, false);
+            jsonBuild.addTask(newTask, undefined, false);
             jsonBuild.addTask(truthyEndTask, undefined, true);
 
-            expect(jsonBuild.json.States[firstTask]).toMatchObject({
-                Type: 'Task'
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
             });
             expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
-                Type: 'Task',
+                ...BASE_TASK_TYPES.TASK,
                 End: true
             });
         });
@@ -113,7 +124,7 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addTaskAtPath(rootPath);
 
             expect(jsonBuild.json.States[rootPath]).toMatchObject({
-                Type: 'Task'
+                ...BASE_TASK_TYPES.TASK
             });
         });
 
@@ -122,7 +133,7 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addTaskAtPath(nestedStringPath);
 
             expect(RPath(convertToArrayPath(nestedStringPath), jsonBuild.json.States)).toMatchObject({
-                Type: 'Task'
+                ...BASE_TASK_TYPES.TASK
             });
         });
 
@@ -130,7 +141,7 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addTaskAtPath(nestedArrayPath);
 
             expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
-                Type: 'Task'
+                ...BASE_TASK_TYPES.TASK
             });
         });
 
@@ -139,7 +150,7 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addTaskAtPath(nestedArrayPath, next);
 
             expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
-                Type: 'Task',
+                ...BASE_TASK_TYPES.TASK,
                 Next: next
             });
         });
@@ -150,10 +161,85 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addTaskAtPath(truthyNestedArrayPath, undefined, true);
 
             expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
-                Type: 'Task'
+                ...BASE_TASK_TYPES.TASK
             });
             expect(RPath(truthyNestedArrayPath, jsonBuild.json.States)).toMatchObject({
-                Type: 'Task',
+                ...BASE_TASK_TYPES.TASK,
+                End: true
+            });
+        });
+    });
+
+    describe('addSuccess', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const newTask = 'NewTask';
+        
+        it('Adds state at provided key of type "Success"', () => {
+            jsonBuild.addSuccess(newTask);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS
+            });
+        });
+
+        it('Adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addSuccess(newTask, next);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS,
+                Next: next
+            });
+        });
+
+        it('Sets end to true when provided truthy end value on added task', () => {
+            const truthyEndTask = 'TruthyEndTask';
+            jsonBuild.addSuccess(newTask, undefined, false);
+            jsonBuild.addSuccess(truthyEndTask, undefined, true);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS
+            });
+            expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS,
+                End: true
+            });
+        });
+    });
+
+    describe('addChoice', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const newTask = 'NewTask';
+        const choices = [{ Next: 'One'}, { Next: 'Two'}, { Next: 'Three'}]
+        
+        it('Adds state at provided key of type "Choice"', () => {
+            jsonBuild.addChoice(newTask, choices);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.CHOICE
+            });
+        });
+
+        it('Adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addChoice(newTask, choices, next);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.CHOICE,
+                Next: next
+            });
+        });
+
+        it('Sets end to true when provided truthy end value on added task', () => {
+            const truthyEndTask = 'TruthyEndTask';
+            jsonBuild.addChoice(newTask, choices, undefined, false);
+            jsonBuild.addChoice(truthyEndTask, choices, undefined, true);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.CHOICE
+            });
+            expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
+                ...BASE_TASK_TYPES.CHOICE,
                 End: true
             });
         });
