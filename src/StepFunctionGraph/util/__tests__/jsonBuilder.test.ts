@@ -1,4 +1,10 @@
 import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil } from '../JSONBuilder.util';
+import { cleanup } from '@testing-library/react';
+import * as R from 'ramda';
+
+const { path: RPath } = R;
+
+afterAll(cleanup);
 
 describe('convertToArrayPath', () => {
     const PATH = ['a', 'b', 'c'];
@@ -39,6 +45,7 @@ describe('numberOrIdentity', () => {
 });
 
 describe('JSONBuilderUtil', () => {
+    beforeEach(cleanup);
     const INITIAL_JSON = { StartAt: '', States: {} };
 
     it('sets initial json to proper StepFunction object when no json provided to constructor', () => {
@@ -50,5 +57,105 @@ describe('JSONBuilderUtil', () => {
         const stepFunctionJSON = { StartAt: 'Start', States: { Start: {} }};
         const jsonBuild = new JSONBuilderUtil(stepFunctionJSON);
         expect(jsonBuild.json).toBe(stepFunctionJSON);
+    });
+
+    describe('getChoiceForAdd', () => {
+        it('returns a base step function "Choice" object', () => {
+            expect(JSONBuilderUtil.getChoiceForAdd('next')).toMatchObject({
+                Next: 'next'
+            })
+        });
+    });
+
+    describe('addTask', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const firstTask = 'FirstTask';
+        
+        it('Adds state at provided key of type "Task"', () => {
+            jsonBuild.addTask(firstTask);
+
+            expect(jsonBuild.json.States[firstTask]).toMatchObject({
+                Type: 'Task'
+            });
+        });
+
+        it('Adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addTask(firstTask, next);
+
+            expect(jsonBuild.json.States[firstTask]).toMatchObject({
+                Type: 'Task',
+                Next: next
+            });
+        });
+
+        it('Sets end to true when provided truthy end value on added task', () => {
+            const truthyEndTask = 'TruthyEndTask';
+            jsonBuild.addTask(firstTask, undefined, false);
+            jsonBuild.addTask(truthyEndTask, undefined, true);
+
+            expect(jsonBuild.json.States[firstTask]).toMatchObject({
+                Type: 'Task'
+            });
+            expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
+                Type: 'Task',
+                End: true
+            });
+        });
+    });
+
+    describe('addTaskAtPath', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const nestedArrayPath = ['Nested' , 'String', 'Path'];
+
+        it('Adds state at provided rootPath of type "Task"', () => {
+            const rootPath = 'RootPath';
+            jsonBuild.addTaskAtPath(rootPath);
+
+            expect(jsonBuild.json.States[rootPath]).toMatchObject({
+                Type: 'Task'
+            });
+        });
+
+        it('Adds state at provided nested string path of type "Task"', () => {
+            const nestedStringPath = 'Nested.String.Path';
+            jsonBuild.addTaskAtPath(nestedStringPath);
+
+            expect(RPath(convertToArrayPath(nestedStringPath), jsonBuild.json.States)).toMatchObject({
+                Type: 'Task'
+            });
+        });
+
+        it('Adds state at provided nested array path of type "Task"', () => { 
+            jsonBuild.addTaskAtPath(nestedArrayPath);
+
+            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+                Type: 'Task'
+            });
+        });
+
+        it('Adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addTaskAtPath(nestedArrayPath, next);
+
+            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+                Type: 'Task',
+                Next: next
+            });
+        });
+
+        it('Sets end to true when provided truthy end value on added task', () => {
+            const truthyNestedArrayPath = [...nestedArrayPath];
+            jsonBuild.addTaskAtPath(nestedArrayPath, undefined, false);
+            jsonBuild.addTaskAtPath(truthyNestedArrayPath, undefined, true);
+
+            expect(RPath(nestedArrayPath, jsonBuild.json.States)).toMatchObject({
+                Type: 'Task'
+            });
+            expect(RPath(truthyNestedArrayPath, jsonBuild.json.States)).toMatchObject({
+                Type: 'Task',
+                End: true
+            });
+        });
     });
 });
