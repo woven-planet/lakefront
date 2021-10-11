@@ -556,4 +556,24 @@ describe('JSONBuilderUtil', () => {
             );
         });
     });
+
+    describe('setNodeStateName', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const taskName = 'TaskName';
+        jsonBuild.addTaskAtPath(taskName);
+
+        it('replaces state at name with same value under new name', () => {
+            expect(jsonBuild.json.States[taskName]).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.setNodeStateName(taskName, 'NewName');
+
+            expect(jsonBuild.json.States[taskName]).toBeUndefined();
+
+            expect(jsonBuild.json.States['NewName']).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+        });
+    });
 });
