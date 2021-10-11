@@ -517,4 +517,12 @@ describe('JSONBuilderUtil', () => {
             });
         });
     });
+
+    describe('getJson', () => {
+        it('returns current JSONBuilder json value.', () => {
+            const jsonBuild = new JSONBuilderUtil();
+            
+            expect(jsonBuild.getJson()).toBe(jsonBuild.json);
+        });
+    });
 });
