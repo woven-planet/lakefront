@@ -1,4 +1,10 @@
-import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil, JSONState, StepFunctionJSON } from '../JSONBuilder.util';
+import {
+    convertToArrayPath,
+    numberOrIdentity,
+    JSONBuilderUtil,
+    JSONState,
+    StepFunctionJSON
+} from '../JSONBuilder.util';
 import { cleanup } from '@testing-library/react';
 import * as R from 'ramda';
 
@@ -64,7 +70,7 @@ describe('JSONBuilderUtil', () => {
             Type: 'Parallel'
         }
     };
-    const NESTED_ARRAY_PATH = ['Nested' , 'String', 'Path'];
+    const NESTED_ARRAY_PATH = ['Nested', 'String', 'Path'];
 
     it('sets initial json to proper StepFunction object when no json provided to constructor', () => {
         const jsonBuild = new JSONBuilderUtil();
@@ -72,7 +78,7 @@ describe('JSONBuilderUtil', () => {
     });
 
     it('sets json to JSON provided to constructor', () => {
-        const stepFunctionJSON = { StartAt: 'Start', States: { Start: {} }};
+        const stepFunctionJSON = { StartAt: 'Start', States: { Start: {} } };
         const jsonBuild = new JSONBuilderUtil(stepFunctionJSON);
         expect(jsonBuild.json).toBe(stepFunctionJSON);
     });
@@ -81,14 +87,14 @@ describe('JSONBuilderUtil', () => {
         it('returns a base step function "Choice" object', () => {
             expect(JSONBuilderUtil.getChoiceForAdd('next')).toMatchObject({
                 Next: 'next'
-            })
+            });
         });
     });
 
     describe('addTask', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
-        
+
         it('adds state at provided key of type "Task"', () => {
             jsonBuild.addTask(newTask);
 
@@ -143,7 +149,7 @@ describe('JSONBuilderUtil', () => {
             });
         });
 
-        it('adds state at provided nested array path of type "Task"', () => { 
+        it('adds state at provided nested array path of type "Task"', () => {
             jsonBuild.addTaskAtPath(NESTED_ARRAY_PATH);
 
             expect(RPath(NESTED_ARRAY_PATH, jsonBuild.json.States)).toMatchObject({
@@ -179,7 +185,7 @@ describe('JSONBuilderUtil', () => {
     describe('addSuccess', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
-        
+
         it('adds state at provided key of type "Success"', () => {
             jsonBuild.addSuccess(newTask);
 
@@ -216,8 +222,8 @@ describe('JSONBuilderUtil', () => {
     describe('addChoice', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
-        const choices = [{ Next: 'One'}, { Next: 'Two'}, { Next: 'Three'}];
-        
+        const choices = [{ Next: 'One' }, { Next: 'Two' }, { Next: 'Three' }];
+
         it('adds state at provided key of type "Choice"', () => {
             jsonBuild.addChoice(newTask, choices);
 
@@ -264,7 +270,7 @@ describe('JSONBuilderUtil', () => {
                 One: {}
             }
         };
-        
+
         it('adds state at provided key of type "Map"', () => {
             jsonBuild.addMap(newTask, iterator);
 
@@ -319,7 +325,7 @@ describe('JSONBuilderUtil', () => {
                 }
             }
         ] as StepFunctionJSON[];
-        
+
         it('adds state at provided key of type "Parallel"', () => {
             jsonBuild.addParallel(newTask, branches);
 
@@ -365,9 +371,9 @@ describe('JSONBuilderUtil', () => {
         it('Adds provided name-state pair after sibiling by default', () => {
             const afterNodeContent = { Next: 'Next' };
             jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath });
-            
+
             expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
-    
+
             const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
             expect(Object.keys(parentContent)[0]).toBe('Path');
             expect(Object.keys(parentContent)[1]).toBe('AfterNode');
@@ -376,9 +382,9 @@ describe('JSONBuilderUtil', () => {
         it('Adds provided name-state pair after sibiling when after is true', () => {
             const afterNodeContent = { Next: 'Next' };
             jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath, after: true });
-            
+
             expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
-    
+
             const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
             expect(Object.keys(parentContent)[0]).toBe('Path');
             expect(Object.keys(parentContent)[1]).toBe('AfterNode');
@@ -387,9 +393,9 @@ describe('JSONBuilderUtil', () => {
         it('Adds provided name-state pair before sibiling when after is false', () => {
             const afterNodeContent = { Next: 'Next' };
             jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath, after: false });
-            
+
             expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
-    
+
             const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
             expect(Object.keys(parentContent)[0]).toBe('AfterNode');
             expect(Object.keys(parentContent)[1]).toBe('Path');
@@ -521,7 +527,7 @@ describe('JSONBuilderUtil', () => {
     describe('getJson', () => {
         it('returns current JSONBuilder json value.', () => {
             const jsonBuild = new JSONBuilderUtil();
-            
+
             expect(jsonBuild.getJson()).toBe(jsonBuild.json);
         });
     });
@@ -540,7 +546,7 @@ describe('JSONBuilderUtil', () => {
             const jsonBuild = new JSONBuilderUtil();
             const taskName = 'TaskName';
             jsonBuild.addTaskAtPath(taskName);
-            
+
             expect(jsonBuild.getNodeJson(taskName)).toMatchObject(jsonBuild.json.States[taskName]);
         });
     });
@@ -613,7 +619,7 @@ describe('JSONBuilderUtil', () => {
     describe('toString', () => {
         it('returns stringified version of current JSONBuilder json value.', () => {
             const jsonBuild = new JSONBuilderUtil();
-            
+
             expect(jsonBuild.toString()).toBe(JSON.stringify(jsonBuild.json));
         });
     });
