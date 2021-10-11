@@ -576,4 +576,27 @@ describe('JSONBuilderUtil', () => {
             });
         });
     });
+
+    describe('reset', () => {
+        it('sets JSONBuilder json property back to initial value', () => {
+            const jsonBuild = new JSONBuilderUtil();
+
+            expect(jsonBuild.json).toMatchObject(INITIAL_JSON);
+
+            jsonBuild.addTaskAtPath('TaskName');
+
+            expect(jsonBuild.json).toMatchObject({
+                ...INITIAL_JSON,
+                States: {
+                    TaskName: {
+                        ...BASE_TASK_TYPES.TASK
+                    }
+                }
+            });
+
+            jsonBuild.reset();
+
+            expect(jsonBuild.json).toMatchObject(INITIAL_JSON);
+        });
+    });
 });
