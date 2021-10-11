@@ -150,31 +150,6 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    addNode(name: string, value: JSONStateObject, after: string): JSONBuilderUtil {
-        const original = { ...this.json.States };
-
-        const newState = Object.entries(original).reduce<[key: string, value: JSONStateObject][]>(
-            (accum, current, idx) => {
-                const [k, v] = current;
-
-                if (k === after) {
-                    return [
-                        ...accum,
-                        [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }],
-                        [name, { ...value, Metadata: { ...value?.Metadata, SortOrder: idx + 0.1 } }]
-                    ];
-                }
-
-                return [...accum, [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }]];
-            },
-            []
-        );
-
-        this.json.States = Object.fromEntries(newState);
-
-        return this;
-    }
-
     addOrderedNode(
         name: string,
         value: JSONStateObject,
