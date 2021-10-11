@@ -56,6 +56,9 @@ describe('JSONBuilderUtil', () => {
         },
         CHOICE: {
             Type: 'Choice'
+        },
+        MAP: {
+            Type: 'Map'
         }
     }
 
@@ -244,6 +247,53 @@ describe('JSONBuilderUtil', () => {
             expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
                 ...BASE_TASK_TYPES.CHOICE,
                 Choices: choices,
+                End: true
+            });
+        });
+    });
+
+    describe('addMap', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const newTask = 'NewTask';
+        const iterator = {
+            StartAt: 'One',
+            States: {
+                One: {}
+            }
+        };
+        
+        it('Adds state at provided key of type "Map"', () => {
+            jsonBuild.addMap(newTask, iterator);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.MAP,
+                Iterator: iterator
+            });
+        });
+
+        it('Adds provided next to added task', () => {
+            const next = 'Next';
+            jsonBuild.addMap(newTask, iterator, next);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.MAP,
+                Iterator: iterator,
+                Next: next
+            });
+        });
+
+        it('Sets end to true when provided truthy end value on added task', () => {
+            const truthyEndTask = 'TruthyEndTask';
+            jsonBuild.addMap(newTask, iterator, undefined, false);
+            jsonBuild.addMap(truthyEndTask, iterator, undefined, true);
+
+            expect(jsonBuild.json.States[newTask]).toMatchObject({
+                ...BASE_TASK_TYPES.MAP,
+                Iterator: iterator
+            });
+            expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
+                ...BASE_TASK_TYPES.MAP,
+                Iterator: iterator,
                 End: true
             });
         });
