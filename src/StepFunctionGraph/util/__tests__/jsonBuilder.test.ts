@@ -457,4 +457,46 @@ describe('JSONBuilderUtil', () => {
             });
         });
     });
+
+    describe('editNodeAtPath', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const taskNamePath = 'Task.Name.Path';
+        const metadata = {
+            Metadata: {
+                NodePath: taskNamePath
+            }
+        };
+        jsonBuild.addTaskAtPath(taskNamePath);
+
+        it('merges existing state at path with provided content', () => {
+            expect(RPath(convertToArrayPath(taskNamePath), jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.editNodeAtPath(taskNamePath, {
+                ...metadata
+            });
+
+            expect(RPath(convertToArrayPath(taskNamePath), jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.TASK,
+                ...metadata
+            });
+        });
+
+        it('overwrites existing state when provided content includes existing state properties', () => {
+            expect(RPath(convertToArrayPath(taskNamePath), jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.TASK
+            });
+
+            jsonBuild.editNodeAtPath(taskNamePath, {
+                ...BASE_TASK_TYPES.SUCCESS,
+                ...metadata
+            });
+
+            expect(RPath(convertToArrayPath(taskNamePath), jsonBuild.json.States)).toMatchObject({
+                ...BASE_TASK_TYPES.SUCCESS,
+                ...metadata
+            });
+        });
+    });
 });
