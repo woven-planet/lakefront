@@ -41,7 +41,7 @@ export interface AddOrderedNodeOptions {
  * Attempts to convert a value to a number. If that is not possible,
  * the original value will be returned.
  */
-const numberOrIdentity = cond([
+export const numberOrIdentity = cond([
     [(a: any) => Number(a) === 0 || Boolean(Number(a)), Number],
     [RT, identity]
 ]);
@@ -51,7 +51,7 @@ const numberOrIdentity = cond([
  * If the provided `path` is already an array, the original
  * value will be returned.
  */
-const convertToArrayPath = (path: string | (string | number)[]) => {
+export const convertToArrayPath = (path: string | (string | number)[]) => {
     if (!path) {
         return [];
     }
@@ -59,6 +59,13 @@ const convertToArrayPath = (path: string | (string | number)[]) => {
     return Array.isArray(path) ? path : path.split('.');
 };
 
+/**
+ * The JSONBuilderUtil class consist of various methods and standalone helper
+ * functions to build valid StepFunction JSON. Initial step function configuration
+ * can be provided to the constructor.
+ * 
+ *❗❗**NOTE: This class will mutate the provided initial JSON.**
+ */
 export class JSONBuilderUtil {
     json: StepFunctionJSON = { StartAt: '', States: {} };
 
