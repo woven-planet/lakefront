@@ -1,4 +1,4 @@
-import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil, StepFunctionJSON } from '../JSONBuilder.util';
+import { convertToArrayPath, numberOrIdentity, JSONBuilderUtil, JSONState, StepFunctionJSON } from '../JSONBuilder.util';
 import { cleanup } from '@testing-library/react';
 import * as R from 'ramda';
 
@@ -354,6 +354,45 @@ describe('JSONBuilderUtil', () => {
                 Branches: branches,
                 End: true
             });
+        });
+    });
+
+    describe('addOrderedNode', () => {
+        const jsonBuild = new JSONBuilderUtil();
+        const nestedStringPath = 'Nested.String.Path';
+        jsonBuild.addTaskAtPath(nestedStringPath);
+
+        it('Adds provided name-state pair after sibiling by default', () => {
+            const afterNodeContent = { Next: 'Next' };
+            jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath });
+            
+            expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
+    
+            const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
+            expect(Object.keys(parentContent)[0]).toBe('Path');
+            expect(Object.keys(parentContent)[1]).toBe('AfterNode');
+        });
+
+        it('Adds provided name-state pair after sibiling when after is true', () => {
+            const afterNodeContent = { Next: 'Next' };
+            jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath, after: true });
+            
+            expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
+    
+            const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
+            expect(Object.keys(parentContent)[0]).toBe('Path');
+            expect(Object.keys(parentContent)[1]).toBe('AfterNode');
+        });
+
+        it('Adds provided name-state pair before sibiling when after is false', () => {
+            const afterNodeContent = { Next: 'Next' };
+            jsonBuild.addOrderedNode('AfterNode', afterNodeContent, { siblingPath: nestedStringPath, after: false });
+            
+            expect(RPath(['Nested', 'String', 'AfterNode'], jsonBuild.json.States)).toMatchObject(afterNodeContent);
+    
+            const parentContent = RPath(['Nested', 'String'], jsonBuild.json.States) as JSONState;
+            expect(Object.keys(parentContent)[0]).toBe('AfterNode');
+            expect(Object.keys(parentContent)[1]).toBe('Path');
         });
     });
 });
