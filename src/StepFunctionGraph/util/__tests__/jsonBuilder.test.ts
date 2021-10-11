@@ -599,4 +599,12 @@ describe('JSONBuilderUtil', () => {
             expect(jsonBuild.json).toMatchObject(INITIAL_JSON);
         });
     });
+
+    describe('toString', () => {
+        it('returns stringified version of current JSONBuilder json value.', () => {
+            const jsonBuild = new JSONBuilderUtil();
+            
+            expect(jsonBuild.toString()).toBe(JSON.stringify(jsonBuild.json));
+        });
+    });
 });
