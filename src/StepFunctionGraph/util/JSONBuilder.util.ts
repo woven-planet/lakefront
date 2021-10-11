@@ -128,17 +128,6 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    addChoiceAtPath(state: string, choices: JSONStateObject[], next?: string, end?: boolean): JSONBuilderUtil {
-        this.json.States[state] = {
-            Type: 'Choice',
-            Choices: choices,
-            ...(next && { Next: next }),
-            ...(end && { End: end })
-        };
-
-        return this;
-    }
-
     addMap(state: string, iterator: StepFunctionJSON, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Map',

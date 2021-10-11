@@ -210,13 +210,14 @@ describe('JSONBuilderUtil', () => {
     describe('addChoice', () => {
         const jsonBuild = new JSONBuilderUtil();
         const newTask = 'NewTask';
-        const choices = [{ Next: 'One'}, { Next: 'Two'}, { Next: 'Three'}]
+        const choices = [{ Next: 'One'}, { Next: 'Two'}, { Next: 'Three'}];
         
         it('Adds state at provided key of type "Choice"', () => {
             jsonBuild.addChoice(newTask, choices);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
-                ...BASE_TASK_TYPES.CHOICE
+                ...BASE_TASK_TYPES.CHOICE,
+                Choices: choices
             });
         });
 
@@ -226,6 +227,7 @@ describe('JSONBuilderUtil', () => {
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
                 ...BASE_TASK_TYPES.CHOICE,
+                Choices: choices,
                 Next: next
             });
         });
@@ -236,10 +238,12 @@ describe('JSONBuilderUtil', () => {
             jsonBuild.addChoice(truthyEndTask, choices, undefined, true);
 
             expect(jsonBuild.json.States[newTask]).toMatchObject({
-                ...BASE_TASK_TYPES.CHOICE
+                ...BASE_TASK_TYPES.CHOICE,
+                Choices: choices
             });
             expect(jsonBuild.json.States[truthyEndTask]).toMatchObject({
                 ...BASE_TASK_TYPES.CHOICE,
+                Choices: choices,
                 End: true
             });
         });
