@@ -499,4 +499,22 @@ describe('JSONBuilderUtil', () => {
             });
         });
     });
+
+    describe('editRootJSON', () => {
+        const jsonBuild = new JSONBuilderUtil();
+
+        it('overwrites root step function JSON with provided content', () => {
+            const content = {
+                StartAt: 'NewState'
+            };
+            expect(jsonBuild.json).toMatchObject(INITIAL_JSON);
+
+            jsonBuild.editRootJSON(content);
+
+            expect(jsonBuild.json).toMatchObject({
+                ...INITIAL_JSON,
+                ...content
+            });
+        });
+    });
 });
