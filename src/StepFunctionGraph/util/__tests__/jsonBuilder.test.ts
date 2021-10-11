@@ -534,4 +534,14 @@ describe('JSONBuilderUtil', () => {
             expect(JSONBuilderUtil.getNodeParentPath(['root', 'parent', 'child'])).toMatchObject(parentPath);
         });
     });
+
+    describe('getNodeJson', () => {
+        it('returns value at provided state name', () => {
+            const jsonBuild = new JSONBuilderUtil();
+            const taskName = 'TaskName';
+            jsonBuild.addTaskAtPath(taskName);
+            
+            expect(jsonBuild.getNodeJson(taskName)).toMatchObject(jsonBuild.json.States[taskName]);
+        });
+    });
 });
