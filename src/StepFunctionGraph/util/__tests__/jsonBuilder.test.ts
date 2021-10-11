@@ -607,4 +607,23 @@ describe('JSONBuilderUtil', () => {
             expect(jsonBuild.toString()).toBe(JSON.stringify(jsonBuild.json));
         });
     });
+
+    describe('updateAtPath', () => {
+        const taskNamePath = 'Task.Name.Path';
+        const metadata = {
+            Metadata: {
+                NodePath: taskNamePath
+            }
+        };
+
+        it('returns copy of value with content replaced at provided path', () => {
+            const originalState = { TaskName: { Iterator: { StartAt: 'One', States: { One: {} } } } };
+            const content = { StartAt: 'Two', States: { Two: {} } };
+            const path = ['TaskName', 'Iterator'];
+
+            expect(JSONBuilderUtil.updateAtPath(path, content, originalState)).toMatchObject({
+                TaskName: { Iterator: { ...content } }
+            });
+        });
+    });
 });
