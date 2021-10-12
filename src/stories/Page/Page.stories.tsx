@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import PageComponent, { PageProps } from 'src/Page/Page';
+import HeaderComponent from 'src/Page/Header';
 import DocBlock from '.storybook/DocBlock';
 import FilterPageWithCollapse from '../Filter/components/FilterPage/FilterPageWithCollapse';
 import { RadioFilter as RadioFilterFunction } from 'src/Filter/modules';
@@ -57,7 +58,13 @@ const Template: Story<PageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     };
     return (
         <PageComponent className={args.className}>
-            {args.children}
+            <HeaderComponent>
+                {args.children}
+            </HeaderComponent>
+            <p>
+                This page shows filter and 3 collapsible section. The Page component
+                can render any child component.
+            </p>
             <br />
             <FilterPageWithCollapse pageFilters={pageFilters} />
         </PageComponent>
@@ -66,5 +73,5 @@ const Template: Story<PageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
 
 export const Page = Template.bind({});
 Page.args = {
-    children: <div>This page shows a filter and 3 collapsible sections.</div>
+    children: <div>Page with Filter and Collapsible sections</div>
 };
