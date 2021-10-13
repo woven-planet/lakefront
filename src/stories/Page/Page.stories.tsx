@@ -62,7 +62,7 @@ const Template: Story<PageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
                 {args.children}
             </HeaderComponent>
             <p>
-                This page shows filter and 3 collapsible section. The Page component
+                This page shows filter and 3 collapsible sections. The Page component
                 can render any child component.
             </p>
             <br />
