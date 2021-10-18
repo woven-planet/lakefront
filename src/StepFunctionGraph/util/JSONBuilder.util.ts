@@ -41,7 +41,7 @@ export interface AddOrderedNodeOptions {
  * Attempts to convert a value to a number. If that is not possible,
  * the original value will be returned.
  */
-const numberOrIdentity = cond([
+export const numberOrIdentity = cond([
     [(a: any) => Number(a) === 0 || Boolean(Number(a)), Number],
     [RT, identity]
 ]);
@@ -51,7 +51,7 @@ const numberOrIdentity = cond([
  * If the provided `path` is already an array, the original
  * value will be returned.
  */
-const convertToArrayPath = (path: string | (string | number)[]) => {
+export const convertToArrayPath = (path: string | (string | number)[]) => {
     if (!path) {
         return [];
     }
@@ -59,6 +59,13 @@ const convertToArrayPath = (path: string | (string | number)[]) => {
     return Array.isArray(path) ? path : path.split('.');
 };
 
+/**
+ * The JSONBuilderUtil class consist of various methods and standalone helper
+ * functions to build valid StepFunction JSON. Initial step function configuration
+ * can be provided to the constructor.
+ * 
+ *❗❗**NOTE: This class will mutate the provided initial JSON.**
+ */
 export class JSONBuilderUtil {
     json: StepFunctionJSON = { StartAt: '', States: {} };
 
@@ -121,17 +128,6 @@ export class JSONBuilderUtil {
         return this;
     }
 
-    addChoiceAtPath(state: string, choices: JSONStateObject[], next?: string, end?: boolean): JSONBuilderUtil {
-        this.json.States[state] = {
-            Type: 'Choice',
-            Choices: choices,
-            ...(next && { Next: next }),
-            ...(end && { End: end })
-        };
-
-        return this;
-    }
-
     addMap(state: string, iterator: StepFunctionJSON, next?: string, end?: boolean): JSONBuilderUtil {
         this.json.States[state] = {
             Type: 'Map',
@@ -150,31 +146,6 @@ export class JSONBuilderUtil {
             ...(next && { Next: next }),
             ...(end && { End: end })
         };
-
-        return this;
-    }
-
-    addNode(name: string, value: JSONStateObject, after: string): JSONBuilderUtil {
-        const original = { ...this.json.States };
-
-        const newState = Object.entries(original).reduce<[key: string, value: JSONStateObject][]>(
-            (accum, current, idx) => {
-                const [k, v] = current;
-
-                if (k === after) {
-                    return [
-                        ...accum,
-                        [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }],
-                        [name, { ...value, Metadata: { ...value?.Metadata, SortOrder: idx + 0.1 } }]
-                    ];
-                }
-
-                return [...accum, [k, { ...v, Metadata: { ...v?.Metadata, SortOrder: idx } }]];
-            },
-            []
-        );
-
-        this.json.States = Object.fromEntries(newState);
 
         return this;
     }
