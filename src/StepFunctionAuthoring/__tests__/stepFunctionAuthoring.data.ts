@@ -1,3 +1,21 @@
+export const simpleExample = {
+    StartAt: 'Task',
+    States: {
+        Task: {
+            Type: 'Task',
+            Next: 'Second'
+        },
+        Second: {
+            Type: 'Task',
+            Next: 'Third'
+        },
+        Third: {
+            Type: 'Task',
+            End: true
+        }
+    }
+};
+
 export const parallelExample = {
     Comment: 'Parallel Example.',
     StartAt: 'LookupCustomerInfo',

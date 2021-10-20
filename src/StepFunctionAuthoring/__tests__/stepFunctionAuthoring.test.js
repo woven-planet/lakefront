@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import StepFunctionAuthoring from '../StepFunctionAuthoring';
 import MockTestRenderer from './TestRenderer.util';
-import { parallelExample } from './stepFunctionAuthoring.data';
+import { parallelExample, simpleExample } from './stepFunctionAuthoring.data';
 
 jest.mock('src/StepFunctionRenderer/StepFunctionRenderer', () => jest.fn((props) => <MockTestRenderer {...props} />))
 
@@ -27,28 +27,6 @@ describe('StepFunctionAuthoring', () => {
             expect(container.querySelector('#LookupPhone')).toBeInTheDocument()
         });
 
-        it('renders inputs properly', () => {
-            const { queryAllByRole } = render(
-                <StepFunctionAuthoring />
-            );
-
-            // check for correct number of inputs
-            const inputNodes = queryAllByRole('textbox');
-            expect(inputNodes).toHaveLength(2);
-
-            // check for correct input labels
-            const options = ['Name', 'Next'];
-            const labels = [];
-            
-            for (const node of inputNodes) {
-                labels.push(node.parentElement.firstChild.innerHTML);
-            }
-
-            for (const option of options) {
-                expect(labels).toContain(option);
-            }
-        });
-
         it('renders node type options properly', () => {
             const { container } = render(
                 <StepFunctionAuthoring />
@@ -69,6 +47,41 @@ describe('StepFunctionAuthoring', () => {
             for (const option of options) {
                 expect(labels).toContain(option);
             }
+        });
+
+        describe('form inputs', () => {
+            it('renders inputs properly', () => {
+                const { queryAllByRole } = render(
+                    <StepFunctionAuthoring />
+                );
+    
+                // check for correct number of inputs
+                const inputNodes = queryAllByRole('textbox');
+                expect(inputNodes).toHaveLength(2);
+    
+                // check for correct input labels
+                const options = ['Name', 'Next'];
+                const labels = [];
+                
+                for (const node of inputNodes) {
+                    labels.push(node.parentElement.firstChild.innerHTML);
+                }
+    
+                for (const option of options) {
+                    expect(labels).toContain(option);
+                }
+            });
+
+            it('displays the node name and next node', () => {
+                const { container } = render(
+                    <StepFunctionAuthoring initialGraphState={simpleExample} />
+                );
+
+                fireEvent.click(container.querySelector('#Task'));
+
+                expect(container.querySelector('input[value="Task"]')).toBeInTheDocument();
+                expect(container.querySelector('input[value="Second"]')).toBeInTheDocument();
+            });
         });
 
         describe('form buttons', () => {

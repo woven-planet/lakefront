@@ -14,7 +14,7 @@ const TestRenderer: FC<StepFunctionRendererProps> = ({
     const states = getStates(stepFunctionJSON);
     const nodeNames = Object.keys(states);
 
-    const handleNodeClick = (event: any, data: any) => {
+    const handleNodeClick = (event: string, data: any) => {
         if (handleSelectedNode) {
             handleSelectedNode(event, data);
         }
@@ -30,7 +30,7 @@ const TestRenderer: FC<StepFunctionRendererProps> = ({
                 const state = states[name] as JSONStateObject;
                 
                 return (
-                    <div id={name} key={name} onClick={(event) => handleNodeClick(event, name)}>
+                    <div id={name} key={name} onClick={() => handleNodeClick(name, state)}>
                         <div className={'type'}>{state.Type}</div>
                         <div className={'nodePath'}>{state?.Metadata?.NodePath}</div>
                     </div>
