@@ -1,11 +1,11 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import StepFunctionAuthoring from '../StepFunctionAuthoring';
 import MockTestRenderer from './TestRenderer.util';
 import { parallelExample, simpleExample } from './stepFunctionAuthoring.data';
 
 jest.mock('src/StepFunctionRenderer/StepFunctionRenderer', () => jest.fn((props) => <MockTestRenderer {...props} />))
-
+const handleContextMenuClick = jest.fn();
 describe('StepFunctionAuthoring', () => {
     describe('general rendering', () => {
         it('renders a "Task" Node when initialGraphState is undefined', () => {
@@ -35,7 +35,7 @@ describe('StepFunctionAuthoring', () => {
             // check for correct number of labels
             const labelNodes = container.querySelectorAll('.label');
             expect(labelNodes).toHaveLength(5);
-            
+
             // check for correct labels
             const options = ['Task', 'Choice', 'Succeed', 'Map', 'Parallel'];
             const labels = [];
@@ -54,19 +54,19 @@ describe('StepFunctionAuthoring', () => {
                 const { queryAllByRole } = render(
                     <StepFunctionAuthoring />
                 );
-    
+
                 // check for correct number of inputs
                 const inputNodes = queryAllByRole('textbox');
                 expect(inputNodes).toHaveLength(2);
-    
+
                 // check for correct input labels
                 const options = ['Name', 'Next'];
                 const labels = [];
-                
+
                 for (const node of inputNodes) {
                     labels.push(node.parentElement.firstChild.innerHTML);
                 }
-    
+
                 for (const option of options) {
                     expect(labels).toContain(option);
                 }
@@ -89,16 +89,16 @@ describe('StepFunctionAuthoring', () => {
                 const { getByText } = render(
                     <StepFunctionAuthoring />
                 );
-    
+
                 getByText('Save');
                 getByText('Cancel');
             });
-    
+
             it('save button is disabled by default', () => {
                 const { getByText } = render(
                     <StepFunctionAuthoring />
                 );
-    
+
                 expect(getByText('Save')).toBeDisabled();
             });
 
@@ -110,9 +110,20 @@ describe('StepFunctionAuthoring', () => {
                 expect(getByText('Save')).toBeDisabled();
 
                 fireEvent.click(container.querySelector('#Task'));
-    
+
                 expect(getByText('Save')).not.toBeDisabled();
             });
+        });
+        it('renders context menu', () => {
+            const { container, getByText, debug } = render(
+                <StepFunctionAuthoring />
+            );
+
+            fireEvent.contextMenu(container.querySelector('#Task'));
+            debug();
+            //expect(handleContextMenuClick).toHaveBeenCalled();
+            expect(getByText('Add Task After')).toBeInTheDocument();
+
         });
     });
 });

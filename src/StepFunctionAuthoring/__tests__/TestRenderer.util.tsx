@@ -24,13 +24,23 @@ const TestRenderer: FC<StepFunctionRendererProps> = ({
         }
     };
 
+    const handleContextMenuClick = (event: any, eventData: any, node: any) => {
+        // make a simple rectangle
+        let newRect: SVGElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        if (handleContextClickNode && node) {
+            handleContextClickNode(eventData, node, event, newRect);
+        }
+
+    }
+
     return (
         <div>
             {nodeNames.map(name => {
                 const state = states[name] as JSONStateObject;
-                
+
                 return (
-                    <div id={name} key={name} onClick={() => handleNodeClick(name, state)}>
+                    <div id={name} key={name} onClick={() => handleNodeClick(name, state)}
+                        onContextMenu={(e) => handleContextMenuClick(e, name, state)}>
                         <div className={'type'}>{state.Type}</div>
                         <div className={'nodePath'}>{state?.Metadata?.NodePath}</div>
                     </div>
