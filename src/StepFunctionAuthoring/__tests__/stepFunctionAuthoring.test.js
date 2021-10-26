@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import StepFunctionAuthoring from '../StepFunctionAuthoring';
 import MockTestRenderer from './TestRenderer.util';
 import { parallelExample, simpleExample } from './stepFunctionAuthoring.data';
@@ -114,16 +114,110 @@ describe('StepFunctionAuthoring', () => {
                 expect(getByText('Save')).not.toBeDisabled();
             });
         });
-        it('renders context menu', () => {
-            const { container, getByText, debug } = render(
-                <StepFunctionAuthoring />
-            );
+    });
 
-            fireEvent.contextMenu(container.querySelector('#Task'));
-            debug();
-            //expect(handleContextMenuClick).toHaveBeenCalled();
-            expect(getByText('Add Task After')).toBeInTheDocument();
+    describe('events', () => {
+        describe('task node events', () => {
+            it('displays menu on context click', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+    
+                fireEvent.contextMenu(container.querySelector('#Task'));
+    
+                expect(getByText('Add Task After')).toBeInTheDocument();
+            });
+    
+            it('adds task on "Add Task After" menu click', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+    
+                expect(container.querySelectorAll('.type')).toHaveLength(1);
+    
+                fireEvent.contextMenu(container.querySelector('#Task'));
+                fireEvent.click(getByText('Add Task After'));
+    
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
+            });
+        });
 
+        describe('choice node events', () => {
+            it('changes selected task node to choice node on save', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+
+                expect(container.querySelector('.type').innerHTML).toBe('Task');
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Choice"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelector('.type').innerHTML).toBe('Choice');     
+            });
+
+            it('adds a choice if none exist on type change to "Choice"', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+
+                expect(container.querySelectorAll('.type')).toHaveLength(1);
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Choice"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);     
+            });
+
+            it('uses already existing choice on type change to "Choice"', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+
+                fireEvent.contextMenu(container.querySelector('#Task'));
+                fireEvent.click(getByText('Add Task After'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
+
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Choice"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);     
+            });
+
+            it('provides "Add Choice" context menu', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Task After')).toBeInTheDocument();
+
+                fireEvent.click(getByText('Add Task After'));
+
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Choice"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
+
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Choice')).toBeInTheDocument();
+                
+                fireEvent.click(getByText('Add Choice'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(3);
+            });
+        });
+
+        describe('map node events', () => {
+            it.todo('Map Node Changes');
+        });
+        describe('parallel node events', () => {
+            it.todo('Parallel Node Changes');
         });
     });
 });
