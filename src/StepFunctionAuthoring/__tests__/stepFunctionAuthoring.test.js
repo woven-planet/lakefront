@@ -5,7 +5,7 @@ import MockTestRenderer from './TestRenderer.util';
 import { parallelExample, simpleExample } from './stepFunctionAuthoring.data';
 
 jest.mock('src/StepFunctionRenderer/StepFunctionRenderer', () => jest.fn((props) => <MockTestRenderer {...props} />))
-const handleContextMenuClick = jest.fn();
+
 describe('StepFunctionAuthoring', () => {
     describe('general rendering', () => {
         it('renders a "Task" Node when initialGraphState is undefined', () => {
@@ -122,22 +122,22 @@ describe('StepFunctionAuthoring', () => {
                 const { container, getByText } = render(
                     <StepFunctionAuthoring />
                 );
-    
+
                 fireEvent.contextMenu(container.querySelector('#Task'));
-    
+
                 expect(getByText('Add Task After')).toBeInTheDocument();
             });
-    
+
             it('adds task on "Add Task After" menu click', () => {
                 const { container, getByText } = render(
                     <StepFunctionAuthoring />
                 );
-    
+
                 expect(container.querySelectorAll('.type')).toHaveLength(1);
-    
+
                 fireEvent.contextMenu(container.querySelector('#Task'));
                 fireEvent.click(getByText('Add Task After'));
-    
+
                 expect(container.querySelectorAll('.type')).toHaveLength(2);
             });
         });
@@ -153,7 +153,7 @@ describe('StepFunctionAuthoring', () => {
                 fireEvent.click(container.querySelector('input[value="Choice"]'));
                 fireEvent.click(getByText('Save'));
 
-                expect(container.querySelector('.type').innerHTML).toBe('Choice');     
+                expect(container.querySelector('.type').innerHTML).toBe('Choice');
             });
 
             it('adds a choice if none exist on type change to "Choice"', () => {
@@ -166,7 +166,7 @@ describe('StepFunctionAuthoring', () => {
                 fireEvent.click(container.querySelector('input[value="Choice"]'));
                 fireEvent.click(getByText('Save'));
 
-                expect(container.querySelectorAll('.type')).toHaveLength(2);     
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
             });
 
             it('uses already existing choice on type change to "Choice"', () => {
@@ -183,7 +183,7 @@ describe('StepFunctionAuthoring', () => {
                 fireEvent.click(container.querySelector('input[value="Choice"]'));
                 fireEvent.click(getByText('Save'));
 
-                expect(container.querySelectorAll('.type')).toHaveLength(2);     
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
             });
 
             it('provides "Add Choice" context menu', () => {
@@ -206,7 +206,7 @@ describe('StepFunctionAuthoring', () => {
                 fireEvent.contextMenu(container.querySelector('#Task'));
 
                 expect(getByText('Add Choice')).toBeInTheDocument();
-                
+
                 fireEvent.click(getByText('Add Choice'));
 
                 expect(container.querySelectorAll('.type')).toHaveLength(3);
@@ -214,10 +214,57 @@ describe('StepFunctionAuthoring', () => {
         });
 
         describe('map node events', () => {
-            it.todo('Map Node Changes');
+            it('changes selected task node to map node on save', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Task After')).toBeInTheDocument();
+
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Map"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
+
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Task After')).toBeInTheDocument();
+                expect(getByText('Add Task Inside')).toBeInTheDocument();
+
+                fireEvent.click(getByText('Add Task Inside'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(3);
+            });
         });
+
         describe('parallel node events', () => {
-            it.todo('Parallel Node Changes');
+            it('changes selected task node to parallel node on save', () => {
+                const { container, getByText } = render(
+                    <StepFunctionAuthoring />
+                );
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Task After')).toBeInTheDocument();
+
+                fireEvent.click(container.querySelector('#Task'));
+                fireEvent.click(container.querySelector('input[value="Parallel"]'));
+                fireEvent.click(getByText('Save'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(2);
+
+                fireEvent.contextMenu(container.querySelector('#Task'));
+
+                expect(getByText('Add Task After')).toBeInTheDocument();
+                expect(getByText('Add Task Inside')).toBeInTheDocument();
+
+                fireEvent.click(getByText('Add Task Inside'));
+
+                expect(container.querySelectorAll('.type')).toHaveLength(3);
+                expect(container).toHaveTextContent('Task.Branches');
+
+            });
         });
     });
 });
