@@ -26,7 +26,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ data, theme, total, width }) 
         <ThemeProvider theme={customTheme}>
             <ProgressStyle width={width}>
                 {data.map(({ label, value }) => {
-                    debugger;
                     if (label === 'pending' || value === 0) {
                         return null;
                     }
