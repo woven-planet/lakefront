@@ -1,7 +1,6 @@
-
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import CircularProgressComponent, { CircularProgressProps } from 'src/Progress/CircularProgress';
+import ProgressBarComponent, { ProgressBarProps } from 'src/Progress/ProgressBar';
 import DocBlock from '.storybook/DocBlock';
 import { PROGRESS_COLOR_SCHEME } from 'src/stories/Progress/progressColors';
 import styled from '@emotion/styled';
@@ -30,7 +29,7 @@ const Row = styled.li(() => ({
 
 export default {
     title: 'Lakefront/Progress',
-    component: CircularProgressComponent,
+    component: ProgressBarComponent,
     parameters: {
         docs: {
             page: DocBlock
@@ -38,11 +37,11 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CircularProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: Story<ProgressBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <section style={{ display: 'inline-flex' }}>
-            <CircularProgressComponent width={args.width} data={args.data} theme={args.theme} text={args.text}>
-            </CircularProgressComponent>
+            <ProgressBarComponent width={args.width} data={args.data} theme={args.theme} total={args.total}>
+            </ProgressBarComponent>
             <section style={{ marginLeft: 20 }}>
                 <ul style={{ margin: 0 }}>
                     {args.data.map((res) => {
@@ -62,15 +61,16 @@ const Template: Story<CircularProgressProps & ComponentPropsWithoutRef<'div'>> =
     );
 };
 
-export const CircularProgress = Template.bind({});
-CircularProgress.args = {
+export const ProgressBar = Template.bind({});
+ProgressBar.args = {
     data: [
         { label: 'finished', value: 5 },
         { label: 'failed', value: 30 },
         { label: 'running', value: 10 },
         { label: 'pending', value: 5 }
     ],
-    width: 100,
+    width: 300,
     theme: PROGRESS_COLOR_SCHEME,
-    text: '12%'
+    text: '12%',
+    total: 50
 };
