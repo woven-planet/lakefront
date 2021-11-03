@@ -5,11 +5,11 @@ import customTheme from 'src/styles/theme';
 export interface ProgressBarProps {
     /** 
      * This is to set the total of the progress bar. 
-     * */
+     */
     total: number;
     /** 
      * This is to set the width of the progress bar. 
-     * */
+     */
     width: number;
     /**
      * The data that is passed to the Progress Bar Component to render the bar width of each label depending on the value.
@@ -32,7 +32,7 @@ export interface ProgressBarProps {
 /**
  * Progress Bar Component
  * 
- * The Progress Bar  component is used to render the bar. The bar displays each section in a given color and the width
+ * The Progress Bar Component is used to render the bar. The bar displays each section in a given color and the width
  * of each section is calculated according to the value provide.
  */
 const ProgressBar: React.FC<ProgressBarProps> = ({ data, theme, total, width }) => {

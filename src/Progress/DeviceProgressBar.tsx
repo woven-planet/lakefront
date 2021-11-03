@@ -51,7 +51,7 @@ export const formatBytes = (bytes: any, decimals = 2) => {
  * Device Progress Component
  * 
  * The Device Progress Component displays the used space, available space and the total space of the device in the
- * form of a bar.It also displays the percentage of the device that is full.
+ * form of a bar. It also displays the percentage of the device that is full.
  * 
  */
 const DeviceProgressBar: React.FC<DeviceProgressProps> = ({

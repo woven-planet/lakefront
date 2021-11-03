@@ -7,11 +7,11 @@ import { CircularProgressStyle, CenterTextStyle } from './circularProgressStyles
 export interface CircularProgressProps {
     /** 
      * This is to set the width of the pie chart. 
-     * */
+     */
     width: number;
     /** 
      * This is to set the text that would appear inside the pie chart. 
-     * */
+     */
     text?: ReactNode;
     /**
      * The data that is passed to the Circular Progress Component to render different arcs for each value provided.
@@ -46,6 +46,7 @@ interface PieData {
  */
 const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme }) => {
 
+    var width = Math.abs(width);
     const svgRef = useRef<SVGSVGElement>(null);
     const htmlRef = useRef<HTMLDivElement>(null);
     const radius = width / 2;
