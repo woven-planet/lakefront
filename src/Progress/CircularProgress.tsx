@@ -2,7 +2,7 @@ import { FC, ReactNode, useRef, useEffect } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import customTheme from 'src/styles/theme';
 import { arc as d3arc, pie as d3pie } from 'd3-shape';
-import { event, select } from 'd3-selection';
+import { select } from 'd3-selection';
 import { CircularProgressStyle, CenterTextStyle } from './circularProgressStyles';
 export interface CircularProgressProps {
     /** 
@@ -33,6 +33,12 @@ export interface CircularProgressProps {
     };
 }
 
+interface PieData {
+    label: string;
+    value: number;
+    tooltip?: boolean;
+    key?: string;
+}
 /**
  * Circular Progress Component
  * 
@@ -54,7 +60,7 @@ const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme 
         const html = select(htmlRef.current);
 
         // for tooltips later
-        const div = html
+        const div: any = html
             .select('div')
             .attr('class', 'tooltip')
             .style('opacity', 0);
@@ -63,8 +69,10 @@ const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme 
         const radius = width / 2;
 
         const arc = d3arc().outerRadius(radius).innerRadius(radius - 10).padAngle(0);
-
-        const paths: any = g.selectAll('path').data(d3pie()(data.map(d => d.value)));
+        const pie = d3pie<PieData>()
+            .sort(null)
+            .value((record) => record.value);
+        const paths: any = g.selectAll('path').data(pie(data));
         paths
             .enter()
             .append('path')
@@ -76,7 +84,7 @@ const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme 
                 return theme[key] ? theme[key].bgColor : 'transparent';
             })
             // have a mouse tooltip effect
-            .on('mouseover', function (d: any) {
+            .on('mouseover', function (event: PointerEvent, d: any) {
                 if (d.data.tooltip === undefined || d.data.tooltip === true) {
                     div.transition()
                         .duration(200)

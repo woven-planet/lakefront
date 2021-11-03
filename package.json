@@ -55,7 +55,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^7.0.0",
-    "@types/d3-selection": "^1.0.0",
+    "@types/d3-selection": "^3.0.1",
     "@types/d3-shape": "^3.0.2",
     "@types/d3-zoom": "^3.0.1",
     "@types/dagre-d3": "^0.6.3",
