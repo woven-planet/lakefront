@@ -5,14 +5,26 @@ import { arc as d3arc, pie as d3pie } from 'd3-shape';
 import { event, select } from 'd3-selection';
 import { CircularProgressStyle, CenterTextStyle } from './circularProgressStyles';
 export interface CircularProgressProps {
+    /** 
+     * This is to set the width of the pie chart. 
+     * */
     width: number;
+    /** 
+     * This is to set the text that would appear inside the pie chart. 
+     * */
     text?: ReactNode;
+    /**
+     * The data that is passed to the Circular Progress Component to render different arcs for each value provided.
+     */
     data: {
         label: string;
         value: number;
         tooltip?: boolean;
         key?: string;
     }[];
+    /**
+     * This is to render the background color for each label that is being passed.
+     */
     theme: {
         [key: string]: {
             bgColor: string;
@@ -21,7 +33,11 @@ export interface CircularProgressProps {
     };
 }
 
-
+/**
+ * Circular Progress Component
+ * 
+ * The Circular Progress component is used to render the arcs depending on the value provided for each label.
+ */
 const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme }) => {
 
     const svgRef = useRef<SVGSVGElement>(null);

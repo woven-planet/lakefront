@@ -28,7 +28,7 @@ const Row = styled.li(() => ({
 }));
 
 export default {
-    title: 'Lakefront/Progress',
+    title: 'Lakefront/Progress/ProgressBar',
     component: ProgressBarComponent,
     parameters: {
         docs: {

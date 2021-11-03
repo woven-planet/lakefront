@@ -4,7 +4,7 @@ import DeviceProgressBarComponent, { DeviceProgressProps } from 'src/Progress/De
 import DocBlock from '.storybook/DocBlock';
 
 export default {
-    title: 'Lakefront/Progress',
+    title: 'Lakefront/Progress/DeviceProgress',
     component: DeviceProgressBarComponent,
     parameters: {
         docs: {

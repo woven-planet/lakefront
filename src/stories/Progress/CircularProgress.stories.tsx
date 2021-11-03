@@ -29,7 +29,7 @@ const Row = styled.li(() => ({
 }));
 
 export default {
-    title: 'Lakefront/Progress',
+    title: 'Lakefront/Progress/CircularProgress',
     component: CircularProgressComponent,
     parameters: {
         docs: {

@@ -3,10 +3,25 @@ import { ThemeProvider } from '@emotion/react';
 import customTheme from 'src/styles/theme';
 
 export interface DeviceProgressProps {
+    /**
+     * This is to set the used space of the device. The type should be a number.
+     */
     used: number;
+    /**
+     * This is to set the available space of the device. The type should be a number.
+     */
     available: number;
+    /**
+     * This is to set the total space of the device. The type should be a number.
+     */
     total: number;
+    /**
+     * This is to set the capacity for the device progress bar.
+     */
     capacity: string;
+    /**
+     * This is to set the background color of the  progress bar.
+     */
     backgroundColor?: string;
 }
 
@@ -32,6 +47,13 @@ export const formatBytes = (bytes: any, decimals = 2) => {
     return { value: value, size: size };
 };
 
+/**
+ * Device Progress Component
+ * 
+ * The Device Progress Component displays the used space, available space and the total space of the device in the
+ * form of a bar.It also displays the percentage of the device that is full.
+ * 
+ */
 const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
     used,
     available,
