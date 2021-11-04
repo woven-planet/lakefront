@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import DeviceProgressBar from '../DeviceProgressBar';
 import { mockDeviceData } from './mockDevices.data';
 

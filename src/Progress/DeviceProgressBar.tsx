@@ -1,5 +1,6 @@
 import { ProgressBarContainer, TopText, CenterText, RightText, ProgressBar, Filler, BottomText } from './deviceProgressBarStyles';
 import { ThemeProvider } from '@emotion/react';
+import { formatBytes } from './deviceProgressBarUtil';
 import customTheme from 'src/styles/theme';
 
 export interface DeviceProgressProps {
@@ -25,27 +26,7 @@ export interface DeviceProgressProps {
     backgroundColor?: string;
 }
 
-export const formatBytes = (bytes: any, decimals = 2) => {
-    if (bytes === 0 || bytes === undefined) return { value: 0, size: 'B' };
 
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    let i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    let value = (bytes / Math.pow(k, i)).toFixed(dm);
-    let size = sizes[i];
-
-    if (value === k.toFixed(dm)) {
-        i = i + 1;
-
-        value = (bytes / Math.pow(k, i)).toFixed(dm);
-        size = sizes[i];
-    }
-
-    return { value: value, size: size };
-};
 
 /**
  * Device Progress Component
