@@ -36,6 +36,12 @@ export { default as Modal, ConfirmationModal } from './Modal';
 
 export { default as Page } from './Page/Page';
 
+export { default as CircularProgress } from './Progress/CircularProgress';
+
+export { default as ProgressBar } from './Progress/ProgressBar';
+
+export { default as DeviceProgressBar } from './Progress/DeviceProgressBar';
+
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 
 export { default as StackBanner } from './StackBanner/StackBanner';
