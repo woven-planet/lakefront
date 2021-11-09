@@ -27,24 +27,69 @@ export interface EpisodeImageTagProp {
 }
 
 export interface MaskableImageProps {
+    /**
+     * The url to set the image source.
+     */
     url: string;
+    /**
+     * This is to set the full size dimension of the image.
+     */
     fullSizeDimensions: { height: number; width: number };
+    /**
+     * This is to set the alternate text of the image.
+     */
     alt?: string;
+    /**
+     * This will enable or disable the selection of the image when check icon is clicked.
+     */
     selectable?: boolean;
+    /**
+     * This will set the selection of the image by default.
+     */
     selected?: boolean;
+    /**
+     * This is an event that would be called when the image is selected.
+     */
     onSelect?(selected: boolean): void;
+    /**
+     * This is to set the default property that would highlight the image.
+     */
     highlighted?: boolean;
+    /**
+     * This is to set the biunding box tags.
+     */
     boundingBoxTags?: EpisodeImageTagProp[];
+    /**
+     * This will set the show spinner property bey default.
+     */
     showSpinner?: boolean;
+    /**
+     * If set to true,This will show spinner when the image is still loading.
+     */
     showSpinnerOnLoad?: boolean;
+    /**
+     * This will add the class to the image component.
+     */
     className?: string;
+    /**
+     * This will specify the heightToWidthRatio of the image.
+     */
     heightToWidthRatio?: number;
+    /**
+     * This is to set the inner width of the image.
+     */
     innerWidth?: number;
 }
 
 // This is the base64 for a 1x1 transparent pixel
 const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
+/**
+ * Maskable Image Component
+ *  
+ * This Component is used to render an image. The image can be selected and highlighted.The showSpinnerOnLoad when set
+ * to true will show the loading spinner until the image is loaded.
+ */
 const MaskableImage: FC<MaskableImageProps> = ({
     className,
     url,
