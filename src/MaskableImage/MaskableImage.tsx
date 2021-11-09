@@ -87,7 +87,7 @@ const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEA
 /**
  * Maskable Image Component
  *  
- * This Component is used to render an image. The image can be selected and highlighted.The showSpinnerOnLoad when set
+ * This Component is used to render an image. The image can be selected and highlighted. The showSpinnerOnLoad when set
  * to true will show the loading spinner until the image is loaded.
  */
 const MaskableImage: FC<MaskableImageProps> = ({
@@ -168,9 +168,6 @@ const MaskableImage: FC<MaskableImageProps> = ({
     const handleImageLoaded = () => {
         setImageLoaded(true);
     };
-
-    // https://css-tricks.com/scaled-proportional-blocks-with-css-and-javascript/
-    // const aspectRatioConstraint = { paddingBottom: `${heightToWidthRatio * 100}%` };
 
     return (
         <ThemeProvider theme={theme}>
