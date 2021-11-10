@@ -17,10 +17,13 @@ export default {
 } as Meta;
 
 const Template: Story = (args) => {
-    const [json, setJson] = useState(args.initialGraphState);
+    // Use copy of args.initialGraphState since authoring
+    // currently mutates data.
+    const [json, setJson] = useState(args.initialGraphState ? { ...args.initialGraphState } : args.initialGraphState);
 
     useEffect(() => {
-        setJson(args.initialGraphState);
+        // Force rerender if user changes args
+        setJson(args.initialGraphState ? { ...args.initialGraphState } : args.initialGraphState);
     }, [args.initialGraphState]);
 
     return <StepFunctionAuthoring initialGraphState={json} />;
@@ -29,9 +32,9 @@ const Template: Story = (args) => {
 export const NewStepFunction = Template.bind({});
 NewStepFunction.args = {
     initialGraphState: undefined
-}
+};
 
 export const InitializedStepFunction = Template.bind({});
 InitializedStepFunction.args = {
     initialGraphState: choiceJson
-}
+};

@@ -52,3 +52,9 @@ export const Menu = styled.ul(({ theme }) => ({
         }
     }
 }));
+
+export const ActionWrapper = styled(SpacedButtons)({
+    display: 'flex',
+    marginTop: 32,
+    justifyContent: 'flex-end'
+});
