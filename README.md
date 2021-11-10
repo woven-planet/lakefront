@@ -64,6 +64,7 @@ We've added storybook pages to show how each component can be used.
 * [ItemGrid](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-itemgrid--item-grid)
 * [ItemResults](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-itemresults--item-results)
 * [Loading](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-loading--loading)
+* [MaskableImage](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-maskableimage--maskable-image)
 * [Modal](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modal--simple-modal)
   * [ConfirmationModal](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modal-confirmationmodal--basic-confirm)
 * [Page](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-page--page)
