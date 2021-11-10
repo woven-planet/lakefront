@@ -2,7 +2,7 @@ import { graphlib } from 'dagre-d3';
 import { WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
 import { JSONStateObject, StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 
-export interface StephFunctionAuthoringFormState {
+export interface StepFunctionAuthoringFormState {
     name: string;
     next: string;
     nodeType: WorkFlowType | '';

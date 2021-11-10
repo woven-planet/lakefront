@@ -14,7 +14,7 @@ import {
     isComplexNode
 } from './util';
 import {
-    StephFunctionAuthoringFormState,
+    StepFunctionAuthoringFormState,
     StepFunctionAuthoringSnapshot,
     StepFunctionAuthoringChangeType
 } from './types';
@@ -60,7 +60,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
     const [menuCoordinates, setMenuCoordinates] = useState<[number, number]>([0, 0]);
 
     // Form State
-    const [formState, setFormState] = useState<StephFunctionAuthoringFormState>(DEFAULT_FORM_STATE);
+    const [formState, setFormState] = useState<StepFunctionAuthoringFormState>(DEFAULT_FORM_STATE);
     const [resetModalVisible, setResetModalVisible] = useState(false);
 
     useEffect(() => {
