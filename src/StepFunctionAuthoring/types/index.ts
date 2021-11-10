@@ -8,7 +8,7 @@ export interface StephFunctionAuthoringFormState {
     nodeType: WorkFlowType | '';
 }
 
-export enum StephFunctionAuthoringChangeType {
+export enum StepFunctionAuthoringChangeType {
     ADD = 'add',
     UPDATE = 'update',
     DELETE = 'delete',
@@ -16,13 +16,13 @@ export enum StephFunctionAuthoringChangeType {
 }
 
 interface StepFunctionGeneralChange {
-    type: StephFunctionAuthoringChangeType,
+    type: StepFunctionAuthoringChangeType,
     key: string;
     data?: JSONStateObject | StepFunctionJSON
 }
 
 interface StepFunctionAddChange extends StepFunctionGeneralChange {
-    type: StephFunctionAuthoringChangeType.ADD
+    type: StepFunctionAuthoringChangeType.ADD
 }
 
 export interface StepFunctionAuthoringSnapshot {

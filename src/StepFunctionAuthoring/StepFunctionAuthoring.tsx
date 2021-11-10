@@ -16,7 +16,7 @@ import {
 import {
     StephFunctionAuthoringFormState,
     StepFunctionAuthoringSnapshot,
-    StephFunctionAuthoringChangeType
+    StepFunctionAuthoringChangeType
 } from './types';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
@@ -86,12 +86,12 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         const [{ change }] = snapshots;
 
         // Reset state as needed
-        if (change?.type === StephFunctionAuthoringChangeType.RESET) {
+        if (change?.type === StepFunctionAuthoringChangeType.RESET) {
             handleSelectedNode('', null);
         }
 
         // Highlight and select added node for editing
-        if (change?.type === StephFunctionAuthoringChangeType.ADD) {
+        if (change?.type === StepFunctionAuthoringChangeType.ADD) {
             handleSelectedNode(change.key, change.data || null);
         }
     }, [json, snapshots]);
@@ -252,7 +252,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
             // Store change in snapshot history
             createSnapshot({
                 change: {
-                    type: StephFunctionAuthoringChangeType.ADD,
+                    type: StepFunctionAuthoringChangeType.ADD,
                     key: newKey,
                     data: JSONBuilder.current.getNodeJsonAtPath(NodePath)
                 }
@@ -347,7 +347,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 // Store change in snapshot history
                 createSnapshot({
                     change: {
-                        type: StephFunctionAuthoringChangeType.ADD,
+                        type: StepFunctionAuthoringChangeType.ADD,
                         key: newKey,
                         data: newNode
                     }
@@ -372,7 +372,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 // Store change in snapshot history
                 createSnapshot({
                     change: {
-                        type: StephFunctionAuthoringChangeType.ADD,
+                        type: StepFunctionAuthoringChangeType.ADD,
                         key: newKey,
                         data: taskBuilder.getJson()
                     }
@@ -506,7 +506,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
             // Store change in snapshot history
             createSnapshot({
                 change: {
-                    type: StephFunctionAuthoringChangeType.UPDATE,
+                    type: StepFunctionAuthoringChangeType.UPDATE,
                     key: name || selectedNodeKey,
                     data: JSONBuilder.current.getNodeJsonAtPath(NodePath)
                 }
@@ -536,7 +536,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         // Store change in snapshot history
         createSnapshot({
             change: {
-                type: StephFunctionAuthoringChangeType.RESET,
+                type: StepFunctionAuthoringChangeType.RESET,
                 key: '',
                 data: JSONBuilder.current.getJson()
             }
