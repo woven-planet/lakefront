@@ -11,7 +11,8 @@ export interface StephFunctionAuthoringFormState {
 export enum StephFunctionAuthoringChangeType {
     ADD = 'add',
     UPDATE = 'update',
-    DELETE = 'delete'
+    DELETE = 'delete',
+    RESET = 'reset'
 }
 
 interface StepFunctionGeneralChange {

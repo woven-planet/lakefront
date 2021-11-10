@@ -84,6 +84,11 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         // Detect any stored changes
         const [{ change }] = snapshots;
 
+        // Reset state as needed
+        if (change?.type === StephFunctionAuthoringChangeType.RESET) {
+            handleSelectedNode('', null);
+        }
+
         // Highlight and select added node for editing
         if (change?.type === StephFunctionAuthoringChangeType.ADD) {
             handleSelectedNode(change.key, change.data || null);
@@ -527,7 +532,14 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         } else {
             JSONBuilder.current = new JSONBuilderUtil({ ...originalGraphStateRef.current });
         }
-        setFormState(DEFAULT_FORM_STATE);
+        // Store change in snapshot history
+        createSnapshot({
+            change: {
+                type: StephFunctionAuthoringChangeType.RESET,
+                key: '',
+                data: JSONBuilder.current.getJson()
+            }
+        });
         updateJson(JSONBuilder.current.getJson());
         setResetModalVisible(false);
     };
