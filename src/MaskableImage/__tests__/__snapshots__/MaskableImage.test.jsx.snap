@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MaskableImage /> renders properly 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-1hyfx7x"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> renders properly without dimensions passed as a prop 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-1hyfx7x"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> renders the checkmark when hovered 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-e4d18b"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> renders the filled in checkmark when selected 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-1x68q7l"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> should loading spinner when showSpinnerOnLoad is true 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <div
+      class="css-1ja8l8u"
+    >
+      <div
+        class="css-mqm9zm"
+      >
+        <svg
+          height="24"
+          width="24"
+        />
+        <div>
+          Loading
+        </div>
+      </div>
+    </div>
+    <img
+      alt="Loading"
+      class="css-1itg168"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-ykspsl"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-1hyfx7x"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> should not allow selecting when selectable is false 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1hyfx7x"
+    />
+    <svg
+      class="css-1hyfx7x"
+    />
+  </div>
+</div>
+`;
+
+exports[`<MaskableImage /> should show highlighted overlay when highlighted prop is true 1`] = `
+<div>
+  <div
+    class="css-wwgxf1"
+  >
+    <img
+      alt="Loading"
+      class="css-9ndp5p"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+    />
+    <img
+      alt=""
+      class="css-yl3f07"
+      src="test.com"
+    />
+    <div
+      class="css-1vkrpwh"
+    />
+    <svg
+      class="css-1hyfx7x"
+    />
+  </div>
+</div>
+`;
