@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { JSONBuilderUtil, JSONStateObject, StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
-import { Button, Input, RadioGroup } from '../index';
+import { ConfirmationModal, Button, Input, RadioGroup } from '../index';
 import { addMetadata, WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
-import { EditForm, Menu, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
+import { ActionWrapper, EditForm, Menu, StyledTypeLabel, SubmitWrapper, TypeSpan, Wrapper } from './stepFunctionAuthoringStyles';
 import StepFunctionRenderer from 'src/StepFunctionRenderer/StepFunctionRenderer';
 import {
     DEFAULT_FORM_STATE,
@@ -41,6 +41,8 @@ interface StepFunctionAuthoringProps {
  */
 const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphState }) => {
     // Graph State
+    // Save copy of initial graph state since JSONBuilder mutates data
+    const originalGraphStateRef = useRef(initialGraphState ? { ...initialGraphState } : initialGraphState);
     const JSONBuilder = useRef(new JSONBuilderUtil(initialGraphState));
     const [json, setJson] = useState<StepFunctionJSON>(DEFAULT_GRAPH_STATE);
     const [graph, setGraph] = useState<graphlib.Graph | null>(null);
@@ -58,6 +60,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
 
     // Form State
     const [formState, setFormState] = useState<StephFunctionAuthoringFormState>(DEFAULT_FORM_STATE);
+    const [resetModalVisible, setResetModalVisible] = useState(false);
 
     useEffect(() => {
         // Initialize Graph Render
@@ -516,6 +519,18 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         setStates(currentStates);
     };
 
+    const handleReset = () => {
+        if (!originalGraphStateRef.current) {
+            JSONBuilder.current = new JSONBuilderUtil();
+            JSONBuilder.current.addTask('Task', undefined, true);
+            JSONBuilder.current.editRootJSON({ StartAt: 'Task' });
+        } else {
+            JSONBuilder.current = new JSONBuilderUtil({ ...originalGraphStateRef.current });
+        }
+        setFormState(DEFAULT_FORM_STATE);
+        updateJson(JSONBuilder.current.getJson());
+    };
+
     const isFormValid = (): boolean => {
         return highlighted !== null && formState.name !== '' && formState.name !== 'End';
     };
@@ -572,6 +587,11 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                     </Menu>
                 </div>
                 <EditForm>
+                    <ActionWrapper>
+                        <Button color="destructive" onClick={handleReset}>
+                            Reset
+                        </Button>
+                    </ActionWrapper>
                     <h3>Edit Node</h3>
                     <Input onChange={makeFormUpdateHandler(FORM_KEYS.NAME)} label="Name" value={formState.name} />
                     <Input onChange={makeFormUpdateHandler(FORM_KEYS.NEXT)} label="Next" value={formState.next} />
@@ -593,6 +613,13 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                         </Button>
                     </SubmitWrapper>
                 </EditForm>
+                <ConfirmationModal
+                    modalVisible={resetModalVisible}
+                    title={'Are you sure you want to reset the current Step Function Authoring state?'}
+                    message={''}
+                    onYes={handleReset}
+                    onNo={() => setResetModalVisible(false)}
+                />
             </Wrapper>
         </ThemeProvider>
     );
