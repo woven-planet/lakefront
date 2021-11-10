@@ -16,6 +16,12 @@ export const FORM_KEYS = {
     NODE_TYPE: 'nodeType'
 };
 
+export const RESET_MODAL = {
+    TITLE: 'Are you sure you want to reset the current Step Function Authoring state?',
+    RESET: 'Reset',
+    CANCEL: 'Cancel'
+};
+
 export const DEFAULT_FORM_STATE: StephFunctionAuthoringFormState = { name: '', next: '', nodeType: '' };
 
 export const DEFAULT_GRAPH_STATE: StepFunctionJSON = { StartAt: '', States: {} };

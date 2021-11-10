@@ -8,6 +8,7 @@ import {
     DEFAULT_FORM_STATE,
     DEFAULT_GRAPH_STATE,
     FORM_KEYS,
+    RESET_MODAL,
     TYPE_OPTIONS,
     generateNodeName,
     isComplexNode
@@ -628,12 +629,13 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 </EditForm>
                 <ConfirmationModal
                     modalVisible={resetModalVisible}
-                    title={'Are you sure you want to reset the current Step Function Authoring state?'}
+                    title={RESET_MODAL.TITLE}
                     message={''}
                     onYes={handleReset}
                     onNo={() => setResetModalVisible(false)}
-                    yes='Reset'
-                    no='Cancel'
+                    yes={RESET_MODAL.RESET}
+                    no={RESET_MODAL.CANCEL}
+                    className='stepfunctionAuthoringResetModal'
                 />
             </Wrapper>
         </ThemeProvider>
