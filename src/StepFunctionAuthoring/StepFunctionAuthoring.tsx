@@ -529,6 +529,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
         }
         setFormState(DEFAULT_FORM_STATE);
         updateJson(JSONBuilder.current.getJson());
+        setResetModalVisible(false);
     };
 
     const isFormValid = (): boolean => {
@@ -588,7 +589,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                 </div>
                 <EditForm>
                     <ActionWrapper>
-                        <Button color="destructive" onClick={handleReset}>
+                        <Button color="destructive" onClick={() => setResetModalVisible(true)}>
                             Reset
                         </Button>
                     </ActionWrapper>
@@ -619,6 +620,8 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
                     message={''}
                     onYes={handleReset}
                     onNo={() => setResetModalVisible(false)}
+                    yes='Reset'
+                    no='Cancel'
                 />
             </Wrapper>
         </ThemeProvider>
