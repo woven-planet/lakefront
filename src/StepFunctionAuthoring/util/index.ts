@@ -1,5 +1,5 @@
 import { WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
-import { StephFunctionAuthoringFormState } from 'src/StepFunctionAuthoring';
+import { StepFunctionAuthoringFormState } from 'src/StepFunctionAuthoring';
 import { StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 
 export const TYPE_OPTIONS = [
@@ -16,7 +16,13 @@ export const FORM_KEYS = {
     NODE_TYPE: 'nodeType'
 };
 
-export const DEFAULT_FORM_STATE: StephFunctionAuthoringFormState = { name: '', next: '', nodeType: '' };
+export const RESET_MODAL = {
+    TITLE: 'Are you sure you want to reset the current Step Function Authoring state?',
+    RESET: 'Reset',
+    CANCEL: 'Cancel'
+};
+
+export const DEFAULT_FORM_STATE: StepFunctionAuthoringFormState = { name: '', next: '', nodeType: '' };
 
 export const DEFAULT_GRAPH_STATE: StepFunctionJSON = { StartAt: '', States: {} };
 

@@ -2,26 +2,27 @@ import { graphlib } from 'dagre-d3';
 import { WorkFlowType } from 'src/StepFunctionGraph/StepFunctionUtil';
 import { JSONStateObject, StepFunctionJSON } from 'src/StepFunctionGraph/util/JSONBuilder.util';
 
-export interface StephFunctionAuthoringFormState {
+export interface StepFunctionAuthoringFormState {
     name: string;
     next: string;
     nodeType: WorkFlowType | '';
 }
 
-export enum StephFunctionAuthoringChangeType {
+export enum StepFunctionAuthoringChangeType {
     ADD = 'add',
     UPDATE = 'update',
-    DELETE = 'delete'
+    DELETE = 'delete',
+    RESET = 'reset'
 }
 
 interface StepFunctionGeneralChange {
-    type: StephFunctionAuthoringChangeType,
+    type: StepFunctionAuthoringChangeType,
     key: string;
     data?: JSONStateObject | StepFunctionJSON
 }
 
 interface StepFunctionAddChange extends StepFunctionGeneralChange {
-    type: StephFunctionAuthoringChangeType.ADD
+    type: StepFunctionAuthoringChangeType.ADD
 }
 
 export interface StepFunctionAuthoringSnapshot {

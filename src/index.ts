@@ -32,6 +32,8 @@ export { default as ItemResults } from './ItemResults/ItemResults';
 
 export { default as Loading } from './Loading/Loading';
 
+export { default as MaskableImage } from './MaskableImage/MaskableImage';
+
 export { default as Modal, ConfirmationModal } from './Modal';
 
 export { default as Page } from './Page/Page';
