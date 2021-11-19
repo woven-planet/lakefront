@@ -46,6 +46,8 @@ export { default as DeviceProgressBar } from './Progress/DeviceProgressBar';
 
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 
+export { default as Select } from './Select';
+
 export { default as StackBanner } from './StackBanner/StackBanner';
 
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';
