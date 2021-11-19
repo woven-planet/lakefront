@@ -3,9 +3,8 @@ import { lightenDarkenColor } from 'src/styles/stylesUtil';
 import { GroupTypeBase, Styles } from 'react-select';
 import { Theme } from '@emotion/react';
 import { SelectOption } from 'src/types/global';
-import { ReactComponent as baselineExpandSvg } from './baseline-expand_more-24px.svg'
-const DARKEN_MOST = -40;
-const DARKEN_LEAST = -10;
+import { ReactComponent as baselineExpandSvg } from './baseline-expand_more-24px.svg';
+import theme from 'src/styles/theme';
 
 export const SelectStyles = styled.div({
     select: {
@@ -29,7 +28,7 @@ export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, Grou
         display: 'flex',
         color: state.theme.colors.storm,
         backgroundColor: state.selectProps.isDisabled ?
-            lightenDarkenColor(state.theme.colors.white, DARKEN_MOST) :
+            lightenDarkenColor(state.theme.colors.white, theme?.DARKEN_MOST) :
             state.theme.colors.white,
         cursor: state.selectProps.isDisabled ? 'not-allowed' : 'pointer',
         alignItems: 'center',
@@ -46,7 +45,7 @@ export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, Grou
             outline: 0
         }),
         ':hover': {
-            backgroundColor: lightenDarkenColor(state.theme?.colors?.white, DARKEN_LEAST),
+            backgroundColor: lightenDarkenColor(state.theme?.colors?.white, theme?.DARKEN_LEAST),
             border: `1px solid ${state.theme.colors.storm}`,
             outline: 0
         }
@@ -75,7 +74,7 @@ export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, Grou
         ...defaultStyles,
         alignItems: 'center',
         color: state.selectProps.isDisabled ?
-            lightenDarkenColor(state.theme?.colors?.white, DARKEN_MOST) :
+            lightenDarkenColor(state.theme?.colors?.white, theme?.DARKEN_MOST) :
             state.theme?.colors?.storm,
         cursor: 'pointer',
         display: 'flex',
@@ -107,7 +106,7 @@ export const SelectStyledComponent = styled.select({
     borderRadius: '2px',
     boxShadow: 'inset 0 1px 2px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2)',
     border: 'solid 1px #9393a2',
-    backgroundColor: '#ffffff',
+    backgroundColor: theme?.colors?.white,
     color: '#000000',
     fontSize: '16px',
     minWidth: '200px',

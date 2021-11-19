@@ -58,7 +58,7 @@ const Select: FC<SelectProps> = ({ options, className, ...rest }) => {
         <SelectStyles>
             <SelectStyledComponent className={className} {...rest}>
                 {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
                     </option>
                 ))}
