@@ -70,11 +70,10 @@ describe('<RefreshToolbar />', () => {
         expect(container.getElementsByClassName('iconChild')).toBeDefined();
     });
 
-    it('renders right sidtext', () => {
-        const handleRefresh = jest.fn();
+    it('renders right side text', () => {
         const { container, debug } = render((
             <RefreshToolbar
-                handleRefresh={handleRefresh}
+                handleRefresh={() => null}
                 refreshTooltipText="Refresh LogSync File Details"
                 lastUpdated="11:28:22 AM"
                 rightSideText="Last Updated: 11:28:22 AM EST"

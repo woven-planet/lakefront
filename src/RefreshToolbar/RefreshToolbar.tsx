@@ -66,7 +66,6 @@ const RefreshToolbar: FC<RefreshToolbarProps> = props => {
         rightComp,
         rightSideText,
         refreshButton
-
     } = props;
     return (
         <ThemeProvider theme={theme}>
