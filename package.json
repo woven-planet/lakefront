@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.86.1",
+  "version": "0.87.2",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -55,6 +55,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^7.0.0",
+    "@testing-library/user-event": "^13.5.0",
     "@types/d3-selection": "^3.0.1",
     "@types/d3-shape": "^3.0.2",
     "@types/d3-zoom": "^3.0.1",

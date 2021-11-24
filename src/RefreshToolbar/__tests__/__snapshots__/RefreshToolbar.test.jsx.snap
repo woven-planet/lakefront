@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RefreshToolbar /> renders button as correctly-styled icon 1`] = `
+<div>
+  <div
+    class="css-ausj0h"
+  >
+    <div>
+      <button
+        class="css-th9i8z"
+      >
+        <span
+          class="css-1uvgx5t"
+        >
+          <span
+            class="iconChild"
+          >
+            <svg />
+          </span>
+        </span>
+      </button>
+    </div>
+    <div
+      class="css-e55m9z"
+    >
+      <div
+        class="css-1yye06s"
+      />
+      <div
+        class="css-ybfxeh"
+      >
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<RefreshToolbar /> renders tooltip on hover 1`] = `
+<div>
+  <div
+    class="css-ausj0h"
+  >
+    <div>
+      <button
+        class="css-th9i8z"
+      >
+        <span
+          class="css-1uvgx5t"
+        >
+          <span
+            class="iconChild"
+          >
+            <svg />
+          </span>
+        </span>
+      </button>
+    </div>
+    <div
+      class="css-e55m9z"
+    >
+      <div
+        class="css-1yye06s"
+      />
+      <div
+        class="css-ybfxeh"
+      >
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
