@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Button from 'src/Button/Button';
 import RefreshToolbar from '../RefreshToolbar';
 
@@ -34,8 +35,7 @@ describe('<RefreshToolbar />', () => {
             />
         ));
 
-        fireEvent.mouseOver(container.querySelector('button'));
-
+        userEvent.hover(screen.getByRole('button'));
         expect(container).toMatchSnapshot();
     });
 
@@ -49,7 +49,7 @@ describe('<RefreshToolbar />', () => {
             />
         ));
 
-        fireEvent.click(container.querySelector('button'));
+        userEvent.click(screen.getByRole('button'));
 
         expect(count).toBe(1);
         expect(refreshing).toBeTruthy();
@@ -71,7 +71,7 @@ describe('<RefreshToolbar />', () => {
     });
 
     it('renders right side text', () => {
-        const { container, debug } = render((
+        const { container } = render((
             <RefreshToolbar
                 handleRefresh={() => null}
                 refreshTooltipText="Refresh LogSync File Details"

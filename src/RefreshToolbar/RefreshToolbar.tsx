@@ -1,10 +1,10 @@
 import { FC, ReactNode, useMemo } from 'react';
-import Button from 'src/Button/Button';
 import {
     ToolbarContainer, LogoLoadingSpinner, RefreshProgressContainer,
     ToolbarAdditionalContent, ButtonContainer, RightSideContainer
 } from './refreshToolbarStyles';
 import { ReactComponent as RefreshIcon } from './assets/refreshIcon.svg';
+import Button from 'src/Button/Button';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
