@@ -64,6 +64,8 @@ export { default as StepFunctionGraph } from './StepFunctionGraph/Graph';
 
 export { default as StepFunctionRenderer } from './StepFunctionRenderer/StepFunctionRenderer';
 
+export { default as Tabs } from './Tabs';
+
 export { default as TextArea } from './TextArea/TextArea';
 
 export { default as Toggle } from './Toggle/Toggle';
