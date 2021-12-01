@@ -1,12 +1,10 @@
-import React from 'react';
-import Immutable from 'immutable';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 
 import Tabs from '../Tabs';
 
 afterAll(cleanup);
 
-const TABS = Immutable.List([
+const TABS = [
     {
         key: 'episode',
         caption: 'Episode Tasks'
@@ -16,7 +14,7 @@ const TABS = Immutable.List([
         caption: 'Command Tasks'
     }
 
-]);
+];
 
 describe('<Tabs>', () => {
     it('check tab tags and behaviour', () => {

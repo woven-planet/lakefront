@@ -1,12 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { TabBar, TabStyle } from './tabStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-
-export interface TabDef {
-    key: string;
-    caption: string;
-}
+import { TabDef } from 'src/types/global';
 
 export interface TabProps {
     /**
@@ -14,7 +10,7 @@ export interface TabProps {
      */
     options: TabDef[];
     /**
-     * This is to set the slected tab by default.
+     * This is to set the selected tab by default.
      */
     value: string;
     /**
@@ -31,7 +27,7 @@ export interface TabProps {
  * The Tab Component is used to render multiple tabs. The onChange event is called whenever the user clicks a different tab.
  * The value will set the selection of the tab by default.
  */
-const Tabs: React.FC<TabProps> = props => {
+const Tabs: FC<TabProps> = props => {
     const {
         options,
         value,

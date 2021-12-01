@@ -46,7 +46,7 @@ export { default as DeviceProgressBar } from './Progress/DeviceProgressBar';
 
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
 
-export { default as RefreshToolbar } from './RefreshToolbar';
+export { default as RefreshToolbar, RefreshToolbarProps } from './RefreshToolbar';
 
 export { default as Select } from './Select';
 
@@ -78,4 +78,4 @@ export { default as colors } from './styles/lakefrontColors';
 export { default as theme } from './styles/theme';
 
 // Types
-export { SelectOption } from './types/global';
+export { SelectOption, TabDef } from './types/global';
