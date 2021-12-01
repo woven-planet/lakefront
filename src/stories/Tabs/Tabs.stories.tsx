@@ -2,7 +2,7 @@
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import TabComponent, { TabProps, TabDef } from 'src/Tabs';
+import TabComponent, { TabProps } from 'src/Tabs';
 import DocBlock from '.storybook/DocBlock';
 
 export default {
