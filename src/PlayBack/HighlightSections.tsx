@@ -1,7 +1,14 @@
-import { getPercentage } from './playBackUtil';
+import { getPercentage } from './playbackUtil';
+import { FC } from 'react';
 import { Highlight } from './playBackStyle';
+import { HighlightsProp } from '../types/global';
 
-const HighlightSections = (highlights: any, max: any) => {
+interface Props {
+    highlights: HighlightsProp[],
+    max: number
+}
+
+const HighlightSections: FC<Props> = ({ highlights, max }) => {
     return (
         <>
             {highlights && highlights.map((highlight: any) => {
@@ -9,8 +16,7 @@ const HighlightSections = (highlights: any, max: any) => {
                 const end = getPercentage(highlight.end, max);
                 const left = `${start}%`;
                 const width = `${end - start}%`;
-
-                return <Highlight key={highlight.start} left={left} width={width} />;
+                return <Highlight key={highlight.start} left={left} width={width} data-testid="highlight" />;
             })}
         </>
     );

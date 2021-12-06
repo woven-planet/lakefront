@@ -38,6 +38,8 @@ export { default as Modal, ConfirmationModal } from './Modal';
 
 export { default as Page } from './Page/Page';
 
+export { default as PlaybackBar } from './Playback';
+
 export { default as CircularProgress } from './Progress/CircularProgress';
 
 export { default as ProgressBar } from './Progress/ProgressBar';

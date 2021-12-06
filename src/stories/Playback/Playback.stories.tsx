@@ -1,0 +1,83 @@
+import { ComponentPropsWithoutRef, useState, useRef, useEffect } from 'react';
+import { Meta, Story } from '@storybook/react/types-6-0';
+
+import PlaybackBarComponent, { PlaybackBarProps } from 'src/Playback';
+import DocBlock from '.storybook/DocBlock';
+import { emerald } from 'src/styles/lakefrontColors';
+
+export default {
+    title: 'Lakefront/PlaybackBar',
+    component: PlaybackBarComponent,
+    argTypes: {
+        children: {
+            table: {
+                disable: true
+            }
+        },
+        className: {
+            type: 'string'
+        }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock
+        }
+    }
+} as Meta;
+
+const Template: Story<PlaybackBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+    const [index, setIndex] = useState(0);
+    const [showBanner, setShowBanner] = useState(false);
+    const playBackRef = useRef(null);
+    const handleSetSlider = (index: number) => {
+        setIndex(index);
+    };
+
+    useEffect(() => {
+        if (playBackRef.current) {
+            setShowBanner(true);
+        }
+
+        const timer = setTimeout(() => {
+            setShowBanner(false);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [index]);
+
+    return (
+        <div ref={playBackRef}>
+            <div
+                style={{
+                    minHeight: 20,
+                    backgroundColor: showBanner && emerald,
+                    padding: 8,
+                    margin: '8px 0',
+                    textAlign: 'center',
+                    width: '100%'
+                }}
+            >
+                {showBanner && `Playback is set to index ${index}`}
+            </div>
+            <PlaybackBarComponent currentDuration={args.currentDuration} currentSlider={args.currentSlider}
+                endDuration={args.endDuration} highlights={args.highlights} maxSlider={args.maxSlider}
+                setSlider={handleSetSlider}>
+            </PlaybackBarComponent>
+            <div style={{ textAlign: 'center' }}>
+                <b>Start Index:</b><span> {args.highlights[0].start}</span>&nbsp;
+                <b>End Index:</b><span> {args.highlights[0].end}</span>
+            </div>
+        </div>
+    )
+}
+
+export const PlaybackBar = Template.bind({});
+PlaybackBar.args = {
+    currentDuration: '00:30',
+    currentSlider: 100,
+    endDuration: '05:15',
+    highlights: [{ start: 50, end: 300, playback: true }],
+    maxSlider: 720,
+};

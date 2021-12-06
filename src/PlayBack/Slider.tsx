@@ -1,6 +1,6 @@
 import { FC, useMemo, useRef } from 'react';
 
-import { getLeft, getPercentage, getValue, throttled } from './playBackUtil';
+import { getLeft, getPercentage, getValue, throttled } from './playbackUtil';
 import { SliderContainer, SliderBar, SliderStyle, ThumbStyle } from './playBackStyle';
 import HighlightSections from './HighlightSections';
 import { HighlightsProp } from '../types/global';
@@ -91,7 +91,7 @@ const Slider: FC<SliderProps> = ({ value, max, highlights, onChange }) => {
 
             <HighlightSections highlights={highlights} max={max} />
 
-            <SliderStyle ref={sliderRef} onClick={handleClick} />
+            <SliderStyle ref={sliderRef} onClick={handleClick} data-testid="slider" />
 
             <ThumbStyle
                 ref={thumbRef}
