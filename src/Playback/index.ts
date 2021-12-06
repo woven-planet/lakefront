@@ -1,3 +1,3 @@
-import PlaybackBar, { PlaybackBarProps } from './Playbackbar';
+import PlaybackBar, { PlaybackBarProps } from './PlaybackBar';
 export default PlaybackBar;
 export { PlaybackBarProps };

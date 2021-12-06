@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Slider from './Slider';
-import { PlaybackStyle, PlaySlider } from './playBackStyle';
+import { PlaybackStyle, PlaySlider } from './playbackStyle';
 import { HighlightsProp } from '../types/global';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
@@ -36,15 +36,12 @@ export interface PlaybackBarProps {
  *  The Playback Component renders a slider that highlights a bar according to the start and end time. 
  *  The slider can be moved between the start point and the end point.
  */
-const PlaybackBar: FC<PlaybackBarProps> = props => {
-    const {
-        currentDuration,
-        currentSlider,
-        endDuration,
-        highlights,
-        maxSlider,
-        setSlider
-    } = props;
+const PlaybackBar: FC<PlaybackBarProps> = ({ currentDuration,
+    currentSlider,
+    endDuration,
+    highlights,
+    maxSlider,
+    setSlider }) => {
 
     return (
         <ThemeProvider theme={theme}>
