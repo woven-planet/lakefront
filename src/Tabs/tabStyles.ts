@@ -8,13 +8,12 @@ export const TabBar = styled.div<any>(({ theme }) => ({
 
 
 export const TabStyle = styled.span<any>(({ theme, isSelected }) => ({
-    margin: '2.5rem',
     color: theme?.colors?.pavement,
-    padding: '0.5rem 0 0.625 0',
-    '& + .tab': {
-        marginLeft: '2.5rem'
-    },
+    padding: '0.5rem 0 0.625rem 0',
     cursor: 'pointer',
+    '& + span': {
+        marginLeft: '2.5rem',
+    },
     ...(isSelected) && {
         color: theme?.colors?.cinder,
         paddingBottom: '0.5rem',
