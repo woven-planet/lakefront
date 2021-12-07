@@ -27,14 +27,18 @@ export interface PlaybackBarProps {
      */
     setSlider(index: number): void;
     /**
-     * This is to highlight a particular section of the playback component.
+     * This is to highlight a particular section of the playback component in green.
      */
     highlights: HighlightsProp[];
 }
 
 /**
- *  The Playback Component renders a slider that highlights a bar according to the start and end time. 
- *  The slider can be moved between the start point and the end point.
+ *  The Playback Component renders a slider.
+ *  The highlights property is an array and each item in an array has start,end and playback.
+ *  The Playback component is highlighted depending on the start and end value.
+ *  You can have multiple highlights in one single playback component.
+ *  The slider can be moved between the start point and the end point depending upon the playback property.
+ *  If playback property is set to false then slider can move between the highlighted and non highlightedd area.
  */
 const PlaybackBar: FC<PlaybackBarProps> = ({ currentDuration,
     currentSlider,
