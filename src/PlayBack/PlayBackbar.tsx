@@ -38,7 +38,7 @@ export interface PlaybackBarProps {
  *  The Playback component is highlighted depending on the start and end value.
  *  You can have multiple highlights in one single playback component.
  *  The slider can be moved between the start point and the end point depending upon the playback property.
- *  If playback property is set to false then slider can move between the highlighted and non highlightedd area.
+ *  The playback property determines whether the slider can be moved freely or whether it is constrained to the highlighted areas.
  */
 const PlaybackBar: FC<PlaybackBarProps> = ({ currentDuration,
     currentSlider,
