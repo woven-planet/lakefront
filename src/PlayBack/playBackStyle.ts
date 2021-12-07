@@ -1,10 +1,14 @@
 import styled from '@emotion/styled';
 
+interface HighlightProps {
+    left?: number;
+    width?: number;
+}
 
-export const PlaybackStyle = styled.div<any>(() => ({
+export const PlaybackStyle = styled.div({
     boxSizing: 'border-box',
     textAlign: 'center'
-}));
+});
 
 export const PlaySlider = styled.div(({ theme }) => ({
     fontSize: '12px',
@@ -14,7 +18,7 @@ export const PlaySlider = styled.div(({ theme }) => ({
     gridRowGap: '0.5rem'
 }));
 
-export const Highlight = styled.div<any>(({ theme, left, width }) => ({
+export const Highlight = styled.div<HighlightProps>(({ theme, left, width }) => ({
     position: 'absolute',
     borderRadius: '6px',
     background: theme?.colors?.green,
@@ -25,10 +29,10 @@ export const Highlight = styled.div<any>(({ theme, left, width }) => ({
     width: width
 }));
 
-export const SliderContainer = styled.div(() => ({
+export const SliderContainer = styled.div({
     position: 'relative',
     height: '14px'
-}));
+});
 
 export const SliderBar = styled.div(({ theme }) => ({
     position: 'relative',
@@ -38,14 +42,14 @@ export const SliderBar = styled.div(({ theme }) => ({
     margin: '3px 0'
 }));
 
-export const SliderStyle = styled.div(() => ({
+export const SliderStyle = styled.div({
     position: 'absolute',
     top: 0,
     left: 0,
     background: 'transparent',
     height: '14px',
     width: '100%'
-}));
+});
 
 export const ThumbStyle = styled.div<any>(({ theme, left }) => ({
     width: '14px',

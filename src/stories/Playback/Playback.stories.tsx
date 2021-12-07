@@ -65,19 +65,40 @@ const Template: Story<PlaybackBarProps & ComponentPropsWithoutRef<'div'>> = (arg
                 endDuration={args.endDuration} highlights={args.highlights} maxSlider={args.maxSlider}
                 setSlider={handleSetSlider}>
             </PlaybackBarComponent>
-            <div style={{ textAlign: 'center' }}>
-                <b>Start Index:</b><span> {args.highlights[0].start}</span>&nbsp;
-                <b>End Index:</b><span> {args.highlights[0].end}</span>
-            </div>
+            {args.highlights.map(highlight => {
+                return (<div style={{ textAlign: 'center' }}>
+                    <b>Start Index:</b><span> {highlight.start}</span>&nbsp;
+                    <b>End Index:</b><span> {highlight.end}</span>&nbsp;
+                    <b>Playback:</b><span> {highlight.playback ? "True" : "False"}</span>
+                </div>)
+            })}
         </div>
     )
 }
 
-export const PlaybackBar = Template.bind({});
-PlaybackBar.args = {
+export const PlaybackBarSingleHighlight = Template.bind({});
+PlaybackBarSingleHighlight.args = {
+    currentDuration: '00:30',
+    currentSlider: 100,
+    endDuration: '05:15',
+    highlights: [{ start: 50, end: 300, playback: false }],
+    maxSlider: 720
+};
+
+export const PlaybackBarWithPlayback = Template.bind({});
+PlaybackBarWithPlayback.args = {
     currentDuration: '00:30',
     currentSlider: 100,
     endDuration: '05:15',
     highlights: [{ start: 50, end: 300, playback: true }],
-    maxSlider: 720,
+    maxSlider: 720
+};
+
+export const PlaybackBarMultipleHighlights = Template.bind({});
+PlaybackBarMultipleHighlights.args = {
+    currentDuration: '00:30',
+    currentSlider: 100,
+    endDuration: '05:15',
+    highlights: [{ start: 50, end: 300, playback: false }, { start: 400, end: 500, playback: false }],
+    maxSlider: 720
 };

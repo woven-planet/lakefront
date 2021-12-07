@@ -27,7 +27,6 @@ const Slider: FC<SliderProps> = ({ value, max, highlights, onChange }) => {
 
     const sliderRef = useRef<HTMLDivElement>(null);
     const thumbRef = useRef<HTMLDivElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const mouseMoveHandler = useRef(() => { });
 
     const triggerThumbMove = (xPos: any) => {
@@ -97,6 +96,7 @@ const Slider: FC<SliderProps> = ({ value, max, highlights, onChange }) => {
                 ref={thumbRef}
                 onMouseDown={handleMouseDown}
                 left={getLeft(initialPercentage)}
+                data-testid="thumb"
             />
         </SliderContainer>
     );

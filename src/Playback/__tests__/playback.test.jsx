@@ -6,10 +6,10 @@ afterAll(cleanup);
 describe('<PlaybackBar>', () => {
     beforeEach(cleanup);
 
-    it('renders fine with highlights', () => {
-        const changeCallback = jest.fn();
+    it('renders fine with highlights and check slider click', async () => {
+        const changeCallback = jest.fn(index => index);
 
-        const { getByTestId } = render(
+        const { container, getByTestId } = render(
             <PlaybackBar
                 currentDuration={'00:30'}
                 currentSlider={100}
@@ -20,13 +20,14 @@ describe('<PlaybackBar>', () => {
             />
         );
 
+
+        // test if the slider is clicked.
         fireEvent.click(getByTestId('slider'), { clientX: '256' });
         expect(changeCallback).toBeCalled();
+
     });
 
     it('renders fine with highlights', () => {
-
-
         const { getByTestId } = render(
             <PlaybackBar
                 currentDuration={'00:30'}
@@ -38,5 +39,22 @@ describe('<PlaybackBar>', () => {
             />
         );
         getByTestId("highlight").hasAttribute("position:'absolute'");
+    });
+
+    it('renders fine with multiple highlights', async () => {
+        const changeCallback = jest.fn(index => index);
+
+        const { container, getAllByTestId } = render(
+            <PlaybackBar
+                currentDuration={'00:30'}
+                currentSlider={100}
+                endDuration={'05:15'}
+                highlights={[{ start: 50, end: 300, playback: false }, { start: 400, end: 500, playback: false }]}
+                setSlider={changeCallback}
+                maxSlider={720}
+            />
+        );
+        expect(getAllByTestId("highlight").length).toEqual(2);
+
     });
 });
