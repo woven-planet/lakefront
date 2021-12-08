@@ -68,6 +68,7 @@ We've added storybook pages to show how each component can be used.
 * [Modal](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modal--simple-modal)
   * [ConfirmationModal](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modal-confirmationmodal--basic-confirm)
 * [Page](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-page--page)
+* [PlaybackBar](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-playbackbar--playback-bar)
 * [Progress](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-progressbar--progress-bar)
    * [Circular Progress](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-circularprogress--circular-progress)
    * [Device Progress](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-deviceprogress--device-progress-bar)
