@@ -38,7 +38,7 @@ export { default as Modal, ConfirmationModal } from './Modal';
 
 export { default as Page } from './Page/Page';
 
-export { default as PlaybackBar } from './Playback';
+export { default as PlaybackBar } from './PlaybackBar';
 
 export { default as CircularProgress } from './Progress/CircularProgress';
 

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 interface HighlightProps {
-    left?: number;
-    width?: number;
+    left?: string;
+    width?: string;
 }
 
 export const PlaybackStyle = styled.div({
