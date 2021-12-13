@@ -75,9 +75,9 @@ const Table: React.FC<TableProps> = ({ className,
     const tableHookOptions = {
         ...options,
         columns,
-        data
+        data,
+        ...(initialSortBy && { initialState: { sortBy: [initialSortBy] } })
     };
-    if (initialSortBy) tableHookOptions.initialState = { sortBy: [initialSortBy] };
     const { getTableProps,
         getTableBodyProps,
         headerGroups,
