@@ -6,34 +6,33 @@ afterAll(cleanup);
 
 const columns = [
     {
-        Header: 'RELEASE',
-        accessor: 'release',
+        Header: 'TITLE',
+        accessor: 'title',
         Cell: ({ cell: { value } }) => value
     },
     {
-        Header: 'COUNT',
-        accessor: 'unique_issues'
+        Header: 'VALUE',
+        accessor: 'value'
     },
     {
-        Header: 'KM',
-        accessor: 'autonomous_km'
+        Header: 'PERCENTAGE',
+        accessor: 'percentage'
     },
     {
-        Header: 'KM / ISSUE',
-        accessor: 'km_disengagement',
+        Header: 'PERCENTAGE CHANGE',
+        accessor: 'percentage_change',
         Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
     },
     {
-        Header: 'ISSUE / 100 KM',
-        accessor: 'issue_km',
+        Header: 'TOTAL/100',
+        accessor: 'total',
         Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
     }
 ];
-
-const customData = [{ release: 'r2204_1_0', unique_issues: 24, autonomous_km: 166.992, km_disengagement: 6.9579999999, issue_km: 0.14371985 },
-{ release: 'r2002_1_0', unique_issues: 3, autonomous_km: 47.442, km_disengagement: 15.814, issue_km: 0.063491 },
-{ release: 'r2010_1_0', unique_issues: 5, autonomous_km: 25.68, km_disengagement: 5.136, issue_km: 0.1947675 },
-{ release: 'r2019_1_0', unique_issues: 51, autonomous_km: 291.549, km_disengagement: 5.7166473529, issue_km: 0.1749277202 }];
+const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percentage_change: 6.9579999999, total: 0.14371985 },
+{ title: 'r2002_1_0', value: 3, percentage: 47.442, percentage_change: 15.814, total: 0.063491 },
+{ title: 'r2010_1_0', value: 5, percentage: 25.68, percentage_change: 5.136, total: 0.1947675 },
+{ title: 'r2019_1_0', value: 51, percentage: 291.549, percentage_change: 5.7166473529, total: 0.1749277202 }]
 
 describe('<Table>', () => {
     it('check if table renders properly', () => {
@@ -45,19 +44,19 @@ describe('<Table>', () => {
 
     it('checks if the column sorting is working', () => {
         const { container } = render(<Table columns={columns} data={customData}
-            initialSortBy={{ id: 'release', desc: false }} />);
+            initialSortBy={{ id: 'title', desc: false }} />);
 
         // initial sorting applied on release column
         const releaseCol = container.querySelectorAll('thead th')[0];
-        expect(releaseCol.innerHTML).toBe("RELEASE<svg></svg>");
+        expect(releaseCol.innerHTML).toBe("TITLE<svg></svg>");
 
         // sorting is not applied on count column
         const countCol = container.querySelectorAll('thead th')[1];
-        expect(countCol.innerHTML).not.toBe("COUNT<svg></svg>");
+        expect(countCol.innerHTML).not.toBe("VALUE<svg></svg>");
 
         // sorting is applied on count column on click event
         fireEvent.click(countCol);
-        expect(countCol.innerHTML).toBe("COUNT<svg></svg>");
+        expect(countCol.innerHTML).toBe("VALUE<svg></svg>");
     });
 
     it('check if message is displayed properly when data is not present', () => {

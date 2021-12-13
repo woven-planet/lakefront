@@ -17,43 +17,43 @@ export default {
 
 const columns = [
     {
-        Header: 'RELEASE',
-        accessor: 'release',
+        Header: 'TITLE',
+        accessor: 'title',
         Cell: ({ cell: { value } }) => value
     },
     {
-        Header: 'COUNT',
-        accessor: 'unique_issues'
+        Header: 'VALUE',
+        accessor: 'value'
     },
     {
-        Header: 'KM',
-        accessor: 'autonomous_km'
+        Header: 'PERCENTAGE',
+        accessor: 'percentage'
     },
     {
-        Header: 'KM / ISSUE',
-        accessor: 'km_disengagement',
+        Header: 'PERCENTAGE CHANGE',
+        accessor: 'percentage_change',
         Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
     },
     {
-        Header: 'ISSUE / 100 KM',
-        accessor: 'issue_km',
+        Header: 'TOTAL/100',
+        accessor: 'total',
         Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
     }
 ];
 
-const customData = [{ release: 'r2204_1_0', unique_issues: 24, autonomous_km: 166.992, km_disengagement: 6.9579999999, issue_km: 0.14371985 },
-{ release: 'r2002_1_0', unique_issues: 3, autonomous_km: 47.442, km_disengagement: 15.814, issue_km: 0.063491 },
-{ release: 'r2010_1_0', unique_issues: 5, autonomous_km: 25.68, km_disengagement: 5.136, issue_km: 0.1947675 },
-{ release: 'r2019_1_0', unique_issues: 51, autonomous_km: 291.549, km_disengagement: 5.7166473529, issue_km: 0.1749277202 },
-{ release: 'r2125_1_0', unique_issues: 39, autonomous_km: 175.199, km_disengagement: 4.4922282052, issue_km: 0.2226686241 },
-{ release: 'r2018_1_0', unique_issues: 12, autonomous_km: 80.672, km_disengagement: 6.7266666, issue_km: 0.148750612 },
-{ release: 'r2027_1_0', unique_issues: 83, autonomous_km: 275.087, km_disengagement: 3.314819277, issue_km: 0.3017716 },
-{ release: 'r2016_1_0', unique_issues: 27, autonomous_km: 130.419, km_disengagement: 4.830333334, issue_km: 0.20705373 },
-{ release: 'r2115_1_0', unique_issues: 18, autonomous_km: 97.505, km_disengagement: 5.41694444, issue_km: 0.1846059897 },
-{ release: 'r1112_1_0', unique_issues: 22, autonomous_km: 113.747, km_disengagement: 5.17018182, issue_km: 0.193415712 },
-{ release: 'r2110_1_0', unique_issues: 80, autonomous_km: 304.77, km_disengagement: 3.80969996, issue_km: 0.2625626 }];
+const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percentage_change: 6.9579999999, total: 0.14371985 },
+{ title: 'r2002_1_0', value: 3, percentage: 47.442, percentage_change: 15.814, total: 0.063491 },
+{ title: 'r2010_1_0', value: 5, percentage: 25.68, percentage_change: 5.136, total: 0.1947675 },
+{ title: 'r2019_1_0', value: 51, percentage: 291.549, percentage_change: 5.7166473529, total: 0.1749277202 },
+{ title: 'r2125_1_0', value: 39, percentage: 175.199, percentage_change: 4.4922282052, total: 0.2226686241 },
+{ title: 'r2018_1_0', value: 12, percentage: 80.672, percentage_change: 6.7266666, total: 0.148750612 },
+{ title: 'r2027_1_0', value: 83, percentage: 275.087, percentage_change: 3.314819277, total: 0.3017716 },
+{ title: 'r2016_1_0', value: 27, percentage: 130.419, percentage_change: 4.830333334, total: 0.20705373 },
+{ title: 'r2115_1_0', value: 18, percentage: 97.505, percentage_change: 5.41694444, total: 0.1846059897 },
+{ title: 'r1112_1_0', value: 22, percentage: 113.747, percentage_change: 5.17018182, total: 0.193415712 },
+{ title: 'r2110_1_0', value: 80, percentage: 304.77, percentage_change: 3.80969996, total: 0.2625626 }];
 
-const Template: Story<TableProps<any> & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [data, setData] = useState(args.data);
     const [dataToggle, setDataToggle] = useState(false);
     const [sortMsg, setSortMsg] = useState('');
@@ -88,7 +88,7 @@ export const Table = Template.bind({});
 Table.args = {
     columns: columns,
     data: customData,
-    initialSortBy: { id: 'release', desc: false },
+    initialSortBy: { id: 'title', desc: false },
     noDataMessage: "No data found",
     options: {
         disableSortRemove: true,
