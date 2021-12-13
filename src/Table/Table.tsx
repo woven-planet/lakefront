@@ -59,6 +59,7 @@ type CustomTableOptions = TableState<object> & { sortBy: SortByOptions[] }
  *  The Table Component is used to render table with specified columns and data.
  *  The no data meesage can be set when the data is not present.
  *  You can set initial sorting on the table. OnChangeSort is triggered everytime the sorting is changed on the table.
+ *  For more information about react-table please check the link https://react-table.tanstack.com/docs/api/useTable
  */
 const Table: React.FC<TableProps> = ({ className,
     columns,
