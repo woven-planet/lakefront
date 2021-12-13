@@ -18,9 +18,9 @@ export const TableStyle = styled.table(({ theme }) => ({
         position: 'relative',
         textAlign: 'left',
         'svg': {
-            marginTop: '2px',
+            marginTop: 2,
             position: 'absolute',
-            top: '6px'
+            top: 6
         }
     },
     'th,td': {
@@ -35,7 +35,7 @@ export const TableStyle = styled.table(({ theme }) => ({
         },
 
         '&.marginBottom': {
-            marginBottom: '5px'
+            marginBottom: 5
         }
     }
 }));

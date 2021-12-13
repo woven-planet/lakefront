@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useTable, useSortBy, useExpanded, TableState } from 'react-table';
+import { useTable, useSortBy, useExpanded, TableState, Column } from 'react-table';
 import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
 import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
 import { TableStyle } from './tableStyles';
@@ -13,13 +13,14 @@ export interface TableProps {
     /**
      * This is to set the data for the table.
      */
-    data: any;
+    data: Array<any>;
     /**
      * This is to set the columns of the table.
      */
-    columns: any;
+    columns: Array<Column>;
     /**
-     * This is to set the additional properties on the table like disableSortRemove,autoResetSortBy,disableMultiSort,etc.
+     * This is to set the additional properties on the table like disableSortRemove, 
+     * autoResetSortBy, disableMultiSort, etc.
      */
     options?: any;
     /**
@@ -59,27 +60,24 @@ type CustomTableOptions = TableState<object> & { sortBy: SortByOptions[] }
  *  The no data meesage can be set when the data is not present.
  *  You can set initial sorting on the table. OnChangeSort is triggered everytime the sorting is changed on the table.
  */
-const Table: React.FC<TableProps> = props => {
+const Table: React.FC<TableProps> = ({ className,
+    columns,
+    data,
+    options = {},
+    noDataMessage = 'No data available',
+    style,
+    onChangeSort,
+    initialSortBy,
+    rowProps,
+    renderRowSubComponent }) => {
+
     // Use the state and functions returned from useTable to build your UI
-    const {
-        className,
-        columns,
-        data,
-        options = {},
-        noDataMessage = 'No data available',
-        style,
-        onChangeSort,
-        initialSortBy,
-        rowProps,
-        renderRowSubComponent
-    } = props;
     const tableHookOptions = {
         ...options,
         columns,
-        data
+        data,
+        ...(initialSortBy && { sortBy: [initialSortBy] })
     };
-    if (initialSortBy) tableHookOptions.initialState = { sortBy: [initialSortBy] };
-
     const { getTableProps,
         getTableBodyProps,
         headerGroups,
@@ -89,6 +87,7 @@ const Table: React.FC<TableProps> = props => {
         ...rest
     } = useTable(tableHookOptions, useSortBy, useExpanded);
     const { sortBy } = state as CustomTableOptions;
+
     useEffect(() => {
         if (onChangeSort && sortBy.length) {
             onChangeSort(sortBy[0]);
