@@ -53,7 +53,7 @@ const customData = [{ release: 'r2204_1_0', unique_issues: 24, autonomous_km: 16
 { release: 'r1112_1_0', unique_issues: 22, autonomous_km: 113.747, km_disengagement: 5.17018182, issue_km: 0.193415712 },
 { release: 'r2110_1_0', unique_issues: 80, autonomous_km: 304.77, km_disengagement: 3.80969996, issue_km: 0.2625626 }];
 
-const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: Story<TableProps<any> & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [data, setData] = useState(args.data);
     const [dataToggle, setDataToggle] = useState(false);
     const [sortMsg, setSortMsg] = useState('');

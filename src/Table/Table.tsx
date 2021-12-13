@@ -9,7 +9,7 @@ interface SortByOptions {
     desc: boolean;
 }
 
-export interface TableProps {
+export interface TableProps<T> {
     /**
      * This is to set the data for the table.
      */
@@ -22,11 +22,11 @@ export interface TableProps {
      * This is to set the additional properties on the table like disableSortRemove, 
      * autoResetSortBy, disableMultiSort, etc.
      */
-    options?: any;
+    options?: T;
     /**
      * This is to set the row properties.
      */
-    rowProps?: any;
+    rowProps?: T;
     /**
      * This is to set the display message when there is no data.
      */
@@ -60,7 +60,7 @@ type CustomTableOptions = TableState<object> & { sortBy: SortByOptions[] }
  *  The no data meesage can be set when the data is not present.
  *  You can set initial sorting on the table. OnChangeSort is triggered everytime the sorting is changed on the table.
  */
-const Table: React.FC<TableProps> = ({ className,
+const Table: React.FC<TableProps<any>> = ({ className,
     columns,
     data,
     options = {},
