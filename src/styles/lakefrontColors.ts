@@ -39,6 +39,7 @@ export const saturatedGreen = '#45d686';
 export const saturatedTeal = '#36c7c4';
 export const saturatedBlue = '#378fee';
 export const saturatedLavender = '#625fe3';
+export const arsenic = '#41414e';
 
 const LAKEFRONT_COLORS = {
     white,
@@ -79,7 +80,8 @@ const LAKEFRONT_COLORS = {
     saturatedBlue,
     saturatedGreen,
     saturatedLavender,
-    saturatedTeal
+    saturatedTeal,
+    arsenic
 };
 
 // export the variables for javascript access
