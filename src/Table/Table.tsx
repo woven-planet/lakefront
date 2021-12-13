@@ -3,6 +3,8 @@ import { useTable, useSortBy, useExpanded, TableState, Column } from 'react-tabl
 import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
 import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
 import { TableStyle } from './tableStyles';
+import { ThemeProvider } from '@emotion/react';
+import theme from 'src/styles/theme';
 
 interface SortByOptions {
     id: string;
@@ -97,38 +99,40 @@ const Table: React.FC<TableProps> = ({ className,
 
     // Render the UI for your table
     return (
-        <TableStyle {...getTableProps()} className={className} style={style}>
-            <thead>
-                {headerGroups.map((headerGroup: any) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column: any) => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                {column.render('Header')}
-                                {column.isSorted && (
-                                    <>{(column.isSortedDesc ? <ArrowDown /> : <ArrowUp />)}</>
-                                )}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row: any) => {
-                    prepareRow(row);
-                    return (
-                        <React.Fragment key={row.id}>
-                            <tr {...row.getRowProps(rowProps)}>
-                                {row.cells.map((cell: any) => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                })}
-                            </tr>
-                            {row.isExpanded && renderRowSubComponent ? (renderRowSubComponent({ row })) : null}
-                        </React.Fragment>
-                    );
-                })}
-                {rows.length === 0 && <tr><td colSpan={columns.length}>{noDataMessage}</td></tr>}
-            </tbody>
-        </TableStyle>
+        <ThemeProvider theme={theme}>
+            <TableStyle {...getTableProps()} className={className} style={style}>
+                <thead>
+                    {headerGroups.map((headerGroup: any) => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map((column: any) => (
+                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    {column.render('Header')}
+                                    {column.isSorted && (
+                                        <>{(column.isSortedDesc ? <ArrowDown /> : <ArrowUp />)}</>
+                                    )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                    {rows.map((row: any) => {
+                        prepareRow(row);
+                        return (
+                            <React.Fragment key={row.id}>
+                                <tr {...row.getRowProps(rowProps)}>
+                                    {row.cells.map((cell: any) => {
+                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                    })}
+                                </tr>
+                                {row.isExpanded && renderRowSubComponent ? (renderRowSubComponent({ row })) : null}
+                            </React.Fragment>
+                        );
+                    })}
+                    {rows.length === 0 && <tr><td colSpan={columns.length}>{noDataMessage}</td></tr>}
+                </tbody>
+            </TableStyle>
+        </ThemeProvider>
     );
 };
 
