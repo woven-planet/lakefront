@@ -15,7 +15,7 @@ export interface TableProps {
     /**
      * This is to set the data for the table.
      */
-    data: Array<any>;
+    data: Array<any> | null | undefined;
     /**
      * This is to set the columns of the table.
      */
