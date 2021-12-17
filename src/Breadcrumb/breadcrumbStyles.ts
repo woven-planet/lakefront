@@ -25,3 +25,18 @@ export const Divider = styled.span(({ theme }) => ({
     display: 'inline-block',
     margin: '0 10px'
 }));
+
+export const Container = styled.div<any>(({ theme, standalone }) => ({
+    display: 'grid',
+    gridTemplateRows: '56px auto',
+    ...((standalone) && {
+        padding: '0 3.5rem',
+        borderBottom: '1px solid',
+        borderBottomColor: theme?.colors?.mercury,
+        backgroundColor: theme?.colors?.white
+    })
+}));
+
+export const Content = styled.div({
+    display: 'grid'
+});

@@ -3,7 +3,7 @@ export { default as AnchorCopy } from './AnchorCopy';
 
 export { default as BoundingBoxes } from './BoundingBoxes';
 
-export { default as Breadcrumb, RouteProp } from './Breadcrumb';
+export { default as BreadcrumbHeader, Breadcrumb, RouteProp } from './Breadcrumb';
 
 export { default as Button } from './Button/Button';
 
