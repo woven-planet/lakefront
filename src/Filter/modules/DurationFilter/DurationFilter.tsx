@@ -1,15 +1,6 @@
 import { FilterModule } from 'src/Filter/types';
 import MinMaxInput, { MinMax } from './MinMaxInput';
-
-export const getMinMaxFromKey = (key: any): MinMax | undefined => {
-    const [min, max] = key.split('~');
-
-    if (min || max) {
-        return { min, max };
-    }
-
-    return undefined;
-};
+import { getMinMaxFromKey } from '../../util/durationFilterUtil';
 
 export interface DurationFilterProps {
     label: string;
