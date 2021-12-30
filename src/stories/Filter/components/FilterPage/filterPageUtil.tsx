@@ -4,7 +4,8 @@ import {
     MultiSelectFilter,
     RadioFilter,
     SingleSelectFilter,
-    TextFilter
+    TextFilter,
+    DurationFilter
 } from 'src/Filter/modules';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
@@ -128,6 +129,12 @@ export const FILTERS = {
             getDefaultFilterValue: () => 'lakefront',
             parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
             getFilterBarLabel: (value: string) => `Text Filter: ${value}`
+        }
+    ),
+    durationFilter: DurationFilter(
+        {
+            label: 'Duration Filter',
+            description: 'Duration Filter is an input control meant to be used to filter according to the minimum and maximum input'
         }
     )
 };
