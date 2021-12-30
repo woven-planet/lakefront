@@ -5,6 +5,7 @@ import MultiSelectFilter from './MultiSelectFilter';
 import RadioFilter from './RadioFilter';
 import SingleSelectFilter from './SingleSelectFilter';
 import TextFilter from './TextFilter';
+import DurationFilter from './DurationFilter';
 
 export {
     AdditionalJSONFilter,
@@ -13,5 +14,6 @@ export {
     MultiSelectFilter,
     RadioFilter,
     SingleSelectFilter,
-    TextFilter
+    TextFilter,
+    DurationFilter
 };
