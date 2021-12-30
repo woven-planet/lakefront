@@ -2,22 +2,12 @@ import { FC, useEffect, useState } from 'react';
 
 import Input from 'src/Input/Input';
 import useDebounce from '../../../lib/hooks/useDebounce';
+import { validateNumber } from '../../util/durationFilterUtil';
 
 export interface MinMax {
     min?: number;
     max?: number;
 }
-
-const validateNumber = (num: number, allowNegatives: boolean) => {
-    // negative number validation
-    const parsed = Number(num);
-    if (!allowNegatives && !isNaN(parsed)) {
-        return num >= 0;
-    }
-
-    // input type number does the number verification for us automatically
-    return true;
-};
 
 export interface MinMaxInputProps {
     value: MinMax | null;
