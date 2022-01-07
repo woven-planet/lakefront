@@ -80,7 +80,6 @@ export { default as TypeaheadSearch } from './TypeaheadSearch';
 
 // Theme
 export { default as colors } from './styles/lakefrontColors';
-
 export { default as theme } from './styles/theme';
 
 // Types
