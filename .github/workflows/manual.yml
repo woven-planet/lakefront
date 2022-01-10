@@ -1,4 +1,4 @@
-name: Deploy GH Pages
+name: Deploy GH Pages Manual
 on:
   push:
     branches:
