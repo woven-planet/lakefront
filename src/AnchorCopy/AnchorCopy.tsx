@@ -5,6 +5,7 @@ import copyClipboard from 'src/lib/util/copy';
 import Button from 'src/Button/Button';
 import { ReactComponent as Link } from './assets/link.svg';
 
+
 export interface AnchorCopyProps {
     /**
      * The button or inner content to render. This defaults to
@@ -75,12 +76,12 @@ const AnchorCopy: FC<AnchorCopyProps & Omit<ComponentPropsWithoutRef<'div'>, 'on
                 disabled
                     ? () => null
                     : () => {
-                          const success = copyClipboard(generateScrollToUrl(hash));
+                        const success = copyClipboard(generateScrollToUrl(hash));
 
-                          if (onCopy && success) {
-                              onCopy(generateScrollToUrl(hash));
-                          }
-                      }
+                        if (onCopy && success) {
+                            onCopy(generateScrollToUrl(hash));
+                        }
+                    }
             }
         >
             {AnchorContentComponent}
