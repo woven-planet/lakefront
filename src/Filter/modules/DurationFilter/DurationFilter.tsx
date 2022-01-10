@@ -7,6 +7,7 @@ export interface DurationFilterProps {
     description?: string;
 }
 
+
 export const DurationFilter = ({ label, description }: DurationFilterProps): FilterModule<MinMax> => ({
     label,
     description,
