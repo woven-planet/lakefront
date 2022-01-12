@@ -11,6 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install and Build
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
         run: | # Install npm packages and build the Storybook files
           # npm ci
           npm -v
