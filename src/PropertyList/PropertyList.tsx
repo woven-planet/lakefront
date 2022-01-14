@@ -44,10 +44,10 @@ const PropertyList: React.FC<PropertyListProps> = (props) => {
         <ThemeProvider theme={theme}>
             <AttributeGrid>
                 {attributes.map(a => (
-                    <>
+                    <React.Fragment key={a.caption}>
                         <Caption className={a.captionStyles}>{a.caption}</Caption>
                         <Content className={a.contentStyles}>{a.content(data)}</Content>
-                    </>
+                    </React.Fragment>
                 ))}
             </AttributeGrid>
         </ThemeProvider>
