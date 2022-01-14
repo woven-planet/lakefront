@@ -14,13 +14,13 @@ export default {
 } as Meta;
 
 const attributes: Property[] = [
-    { caption: 'P1', content: d => d.p1 },
-    { caption: 'P2', content: d => d.p2 }
+    { caption: 'LongCaptionNameC1', content: d => d.p1 },
+    { caption: 'C2', content: d => d.p2 }
 ]
 
 const data = {
-    p1: 'content 1',
-    p2: 'content 2'
+    p1: 'This is to demonstrate the rendering of content 1',
+    p2: 'This is to demonstrate the rendering of content 2'
 };
 
 
@@ -36,9 +36,9 @@ PropertyList.args = {
     data: data
 };
 
-export const PropertyListLeftAlign = Template.bind({});
-PropertyListLeftAlign.args = {
+export const PropertyListCaptionVariable = Template.bind({});
+PropertyListCaptionVariable.args = {
     attributes: attributes,
     data: data,
-    variant: 'left-align'
+    variant: 'variable'
 };

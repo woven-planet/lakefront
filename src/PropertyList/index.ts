@@ -1,3 +1,3 @@
-import PropertyList, { Property, PropertyListProps, PropertyListLeftAligned } from "./PropertyList";
-export { Property, PropertyListProps, PropertyListLeftAligned };
+import PropertyList, { Property, PropertyListProps, PropertyListVariable } from "./PropertyList";
+export { Property, PropertyListProps, PropertyListVariable };
 export default PropertyList;

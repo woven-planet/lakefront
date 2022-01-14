@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import PropertyList, { PropertyListLeftAligned } from '../PropertyList';
+import PropertyList, { PropertyListVariable } from '../PropertyList';
 
 const attributes = [
     { caption: 'P1', content: d => d.p1 },
@@ -24,7 +24,7 @@ describe('<PropertiesPanel />', () => {
 
 describe('<PropertyListLeftAligned />', () => {
     it('renders a title and attributes', () => {
-        const { container } = render(<PropertyListLeftAligned attributes={attributes} data={data} />);
+        const { container } = render(<PropertyListVariable attributes={attributes} data={data} />);
 
         expect(container.querySelectorAll('div div').length).toBe(2);
 
