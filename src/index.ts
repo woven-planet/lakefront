@@ -46,6 +46,8 @@ export { default as CircularProgress } from './Progress/CircularProgress';
 
 export { default as ProgressBar } from './Progress/ProgressBar';
 
+export { default as PropertyList, Property, PropertyListLeftAligned } from './PropertyList/PropertyList';
+
 export { default as DeviceProgressBar } from './Progress/DeviceProgressBar';
 
 export { default as RadioGroup } from './RadioGroup/RadioGroup';
