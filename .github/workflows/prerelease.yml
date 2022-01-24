@@ -1,5 +1,9 @@
 name: NPM Prerelease
 
+on:
+  release:
+    types: [prereleased]
+
 jobs:
   build:
     runs-on: ubuntu-latest
