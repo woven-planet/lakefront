@@ -3,7 +3,9 @@ name: Main Continuous Deployment
 on:
   push:
     branches:
-      - VersionUpdate
+      - main
+    paths:
+      - 'src/**'
 
 jobs:
   build:
