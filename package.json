@@ -78,8 +78,8 @@
     "eslint-plugin-react": "^7.23.2",
     "jest": "^26.6.3",
     "jest-canvas-mock": "^2.3.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rollup": "^2.63.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-ts": "^2.0.5",
@@ -97,8 +97,8 @@
     "d3-zoom": "^3.0.0",
     "dagre-d3": "^0.6.4",
     "ramda": "^0.27.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "files": [
     "dist"
