@@ -217,7 +217,7 @@ export class JSONBuilderUtil {
 
         if (oldName && nodeValue) {
             const newParentValue = {
-                ...omit([oldName], parentValue),
+                ...omit([oldName.toString()], parentValue),
                 [name]: nodeValue
             };
 

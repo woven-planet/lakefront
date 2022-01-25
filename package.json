@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.96.2",
+  "version": "0.96.7",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -34,9 +34,9 @@
     "dagre-d3": "^0.6.4",
     "query-string": "^7.0.0",
     "ramda": "^0.27.1",
+    "react-router-dom": "^5.1.2",
     "react-select": "^4.3.1",
     "react-table": "^7.7.0",
-    "react-router-dom": "^5.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -63,7 +63,7 @@
     "@types/d3-zoom": "^3.0.1",
     "@types/dagre-d3": "^0.6.3",
     "@types/jest": "^26.0.20",
-    "@types/ramda": "github:types/npm-ramda#dist",
+    "@types/ramda": "^0.27.64",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.1",
     "@types/react-router-dom": "^5.1.0",
@@ -114,5 +114,8 @@
   "keywords": [
     "components",
     "library"
-  ]
+  ],
+  "engines": {
+    "node": "16.13.2"
+  }
 }
