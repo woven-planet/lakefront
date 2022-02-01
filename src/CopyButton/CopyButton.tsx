@@ -28,6 +28,11 @@ export interface CopyButtonProps {
      * The value to be copied to the clipboard.
      */
     valueToCopy: string;
+    /**
+     * This is to set the iconOnly property. If set to false, the icon and text will appear. If true, only copy icon will render.
+     * By default, the IconOnly property is set to false.
+     */
+    iconOnly:boolean
 }
 
 /**
@@ -44,6 +49,7 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
     onCopy,
     valueToCopy,
     icon,
+    iconOnly=false,
     ...props
 }) => {
     return (
@@ -64,9 +70,10 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
             {...props}
             icon={icon || <FileCopy aria-label="File Copy" />}
         >
-            <CopyButtonContent hasContent={Boolean(children || buttonText)} className="copyButtonContent">
+            {!iconOnly && <CopyButtonContent hasContent={Boolean(children || buttonText)} className="copyButtonContent">
                 {children || buttonText}
             </CopyButtonContent>
+            }
         </Button>
     );
 };

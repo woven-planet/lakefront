@@ -62,4 +62,11 @@ describe('CopyButton', () => {
 
         expect(onCopy).not.toHaveBeenCalled();;
     });
+
+    it('renders Icon Only', () => {
+        const onCopy = jest.fn();
+        const { getByText } = render(<CopyButton onCopy={onCopy} valueToCopy={COPY_TEXT} disabled iconOnly={true}/>);
+        // throws error as the text doesn't exist in iconOnly mode.
+        expect(()=>getByText(COPY_TEXT)).toThrowError();
+    });
 });

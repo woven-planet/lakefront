@@ -75,6 +75,7 @@ We've added storybook pages to show how each component can be used.
    * [Circular Progress](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-circularprogress--circular-progress)
    * [Device Progress](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-deviceprogress--device-progress-bar)
    * [Progress Bar](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-progress-progressbar--progress-bar)
+* [PropertyList](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-propertylist--property-list)
 * [RadioGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-radiogroup--standard-radio-group)
 * [RefreshToolBar](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-refreshtoolbar--refresh-toolbar)
 * [Select](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-select--select)
