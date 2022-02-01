@@ -29,7 +29,7 @@ export interface CopyButtonProps {
      */
     valueToCopy: string;
     /**
-     * This to set the iconOnly property. If set to false, the icon and text will appear. If true, only copy icon will render.
+     * This is to set the iconOnly property. If set to false, the icon and text will appear. If true, only copy icon will render.
      * By default, the IconOnly property is set to false.
      */
     iconOnly:boolean
