@@ -32,7 +32,7 @@ export interface CopyButtonProps {
      * This is to set the iconOnly property. If set to false, the icon and text will appear. If true, only copy icon will render.
      * By default, the IconOnly property is set to false.
      */
-    iconOnly:boolean
+    iconOnly: boolean
 }
 
 /**
@@ -49,7 +49,7 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
     onCopy,
     valueToCopy,
     icon,
-    iconOnly=false,
+    iconOnly = false,
     ...props
 }) => {
     return (
@@ -59,12 +59,12 @@ const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (
                 disabled
                     ? undefined
                     : () => {
-                          const success = copyClipboard(valueToCopy);
+                        const success = copyClipboard(valueToCopy);
 
-                          if (onCopy && success) {
-                              onCopy(valueToCopy);
-                          }
-                      }
+                        if (onCopy && success) {
+                            onCopy(valueToCopy);
+                        }
+                    }
             }
             type="button"
             {...props}

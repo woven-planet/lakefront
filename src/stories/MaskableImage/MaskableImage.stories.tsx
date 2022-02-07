@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import MaskableImageComponent, { MaskableImageProps } from 'src/MaskableImage'
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
+import imageFile from './__assets__/Nature.jpg';
 
 export default {
     title: 'Lakefront/MaskableImage',
@@ -42,7 +43,7 @@ const Template: Story<MaskableImageProps & ComponentPropsWithoutRef<'div'>> = (a
 
 export const MaskableImage = Template.bind({});
 MaskableImage.args = {
-    url: 'https://raw.githubusercontent.com/ToyotaResearchInstitute/lakefront/Maskable-Component/src/stories/MaskableImage/__assets__/Nature.jpg',
+    url: imageFile,
     fullSizeDimensions: { height: '1px', width: '2px' },
     selectable: true,
     selected: false,
