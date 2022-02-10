@@ -12,10 +12,19 @@ export enum Status {
 }
 
 export interface StatusRowProps {
+    /**
+     * This is to set the status.
+     */
     status?: Status;
+    /**
+     * This is to set an external classname.
+     */
     className?: string;
 }
 
+/**
+ *  Status Row Component is used to render the row with various colums.
+ */
 const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, className }) => {
     return (
         <ThemeProvider theme={theme}>

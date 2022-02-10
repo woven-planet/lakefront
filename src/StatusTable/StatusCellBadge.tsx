@@ -6,12 +6,21 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
 export interface StatusCellBadgeProps {
+    /**
+     * This is to set the status.
+     */
     status: string;
+    /**
+     * This is to set an external class.
+     */
     className?: string;
 }
 
+/**
+ *  Status Cell Badge Component will display a round bullet colored according to the status and 
+ *  display the status. 
+ */
 const StatusCellBadge: FC<StatusCellBadgeProps> = ({ status = Status.NONE, className }) => {
-    debugger;
     const styleKey = (Status as any)[status];
 
     return (
