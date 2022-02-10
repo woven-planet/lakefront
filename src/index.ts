@@ -60,6 +60,8 @@ export { default as StackBanner } from './StackBanner/StackBanner';
 
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';
 
+export * from './StatusTable';
+
 export { default as SelectPopover } from './SelectPopover/SelectPopover';
 
 export { default as StepFunctionAuthoring } from './StepFunctionAuthoring';
