@@ -11,7 +11,7 @@ exports[`<StatusTable /> should render properly 1`] = `
           <th>
             <div>
               First
-              <mock-url.svg />
+              <svg />
             </div>
           </th>
           <th>
@@ -22,76 +22,76 @@ exports[`<StatusTable /> should render properly 1`] = `
         </tr>
       </thead>
       <tbody>
-        <div
-          class="css-13wn5hp"
+        <tr
+          class="css-1gwwktf"
         >
           <td>
             First
           </td>
           <td>
             <div
-              class="css-ewbhnz"
+              class="css-1rl6b37"
             >
               Running
             </div>
           </td>
-        </div>
-        <div
-          class="css-1g2emov"
+        </tr>
+        <tr
+          class="css-1fd9476"
         >
           <td>
             First
           </td>
           <td>
             <div
-              class="css-8tb6ud"
+              class="css-mdik6a"
             >
               Enqueued
             </div>
           </td>
-        </div>
-        <div
-          class="css-at2923"
+        </tr>
+        <tr
+          class="css-x8c9an"
         >
           <td>
             First
           </td>
           <td>
             <div
-              class="css-18smb1f"
+              class="css-va5d7x"
             >
               Failed
             </div>
           </td>
-        </div>
-        <div
-          class="css-cbb6vz"
+        </tr>
+        <tr
+          class="css-dhzdu5"
         >
           <td>
             First
           </td>
           <td>
             <div
-              class="css-1mbqwq4"
+              class="css-sd2cxs"
             >
               Finished
             </div>
           </td>
-        </div>
-        <div
-          class="css-cbb6vz"
+        </tr>
+        <tr
+          class="css-dhzdu5"
         >
           <td>
             First
           </td>
           <td>
             <div
-              class="css-1mbqwq4"
+              class="css-sd2cxs"
             >
               None
             </div>
           </td>
-        </div>
+        </tr>
       </tbody>
     </table>
   </div>
