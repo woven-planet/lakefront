@@ -23,7 +23,7 @@ exports[`<StatusTable /> should render properly 1`] = `
       </thead>
       <tbody>
         <tr
-          class="css-dhzdu5"
+          class="css-1gwwktf"
         >
           <td>
             First
@@ -37,7 +37,7 @@ exports[`<StatusTable /> should render properly 1`] = `
           </td>
         </tr>
         <tr
-          class="css-dhzdu5"
+          class="css-1fd9476"
         >
           <td>
             First
@@ -51,7 +51,7 @@ exports[`<StatusTable /> should render properly 1`] = `
           </td>
         </tr>
         <tr
-          class="css-dhzdu5"
+          class="css-x8c9an"
         >
           <td>
             First
