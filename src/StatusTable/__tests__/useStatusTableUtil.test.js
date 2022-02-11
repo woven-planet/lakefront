@@ -7,22 +7,22 @@ const FILTER_VALUES = {
 
 const DATA = [
     {
-        log_id: 't408/data-01-20-2021_13-11-10.tlog',
+        log_id: 't408/data-10.tlog',
         data_modified: '2021-01-22T15:58:03.966361Z',
         count: 377
     },
     {
-        log_id: 't408/data-01-20-2021_13-11-110.tlog',
+        log_id: 't408/data-110.tlog',
         data_modified: '2021-01-23T15:58:03.966361Z',
         count: 377
     },
     {
-        log_id: 't408/data-01-20-2021_13-11-12.tlog',
+        log_id: 't408/data-12.tlog',
         data_modified: '2021-01-21T15:58:03.966361Z',
         count: 377
     },
     {
-        log_id: 't408/data-01-20-2021_13-11-110.tlog',
+        log_id: 't408/data-110.tlog',
         data_modified: '2021-01-23T15:58:03.966361Z',
         count: 1400
     }
