@@ -28,7 +28,7 @@ export interface StatusRowProps {
 const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, className }) => {
     return (
         <ThemeProvider theme={theme}>
-            <StatusRowStyle className={className} status>
+            <StatusRowStyle className={className} status={status}>
                 {children}
             </StatusRowStyle>
         </ThemeProvider>

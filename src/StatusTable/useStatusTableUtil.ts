@@ -6,11 +6,9 @@ export interface SortOptions {
 }
 
 /**
-* mapTableFilters was primarily created to mitigate api inconsistencies.
-* For instance while 'log_id' is used by most endpoints,
-* others use 'name' to bring back the same data.
-* In order to target for filtering across tables,
-* we needed a way to target all with the same property.
+* mapTableFilters was primarily created to mitigate where different
+* api endpoints can bring back the same data under different key names.
+* This allows for filtering across tables.
 */
 export const mapTableFilters = (filterValues: FilterValues, filterMap: FilterMap): FilterMap => {
     const filterPairs = Object.entries(filterMap);
