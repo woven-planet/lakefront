@@ -95,16 +95,16 @@ export const formatLatLong = (value) => {
 };
 
 /**
- * Receives a celcius temperature and returns a properly formatted temperature string
+ * Receives a celsius temperature and returns a properly formatted temperature string
  * with degree symbol. An optional measurementSystem param can be provided to output
  * as Fahrenheit.
- * @param {number} celciusTemp - The temperature in celcius
+ * @param {number} celsiusTemp - The temperature in celsius
  * @param {string} [measurementSystem="metric"] - The output measurement system
  * @returns {string}
  */
-export const formatCelciusTemperature = (celciusTemp = 0, measurementSystem = 'metric') => {
+export const formatCelsiusTemperature = (celsiusTemp = 0, measurementSystem = 'metric') => {
     let unit = 'C';
-    let temp = celciusTemp;
+    let temp = celsiusTemp;
 
     if (measurementSystem === 'imperial') {
         unit = 'F';

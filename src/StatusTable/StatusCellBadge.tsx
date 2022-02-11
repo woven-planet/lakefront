@@ -25,7 +25,7 @@ const StatusCellBadge: FC<StatusCellBadgeProps> = ({ status = Status.NONE, class
 
     return (
         <ThemeProvider theme={theme}>
-            <StatusCellBadgeStyle className={className} Status={styleKey}>
+            <StatusCellBadgeStyle className={className} status={styleKey}>
                 {humanize(status)}
             </StatusCellBadgeStyle>
         </ThemeProvider>

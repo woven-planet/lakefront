@@ -3,7 +3,7 @@
 exports[`<StatusTable /> should render properly 1`] = `
 <div>
   <div
-    class="css-pymjyk"
+    class="css-6en7p3"
   >
     <table>
       <thead>
@@ -23,7 +23,7 @@ exports[`<StatusTable /> should render properly 1`] = `
       </thead>
       <tbody>
         <tr
-          class="css-1gwwktf"
+          class="css-dhzdu5"
         >
           <td>
             First
@@ -37,7 +37,7 @@ exports[`<StatusTable /> should render properly 1`] = `
           </td>
         </tr>
         <tr
-          class="css-1fd9476"
+          class="css-dhzdu5"
         >
           <td>
             First
@@ -51,7 +51,7 @@ exports[`<StatusTable /> should render properly 1`] = `
           </td>
         </tr>
         <tr
-          class="css-x8c9an"
+          class="css-dhzdu5"
         >
           <td>
             First

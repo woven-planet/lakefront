@@ -1,6 +1,13 @@
 import styled from '@emotion/styled';
+interface StatusTableStyleProps {
+    cards?: boolean;
+}
 
-export const StatusTableStyle = styled.div<any>(({ StatusTableCard, theme }) => ({
+interface StatusProps {
+    status?: string;
+}
+
+export const StatusTableStyle = styled.div<StatusTableStyleProps>(({ cards, theme }) => ({
     'table': {
         borderCollapse: 'separate',
         borderSpacing: 0,
@@ -31,7 +38,7 @@ export const StatusTableStyle = styled.div<any>(({ StatusTableCard, theme }) => 
             display: 'flex'
         }
     },
-    ...(StatusTableCard && {
+    ...(cards && {
 
         borderSpacing: 0,
 
@@ -74,7 +81,7 @@ export const DividerRow = styled.tr({
     opacity: '0'
 });
 
-export const StatusCellBadgeStyle = styled.div<any>(({ Status, theme }) => ({
+export const StatusCellBadgeStyle = styled.div<StatusProps>(({ status, theme }) => ({
     paddingLeft: '24px',
 
     ':before': {
@@ -87,26 +94,26 @@ export const StatusCellBadgeStyle = styled.div<any>(({ Status, theme }) => ({
         width: '16px'
     },
 
-    ...((Status === 'Running') && {
+    ...((status === 'Running') && {
         '&:before': {
             backgroundColor: theme?.colors?.teal
         }
     }),
 
-    ...((Status === 'Enqueued') && {
+    ...((status === 'Enqueued') && {
         '&:before': {
             backgroundColor: theme?.colors?.mercury
         }
     }),
 
-    ...(((Status === 'Failed') || (Status === 'Error')) && {
+    ...(((status === 'Failed') || (status === 'Error')) && {
         '&:before': {
             backgroundColor: theme?.colors?.red
         }
     })
 }));
 
-export const StatusRowStyle = styled.tr<any>(({ Status, theme }) => ({
+export const StatusRowStyle = styled.tr<StatusProps>(({ status, theme }) => ({
     backgroundColor: theme?.colors?.white,
 
     '&:hover': {
@@ -149,7 +156,7 @@ export const StatusRowStyle = styled.tr<any>(({ Status, theme }) => ({
         position: 'relative'
     },
 
-    ...((Status === 'Running') && {
+    ...((status === 'Running') && {
         'td:first-of-type': {
             '&:before': {
                 backgroundColor: theme?.colors?.teal
@@ -157,7 +164,7 @@ export const StatusRowStyle = styled.tr<any>(({ Status, theme }) => ({
         }
     }),
 
-    ...((Status === 'Enqueued') && {
+    ...((status === 'Enqueued') && {
         'td:first-of-type': {
             '&:before': {
                 backgroundColor: theme?.colors?.mercury
@@ -165,7 +172,7 @@ export const StatusRowStyle = styled.tr<any>(({ Status, theme }) => ({
         }
     }),
 
-    ...(((Status === 'Failed') || (Status === 'Error')) && {
+    ...(((status === 'Failed') || (status === 'Error')) && {
         'td:first-of-type': {
             '&:before': {
                 backgroundColor: theme?.colors?.red

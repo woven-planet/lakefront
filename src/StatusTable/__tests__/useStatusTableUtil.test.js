@@ -2,29 +2,29 @@ import { filterData, getCompareFormat, mapTableFilters, sortData } from '../useS
 
 const FILTER_VALUES = {
     logId: 'id123',
-    discoveredOn: '2020-01-20'
+    dateModified: '2020-01-20'
 };
 
 const DATA = [
     {
-        log_id: 'tri408/D_20210120_131101/d001/data-01-20-2021_13-11-10.tlog',
-        discovered_on: '2021-01-22T15:58:03.966361Z',
-        ingestion_milliseconds: 377
+        log_id: 't408/data-01-20-2021_13-11-10.tlog',
+        data_modified: '2021-01-22T15:58:03.966361Z',
+        count: 377
     },
     {
-        log_id: 'tri408/D_20210120_131101/d001/data-01-20-2021_13-11-110.tlog',
-        discovered_on: '2021-01-23T15:58:03.966361Z',
-        ingestion_milliseconds: 377
+        log_id: 't408/data-01-20-2021_13-11-110.tlog',
+        data_modified: '2021-01-23T15:58:03.966361Z',
+        count: 377
     },
     {
-        log_id: 'tri408/D_20210120_131101/d001/data-01-20-2021_13-11-12.tlog',
-        discovered_on: '2021-01-21T15:58:03.966361Z',
-        ingestion_milliseconds: 377
+        log_id: 't408/data-01-20-2021_13-11-12.tlog',
+        data_modified: '2021-01-21T15:58:03.966361Z',
+        count: 377
     },
     {
-        log_id: 'tri408/D_20210120_131101/d001/data-01-20-2021_13-11-110.tlog',
-        discovered_on: '2021-01-23T15:58:03.966361Z',
-        ingestion_milliseconds: 1400
+        log_id: 't408/data-01-20-2021_13-11-110.tlog',
+        data_modified: '2021-01-23T15:58:03.966361Z',
+        count: 1400
     }
 ];
 
@@ -32,25 +32,25 @@ describe('mapTableFilters', () => {
     it('Maps valid filterValue keys to "new key, same value" pairs object.', () => {
         const validFilterMap = {
             logId: 'log_id',
-            discoveredOn: 'discovered_on'
+            dateModified: 'date_modified'
         };
 
         const tableFilters = mapTableFilters(FILTER_VALUES, validFilterMap);
 
         expect(tableFilters.log_id).toBe(FILTER_VALUES.logId);
-        expect(tableFilters.discovered_on).toBe(FILTER_VALUES.discoveredOn);
+        expect(tableFilters.date_modified).toBe(FILTER_VALUES.dateModified);
     });
 
     it('Returns object without mapped keys if no valid filterValue keys are found.', () => {
         const invalidFilterMap = {
             LOG_ID: 'log_id',
-            DISCOVERED_ON: 'discovered_on'
+            DATE_MODIFIED: 'discovered_on'
         };
 
         const tableFilters = mapTableFilters(FILTER_VALUES, invalidFilterMap);
 
         expect(tableFilters.log_id).toBeUndefined();
-        expect(tableFilters.discovered_on).toBeUndefined();
+        expect(tableFilters.date_modified).toBeUndefined();
     });
 });
 
@@ -73,7 +73,7 @@ describe('filterData', () => {
 
     it('Returns one result when multiple filters match single record.', () => {
         expect(
-            filterData({ log_id: '10.tlog', discovered_on: DATA[1].discovered_on })(DATA)
+            filterData({ log_id: '10.tlog', data_modified: DATA[1].data_modified })(DATA)
         ).toHaveLength(2);
     });
 
@@ -92,21 +92,21 @@ describe('filterData', () => {
 
 describe('sortData', () => {
     it('Returns results sorted in descending order when ascending is undefined', () => {
-        const sortedData = sortData({ orderBy: 'discovered_on' })(DATA);
+        const sortedData = sortData({ orderBy: 'data_modified' })(DATA);
 
         expect(sortedData[0].log_id).toBe(DATA[1].log_id);
         expect(sortedData[3].log_id).toBe(DATA[2].log_id);
     });
 
     it('Returns results sorted in the requested orderBy priority', () => {
-        const sortedData = sortData({ orderBy: ['discovered_on', 'ingestion_milliseconds'] })(DATA);
+        const sortedData = sortData({ orderBy: ['data_modified', 'count'] })(DATA);
 
-        expect(sortedData[0].ingestion_milliseconds).toBe(DATA[3].ingestion_milliseconds);
+        expect(sortedData[0].count).toBe(DATA[3].count);
     });
 
     it('Returns results sorted in ascending order when ascending is true', () => {
-        const sortedData = sortData({ orderBy: 'ingestion_milliseconds', ascending: true })(DATA);
+        const sortedData = sortData({ orderBy: 'data_modified', ascending: true })(DATA);
 
-        expect(sortedData[3].ingestion_milliseconds).toBe(DATA[3].ingestion_milliseconds);
+        expect(sortedData[3].count).toBe(DATA[3].count);
     });
 });
