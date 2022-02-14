@@ -45,8 +45,8 @@ ReactDOM.render(<App />, document.querySelector('#app'));
 ## Storybook Components
 We've added Storybook pages to show how each component can be used.
 
-|  Component | Picture  | Component  | Picture  |
-| :--------- | :------- | ---------: | -------: | 
+| Component  | Picture  | Component  | Picture  |
+| :--------- | :------- | :--------- | :------- | 
 [AnchorCopy](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-anchorcopy--anchor-copy) | <details><summary>Screenshot</summary><img src="src/assets/AnchorCopy.png"></details> | [BoundingBoxes](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-boundingboxes--bounding-boxes) | <details><summary>Screenshot</summary><img src="src/assets/BoundingBoxes.png"></details> |
 [Breadcrumb](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-breadcrumb--breadcrumb) | <details> <summary>Screenshot</summary><img src="src/assets/Breadcrumb.png"></details> | [Button](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-button--all-buttons) | <details><summary>Screenshot</summary><img src="src/assets/Button.png"></details> | 
 [Checkbox](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkbox--checkbox) | <details><summary>Screenshot</summary><img  src="src/assets/Checkbox.png"></details> | [CheckboxGroup](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-checkboxgroup--checkbox-group) | <details><summary>Screenshot</summary><img  src="src/assets/CheckboxGroup.png"></details>
