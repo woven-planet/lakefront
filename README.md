@@ -71,7 +71,6 @@ We've added Storybook pages to show how each component can be used.
 [Table](https://toyotaresearchinstitute.github.io/lakefront?path=/docs/lakefront-table--table) | <details><summary>Screenshot</summary><img src="src/assets/Table.png"></details> | [Tabs](https://toyotaresearchinstitute.github.io/lakefront?path=/docs/lakefront-tabs--tabs) | <details><summary>Screenshot</summary><img src="src/assets/Tabs.png"></details> |
 [TextArea](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-textarea--placeholder) | <details><summary>Screenshot</summary><img src="src/assets/TextArea.png"></details> | [Toggle](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-toggle--toggle) | <details><summary>Screenshot</summary><img src="src/assets/Toggle.png"></details> |
 [TypeaheadSearch](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-typeaheadsearch--search-bottom-start) | <details><summary>Screenshot</summary><img src="src/assets/TypeaheadSearch.png"></details> 
-|
 ---
 
 ## Contributing
