@@ -49,8 +49,11 @@ If you want to contribute to the action, even by just raising a problem or propo
 ## Storybook Components
 We've added Storybook pages to show how each component can be used.
 
-Upon a new component being added to this table run 'npm run update-readme' for boilerplate code. Please replace the three variables with the corresponding information as needed.
-
+---
+## How to add components to this table
+Upon a new component being added to this table run 'npm run update-readme' for boilerplate code. Please replace the three variables with the corresponding information as needed. Also, store screenshots of components in the 'screenshots' folder. 
+### <b>Please do not add information below this table, the 'npm run update-readme' will not work properly if the table is not last.
+---
 | Component  | Picture  | Component  | Picture  |
 | :--------- | :------- | :--------- | :------- | 
 [AnchorCopy](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-anchorcopy--anchor-copy) | <details><summary>Screenshot</summary><img src="src/screenshots/AnchorCopy.png"></details> | [BoundingBoxes](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-boundingboxes--bounding-boxes) | <details><summary>Screenshot</summary><img src="src/screenshots/BoundingBoxes.png"></details> |
