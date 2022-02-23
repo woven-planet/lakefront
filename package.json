@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.100.2",
+  "version": "0.100.1",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -22,7 +22,8 @@
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "update-readme": "node index.js"
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
@@ -32,6 +33,7 @@
     "d3-shape": "^3.0.1",
     "d3-zoom": "^3.0.0",
     "dagre-d3": "^0.6.4",
+    "mustache": "^4.2.0",
     "query-string": "^7.0.0",
     "ramda": "^0.27.1",
     "react-router-dom": "^5.1.2",
