@@ -1,24 +1,8 @@
 import { FC, useState, ChangeEvent } from 'react';
 import RadioGroup from 'src/RadioGroup/RadioGroup';
 import MinMaxInput from 'src/Filter/modules/DurationFilter/MinMaxInput';
-
 import { speedInputStyles } from 'src/SpeedInput/speedInputStyles';
 import { RadioGroupWrapper } from 'src/SpeedInput/speedInputStyles';
-
-import styled from '@emotion/styled';
-import { StyledRadioGroup, StyledLabel } from 'src/RadioGroup/radioGroupStyles';
-import { ReactComponent as Checked } from './assets/radioChecked.svg';
-import { ReactComponent as Unchecked } from './assets/radioUnchecked.svg';
-
-
-// import { FC, useState, ChangeEvent } from 'react';
-// import { RadioGroup, MinMaxInput } from '@toyota-research-institute/lakefront';
-// import { Mode, SPEED_UNITS, VehicleSpeed } from './VehicleSpeedUtil';
-
-// import styles from './vehicleSpeedFilter.module.scss';
-
-// import styled from '@emotion/styled';
-// import theme from 'core/styles/theme';
 
 export enum Mode {
     minmax = 'minmax',
@@ -46,16 +30,33 @@ const unitOptions = [
     { value: SPEED_UNITS.milesPerHour, label: 'Mph' }
 ];
 
-
-export interface Props {
+export interface SpeedInputProps {
+    /**
+    *  // TODO: insert description. 
+    */
     value: VehicleSpeed | null;
+    /**
+    * The function that should run when a radio button is selected.
+    */
     onChange(speedRange: VehicleSpeed | null): void;
+    /**
+    * Toggle true, to have speed units validated for selected unit.
+    */
     unitConversionRequired: boolean;
+    /**
+    * Toggle to accept negative input values or not.  
+    */
     allowNegativeInput: boolean;
+    /**
+    * We can set our defaultUnits with (kilometersPerHour(kph), milesPerHour(mph), metersPerSecondSquared(m/s²)). 
+    */
     defaultUnits: SPEED_UNITS;
+    /**
+    * If true, this prop will disable the component. 
+    */
     disabled: boolean;
 }
-const SpeedInput: FC<Props> = ({ value, onChange, unitConversionRequired, allowNegativeInput, defaultUnits }) => {
+const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequired, allowNegativeInput, defaultUnits, disabled }) => {
     const [unit, setUnit] = useState<string>(() => {
         if (unitConversionRequired) {
             return value && value.unit ? value.unit : defaultUnits;
@@ -98,7 +99,7 @@ const SpeedInput: FC<Props> = ({ value, onChange, unitConversionRequired, allowN
                             name="SpeedUnits"
                             options={unitOptions}
                             value={unit}
-                            disabled={false}
+                            disabled={disabled}
                             onChange={handleUnitChange}
                         />
                     </RadioGroupWrapper>

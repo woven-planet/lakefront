@@ -1,23 +1,38 @@
-import { ChangeEvent, ComponentPropsWithoutRef, FC, MouseEventHandler, useState } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-
-import SpeedInput, { Props, SPEED_UNITS, VehicleSpeed } from 'src/SpeedInput/SpeedInput';
-import DocBlock from '.storybook/DocBlock';
-import { action } from '@storybook/addon-actions';
+import SpeedInputComponent, { SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/SpeedInput/SpeedInput';
 
 export default {
     title: 'Lakefront/SpeedInput',
-    component: SpeedInput,
+    component: SpeedInputComponent,
     argTypes: {
-        onChange: {
-            action: 'changed',
+        // Set value
+        value: {
+            control: '',
             table: {
-                disable: true
+                defaultValue: { summary: '' },
+                type: { summary: 'string' }
             }
         },
-        children: {
+        unitConversionRequired: {
+            control: 'boolean',
             table: {
-                disable: true
+                defaultValue: { summary: true },
+                type: { summary: 'boolean' }
+            }
+        },
+        allowNegativeInput: {
+            control: 'boolean',
+            table: {
+                defaultValue: { summary: true },
+                type: { summary: 'boolean' }
+            }
+        },
+        defaultUnits: {
+            control: SPEED_UNITS,
+            table: {
+                defaultValue: { summary: 'Mph' },
+                type: { summary: 'string' }
             }
         },
         disabled: {
@@ -25,64 +40,28 @@ export default {
             table: {
                 defaultValue: { summary: false },
                 type: { summary: 'boolean' }
-            },
-            description: 'HTML input element disabled prop.'
+            }
         }
     },
-
-    parameters: {
-        docs: {
-            page: DocBlock,
-            transformSource: (source: string) => {
-                return source
-                    .replace('onChange={function noRefCheck() {}}', '')
-                    .replace(/\n/g, '')
-                    .replace(/[ ]{2}/g, ' ');
-            },
-        }
-    }
 } as Meta;
 
-// const Template: Story<Props & ComponentPropsWithoutRef<'input'>> = (...args) => {
-const Template: Story<Props & ComponentPropsWithoutRef<'input'>> = (args) => {
-    // const [isChecked, setIsChecked] = useState(false);
-
-    // const handleClick = (event: ChangeEvent<HTMLInputElement>) => {
-    //     setIsChecked(prevState => !prevState);
-    //     action(`Checked changed to ${!isChecked}`)(event);
-    // };
-    const SpeedInput: FC<Props> = ({ value, onChange, unitConversionRequired, allowNegativeInput, defaultUnits }) => {
-        const [unit, setUnit] = useState<string>(() => {
-            if (unitConversionRequired) {
-                return value && value.unit ? value.unit : defaultUnits;
-            }
-            return SPEED_UNITS.metersPerSecondSquared;
-        });
-        const handleUnitChange = (event: ChangeEvent<HTMLInputElement>) => {
-            setUnit(event.target.value);
-            const speedRange: VehicleSpeed = {
-                ...value,
-                unit: unit as SPEED_UNITS,
-                mode: Mode.minmax
-            };
-            onChange(speedRange);
-        };
-        return (
-            <SpeedInput
-                value={VehicleSpeed}
-                onChange={handleUnitChange}
-                unitConversionRequired={true}
-                allowNegativeInput={true}
-                defaultUnits={SPEED_UNITS}
-                disabled={false}
-            />
-        );
+const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+    const updateOnChange = (speedRange: VehicleSpeed | null): void => {
+        //TODO: Remove when done using.
+        console.log('speedRange', speedRange);
     };
+    return (
+        <SpeedInputComponent
+            {...args}
+            onChange={updateOnChange}
+        />
+    );
 };
-export const SpeedInputComponent = Template.bind({});
-// export const Checkbox = Template.bind({});
-
-// export const CheckboxWithLabel = Template.bind({});
-// CheckboxWithLabel.args = {
-//     label: 'Checkbox'
-// };
+export const SpeedInput = Template.bind({});
+SpeedInput.args = {
+    value: SPEED_UNITS.milesPerHour,
+    unitConversionRequired: true,
+    allowNegativeInput: true,
+    defaultUnits: SPEED_UNITS.kilometersPerHour,
+    disabled: false
+};
