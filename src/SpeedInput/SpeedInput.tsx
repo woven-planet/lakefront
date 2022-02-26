@@ -1,12 +1,10 @@
 import { FC, useState, ChangeEvent } from 'react';
 import RadioGroup from 'src/RadioGroup/RadioGroup';
 import MinMaxInput from 'src/Filter/modules/DurationFilter/MinMaxInput';
-import { speedInputStyles } from 'src/SpeedInput/speedInputStyles';
 import { RadioGroupWrapper } from 'src/SpeedInput/speedInputStyles';
 
 export enum Mode {
-    minmax = 'minmax',
-    presets = 'presets'
+    minmax = 'minmax'
 }
 
 export interface VehicleSpeed {
@@ -14,15 +12,14 @@ export interface VehicleSpeed {
     max?: number;
     unit: SPEED_UNITS;
     mode: Mode;
-    preset?: string;
 }
 
 /**
  * Enumerator for units of speed abbreviations
  */
 export enum SPEED_UNITS {
-    kilometersPerHour = 'kph',
-    milesPerHour = 'mph',
+    kilometersPerHour = 'Kph',
+    milesPerHour = 'Mph',
     metersPerSecondSquared = 'm/s²'
 }
 const unitOptions = [
@@ -32,7 +29,7 @@ const unitOptions = [
 
 export interface SpeedInputProps {
     /**
-    *  // TODO: insert description. 
+    *  The value prop is assigned to 'VehicleSpeed', which is made up of a 'min', 'max' for the input values. A 'unit'(SPEED_UNITS) which is currently a toggle between 'kph', 'mph', or 'm/s²'. And 'mode' which uses 'minmax' for both input values. 
     */
     value: VehicleSpeed | null;
     /**
@@ -52,7 +49,7 @@ export interface SpeedInputProps {
     */
     defaultUnits: SPEED_UNITS;
     /**
-    * If true, this prop will disable the component. 
+    * If true, this prop will disable the radio buttons. 
     */
     disabled: boolean;
 }
@@ -84,8 +81,6 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
                 mode: Mode.minmax
             };
             onChange(speedRange);
-        } else {
-            onChange(null);
         }
     };
     return (

@@ -6,12 +6,11 @@ export default {
     title: 'Lakefront/SpeedInput',
     component: SpeedInputComponent,
     argTypes: {
-        // Set value
         value: {
-            control: '',
+            control: 'VehicleSpeed',
             table: {
-                defaultValue: { summary: '' },
-                type: { summary: 'string' }
+                defaultValue: { summary: 'VehicleSpeed' },
+                type: { summary: null }
             }
         },
         unitConversionRequired: {
@@ -31,7 +30,7 @@ export default {
         defaultUnits: {
             control: SPEED_UNITS,
             table: {
-                defaultValue: { summary: 'Mph' },
+                defaultValue: { summary: 'Kph' },
                 type: { summary: 'string' }
             }
         },
@@ -46,9 +45,8 @@ export default {
 } as Meta;
 
 const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+
     const updateOnChange = (speedRange: VehicleSpeed | null): void => {
-        //TODO: Remove when done using.
-        console.log('speedRange', speedRange);
     };
     return (
         <SpeedInputComponent
@@ -59,7 +57,7 @@ const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args
 };
 export const SpeedInput = Template.bind({});
 SpeedInput.args = {
-    value: SPEED_UNITS.milesPerHour,
+    value: null,
     unitConversionRequired: true,
     allowNegativeInput: true,
     defaultUnits: SPEED_UNITS.kilometersPerHour,

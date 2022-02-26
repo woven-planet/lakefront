@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 import theme from 'src/styles/theme';
 
-export const speedInputStyles = styled.div({
-    '.unitOfSpeed': {
-        color: 'blue'
-    }
-});
-
 export const RadioGroupWrapper = styled.div({
     label: {
         marginBottom: '8px',
