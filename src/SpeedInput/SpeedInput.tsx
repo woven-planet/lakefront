@@ -81,8 +81,12 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
                 mode: Mode.minmax
             };
             onChange(speedRange);
+        } else {
+            onChange(null);
         }
     };
+
+
     return (
         <div>
             <MinMaxInput value={value} onChange={submitSearch} allowNegativeInput={allowNegativeInput} />
