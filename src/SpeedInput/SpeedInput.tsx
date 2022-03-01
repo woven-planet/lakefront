@@ -49,7 +49,6 @@ export interface SpeedInputProps {
     /**
     * We can set our defaultUnits with (kilometersPerHour(kph), milesPerHour(mph), metersPerSecondSquared(m/s²)). 
     * These values determine if the unitConversionRequired needs to validate the conversion or not.   
-    *  TODO: 
     */
     defaultUnits: SPEED_UNITS;
     /**
