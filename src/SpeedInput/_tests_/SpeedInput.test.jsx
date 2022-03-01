@@ -1,7 +1,5 @@
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import { isString } from 'lodash';
-
-import SpeedInput, { SPEED_UNITS, Mode, VehicleSpeed } from '../SpeedInput';
+import SpeedInput, { SPEED_UNITS, Mode } from '../SpeedInput';
 
 afterAll(cleanup);
 

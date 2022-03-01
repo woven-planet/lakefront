@@ -46,7 +46,7 @@ export default {
 
 const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
 
-    const updateOnChange = (speedRange: VehicleSpeed | null): void => {
+    const updateOnChange = (_speedRange: VehicleSpeed | null): void => {
     };
     return (
         <SpeedInputComponent
