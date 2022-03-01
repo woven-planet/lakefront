@@ -1,6 +1,7 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import SpeedInputComponent, { SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/SpeedInput/SpeedInput';
+import SpeedInputComponent, { Mode, SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/SpeedInput/SpeedInput';
+import { emerald } from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/SpeedInput',
@@ -30,7 +31,7 @@ export default {
         defaultUnits: {
             control: SPEED_UNITS,
             table: {
-                defaultValue: { summary: 'Kph' },
+                defaultValue: { summary: 'Mph' },
                 type: { summary: 'string' }
             }
         },
@@ -44,22 +45,53 @@ export default {
     },
 } as Meta;
 
+const vehicleValue = {
+    min: 1,
+    max: 50,
+    unit: null,
+    mode: Mode.minmax
+};
+
 const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+    const [showBanner, setShowBanner] = useState(false);
+    const [speedRange, setSpeedrange] = useState(null);
 
     const updateOnChange = (_speedRange: VehicleSpeed | null): void => {
+        setSpeedrange(_speedRange);
+        setShowBanner(true);
+        setTimeout(() => {
+            setShowBanner(false);
+        }, 3000);
     };
+
     return (
-        <SpeedInputComponent
-            {...args}
-            onChange={updateOnChange}
-        />
+        <>
+            {showBanner && (<div
+                style={{
+                    minHeight: 20,
+                    backgroundColor: emerald,
+                    padding: 8,
+                    margin: '8px 0',
+                    textAlign: 'center',
+                    width: '100%'
+                }}
+            >
+                The SeedRange value is min = {speedRange.min} and max= {speedRange.max}.
+            </div>)}
+            <SpeedInputComponent
+                {...args}
+                onChange={updateOnChange}
+            />
+
+        </>
     );
 };
+
 export const SpeedInput = Template.bind({});
 SpeedInput.args = {
-    value: null,
+    value: vehicleValue,
     unitConversionRequired: true,
     allowNegativeInput: true,
-    defaultUnits: SPEED_UNITS.kilometersPerHour,
+    defaultUnits: SPEED_UNITS.milesPerHour,
     disabled: false
 };

@@ -2,6 +2,8 @@ import { FC, useState, ChangeEvent } from 'react';
 import RadioGroup from 'src/RadioGroup/RadioGroup';
 import MinMaxInput from 'src/Filter/modules/DurationFilter/MinMaxInput';
 import { RadioGroupWrapper } from 'src/SpeedInput/speedInputStyles';
+import { ThemeProvider } from '@emotion/react';
+import theme from 'src/styles/theme';
 
 export enum Mode {
     minmax = 'minmax'
@@ -46,6 +48,8 @@ export interface SpeedInputProps {
     allowNegativeInput: boolean;
     /**
     * We can set our defaultUnits with (kilometersPerHour(kph), milesPerHour(mph), metersPerSecondSquared(m/s²)). 
+    * These values determine if the unitConversionRequired needs to validate the conversion or not.   
+    *  TODO: 
     */
     defaultUnits: SPEED_UNITS;
     /**
@@ -53,13 +57,20 @@ export interface SpeedInputProps {
     */
     disabled: boolean;
 }
+/**
+ *
+ * The SpeedInput component takes in RadioGroup and MinMaxInput to create one component. This component is used for input values also to toggle between radio buttons to convert input to a range. 
+ *
+ */
 const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequired, allowNegativeInput, defaultUnits, disabled }) => {
     const [unit, setUnit] = useState<string>(() => {
         if (unitConversionRequired) {
             return value && value.unit ? value.unit : defaultUnits;
         }
+
         return SPEED_UNITS.metersPerSecondSquared;
     });
+
     const handleUnitChange = (event: ChangeEvent<HTMLInputElement>) => {
         setUnit(event.target.value);
         const speedRange: VehicleSpeed = {
@@ -86,9 +97,8 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
         }
     };
 
-
     return (
-        <div>
+        <ThemeProvider theme={theme}>
             <MinMaxInput value={value} onChange={submitSearch} allowNegativeInput={allowNegativeInput} />
             {unitConversionRequired && (
                 <>
@@ -104,7 +114,7 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
                     </RadioGroupWrapper>
                 </>
             )}
-        </div>
+        </ThemeProvider>
     );
 };
 export default SpeedInput;

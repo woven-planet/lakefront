@@ -49,21 +49,6 @@ describe('<SpeedInput>', () => {
         expect(speedInput).toBeDefined();
     });
 
-    it('renders disabled', () => {
-        const callback = jest.fn();
-        const { container } = render(
-            <SpeedInput
-                value={vehicleValue}
-                unitConversionRequired={true}
-                allowNegativeInput={true}
-                disabled={true}
-                defaultUnits={SPEED_UNITS.kilometersPerHour}
-                onChange={callback} />
-        );
-        const speedInputContainer = container.querySelectorAll('div');
-        expect(speedInputContainer).toBeDisabled;
-    });
-
     it('Takes in all props', () => {
         const callback = jest.fn();
         const { container, getByText } = render(
@@ -76,9 +61,9 @@ describe('<SpeedInput>', () => {
                 onChange={callback}
             />
         );
-        expect(container).toBeInTheDocument;
+        expect(container).toBeInTheDocument();
         const icon = container.querySelectorAll('div');
-        expect(icon).toBeDefined;
+        expect(icon).toBeDefined();
         expect(Mode.minmax).toEqual('minmax');
         expect(SpeedInput.value).not.toBeNull();
         expect(SpeedInput.unitConversionRequired).not.toEqual(false);
