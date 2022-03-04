@@ -45,23 +45,23 @@ export default {
     },
 } as Meta;
 
-const vehicleValue = {
-    min: 1,
-    max: 50,
-    unit: null,
-    mode: Mode.minmax
-};
-
 const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
-    const [showBanner, setShowBanner] = useState(false);
     const [speedRange, setSpeedrange] = useState(null);
+    const [showBanner, setShowBanner] = useState(false);
 
-    const updateOnChange = (_speedRange: VehicleSpeed | null): void => {
-        setSpeedrange(_speedRange);
+    let vehicleValue = {
+        min: speedRange?.min || 1,
+        max: speedRange?.max || 50,
+        unit: null,
+        mode: Mode.minmax
+    };
+
+    const handleUnitChange = (speedRange: VehicleSpeed) => {
         setShowBanner(true);
+        setSpeedrange(speedRange);
         setTimeout(() => {
             setShowBanner(false);
-        }, 3000);
+        }, 10000);
     };
 
     return (
@@ -76,11 +76,12 @@ const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args
                     width: '100%'
                 }}
             >
-                The SeedRange value is min = {speedRange.min} and max= {speedRange.max}.
+                The SpeedRange value is min = {speedRange.min} {speedRange.unit} and max = {speedRange.max} {speedRange.unit}.
             </div>)}
             <SpeedInputComponent
                 {...args}
-                onChange={updateOnChange}
+                onChange={handleUnitChange}
+                value={vehicleValue}
             />
 
         </>
@@ -88,8 +89,9 @@ const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args
 };
 
 export const SpeedInput = Template.bind({});
+
 SpeedInput.args = {
-    value: vehicleValue,
+
     unitConversionRequired: true,
     allowNegativeInput: true,
     defaultUnits: SPEED_UNITS.milesPerHour,

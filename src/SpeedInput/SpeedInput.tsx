@@ -66,27 +66,29 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
         if (unitConversionRequired) {
             return value && value.unit ? value.unit : defaultUnits;
         }
-
         return SPEED_UNITS.metersPerSecondSquared;
     });
 
     const handleUnitChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setUnit(event.target.value);
+        const unitVal = event.target.value;
+        setUnit(unitVal);
         const speedRange: VehicleSpeed = {
             ...value,
-            unit: unit as SPEED_UNITS,
+            unit: unitVal as SPEED_UNITS,
             mode: Mode.minmax
         };
-        onChange(speedRange);
+        if ((value?.min || value?.min === 0) && value?.max) {
+            onChange(speedRange);
+        }
     };
 
-    const submitSearch = ({ min, max }: { min: any, max: any }) => {
-        if (min && min !== '.' && max && max !== '.' && min !== '-' && max !== '-') {
-            const parsedMin = parseFloat(min);
-            const parsedMax = parseFloat(max);
-            const speedRange: VehicleSpeed = {
-                min: parsedMin,
-                max: parsedMax,
+    const submitSearch = (output?: any) => {
+        const min = output && output?.min;
+        const max = output && output?.max;
+        if (min || max) {
+            let speedRange: VehicleSpeed = {
+                min: min ? parseFloat(min) : 0,
+                max: max ? parseFloat(max) : undefined,
                 unit: unit as SPEED_UNITS,
                 mode: Mode.minmax
             };
