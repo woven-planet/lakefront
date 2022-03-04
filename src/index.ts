@@ -56,13 +56,16 @@ export { default as RefreshToolbar, RefreshToolbarProps } from './RefreshToolbar
 
 export { default as Select } from './Select';
 
+export { default as SelectPopover } from './SelectPopover/SelectPopover';
+
+export { default as SpeedInput } from './SpeedInput/SpeedInput';
+
 export { default as StackBanner } from './StackBanner/StackBanner';
 
 export { default as StackBannerRow } from './StackBanner/StackBannerRow';
 
 export * from './StatusTable';
 
-export { default as SelectPopover } from './SelectPopover/SelectPopover';
 
 export { default as StepFunctionAuthoring } from './StepFunctionAuthoring';
 export * from './StepFunctionAuthoring/util';
