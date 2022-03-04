@@ -56,9 +56,14 @@ export interface SpeedInputProps {
     */
     disabled: boolean;
 }
+type Output = null | {
+    min?: number,
+    max?: number
+}
 /**
  *
- * The SpeedInput component takes in RadioGroup and MinMaxInput to create one component. This component is used for input values also to toggle between radio buttons to convert input to a range. 
+ * The SpeedInput component takes in RadioGroup and MinMaxInput to create one component. 
+ * This component is used for input values also to toggle between radio buttons to convert input to a range. 
  *
  */
 const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequired, allowNegativeInput, defaultUnits, disabled }) => {
@@ -82,13 +87,13 @@ const SpeedInput: FC<SpeedInputProps> = ({ value, onChange, unitConversionRequir
         }
     };
 
-    const submitSearch = (output?: any) => {
+    const submitSearch = (output?: Output) => {
         const min = output && output?.min;
         const max = output && output?.max;
         if (min || max) {
             let speedRange: VehicleSpeed = {
-                min: min ? parseFloat(min) : 0,
-                max: max ? parseFloat(max) : undefined,
+                min: min || 0,
+                max: max || undefined,
                 unit: unit as SPEED_UNITS,
                 mode: Mode.minmax
             };

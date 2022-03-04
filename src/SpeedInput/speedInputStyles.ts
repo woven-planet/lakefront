@@ -17,4 +17,3 @@ export const RadioGroupWrapper = styled.div(({ theme }) => ({
         width: '16px'
     }
 }));
-

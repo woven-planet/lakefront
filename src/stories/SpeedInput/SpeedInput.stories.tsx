@@ -46,17 +46,17 @@ export default {
 } as Meta;
 
 const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
-    const [speedRange, setSpeedrange] = useState(null);
+    const [speedRange, setSpeedrange] = useState<VehicleSpeed | null>(null);
     const [showBanner, setShowBanner] = useState(false);
 
-    let vehicleValue = {
-        min: speedRange?.min || 1,
-        max: speedRange?.max || 50,
+    let vehicleValue: VehicleSpeed = {
+        min: speedRange?.min,
+        max: speedRange?.max,
         unit: null,
         mode: Mode.minmax
     };
 
-    const handleUnitChange = (speedRange: VehicleSpeed) => {
+    const handleUnitChange = (speedRange: VehicleSpeed | null) => {
         setShowBanner(true);
         setSpeedrange(speedRange);
         setTimeout(() => {
@@ -76,7 +76,7 @@ const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args
                     width: '100%'
                 }}
             >
-                The SpeedRange value is min = {speedRange.min} {speedRange.unit} and max = {speedRange.max} {speedRange.unit}.
+                The SpeedRange value is min = {speedRange?.min || ''} {speedRange?.unit || ''} and max = {speedRange?.max || ''} {speedRange?.unit || ''}.
             </div>)}
             <SpeedInputComponent
                 {...args}
