@@ -76,7 +76,7 @@ const MinMaxInput: FC<MinMaxInputProps> = ({
         submitSearch(min, maxValue);
     }, [debouncedMax]);
 
-    const submitSearch = (min: any, max: any) => {
+    const submitSearch = (min: string, max: string) => {
         if (min || max) {
             const output: MinMax = {};
             if (min) {
