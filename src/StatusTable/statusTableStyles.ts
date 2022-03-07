@@ -5,6 +5,8 @@ interface StatusTableStyleProps {
 
 interface StatusProps {
     status?: string;
+    onRowClick?: () => void;
+    rowClick?: boolean;
 }
 
 export const StatusTableStyle = styled.div<StatusTableStyleProps>(({ cards, theme }) => ({
@@ -113,7 +115,7 @@ export const StatusCellBadgeStyle = styled.div<StatusProps>(({ status, theme }) 
     })
 }));
 
-export const StatusRowStyle = styled.tr<StatusProps>(({ status, theme }) => ({
+export const StatusRowStyle = styled.tr<StatusProps>(({ status, onRowClick, rowClick, theme }) => ({
     backgroundColor: theme?.colors?.white,
 
     '&:hover': {
@@ -178,6 +180,11 @@ export const StatusRowStyle = styled.tr<StatusProps>(({ status, theme }) => ({
                 backgroundColor: theme?.colors?.red
             }
         }
-    })
+    }),
+
+    ...(rowClick && {
+        cursor: 'pointer'
+    }
+    )
 
 }));
