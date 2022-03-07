@@ -1,4 +1,4 @@
-import { FC } from 'react';;
+import { FC, MouseEventHandler } from 'react';;
 import { StatusRowStyle } from './statusTableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
@@ -20,15 +20,27 @@ export interface StatusRowProps {
      * This is to set an external classname.
      */
     className?: string;
+
+    /**
+     * This is to handle the row click event.
+     */
+    onRowClick?: () => void;
 }
 
 /**
  *  Status Row Component is used to render the row with various colums.
  */
-const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, className }) => {
+const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, className, onRowClick }) => {
+
+    const handleOnClick: MouseEventHandler<HTMLTableRowElement> = () => {
+        if (onRowClick) {
+            onRowClick();
+        }
+    }
+
     return (
         <ThemeProvider theme={theme}>
-            <StatusRowStyle className={className} status={status}>
+            <StatusRowStyle className={className} status={status} rowClick={Boolean(onRowClick)} onClick={handleOnClick}>
                 {children}
             </StatusRowStyle>
         </ThemeProvider>
