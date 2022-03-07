@@ -1,4 +1,4 @@
-import { FC } from 'react';;
+import { FC, MouseEventHandler } from 'react';;
 import { StatusRowStyle } from './statusTableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
@@ -32,7 +32,7 @@ export interface StatusRowProps {
  */
 const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, className, onRowClick }) => {
 
-    const handleOnClick = () => {
+    const handleOnClick: MouseEventHandler<HTMLTableRowElement> = () => {
         if (onRowClick) {
             onRowClick();
         }
@@ -40,7 +40,7 @@ const StatusRow: FC<StatusRowProps> = ({ children, status = Status.NONE, classNa
 
     return (
         <ThemeProvider theme={theme}>
-            <StatusRowStyle className={className} status={status} rowClick={Boolean(onRowClick)} onClick={() => handleOnClick()}>
+            <StatusRowStyle className={className} status={status} rowClick={Boolean(onRowClick)} onClick={handleOnClick}>
                 {children}
             </StatusRowStyle>
         </ThemeProvider>
