@@ -9,6 +9,14 @@ export const StyledCollapsible = styled.div<CollapsibleProps>(({ theme }) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        '.iconWithTitle': {
+            svg: {
+                marginRight: 10
+            },
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+        },
         '.title': {
             fontWeight: 600,
             fontSize: 24
