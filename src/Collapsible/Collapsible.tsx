@@ -38,6 +38,11 @@ export interface CollapsibleProps {
    * `Default = true` This determines if the expand/collapse icon should be displayed and usable.
    */
   collapsible?: boolean;
+
+  /**
+   * This is to render icon for expand/collapse control.ß
+   */
+  icon?: ReactElement<SVGElement> | boolean | string | undefined;
 }
 
 /**
@@ -56,6 +61,7 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
   onChange,
   children,
   collapsible = true,
+  icon,
   ...props
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
@@ -73,7 +79,13 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
       {
         <StyledCollapsible {...props}>
           <div className="topCollapsible">
-            <div className="title">{title}</div>
+            {icon &&
+              <div className="iconWithTitle">
+                <div>{icon}</div>
+                <div className="title">{title}</div>
+              </div>
+            }
+            {!icon && <div className="title">{title}</div>}
             <div className="subtitle">
               {subtitle}
               {collapsible && (<Button
@@ -83,7 +95,7 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
             </div>
           </div>
           {divider && <div className="divider" />}
-          <div className={`bottomCollapsible ${isExpanded ? 'expanded': 'collapsed'}`}>{children}</div>
+          <div className={`bottomCollapsible ${isExpanded ? 'expanded' : 'collapsed'}`}>{children}</div>
         </StyledCollapsible>
       }
     </ThemeProvider>
