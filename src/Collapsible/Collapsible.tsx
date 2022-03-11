@@ -40,7 +40,7 @@ export interface CollapsibleProps {
   collapsible?: boolean;
 
   /**
-   * This is to render icon for expand/collapse control.ß
+   * This is to render icon for expand/collapse control.
    */
   icon?: ReactElement<SVGElement> | boolean | string | undefined;
 }
