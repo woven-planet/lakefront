@@ -6,7 +6,8 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
 export enum Mode {
-    minmax = 'minmax'
+    minmax = 'minmax',
+    presets = 'presets'
 }
 
 export interface VehicleSpeed {
@@ -14,14 +15,15 @@ export interface VehicleSpeed {
     max?: number;
     unit: SPEED_UNITS;
     mode: Mode;
+    preset?: string;
 }
 
 /**
  * Enumerator for units of speed abbreviations
  */
 export enum SPEED_UNITS {
-    kilometersPerHour = 'Kph',
-    milesPerHour = 'Mph',
+    kilometersPerHour = 'kph',
+    milesPerHour = 'mph',
     metersPerSecondSquared = 'm/s²'
 }
 const unitOptions = [

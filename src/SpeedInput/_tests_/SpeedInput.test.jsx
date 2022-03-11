@@ -14,11 +14,11 @@ const options = [
     },
     {
         label: 'unit',
-        value: 'Mph'
+        value: 'mph'
     },
     {
         label: 'unit',
-        value: 'Kph'
+        value: 'kph'
     },
     {
         label: 'unit',
@@ -77,11 +77,11 @@ describe('<SpeedInput>', () => {
         expect(SPEED_UNITS.metersPerSecondSquared).toEqual(options[4].value);
         expect(SPEED_UNITS.milesPerHour).toEqual(options[2].value);
 
-        const mphClicked = getByText(options[2].value);
+        const mphClicked = getByText('Mph');
         fireEvent.click(mphClicked);
         expect(callback.mphClicked).not.toEqual(options[3].value);
 
-        const kphStaysKph = getByText(options[3].value);
+        const kphStaysKph = getByText('Kph');
         fireEvent.click(kphStaysKph);
         expect(SPEED_UNITS.kilometersPerHour).toEqual(options[3].value);
 
