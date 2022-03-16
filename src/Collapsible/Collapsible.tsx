@@ -22,7 +22,7 @@ export interface CollapsibleProps {
    */
   onChange?: () => void;
   /**
-  * This is an action to run when the expan/collapse section is clicked.
+  * This is an action to run when the expand/collapse section is clicked.
   */
   onClick?: () => void;
   /**
