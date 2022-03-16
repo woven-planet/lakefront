@@ -42,7 +42,6 @@ export interface CollapsibleProps {
    * `Default = true` This determines if the expand/collapse icon should be displayed and usable.
    */
   collapsible?: boolean;
-
   /**
    * This is to render icon for expand/collapse control.
    */
