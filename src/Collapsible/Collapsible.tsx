@@ -22,7 +22,7 @@ export interface CollapsibleProps {
    */
   onChange?: () => void;
   /**
-  * This is an action to run when the expan/collapse section is clicked.
+  * This is an event which will trigger when the expand/collapse section is clicked.
   */
   onClick?: () => void;
   /**
@@ -42,7 +42,6 @@ export interface CollapsibleProps {
    * `Default = true` This determines if the expand/collapse icon should be displayed and usable.
    */
   collapsible?: boolean;
-
   /**
    * This is to render icon for expand/collapse control.
    */
