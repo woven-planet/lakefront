@@ -22,6 +22,10 @@ export interface CollapsibleProps {
    */
   onChange?: () => void;
   /**
+  * This is an action to run when the expan/collapse section is clicked.
+  */
+  onClick?: () => void;
+  /**
    * Typically a string, this is the content to show at the top left of the component.
    */
   title?: string | ReactElement;
@@ -59,6 +63,7 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
   subtitle = '',
   divider = true,
   onChange,
+  onClick,
   children,
   collapsible = true,
   icon,
@@ -74,10 +79,16 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
     setIsExpanded(!isExpanded);
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       {
-        <StyledCollapsible {...props}>
+        <StyledCollapsible {...props} onClick={handleClick}>
           <div className="topCollapsible">
             {icon &&
               <div className="iconWithTitle">
