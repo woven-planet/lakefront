@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column } from 'react-table';
-import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
-import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
-import { TableStyle } from './tableStyles';
+import { StyledArrowDown, StyledArrowUp, StyledHeader, StyledUnsorted, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
@@ -105,11 +103,17 @@ const Table: React.FC<TableProps> = ({ className,
                     {headerGroups.map((headerGroup: any) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column: any) => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                    {column.render('Header')}
-                                    {column.isSorted && (
-                                        <>{(column.isSortedDesc ? <ArrowDown /> : <ArrowUp />)}</>
-                                    )}
+                                <th {
+                                    ...column.getHeaderProps(column.getSortByToggleProps(
+                                        { title: 'Hold shift & click the column to add to multi-sort' }
+                                    ))
+                                    }>
+                                    <StyledHeader>
+                                        <div>{column.render('Header')}</div>
+                                        <div >
+                                            {column.isSorted ? <>{(column.isSortedDesc ? <StyledArrowDown /> : <StyledArrowUp />)}</> : <StyledUnsorted />}
+                                        </div>
+                                    </StyledHeader>
                                 </th>
                             ))}
                         </tr>
