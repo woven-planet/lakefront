@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colors } from 'src';
+import colors from 'src/styles/lakefrontColors';
 import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
 import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
 import { ReactComponent as Unsorted } from './assets/unsorted.svg'
@@ -52,7 +52,20 @@ export const StyledHeader = styled.div({
     display:'flex', 
     alignItems:'center', 
     justifyContent:'flex-start',
-    width:'fit-Content'
+    'div:first-of-type':{
+        width: 'max-content'
+    }
+});
+
+export const StyledHeaderContent = styled.div({
+    display:'flex', 
+    alignItems:'center', 
+    justifyContent:'flex-start',
+    'svg.sort-icon':{
+        marginTop: 0,
+        position: 'static',    
+        fill: colors.pavement,        
+    }
 });
 
 export const StyledArrowDown = styled(ArrowDown)({
@@ -66,8 +79,7 @@ export const StyledArrowUp = styled(ArrowUp)({
 })
 
 export const StyledUnsorted = styled(Unsorted)({
-    paddingLeft:5,
-    paddingTop:8,
+    marginLeft:8,
     position:'relative',
     top:10
 })

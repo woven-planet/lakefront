@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column } from 'react-table';
-import { StyledArrowDown, StyledArrowUp, StyledHeader, StyledUnsorted, TableStyle } from './tableStyles';
+import { StyledArrowDown, StyledArrowUp, StyledHeader, StyledHeaderContent, StyledUnsorted, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
@@ -45,8 +45,10 @@ export interface TableProps {
     initialSortBy?: { id: string; desc: boolean };
     /**
      * This event is triggered when the sorting is changed on the table.
+     * The first argument is the sorted column and the second argument is the sortBy array
+     * (for if table is sorted by multiple columns).
      */
-    onChangeSort?({ id, desc }: { id: string, desc: boolean }): void;
+    onChangeSort?({ id, desc }: SortByOptions, sortedBy?:SortByOptions[]): void;
     /**
      * This is to set the row sub component on the table.
      */
@@ -91,7 +93,7 @@ const Table: React.FC<TableProps> = ({ className,
 
     useEffect(() => {
         if (onChangeSort && sortBy.length) {
-            onChangeSort(sortBy[0]);
+            onChangeSort( sortBy[0], sortBy );
         }
     }, [sortBy]);
 
@@ -103,19 +105,20 @@ const Table: React.FC<TableProps> = ({ className,
                     {headerGroups.map((headerGroup: any) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column: any) => (
-                                <th {
-                                    ...column.getHeaderProps(column.getSortByToggleProps(
-                                        { title: 'Hold shift & click the column to add to multi-sort' }
-                                    ))
-                                    }>
-                                    <StyledHeader>
-                                        <div>{column.render('Header')}</div>
-                                        <div >
-                                            {column.isSorted ? <>{(column.isSortedDesc ? <StyledArrowDown /> : <StyledArrowUp />)}</> : <StyledUnsorted />}
-                                        </div>
-                                    </StyledHeader>
-                                </th>
-                            ))}
+                                    <th {
+                                        ...column.getHeaderProps( column.getSortByToggleProps(
+                                            { title: 'Hold shift & click the column to add to multi-sort', width:column.width },
+                                            ))
+                                        }>
+                                        <StyledHeader>
+                                            <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
+                                            <StyledHeaderContent >
+                                                {column.isSorted ? <>{(column.isSortedDesc ? <StyledArrowDown className='sort-icon' /> : <StyledArrowUp className='sort-icon'/>)}</> : <StyledUnsorted className='sort-icon'/>}
+                                            </StyledHeaderContent>
+                                        </StyledHeader>
+                                    </th>
+                                )
+                            )}
                         </tr>
                     ))}
                 </thead>

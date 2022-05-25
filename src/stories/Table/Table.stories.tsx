@@ -1,4 +1,3 @@
-
 import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import Button from 'src/Button/Button';
@@ -64,10 +63,15 @@ const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => 
         setDataToggle(dataToggle => !dataToggle);
     }
 
-    const handleSort = ({ id, desc }) => {
-        const newMsg = 'Sorting is applied on column name: ' + columns.filter(col => col.accessor === id)[0].Header;
-        const sortOrder = desc ? ' (Descending Order)' : ' (Ascending Order)';
-        setSortMsg(newMsg + sortOrder);
+    const handleSort = (_, sortedBy) => {
+        const newMsg = 'Sorting is applied on column name(s): ' ;
+        const columnNamesAndSortDirection = sortedBy.map((sortedColumn) => {
+            const colName = columns.find(col => col.accessor === sortedColumn.id).Header 
+             const sortDirection = sortedColumn.desc ? '(Descending Order)' : '(Ascending Order)';
+             return ` ${colName} ${sortDirection}`
+        })
+
+        setSortMsg(`${newMsg} ${columnNamesAndSortDirection}`);
     };
 
     return (
