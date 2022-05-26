@@ -40,6 +40,37 @@ const columns = [
     }
 ];
 
+const columnsWithWidth = [
+    {
+        Header: 'TITLE',
+        accessor: 'title',
+        width:100,
+        Cell: ({ cell: { value } }) => value
+    },
+    {
+        Header: 'VALUE',
+        accessor: 'value',
+        width:100
+    },
+    {
+        Header: 'PERCENTAGE',
+        accessor: 'percentage',
+        width:100
+    },
+    {
+        Header: 'PERCENTAGE CHANGE',
+        accessor: 'percentage_change',
+        width:140,
+        Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
+    },
+    {
+        Header: 'TOTAL/100',
+        accessor: 'total',
+        width:50,
+        Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
+    }
+];
+
 const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percentage_change: 6.9579999999, total: 0.14371985 },
 { title: 'r2002_1_0', value: 3, percentage: 47.442, percentage_change: 15.814, total: 0.063491 },
 { title: 'r2010_1_0', value: 5, percentage: 25.68, percentage_change: 5.136, total: 0.1947675 },
@@ -97,6 +128,28 @@ Table.args = {
     options: {
         disableSortRemove: true,
         autoResetSortBy: true,
+        disableMultiSort: false
+    }
+};
+
+export const TableWithMultiSortDisabled = Template.bind({});
+TableWithMultiSortDisabled.args = {
+    columns: columns,
+    data: customData,
+    initialSortBy: { id: 'title', desc: false },
+    noDataMessage: "No data found",
+    options: {
+        disableMultiSort: true
+    }
+};
+
+export const TableWithCustomWidth = Template.bind({});
+TableWithCustomWidth.args = {
+    columns: columnsWithWidth,
+    data: customData,
+    initialSortBy: { id: 'title', desc: false },
+    noDataMessage: "No data found",
+    options: {
         disableMultiSort: false
     }
 };

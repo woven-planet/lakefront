@@ -42,26 +42,26 @@ export const TableStyle = styled.table(({ theme }) => ({
         '&.marginBottom': {
             marginBottom: 5
         },
-        svg:{
+        svg: {
             fill: colors.pavement,          
         }
     }
 }));
 
 export const StyledHeader = styled.div({
-    display:'flex', 
-    alignItems:'center', 
-    justifyContent:'flex-start',
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'flex-start',
     'div:first-of-type':{
         width: 'max-content'
     }
 });
 
 export const StyledHeaderContent = styled.div({
-    display:'flex', 
-    alignItems:'center', 
-    justifyContent:'flex-start',
-    'svg.sort-icon':{
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'flex-start',
+    'svg.sort-icon': {
         marginTop: 0,
         position: 'static',    
         fill: colors.pavement,        
@@ -69,17 +69,17 @@ export const StyledHeaderContent = styled.div({
 });
 
 export const StyledArrowDown = styled(ArrowDown)({
-    paddingLeft:5,
-    paddingTop:3
+    paddingLeft: 5,
+    paddingTop: 3
 })
 
 export const StyledArrowUp = styled(ArrowUp)({
-    paddingLeft:5,
-    paddingTop:3
+    paddingLeft: 5,
+    paddingTop: 3
 })
 
 export const StyledUnsorted = styled(Unsorted)({
-    marginLeft:8,
-    position:'relative',
-    top:10
+    marginLeft: 8,
+    position: 'relative',
+    top: 10
 })
