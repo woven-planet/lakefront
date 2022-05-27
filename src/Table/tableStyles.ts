@@ -1,4 +1,8 @@
 import styled from '@emotion/styled';
+import colors from 'src/styles/lakefrontColors';
+import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
+import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
+import { ReactComponent as Unsorted } from './assets/unsorted.svg'
 
 export const TableStyle = styled.table(({ theme }) => ({
     padding: 0,
@@ -20,7 +24,8 @@ export const TableStyle = styled.table(({ theme }) => ({
         'svg': {
             marginTop: 2,
             position: 'absolute',
-            top: 6
+            top: 6,
+            fill: colors.pavement,
         }
     },
     'th,td': {
@@ -36,6 +41,45 @@ export const TableStyle = styled.table(({ theme }) => ({
 
         '&.marginBottom': {
             marginBottom: 5
+        },
+        svg: {
+            fill: colors.pavement,          
         }
     }
 }));
+
+export const StyledHeader = styled.div({
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'flex-start',
+    'div:first-of-type':{
+        width: 'max-content'
+    }
+});
+
+export const StyledHeaderContent = styled.div({
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'flex-start',
+    'svg.sort-icon': {
+        marginTop: 0,
+        position: 'static',    
+        fill: colors.pavement,        
+    }
+});
+
+export const StyledArrowDown = styled(ArrowDown)({
+    paddingLeft: 5,
+    paddingTop: 3
+})
+
+export const StyledArrowUp = styled(ArrowUp)({
+    paddingLeft: 5,
+    paddingTop: 3
+})
+
+export const StyledUnsorted = styled(Unsorted)({
+    marginLeft: 8,
+    position: 'relative',
+    top: 10
+})

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { useTable, useSortBy, useExpanded, TableState, Column } from 'react-table';
-import { ReactComponent as ArrowUp } from './assets/arrow_drop_up.svg';
-import { ReactComponent as ArrowDown } from './assets/arrow_drop_down.svg';
-import { TableStyle } from './tableStyles';
+import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggleProps } from 'react-table';
+import { StyledArrowDown, StyledArrowUp, StyledHeader, StyledHeaderContent, StyledUnsorted, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 
@@ -47,8 +45,10 @@ export interface TableProps {
     initialSortBy?: { id: string; desc: boolean };
     /**
      * This event is triggered when the sorting is changed on the table.
+     * The first argument is the sorted column and the second argument is the sortBy array
+     * (for if table is sorted by multiple columns).
      */
-    onChangeSort?({ id, desc }: { id: string, desc: boolean }): void;
+    onChangeSort?({ id, desc }: SortByOptions, sortedBy?: SortByOptions[]): void;
     /**
      * This is to set the row sub component on the table.
      */
@@ -93,7 +93,7 @@ const Table: React.FC<TableProps> = ({ className,
 
     useEffect(() => {
         if (onChangeSort && sortBy.length) {
-            onChangeSort(sortBy[0]);
+            onChangeSort(sortBy[0], sortBy);
         }
     }, [sortBy]);
 
@@ -105,13 +105,32 @@ const Table: React.FC<TableProps> = ({ className,
                     {headerGroups.map((headerGroup: any) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column: any) => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                    {column.render('Header')}
-                                    {column.isSorted && (
-                                        <>{(column.isSortedDesc ? <ArrowDown /> : <ArrowUp />)}</>
-                                    )}
+                                <th {
+                                    ...column.getHeaderProps(column.getSortByToggleProps(
+                                        (props: TableSortByToggleProps) => ({
+                                            ...props,
+                                            title: tableHookOptions.disableMultiSort ? 
+                                                props.title :
+                                                'Hold shift & click the column to add to multi-sort',
+                                            width: column.width
+                                        })
+                                    ))
+                                }>
+                                    <StyledHeader>
+                                        <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
+                                        <StyledHeaderContent >
+                                            {column.isSorted ? 
+                                                <>
+                                                    {(column.isSortedDesc ? 
+                                                    <StyledArrowDown className='sort-icon' /> : 
+                                                    <StyledArrowUp className='sort-icon' />)}
+                                                </> : 
+                                                    <StyledUnsorted className='sort-icon' />}
+                                        </StyledHeaderContent>
+                                    </StyledHeader>
                                 </th>
-                            ))}
+                            )
+                            )}
                         </tr>
                     ))}
                 </thead>
