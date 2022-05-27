@@ -36,7 +36,7 @@ describe('tableUtil', () => {
         expect(container.querySelector('svg[aria-label="arrow-down"]')).toBeInTheDocument()
     })
 
-    it('returns the unsorted svg when column is sorted is falsy', () => {
+    it('returns the unsorted svg when column isSorted is falsy', () => {
 
         const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>)
 
