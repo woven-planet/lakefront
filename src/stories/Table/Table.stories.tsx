@@ -67,6 +67,7 @@ const columnsWithWidth = [
         Header: 'TOTAL/100',
         accessor: 'total',
         width:50,
+        disableSortBy: true,
         Cell: ({ cell: { value } }) => value?.toFixed(4) || ''
     }
 ];

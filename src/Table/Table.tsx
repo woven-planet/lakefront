@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggleProps } from 'react-table';
-import { StyledArrowDown, StyledArrowUp, StyledHeader, StyledHeaderContent, StyledUnsorted, TableStyle } from './tableStyles';
+import { StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
+import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 
 interface SortByOptions {
     id: string;
@@ -106,26 +107,21 @@ const Table: React.FC<TableProps> = ({ className,
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column: any) => (
                                 <th {
-                                    ...column.getHeaderProps(column.getSortByToggleProps(
-                                        (props: TableSortByToggleProps) => ({
-                                            ...props,
-                                            title: tableHookOptions.disableMultiSort ? 
-                                                props.title :
-                                                'Hold shift & click the column to add to multi-sort',
-                                            width: column.width
-                                        })
-                                    ))
+                                    ...column.getHeaderProps(column.getSortByToggleProps
+                                        (
+                                            (props: TableSortByToggleProps) =>
+                                            ({
+                                                ...props,
+                                                title: getTitleForMultiSort(tableHookOptions.disableMultiSort, props.title, column.disableSortBy),
+                                                width: column.width
+                                            })
+                                        )
+                                    )
                                 }>
                                     <StyledHeader>
                                         <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
                                         <StyledHeaderContent >
-                                            {column.isSorted ? 
-                                                <>
-                                                    {(column.isSortedDesc ? 
-                                                    <StyledArrowDown className='sort-icon' /> : 
-                                                    <StyledArrowUp className='sort-icon' />)}
-                                                </> : 
-                                                    <StyledUnsorted className='sort-icon' />}
+                                            {getSortBySVG(column)}
                                         </StyledHeaderContent>
                                     </StyledHeader>
                                 </th>
