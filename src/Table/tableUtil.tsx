@@ -6,14 +6,15 @@ export interface Column {
     isSortedDesc: boolean;
 }
 
-export const getSortBySVG = ({disableSortBy, isSorted, isSortedDesc}: Column) => {
-    if(disableSortBy){
+export const getSortBySVG = ({ disableSortBy, isSorted, isSortedDesc }: Column) => {
+    if (disableSortBy) {
         return null
     }
-    return (        
-        (!disableSortBy && (isSorted ? 
-            (isSortedDesc ? <StyledArrowDown aria-label='arrow-down' className='sort-icon' /> : <StyledArrowUp aria-label='arrow-up' className='sort-icon' />) 
-        : 
-        <StyledUnsorted aria-label='unsorted-icon' className='sort-icon' /> ))
-    )
+
+    return (
+        isSorted ? getSortDirectionSVG(isSortedDesc) : <StyledUnsorted aria-label='unsorted-icon' className='sort-icon' />
+    );
 }
+
+export const getSortDirectionSVG = (isSortedDesc: boolean) =>
+    isSortedDesc ? <StyledArrowDown aria-label='arrow-down' className='sort-icon' /> : <StyledArrowUp aria-label='arrow-up' className='sort-icon' />;

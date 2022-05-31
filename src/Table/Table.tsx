@@ -107,21 +107,22 @@ const Table: React.FC<TableProps> = ({ className,
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column: any) => (
                                 <th {
-                                    ...column.getHeaderProps(column.getSortByToggleProps(
-                                        (props: TableSortByToggleProps) => 
+                                    ...column.getHeaderProps(column.getSortByToggleProps
+                                        (
+                                            (props: TableSortByToggleProps) =>
                                             ({
                                                 ...props,
-                                                title: tableHookOptions.disableMultiSort ? 
+                                                title: tableHookOptions.disableMultiSort ?
                                                     props.title :
                                                     'Hold shift & click the column to add to multi-sort',
                                                 width: column.width
                                             })
-                                    
-                                    ))
+                                        )
+                                    )
                                 }>
                                     <StyledHeader>
                                         <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
-                                        <StyledHeaderContent > 
+                                        <StyledHeaderContent >
                                             {getSortBySVG(column)}
                                         </StyledHeaderContent>
                                     </StyledHeader>
