@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { getSortBySVG, getSortDirectionSVG, getTitleForColumn, getTitleForMultiSort, multiSortTitle } from "../tableUtil"
+import { getSortBySVG, getSortDirectionSVG, getTitleForColumn, getTitleForMultiSort, MULTI_SORT_TITLE } from "../tableUtil"
 
 const defaultColumn = {
     disableSortBy: true,
@@ -8,59 +8,68 @@ const defaultColumn = {
 }
 
 describe('tableUtil', () => {
-    it('returns null when disableSortBy is truthy', () => {
+    describe('getSortBySVG', () => {
+        it('returns null when disableSortBy is truthy', () => {
 
-        const result = getSortBySVG(defaultColumn);
+            const result = getSortBySVG(defaultColumn);
 
-        expect(result).toBeNull();
+            expect(result).toBeNull();
+        })
+
+        it('returns the SVG when disableSortBy is falsy', () => {
+
+            const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>);
+
+            expect(container.querySelector('svg.sort-icon')).toBeInTheDocument();
+        })
+
+        it('returns the unsorted svg when column isSorted is falsy', () => {
+
+            const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>);
+
+            expect(container.querySelector('svg[aria-label="unsorted-icon"]')).toBeInTheDocument();
+        })
+
     })
 
-    it('returns the SVG when disableSortBy is falsy', () => {
+    describe('getSortDirectionSVG', () => {
+        it('returns the arrow-up svg when column is sorted in ascending order', () => {
 
-        const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>);
+            const { container } = render(<>{getSortDirectionSVG(false)}</>);
 
-        expect(container.querySelector('svg.sort-icon')).toBeInTheDocument();
+            expect(container.querySelector('svg[aria-label="arrow-up"]')).toBeInTheDocument();
+        })
+
+        it('returns arrow-down svg when column is sorted in descending order', () => {
+
+            const { container } = render(<>{getSortDirectionSVG(true)}</>);
+
+            expect(container.querySelector('svg[aria-label="arrow-down"]')).toBeInTheDocument();
+        })
     })
 
-    it('returns the arrow-up svg when column is sorted in ascending order', () => {
+    describe('getTitleForMultisort', () => {
+        it('returns title as testTitle when multi-sort is disabled', () => {
 
-        const { container } = render(<>{getSortDirectionSVG( false )}</>);
+            const result = getTitleForMultiSort(true, 'testTitle', false);
 
-        expect(container.querySelector('svg[aria-label="arrow-up"]')).toBeInTheDocument();
+            expect(result).toBe('testTitle')
+        })
     })
 
-    it('returns arrow-down svg when column is sorted in descending order', () => {
+    describe('getTitleForCloumn', () => {
+        it('returns an empty string when sorting is disabled on a column', () => {
 
-        const { container } = render(<>{getSortDirectionSVG( true )}</>);
+            const result = getTitleForColumn(true);
 
-        expect(container.querySelector('svg[aria-label="arrow-down"]')).toBeInTheDocument();
-    })
+            expect(result).toBe('')
+        })
 
-    it('returns the unsorted svg when column isSorted is falsy', () => {
+        it(`returns ${MULTI_SORT_TITLE} when sorting is enabled on a column`, () => {
 
-        const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>);
+            const result = getTitleForColumn(false);
 
-        expect(container.querySelector('svg[aria-label="unsorted-icon"]')).toBeInTheDocument();
-    })
-
-    it('returns title as testTitle when multi-sort is disabled', () => {
-
-        const result = getTitleForMultiSort(true,'testTitle',false);
-
-        expect(result).toBe('testTitle')
-    })
-
-    it('returns an empty string when sorting is disabled on a column', () => {
-
-        const result = getTitleForColumn(true);
-
-        expect(result).toBe('')
-    })
-
-    it(`returns ${multiSortTitle} when sorting is enabled on a column`, () => {
-
-        const result = getTitleForColumn(false);
-
-        expect(result).toBe(multiSortTitle);
+            expect(result).toBe(MULTI_SORT_TITLE);
+        })
     })
 })

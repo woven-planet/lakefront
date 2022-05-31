@@ -112,7 +112,7 @@ const Table: React.FC<TableProps> = ({ className,
                                             (props: TableSortByToggleProps) =>
                                             ({
                                                 ...props,
-                                                title: getTitleForMultiSort(tableHookOptions.disableMultiSort, props.title, column.disableSortBy ),
+                                                title: getTitleForMultiSort(tableHookOptions.disableMultiSort, props.title, column.disableSortBy),
                                                 width: column.width
                                             })
                                         )

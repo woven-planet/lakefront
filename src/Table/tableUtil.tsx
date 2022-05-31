@@ -19,12 +19,12 @@ export const getSortBySVG = ({ disableSortBy, isSorted, isSortedDesc }: Column) 
 export const getSortDirectionSVG = (isSortedDesc: boolean) =>
     isSortedDesc ? <StyledArrowDown aria-label='arrow-down' className='sort-icon' /> : <StyledArrowUp aria-label='arrow-up' className='sort-icon' />;
 
-export const getTitleForMultiSort = (disableMultiSort: boolean, title: string = '' , disableSortBy: boolean ) :string => {
+export const getTitleForMultiSort = (disableMultiSort: boolean, title: string = '', disableSortBy: boolean): string => {
     return disableMultiSort ? title : getTitleForColumn(disableSortBy);
 }
 
-export const multiSortTitle = 'Hold shift & click the column to add to multi-sort';
+export const MULTI_SORT_TITLE = 'Hold shift & click the column to add to multi-sort';
 
 export const getTitleForColumn = (disableSortBy: boolean): string => {
-    return disableSortBy ? '' : multiSortTitle;
+    return disableSortBy ? '' : MULTI_SORT_TITLE;
 }

@@ -81,7 +81,7 @@ describe('<Table>', () => {
 
     it('check if the tooltip on the header indicates that multiple sort criteria is possible by shift-clicking to add to the sort.', () => {
         const { container } = render(<Table columns={columns} data={customData}
-        initialSortBy={{ id: 'title', desc: false }} />);
+            initialSortBy={{ id: 'title', desc: false }} />);
 
         expect(container.querySelectorAll('th')[0].title).toBe('Hold shift & click the column to add to multi-sort')
         expect(container.querySelectorAll('th')[1].title).toBe('Hold shift & click the column to add to multi-sort')
@@ -95,18 +95,18 @@ describe('<Table>', () => {
         const { getAllByRole } = render(<Table columns={columns} data={customData}
             initialSortBy={{ id: 'title', desc: false }} />);
 
-            expect(getAllByRole('columnheader')[0].width).toBe('100');
-            expect(getAllByRole('columnheader')[1].width).toBe('150');
-            expect(getAllByRole('columnheader')[2].width).toBe('150');
-            expect(getAllByRole('columnheader')[3].width).toBe('150');
-            expect(getAllByRole('columnheader')[4].width).toBe('150');
+        expect(getAllByRole('columnheader')[0].width).toBe('100');
+        expect(getAllByRole('columnheader')[1].width).toBe('150');
+        expect(getAllByRole('columnheader')[2].width).toBe('150');
+        expect(getAllByRole('columnheader')[3].width).toBe('150');
+        expect(getAllByRole('columnheader')[4].width).toBe('150');
     });
 
     it('calls the mockHandleSort function', () => {
         const mockHandleSort = jest.fn()
-        render(<Table columns={columns} data={customData} 
-            initialSortBy={{ id: 'title', desc: false }} onChangeSort={mockHandleSort}/>);
+        render(<Table columns={columns} data={customData}
+            initialSortBy={{ id: 'title', desc: false }} onChangeSort={mockHandleSort} />);
 
-            expect(mockHandleSort).toHaveBeenCalledWith({"desc": false, "id": "title"}, [{"desc": false, "id": "title"}]);
+        expect(mockHandleSort).toHaveBeenCalledWith({ "desc": false, "id": "title" }, [{ "desc": false, "id": "title" }]);
     });
 });
