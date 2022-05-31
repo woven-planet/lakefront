@@ -3,7 +3,7 @@ import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggle
 import { StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-import { getSortBySVG } from './tableUtil';
+import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 
 interface SortByOptions {
     id: string;
@@ -112,9 +112,7 @@ const Table: React.FC<TableProps> = ({ className,
                                             (props: TableSortByToggleProps) =>
                                             ({
                                                 ...props,
-                                                title: tableHookOptions.disableMultiSort ?
-                                                    props.title :
-                                                    'Hold shift & click the column to add to multi-sort',
+                                                title: getTitleForMultiSort(tableHookOptions.disableMultiSort, props.title, column.disableSortBy ),
                                                 width: column.width
                                             })
                                         )

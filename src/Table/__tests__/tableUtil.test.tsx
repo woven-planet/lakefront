@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { getSortBySVG, getSortDirectionSVG } from "../tableUtil"
+import { getSortBySVG, getSortDirectionSVG, getTitleForColumn, getTitleForMultiSort, multiSortTitle } from "../tableUtil"
 
 const defaultColumn = {
     disableSortBy: true,
@@ -41,5 +41,26 @@ describe('tableUtil', () => {
         const { container } = render(<>{getSortBySVG({ ...defaultColumn, disableSortBy: false, isSorted: false })}</>);
 
         expect(container.querySelector('svg[aria-label="unsorted-icon"]')).toBeInTheDocument();
+    })
+
+    it('returns title as testTitle when multi-sort is disabled', () => {
+
+        const result = getTitleForMultiSort(true,'testTitle',false);
+
+        expect(result).toBe('testTitle')
+    })
+
+    it('returns an empty string when sorting is disabled on a column', () => {
+
+        const result = getTitleForColumn(true);
+
+        expect(result).toBe('')
+    })
+
+    it(`returns ${multiSortTitle} when sorting is enabled on a column`, () => {
+
+        const result = getTitleForColumn(false);
+
+        expect(result).toBe(multiSortTitle);
     })
 })
