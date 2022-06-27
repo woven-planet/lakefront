@@ -37,7 +37,7 @@ describe('Input', () => {
             expect(error).toHaveTextContent(ERROR);
         });
 
-        it('should render an asterisk when the prop "required" is passed', () => {
+        it('should render an asterisk when the prop "required" is passed along with the label', () => {
             const { container } = render(
                 <Input label="test label" required />
             );
