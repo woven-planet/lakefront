@@ -37,6 +37,7 @@ export const parseInitialFilterValues = (location: Location, filters: FilterSet)
     const initialFilterValues: FilterValues = {};
     Object.keys(filters).forEach((key) => {
         const filter = filters[key];
+        // @ts-ignore
         initialFilterValues[key] = filter.parseInitialFilterValue(urlParams[key]);
     });
     return initialFilterValues;

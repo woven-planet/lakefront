@@ -44,6 +44,7 @@ export const Filter: FC<FilterComponentProps> = ({
     const [isCollapsedState, setIsCollapsedState] = useState(false);
     const [activeSection, setActiveSection] = useState(initialActiveSection);
     const [jsonQueryParams, setJsonQueryParams] = useState(
+        // @ts-ignore
         isJSONInputAllowed ? { jsonView: getDefaultJsonViewValue(urlParams) } : {}
     );
     const [isJSONInputModified, setIsJSONInputModified] = useState(false);
