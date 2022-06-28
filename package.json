@@ -1,7 +1,7 @@
 {
   "name": "@toyota-research-institute/lakefront",
   "description": "React UI Components",
-  "version": "0.108.3",
+  "version": "0.108.5",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/ToyotaResearchInstitute/lakefront",
@@ -86,7 +86,7 @@
     "react-dom": "^17.0.2",
     "rollup": "^2.63.0",
     "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-ts": "^2.0.5",
+    "rollup-plugin-ts": "^3.0.2",
     "rollup-plugin-url": "^3.0.1",
     "ts-node": "^10.8.1",
     "typescript": "^4.2.3",
