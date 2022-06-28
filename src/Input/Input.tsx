@@ -12,7 +12,6 @@ export interface InputProps {
      * If not empty, the input component will be displayed in an error state with the provided error message.
      */
     error?: string;
-
 }
 
 /**
