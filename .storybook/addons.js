@@ -1,1 +1,1 @@
-import 'storybook-addon-emotion-theme/dist/register';
+import '@react-theming/storybook-addon/register';
