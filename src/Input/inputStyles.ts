@@ -11,6 +11,10 @@ export const StyledLabel = styled.label<InputProps>(({ error, theme }) => ({
     fontWeight: 600,
     span: {
         marginBottom: 4,
+        '&.required-field':{
+            color: theme.colors.saturatedRed,
+            marginLeft: 4
+        }
     },
     div: {
         marginTop: 4,

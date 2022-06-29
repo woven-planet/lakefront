@@ -73,3 +73,10 @@ DisabledWithText.args = {
     label: 'My input',
     disabled: true
 };
+
+export const RequiredField = Template.bind({});
+RequiredField.args = {
+    value: 'Value must be provided',
+    label: 'Required Field',
+    required: true
+};

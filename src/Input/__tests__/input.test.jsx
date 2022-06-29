@@ -36,5 +36,21 @@ describe('Input', () => {
 
             expect(error).toHaveTextContent(ERROR);
         });
+
+        it('should render an asterisk when the prop "required" is passed along with the label', () => {
+            const { container } = render(
+                <Input label="test label" required />
+            );
+
+            expect(container.querySelector('span.required-field')).toBeInTheDocument();
+        });
+
+        it('should not render an asterisk when the prop "required" is not passed', () => {
+            const { container } = render(
+                <Input label="test label" />
+            );
+
+            expect(container.querySelector('span.required-field')).not.toBeInTheDocument();
+        });
     });
 });
