@@ -26,7 +26,7 @@ export interface InputProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const Input: FC<InputProps & ComponentPropsWithRef<'input'>> = forwardRef(({ label, error = '',required, ...props }, ref) => (
+const Input: FC<InputProps & ComponentPropsWithRef<'input'>> = forwardRef(({ label, error = '', required, ...props }, ref) => (
         <ThemeProvider theme={theme}>
             <StyledLabel error={error}>
                 {label && <span>{label}{required && <span className="required-field">*</span>}</span>}
