@@ -47,7 +47,7 @@ describe('ModeSelector', () => {
             expect(getAllByText('Mode 2')).toHaveLength(2);
         });
 
-        it('class provided callback with selected option on mode select', () => {
+        it('calls provided callback with selected option on mode select', () => {
             const onModeSelect = jest.fn();
             const { container } = render(<ModeSelector {...PROPS} onModeSelect={onModeSelect} />);
 
