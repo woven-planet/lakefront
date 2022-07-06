@@ -5,6 +5,7 @@ export const ModeSelectorContainer = styled.div(({ theme }) => ({
     borderRadius: 2,
     boxShadow: '0 2px 4px 0 rgb(0 0 0 / 50%)',
     padding: '12px 16px',
+    height: '100%',
 
     h3: {
         color: theme.colors.dolphin,
@@ -12,6 +13,12 @@ export const ModeSelectorContainer = styled.div(({ theme }) => ({
         fontWeight: 'normal',
         marginBottom: '1em',
         textTransform: 'uppercase'
+    },
+
+    '.mode-selector-legend': {
+        maxHeight: '60%',
+        overflowY: 'auto',
+        marginTop: 8,
     }
 }));
 
@@ -20,6 +27,10 @@ interface LegendRowProps {
 }
 
 export const LegendRow = styled.div<LegendRowProps>(({ color }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
     '.row-key': {
         backgroundColor: color,
         height: 20,

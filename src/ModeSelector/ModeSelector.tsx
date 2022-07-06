@@ -10,7 +10,7 @@ interface LegendRow {
     color: string;
 }
 
-interface ModeSelectorProps {
+export interface ModeSelectorProps {
     /**
      * The title of the mode selector.
      */
