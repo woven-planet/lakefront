@@ -34,7 +34,7 @@ interface ModeSelectorProps {
     /**
      * The legend symbol colors and labels.
      */
-    legend: LegendRow[];
+    legend?: LegendRow[];
     /**
      * The action to take on the selected mode value.
      */
@@ -47,7 +47,7 @@ interface ModeSelectorProps {
  *
  * The ModeSelector component is intended to be used as a quick mode/context selection
  * panel. The state is not managed inside this component (i.e. to be received by the parent).
- * For this reason, `selectedMode`, `modes`, `legend`, and `onModeSelect` must be provided.
+ * For this reason, `selectedMode`, `modes`, and `onModeSelect` must be provided.
  */
 const ModeSelector: FC<ModeSelectorProps> = ({
                                                  title = '',
@@ -77,14 +77,16 @@ const ModeSelector: FC<ModeSelectorProps> = ({
                     onChange={handleModeSelect}
                 />
 
-                <div className='mode-selector-legend'>
-                    {legend.map(({ label, color }, idx) => (
-                        <LegendRow className={`legend-row-${idx}`} color={color} key={label}>
-                            <div className='row-key' />
-                            <div className='row-label'>{label}</div>
-                        </LegendRow>
-                    ))}
-                </div>
+                {legend && (
+                    <div className='mode-selector-legend'>
+                        {legend.map(({ label, color }, idx) => (
+                            <LegendRow className={`legend-row-${idx}`} color={color} key={label}>
+                                <div className='row-key' />
+                                <div className='row-label'>{label}</div>
+                            </LegendRow>
+                        ))}
+                    </div>
+                )}
             </ModeSelectorContainer>
         </ThemeProvider>
     );

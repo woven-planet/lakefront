@@ -61,11 +61,19 @@ describe('ModeSelector', () => {
     });
 
     describe('mode selector legend', () => {
+        it('does not display if left undefined', () => {
+            const { container } = render(<ModeSelector {...PROPS} legend={undefined} />);
+
+            expect(container.querySelector('.mode-selector-legend')).not.toBeInTheDocument();
+        });
+
         it('displays a key and label for each legend element', () => {
             const { container } = render(<ModeSelector {...PROPS} />);
 
             const legendRow1 = container.querySelector('.legend-row-0') as HTMLElement;
             const legendRow2 = container.querySelector('.legend-row-1') as HTMLElement;
+
+            expect(container.querySelector('.mode-selector-legend')).toBeInTheDocument();
 
             expect(legendRow1.firstChild).toHaveStyle(`background-color: ${lakefrontColors.red}`);
             expect((legendRow1.lastChild as HTMLDivElement).innerHTML).toBe('First Mode');
