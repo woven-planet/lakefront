@@ -49,6 +49,10 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
         setVisible((isVisible) => !isVisible);
     };
 
+    const handleOnBackdropClick = () => {
+        setVisible(true);
+    };
+
     return (
         <div>
             <Button onClick={updateModalVisibility}>Open {args.headerText}</Button>
@@ -57,6 +61,7 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
                 handleClose={updateModalVisibility}
                 isOpen={visible}
                 actionButton={<Button onClick={updateModalVisibility}>Confirm</Button>}
+                handleBackdropClick={handleOnBackdropClick}
             >
                 <div>
                     <span style={{ fontStyle: 'italic' }}>
@@ -84,7 +89,7 @@ SimpleModal.args = {
     dialogWidth: 'xs',
     renderInPortal: false,
     additionalText:
-        "If you have a really long statement and a smaller dialogWidth is specified, the dialog won't be as long. Longer statements or content will wrap."
+        'If you have a really long statement and a smaller dialogWidth is specified, the dialog won\'t be as long. Longer statements or content will wrap.'
 };
 
 export const PortalModal = Template.bind({});
