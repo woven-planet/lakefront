@@ -49,10 +49,6 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
         setVisible((isVisible) => !isVisible);
     };
 
-    const handleOnBackdropClick = () => {
-        setVisible(true);
-    };
-
     return (
         <div>
             <Button onClick={updateModalVisibility}>Open {args.headerText}</Button>
@@ -61,7 +57,6 @@ const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additiona
                 handleClose={updateModalVisibility}
                 isOpen={visible}
                 actionButton={<Button onClick={updateModalVisibility}>Confirm</Button>}
-                handleBackdropClick={handleOnBackdropClick}
             >
                 <div>
                     <span style={{ fontStyle: 'italic' }}>
