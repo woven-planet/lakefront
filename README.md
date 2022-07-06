@@ -35,7 +35,7 @@ import ReactDOM from 'react-dom';
 import { Button } from '@toyota-research-institute/lakefront';
 
 function App() {
-  return <Button>Hello World</Button>;
+    return <Button>Hello World</Button>;
 }
 
 ReactDOM.render(<App />, document.querySelector('#app'));
@@ -50,7 +50,7 @@ We've added Storybook pages to show how each component can be used.
 
 ---
 ## How to add components to this table
-Upon a new component being added to this table run 'npm run update-readme' for boilerplate code. Please replace the three variables with the corresponding information as needed. Also, store screenshots of components in the 'screenshots' folder. 
+Upon a new component being added to this table run 'npm run update-readme' for boilerplate code. Please replace the three variables with the corresponding information as needed. Also, store screenshots of components in the 'screenshots' folder.
 ### <b>Please do not add information below this table, the 'npm run update-readme' will not work properly if the table is not last.
 ---
 | Component  | Picture  | Component  | Picture  |
@@ -77,5 +77,6 @@ Upon a new component being added to this table run 'npm run update-readme' for b
 [StackBannerRow](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stack-banner-stack-banner-row--error) | <details><summary>Screenshot</summary><img src="src/screenshots/StackBannerRow.png"></details> | [StepFunctionAuthoring](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctionauthoring--new-step-function) | <details><summary>Screenshot</summary><img src="src/screenshots/StepFunctionAuthoring.png"></details> |
 [StatusTable](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-statustable--status-table-with-table-card) | <details><summary>Screenshot</summary><img src="src/screenshots/StatusTable.png"></details> | [StepFunctionGraph](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctiongraph--simple-graph) | <details><summary>Screenshot</summary><img src="src/screenshots/StepFunctionAuthoring.png"></details> |
 [StepFunctionRenderer](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-stepfunctionrenderer--step-function-renderer) |  <details><summary>Screenshot</summary><img src="src/screenshots/StepFunctionRenderer.png"></details> | [Table](https://toyotaresearchinstitute.github.io/lakefront?path=/docs/lakefront-table--table) | <details><summary>Screenshot</summary><img src="src/screenshots/Table.png"></details> |
-[Tabs](https://toyotaresearchinstitute.github.io/lakefront?path=/docs/lakefront-tabs--tabs) | <details><summary>Screenshot</summary><img src="src/screenshots/Tabs.png"></details> | [TextArea](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-textarea--placeholder) | <details><summary>Screenshot</summary><img src="src/screenshots/TextArea.png"></details> 
-[Toggle](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-toggle--toggle) | <details><summary>Screenshot</summary><img src="src/screenshots/Toggle.png"></details> | [TypeaheadSearch](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-typeaheadsearch--search-bottom-start) |<details><summary>Screenshot</summary><img src="src/screenshots/TypeaheadSearch.png"></details> 
+[Tabs](https://toyotaresearchinstitute.github.io/lakefront?path=/docs/lakefront-tabs--tabs) | <details><summary>Screenshot</summary><img src="src/screenshots/Tabs.png"></details> | [TextArea](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-textarea--placeholder) | <details><summary>Screenshot</summary><img src="src/screenshots/TextArea.png"></details>
+[Toggle](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-toggle--toggle) | <details><summary>Screenshot</summary><img src="src/screenshots/Toggle.png"></details> | [TypeaheadSearch](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-typeaheadsearch--search-bottom-start) |<details><summary>Screenshot</summary><img src="src/screenshots/TypeaheadSearch.png"></details>
+[ModeSelector](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-modeselector--simple-mode-selector) | <details><summary>Screenshot</summary><img src="src/screenshots/ModeSelector.png"></details>         |
