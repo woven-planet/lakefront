@@ -25,6 +25,11 @@ export interface ModalProps {
      */
     handleClose?: () => void;
     /**
+     * The action to run when backdrop click is triggered
+     * by clicking on an area outside the modal dialog.
+     */
+    handleBackdropClick?: () => void;
+    /**
      * The boolean value to determine if the modal is visible or not.
      */
     isOpen: boolean;
@@ -92,28 +97,22 @@ export interface ModalProps {
  * to append a div to the body.
  *
  */
-const Modal: FC<ModalProps> = (props) => {
-    const {
-        handleClose,
-        isOpen,
-        headerText = '',
-        isCloseIconVisible = true,
-        actionButton,
-        cancelButtonText = CANCEL_BUTTON_TEXT,
-        subHeaderText = '',
-        children,
-        showTopDivider = false,
-        showBottomDivider = false,
-        dialogWidth = 'sm',
-        renderInPortal = false,
-        className
-    } = props;
-
-    const handleOnClose = () => {
-        if (handleClose) {
-            handleClose();
-        }
-    };
+const Modal: FC<ModalProps> = ({
+                                   handleClose,
+                                   handleBackdropClick = handleClose,
+                                   isOpen,
+                                   headerText = '',
+                                   isCloseIconVisible = true,
+                                   actionButton,
+                                   cancelButtonText = CANCEL_BUTTON_TEXT,
+                                   subHeaderText = '',
+                                   children,
+                                   showTopDivider = false,
+                                   showBottomDivider = false,
+                                   dialogWidth = 'sm',
+                                   renderInPortal = false,
+                                   className
+                               }) => {
 
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [dialogElement, setDialogElement] = useState<HTMLElement | null>(null);
@@ -133,7 +132,9 @@ const Modal: FC<ModalProps> = (props) => {
                 if (e.target !== portalElement) {
                     return;
                 }
-                handleOnClose();
+                if (handleClose) {
+                    handleClose();
+                }
             };
 
             if (!portal) {
@@ -206,21 +207,21 @@ const Modal: FC<ModalProps> = (props) => {
                             {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
                             {isCloseIconVisible ? (
                                 <Button
-                                    className="closeIcon"
-                                    aria-label="Close"
-                                    onClick={handleOnClose}
+                                    className='closeIcon'
+                                    aria-label='Close'
+                                    onClick={handleClose}
                                     icon={<CloseIcon />}
                                 />
                             ) : (
                                 <span />
                             )}
-                            {showTopDivider && <DialogDivider className="dialogDivider" />}
+                            {showTopDivider && <DialogDivider className='dialogDivider' />}
                         </DialogTitleContainer>
                         <DialogContent>{children}</DialogContent>
-                        {showBottomDivider && <DialogDivider className="dialogDivider" />}
+                        {showBottomDivider && <DialogDivider className='dialogDivider' />}
                         {actionButton && (
                             <DialogButtonContainer>
-                                <Button color="secondary" onClick={handleOnClose}>
+                                <Button color='secondary' onClick={handleClose}>
                                     {cancelButtonText}
                                 </Button>
                                 {actionButton}
@@ -244,7 +245,8 @@ const Modal: FC<ModalProps> = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className} onClick={handleOnClose}>
+            <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className}
+                             onClick={handleBackdropClick}>
                 {portal ? createPortal(dialog, portal) : dialog}
             </DialogContainer>
         </ThemeProvider>
