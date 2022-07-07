@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, SyntheticEvent, useState, ReactNode } from 'react';
 import Button from 'src/Button/Button';
 import theme from 'src/styles/theme';
 import { Icon } from 'src/Toggle/toggleStyles';
@@ -13,7 +13,7 @@ export interface SnackbarProps {
     /**
      * The action to display. It renders after the message, at the end of the snackbar.
      */
-    action?: SnackbarContentProps['action'];
+    action?: ReactNode | ReactNode[];
     // action?: string;
     /**
      * The anchor of the `Snackbar`.
@@ -29,7 +29,7 @@ export interface SnackbarProps {
     /**
      * The message to display.
      */
-    message: SnackbarContentProps['message'];
+    message: string;
     /**
      * Replace the `SnackbarContent` component.
      */
@@ -62,36 +62,24 @@ export interface SnackbarProps {
         message,
         type
     }) => {
-        const [showMsg, setShowMsg] = useState<boolean>(false);
-        const showMessage = (value: boolean) => {
-            setShowMsg(value);
-        };
-        
-        if (onClose()) {
-            (_event: SyntheticEvent<any, Event>, reason?: SnackbarCloseReason) => {
-                if (reason === 'clickaway') {
-                    return;
-                }
-                showMessage(false);
-            };
-        }
+ 
 
-
+if (open) {
     return (
         <ThemeProvider theme={theme}>
-            <div>
             <SnackbarWrapper
                 anchorOrigin={anchorOrigin}
                 open={open}
                 >
-                {/* {children} */}
-
-                <SnackbarContent action={action} type={type} onClose={onClose} message={message} />
-
+               {<SnackbarContent
+                action={action}
+                message={message}
+                />}
             </SnackbarWrapper>
-            </div>
         </ThemeProvider>
     );
+}
+return null;
 };
 
 export default Snackbar;
