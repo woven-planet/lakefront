@@ -8,13 +8,11 @@ import SnackbarContent, { SnackbarContentProps } from './SnackbarContent';
 import { SnackbarWrapper } from './snackbarStyles';
 
 
-  
 export interface SnackbarProps {
     /**
      * The action to display. It renders after the message, at the end of the snackbar.
      */
     action?: ReactNode | ReactNode[];
-    // action?: string;
     /**
      * The anchor of the `Snackbar`.
      */
@@ -25,15 +23,11 @@ export interface SnackbarProps {
      * prop to hide the Snackbar. This behavior is disabled by default with
      * the `null` value.
      */
-    autoHideDuration?: number;
+    autoHideDuration?: number | null;
     /**
      * The message to display.
      */
     message: string;
-    /**
-     * Replace the `SnackbarContent` component.
-     */
-    // children: React.ReactElement<any, any>;
     /**
      * Callback fired when the component requests to be closed.
      * Typically `onClose` is used to set state in the parent component,
@@ -44,25 +38,28 @@ export interface SnackbarProps {
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
      */
-    onClose: () => {};
+    onClose: (event: React.SyntheticEvent<any>, reason: SnackbarCloseReason) => void;
     /**
      * If `true`, `Snackbar` is open.
      */
-    open: boolean;
-    type: MESSAGE_TYPES;
+    open?: boolean;
+    /**
+     * Message types used to determine icon color and icon to render.
+     */
+    type?: MESSAGE_TYPES;
 }
 
  const Snackbar: FC<SnackbarProps> = ({ 
         anchorOrigin = { vertical: 'bottom', horizontal: 'left' },
         open,
-        children = { action: '', message: '' },
-        autoHideDuration,
+        autoHideDuration = 4000,
         onClose,
         action,
         message,
         type
     }) => {
  
+
 
 if (open) {
     return (
@@ -71,10 +68,11 @@ if (open) {
                 anchorOrigin={anchorOrigin}
                 open={open}
                 >
-               {<SnackbarContent
+            <SnackbarContent
                 action={action}
                 message={message}
-                />}
+                type={type}
+                />  
             </SnackbarWrapper>
         </ThemeProvider>
     );

@@ -1,10 +1,14 @@
 import colors  from 'src/styles/lakefrontColors';
+import { ReactComponent as CheckCircle } from './check_circle.svg';
+import { ReactComponent as Error } from './error.svg';
+import { ReactComponent as ErrorOutline } from './error_outline.svg';
 
 export enum MESSAGE_TYPES  {
     INFO = 'info',
     ERROR = 'error',
     SUCCESS = 'success'
 }
+
 export type SnackbarCloseReason = 'timeout' | 'clickaway';
 
 export interface SnackbarOrigin {
@@ -12,27 +16,14 @@ export interface SnackbarOrigin {
     horizontal: 'left' | 'center' | 'right';
   }
 
-export const getColor = (type: any) => {
+export const getIcon = (type: MESSAGE_TYPES) => {
     switch (type) {
         case MESSAGE_TYPES.ERROR:
-            return colors.saturatedRed;
+            return <Error style={{fill: colors.saturatedRed}}/>;
         case MESSAGE_TYPES.SUCCESS:
-            return colors.saturatedGreen;
+            return <CheckCircle style={{fill: colors.saturatedGreen}}/>;
         case MESSAGE_TYPES.INFO:
         default:
-            return colors.white;
+            return <ErrorOutline style={{fill: colors.white}}/>;
     }
 };
-
-export const getIcon = (type: any) => {
-    switch (type) {
-        case MESSAGE_TYPES.ERROR:
-            return 'error';
-        case MESSAGE_TYPES.SUCCESS:
-            return 'check_circle';
-        case MESSAGE_TYPES.INFO:
-        default:
-            return 'error_outline';
-    }
-};
-

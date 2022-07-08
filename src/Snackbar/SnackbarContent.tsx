@@ -4,9 +4,8 @@ import { ThemeProvider } from '@emotion/react';
 import Button from 'src/Button/Button';
 import { Icon } from 'src/Toggle/toggleStyles';
 import {  getColor, getIcon, MESSAGE_TYPES, SnackbarCloseReason } from './Snackbar.util';
-import { colors } from 'react-select/src/theme';
 import IconButton from 'src/Button/IconButton';
-import { StyledSnackbarContent, StyledSnackbarMessage, StyledSnackbarButton } from './snackbarStyles';
+import { StyledSnackbarContent, StyledSnackbarMessage, StyledSnackbarButton, StyledMessageTypeIcons } from './snackbarStyles';
 
 export interface SnackbarContentProps {
   /**
@@ -17,25 +16,33 @@ export interface SnackbarContentProps {
    * The message to display.
    */
   message?: ReactNode;
+    /**
+    * Message types used to determine icon color and icon to render.
+    */
+  type?: MESSAGE_TYPES;
 }
+
 
 
 export type SnackbarContentClassKey = 'root' | 'message' | 'action';
 
-     const SnackbarContent: FC<SnackbarContentProps> = ({ action, message }) => {
-        
+     const SnackbarContent: FC<SnackbarContentProps> = ({ action, message, type }) => {
+
+    const icon = getIcon(type);
+
     return (
         <ThemeProvider theme={theme}>
-            <div>
-             <StyledSnackbarContent>
-            {<StyledSnackbarMessage>{message}</StyledSnackbarMessage>}
-            {/* <Icon style={{ color }}>{icon}</Icon>  */}
+            <StyledSnackbarContent>
+            <StyledSnackbarMessage>
+            {message}
+            </StyledSnackbarMessage>
+              <StyledMessageTypeIcons >{icon}</StyledMessageTypeIcons> 
+           
               {!Array.isArray(action) && action}
-              {Array.isArray(action) && action}
               {/* { Array.isArray(action) && action.map(eachAction) => eachAction} */}
+              
             </StyledSnackbarContent>
                             
-            </div>
         </ThemeProvider>
     );
 };
