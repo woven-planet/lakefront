@@ -1,12 +1,9 @@
 import { ThemeProvider } from '@emotion/react';
-import { FC, SyntheticEvent, useState, ReactNode } from 'react';
-import Button from 'src/Button/Button';
+import { FC, ReactNode, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import theme from 'src/styles/theme';
-import { Icon } from 'src/Toggle/toggleStyles';
-import { getColor, getIcon, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
-import SnackbarContent, { SnackbarContentProps } from './SnackbarContent';
+import { MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
+import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper } from './snackbarStyles';
-
 
 export interface SnackbarProps {
     /**
@@ -27,7 +24,7 @@ export interface SnackbarProps {
     /**
      * The message to display.
      */
-    message: string;
+    message?: string;
     /**
      * Callback fired when the component requests to be closed.
      * Typically `onClose` is used to set state in the parent component,
@@ -38,7 +35,7 @@ export interface SnackbarProps {
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
      */
-    onClose: (event: React.SyntheticEvent<any>, reason: SnackbarCloseReason) => void;
+    onClose?: (event: React.SyntheticEvent<any>, reason: SnackbarCloseReason) => void;
     /**
      * If `true`, `Snackbar` is open.
      */
@@ -46,7 +43,7 @@ export interface SnackbarProps {
     /**
      * Message types used to determine icon color and icon to render.
      */
-    type?: MESSAGE_TYPES;
+    type: MESSAGE_TYPES;
 }
 
  const Snackbar: FC<SnackbarProps> = ({ 
@@ -59,16 +56,34 @@ export interface SnackbarProps {
         type
     }) => {
  
+        const snackbarContentRef = useRef<HTMLDivElement | null>(null);
 
 
-if (open) {
+useEffect(() => {
+setTimeout(() => {
+    if (snackbarContentRef.current) {
+        console.log('snackbarContentRef.current', snackbarContentRef.current);
+
+        const newClass = open ? 'snackbarOpen' : 'snackbarClosed';
+        console.log('newClass', newClass);
+
+       snackbarContentRef.current.className = `${ snackbarContentRef.current.className} ${newClass}`;
+
+    //    if (!open){
+    //     snackbarContentRef.current.removeAttribute('snackbarOpen');
+    //    }
+    //    if (open){
+    //     snackbarContentRef.current.removeAttribute('snackbarClosed');
+    //    }
+    }
+}, 0);
+}, [open]);
+
+// if (open) {
     return (
         <ThemeProvider theme={theme}>
-            <SnackbarWrapper
-                anchorOrigin={anchorOrigin}
-                open={open}
-                >
-            <SnackbarContent
+            <SnackbarWrapper>
+            <SnackbarContent ref={snackbarContentRef}
                 action={action}
                 message={message}
                 type={type}
@@ -76,8 +91,8 @@ if (open) {
             </SnackbarWrapper>
         </ThemeProvider>
     );
-}
-return null;
+    // }
+    // return null;
 };
 
 export default Snackbar;

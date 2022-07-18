@@ -1,10 +1,7 @@
-import { FC, ReactNode, SyntheticEvent, useState } from 'react';
+import { ComponentPropsWithRef, FC, forwardRef, LegacyRef, ReactNode } from 'react';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-import Button from 'src/Button/Button';
-import { Icon } from 'src/Toggle/toggleStyles';
-import {  getColor, getIcon, MESSAGE_TYPES, SnackbarCloseReason } from './Snackbar.util';
-import IconButton from 'src/Button/IconButton';
+import { getIcon, MESSAGE_TYPES } from './Snackbar.util';
 import { StyledSnackbarContent, StyledSnackbarMessage, StyledSnackbarButton, StyledMessageTypeIcons } from './snackbarStyles';
 
 export interface SnackbarContentProps {
@@ -19,20 +16,19 @@ export interface SnackbarContentProps {
     /**
     * Message types used to determine icon color and icon to render.
     */
-  type?: MESSAGE_TYPES;
+  type: MESSAGE_TYPES;
+
 }
-
-
 
 export type SnackbarContentClassKey = 'root' | 'message' | 'action';
 
-     const SnackbarContent: FC<SnackbarContentProps> = ({ action, message, type }) => {
+     const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(({ action, message, type }, ref) => {
 
     const icon = getIcon(type);
 
     return (
         <ThemeProvider theme={theme}>
-            <StyledSnackbarContent>
+            <StyledSnackbarContent className='snackbarContent' ref={ref}>
             <StyledSnackbarMessage>
             {message}
             </StyledSnackbarMessage>
@@ -45,6 +41,7 @@ export type SnackbarContentClassKey = 'root' | 'message' | 'action';
                             
         </ThemeProvider>
     );
-};
+
+});
 
 export default SnackbarContent;

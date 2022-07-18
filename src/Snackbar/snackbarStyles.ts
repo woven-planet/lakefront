@@ -1,30 +1,42 @@
-import styled, { keyframes } from '@emotion/styled';
-import Snackbar, { SnackbarProps } from '.';
-import Button from '../Button';
-import { ReactComponent as CheckCircle } from './check_circle.svg';
-import { Icon } from 'src/Toggle/toggleStyles';
-import { ReactComponent as Error } from './error.svg';
-import colors  from 'src/styles/lakefrontColors';
+import styled from '@emotion/styled';
 
 export interface SnackbarPropsStyles {
 anchorOrigin: {vertical: string, horizontal: string};
 open: boolean;
 };
 
-export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({anchorOrigin = { vertical: 'bottom', horizontal: 'left' }, open=true}) => ({
-display: 'flex',
-// set classNames and use opacity to toggle between 0 and 1
-    // transition: 'height 900ms ease, opacity 900ms ease',
-    // opacity: 1,
-
+export const SnackbarWrapper = styled.div(() => ({
+    display: 'flex',
     alignItems: 'center',
-    marginTop:4
+    marginTop: 4,
+    '.snackbarOpen': {
+        backgroundColor: 'pink',
+        height: 50,
+        opacity: 1,
+        transition: 'height 1000ms ease-out, opacity 1000ms ease-out'
+    },
+
+    '.snackbarClosed': {
+        backgroundColor: 'blue',
+        height: 50,
+        opacity: 1,
+        transition: 'height 1000ms ease-out, opacity 1000ms ease-out'
+    }
 }));
+
+export const StyledSnackbarButton = styled.span(() => ({
+    display: 'inline-flex', 
+      backgroundColor: '#316a8f',
+      color: 'white',
+      borderRadius: 5,
+      padding: 5,
+  }));
 
 export const StyledSnackbarContent = styled.div(() => ({
     display: 'flex',
     alignItems: 'center',
-    minHeight: 40,
+    height: 0,
+    // minHeight: 40,
     minWidth: 80,
     borderRadius: 4,
     backgroundColor: 'rgb(44, 44, 53)',
@@ -40,13 +52,5 @@ export const StyledSnackbarMessage = styled.div(() => ({
     export const StyledMessageTypeIcons = styled.span((Icon) => ({
     display: 'flex',
     marginLeft: 10,
-    opacity: 1,
     position: 'initial'
-}));
-
-export const StyledSnackbarButton = styled.span(() => ({
-  display: 'inline-flex', 
-    backgroundColor: '#316a8f',
-    color: 'white',
-    padding: 5
 }));
