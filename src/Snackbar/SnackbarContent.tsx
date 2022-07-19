@@ -2,7 +2,7 @@ import { ComponentPropsWithRef, FC, forwardRef, LegacyRef, ReactNode } from 'rea
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import { getIcon, MESSAGE_TYPES } from './Snackbar.util';
-import { StyledSnackbarContent, StyledSnackbarMessage, StyledSnackbarButton, StyledMessageTypeIcons } from './snackbarStyles';
+import { StyledSnackbarContent, StyledSnackbarMessage, StyledMessageTypeIcons } from './snackbarStyles';
 
 export interface SnackbarContentProps {
   /**
@@ -29,10 +29,10 @@ export type SnackbarContentClassKey = 'root' | 'message' | 'action';
     return (
         <ThemeProvider theme={theme}>
             <StyledSnackbarContent className='snackbarContent' ref={ref}>
-            <StyledSnackbarMessage>
+            <StyledSnackbarMessage className='snackbarMessage'>
             {message}
             </StyledSnackbarMessage>
-              <StyledMessageTypeIcons >{icon}</StyledMessageTypeIcons> 
+              <StyledMessageTypeIcons className='snackbarIcon'>{icon}</StyledMessageTypeIcons> 
            
               {!Array.isArray(action) && action}
               {/* { Array.isArray(action) && action.map(eachAction) => eachAction} */}

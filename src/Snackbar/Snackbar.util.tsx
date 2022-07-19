@@ -9,7 +9,7 @@ export enum MESSAGE_TYPES  {
     SUCCESS = 'success'
 }
 
-export type SnackbarCloseReason = 'timeout' | 'clickaway';
+export type SnackbarCloseReason = 'timeout';
 
 export interface SnackbarOrigin {
     vertical: 'top' | 'bottom';

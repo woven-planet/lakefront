@@ -5,22 +5,34 @@ anchorOrigin: {vertical: string, horizontal: string};
 open: boolean;
 };
 
+export const TRANSITION_TIME = 800;
+
 export const SnackbarWrapper = styled.div(() => ({
     display: 'flex',
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: 4,  
+
     '.snackbarOpen': {
-        backgroundColor: 'pink',
-        height: 50,
+        minHeight: 40,
         opacity: 1,
-        transition: 'height 1000ms ease-out, opacity 1000ms ease-out'
+        transform: `scale(${1.02}, ${1.02 ** 2})`,
+        transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
     },
 
     '.snackbarClosed': {
-        backgroundColor: 'blue',
-        height: 50,
-        opacity: 1,
-        transition: 'height 1000ms ease-out, opacity 1000ms ease-out'
+        minHeight: 40,
+        opacity: 0,
+        transition: 'opacity 195ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 130ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        transform: 'none',
+        // '.closeIcon': {
+        //     display: 'none'
+        //         },
+        //         '.snackbarIcon': {
+        //             display: 'none'
+        //         },
+        //         '.snackbarMessage': {
+        //             display: 'none'
+        //         }
     }
 }));
 
@@ -36,7 +48,6 @@ export const StyledSnackbarContent = styled.div(() => ({
     display: 'flex',
     alignItems: 'center',
     height: 0,
-    // minHeight: 40,
     minWidth: 80,
     borderRadius: 4,
     backgroundColor: 'rgb(44, 44, 53)',
