@@ -1,7 +1,9 @@
 import { ThemeProvider } from '@emotion/react';
-import { FC, ReactNode, useEffect, useRef } from 'react';
+import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { SelectPopoverItem, StyledSelectPopover } from 'src/SelectPopover/selectPopoverStyles';
 import theme from 'src/styles/theme';
-import { MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
+import { generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_TIME } from './snackbarStyles';
 
@@ -38,46 +40,48 @@ export interface SnackbarProps {
     /**
      * If `true`, `Snackbar` is open.
      */
-    open: boolean;
+    open?: boolean;
     /**
      * Message types used to determine icon color and icon to render.
      */
     type: MESSAGE_TYPES;
+    
+    renderInPortal: boolean;
 }
 
- const Snackbar: FC<SnackbarProps> = ({ 
+ const Snackbar: FC<SnackbarProps> = ({
+     //TODO: add portal to use anchorOrigin to put snackbar on bottom left
         anchorOrigin = { vertical: 'bottom', horizontal: 'left' },
         open,
         autoHideDuration,
         onClose,
         action,
         message,
-        type
+        type,
+        renderInPortal = false
     }) => {
  
         const snackbarContentRef = useRef<HTMLDivElement | null>(null);
         const toggleSnackbarOpen = (callback?: () => void) => {
+            console.log('inside toggle', snackbarContentRef.current);
             if (snackbarContentRef.current) {
-                console.log('snackbarContentRef.current', snackbarContentRef.current);
-    const isOpen = snackbarContentRef.current.classList.contains('snackbarOpen');
-
+                const isOpen = snackbarContentRef.current.classList.contains('snackbarOpen');
                 const newClass = !isOpen ? 'snackbarOpen' : 'snackbarClosed';
-                console.log('newClass init', newClass);
-    
+
                 if (newClass === 'snackbarOpen') {
                     snackbarContentRef.current.classList.remove('snackbarClosed');
-                    console.log('newClass if 1', newClass);
                 }
+
                 if (newClass === 'snackbarClosed') {
                     snackbarContentRef.current.classList.remove('snackbarOpen');
-                    console.log('newClass if 2', newClass);
                 }
     
                 snackbarContentRef.current.className = `${snackbarContentRef.current.className} ${newClass}`;
                 if (callback) {
                     setTimeout(() => {
+                        console.log('in setTimeout', snackbarContentRef.current);
                         callback();
-                    }, TRANSITION_TIME);
+                    }, 195);
                 }
             }
         };
@@ -91,7 +95,8 @@ export interface SnackbarProps {
             }
             // allow user to default autoHideDuration to 4000ms
             if (hideDuration === undefined) {
-                hideDuration = 4000;
+                //4000
+                hideDuration = 1000000;
             }
             const timer = setTimeout(() => {
                 toggleSnackbarOpen(() => {
@@ -107,18 +112,106 @@ export interface SnackbarProps {
         }, [open, autoHideDuration]);
 
 
+
+        // NOTE: Portal stuff
+        const [portal, setPortal] = useState<HTMLElement | null>(null);
+        const [popoverElement, setPopoverElement] = useState<HTMLElement | null>(null);
+        const [update, setUpdate] = useState<number>(0);
+
+        useEffect(() => {
+            const bodyElementHTMLCollection = document.getElementsByTagName('body');
+            const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
+            let observer: IntersectionObserver;
+            let portalElement: HTMLElement;
+    
+                if (renderInPortal && bodyElement) {
+                    console.log('bodyElement', bodyElement);
+                portalElement = document.createElement('div');
+    
+                if (!portal) {
+                    bodyElement.appendChild(portalElement);
+                }
+    
+                if (!portal && popoverElement) {
+                    observer = new IntersectionObserver(
+                        () => {
+                            setUpdate(new Date().getTime());
+                        }
+                    );
+                    observer.observe(popoverElement);
+                    setPortal(portalElement);
+                }
+            }
+    
+            return () => {
+                if (popoverElement && observer) {
+                    console.log('unobserve');
+                    observer.unobserve(popoverElement);
+                }
+    
+                if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
+                    console.log('removeChild');
+                    bodyElement.removeChild(portalElement);
+                }
+            };
+        }, [popoverElement, renderInPortal]);
+
+        useEffect(() => {
+            if (popoverElement && portal) {
+                const { left, bottom, width } = popoverElement.getBoundingClientRect();
+                
+                generateAnchorOrigin(anchorOrigin, portal);
+
+                portal.style.position = 'absolute';
+
+                portal.style.left = '0%' || '50%' || '100%';
+
+                portal.style.left = `${left + (width / 2)}px`;
+                portal.style.top = `${bottom + window.scrollY}px`;
+            }
+        }, [update]);
+
+   
+
+        const popoverNodeMounted = (node: HTMLDivElement) => {
+            setPopoverElement(node);
+        };
+
+        const popover = useMemo(
+            () => {
+                console.log('in useMemo open', open);
+                return (
+                    <>
+                        {open && (
+                            <div>
+                                <SnackbarContent
+                                id='snackbar-content'
+                                ref={snackbarContentRef}
+                                action={action}
+                                message={message}
+                                type={type}
+                                />
+                            </div>
+                        )}
+                    </>
+                );
+            },
+            [open]
+        );
+
+
 if (!open) {
     return null;
 }
 
     return (
         <ThemeProvider theme={theme}>
-            <SnackbarWrapper>
-            <SnackbarContent ref={snackbarContentRef}
-                action={action}
-                message={message}
-                type={type}
-                />  
+            <SnackbarWrapper className='snackbarWrapper' ref={popoverNodeMounted}>
+                 {   portal && anchorOrigin ? (
+                        createPortal(popover, portal)
+                    ) : (
+                        popover
+                    )}
             </SnackbarWrapper>
         </ThemeProvider>
     );

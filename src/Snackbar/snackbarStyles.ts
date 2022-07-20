@@ -22,17 +22,8 @@ export const SnackbarWrapper = styled.div(() => ({
     '.snackbarClosed': {
         minHeight: 40,
         opacity: 0,
-        transition: 'opacity 195ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 130ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        transform: 'none',
-        // '.closeIcon': {
-        //     display: 'none'
-        //         },
-        //         '.snackbarIcon': {
-        //             display: 'none'
-        //         },
-        //         '.snackbarMessage': {
-        //             display: 'none'
-        //         }
+        transition: 'opacity 195ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 195ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        transform: 'none'
     }
 }));
 

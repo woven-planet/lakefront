@@ -64,6 +64,7 @@ return (
 export const Snackbar = Template.bind({});
 
 Snackbar.args = {
+    // anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
     message: 'File transfer initiated.',
     type: MESSAGE_TYPES.SUCCESS
 };

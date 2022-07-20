@@ -22,12 +22,13 @@ export interface SnackbarContentProps {
 
 export type SnackbarContentClassKey = 'root' | 'message' | 'action';
 
-     const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(({ action, message, type }, ref) => {
+     const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(({ action, message, type, ...props }, ref) => {
 
     const icon = getIcon(type);
 
     return (
         <ThemeProvider theme={theme}>
+          <div {...props}>
             <StyledSnackbarContent className='snackbarContent' ref={ref}>
             <StyledSnackbarMessage className='snackbarMessage'>
             {message}
@@ -38,7 +39,7 @@ export type SnackbarContentClassKey = 'root' | 'message' | 'action';
               {/* { Array.isArray(action) && action.map(eachAction) => eachAction} */}
               
             </StyledSnackbarContent>
-                            
+            </div>
         </ThemeProvider>
     );
 
