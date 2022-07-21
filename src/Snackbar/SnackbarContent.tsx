@@ -36,7 +36,7 @@ export type SnackbarContentClassKey = 'root' | 'message' | 'action';
               <StyledMessageTypeIcons className='snackbarIcon'>{icon}</StyledMessageTypeIcons> 
            
               {!Array.isArray(action) && action}
-              {/* { Array.isArray(action) && action.map(eachAction) => eachAction} */}
+              { Array.isArray(action) && action.map((eachAction) => eachAction) }
               
             </StyledSnackbarContent>
             </div>

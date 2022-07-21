@@ -16,32 +16,33 @@ export interface SnackbarOrigin {
     horizontal: 'left' | 'center' | 'right';
   }
 
- export const generateAnchorOrigin = ((anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical']; },
-    portal: { style: { left: string; bottom: string; }; } ) => {
+ export const generateAnchorOrigin = (
+     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] },
+     portal: { style: { left: string; bottom: string } }
+ ) => {
 
-        
-//   const left = portal.style.left = '0%';
-//    const center = portal.style.left = '50%';
-//     const right = portal.style.left = '100%';
-//     anchorOrigin.horizontal = left || center || right;
+     // set horizontal properties
+     if (anchorOrigin.horizontal === 'left') {
+         portal.style.left = '0%';
+     }
 
-//     const top = portal.style.bottom = '0%';
-//     const bottom = portal.style.bottom = '50%';
+     if (anchorOrigin.horizontal === 'center') {
+         portal.style.left = '40%';
+     }
 
-//     anchorOrigin.vertical = top || bottom;
+     if (anchorOrigin.horizontal === 'right') {
+         portal.style.left = '85%';
+     }
 
- portal.style.left = '0%';
- portal.style.left = '50%';
- portal.style.left = '100%';
+     // set vertical properties
+     if (anchorOrigin.vertical === 'bottom') {
+         portal.style.bottom = '0%';
+     }
 
- anchorOrigin.horizontal = 'left';
-anchorOrigin.vertical = 'bottom' || 'top';
- 
-
-
-    return ;
-    
-});
+     if (anchorOrigin.vertical === 'top') {
+        portal.style.bottom = '90%';
+     }
+ };
 
 export const getIcon = (type: MESSAGE_TYPES) => {
     switch (type) {
