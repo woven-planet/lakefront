@@ -58,6 +58,8 @@ export { default as Select } from './Select';
 
 export { default as SelectPopover } from './SelectPopover/SelectPopover';
 
+export { default as Snackbar } from './Snackbar/index';
+
 export { default as SpeedInput } from './SpeedInput/SpeedInput';
 
 export { default as StackBanner } from './StackBanner/StackBanner';
