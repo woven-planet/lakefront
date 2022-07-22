@@ -84,7 +84,7 @@ SimpleModal.args = {
     dialogWidth: 'xs',
     renderInPortal: false,
     additionalText:
-        "If you have a really long statement and a smaller dialogWidth is specified, the dialog won't be as long. Longer statements or content will wrap."
+        'If you have a really long statement and a smaller dialogWidth is specified, the dialog won\'t be as long. Longer statements or content will wrap.'
 };
 
 export const PortalModal = Template.bind({});

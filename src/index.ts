@@ -38,6 +38,8 @@ export { default as MaskableImage } from './MaskableImage/MaskableImage';
 
 export { default as Modal, ConfirmationModal } from './Modal';
 
+export { default as ModeSelector } from './ModeSelector/ModeSelector';
+
 export { default as Page } from './Page/Page';
 
 export { default as PlaybackBar } from './PlaybackBar';

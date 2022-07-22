@@ -7,7 +7,7 @@ const MODAL_PROPS = {
     subHeaderText: 'Created with simplicity in mind.',
     isCloseIconVisible: true,
     dialogWidth: 'xs',
-    renderInPortal: false,
+    renderInPortal: false
 };
 
 describe('Modal', () => {
@@ -16,12 +16,12 @@ describe('Modal', () => {
             const MODAL_TEXT = 'modalText';
             const { queryByText } = render(
                 <Modal
-                {...MODAL_PROPS}
-                handleClose={() => null}
-                isOpen={false}
-            >
-               <div>{MODAL_TEXT}</div>
-            </Modal>
+                    {...MODAL_PROPS}
+                    handleClose={() => null}
+                    isOpen={false}
+                >
+                    <div>{MODAL_TEXT}</div>
+                </Modal>
             );
 
             expect(queryByText(MODAL_TEXT)).not.toBeInTheDocument();
@@ -31,12 +31,12 @@ describe('Modal', () => {
             const MODAL_TEXT = 'modalText';
             const { queryByText } = render(
                 <Modal
-                {...MODAL_PROPS}
-                handleClose={() => null}
-                isOpen
-            >
-               <div>{MODAL_TEXT}</div>
-            </Modal>
+                    {...MODAL_PROPS}
+                    handleClose={() => null}
+                    isOpen
+                >
+                    <div>{MODAL_TEXT}</div>
+                </Modal>
             );
 
             expect(queryByText(MODAL_TEXT)).toBeInTheDocument();
@@ -49,8 +49,8 @@ describe('Modal', () => {
                 <Modal
                     isOpen
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(queryByText(CANCEL_BUTTON_TEXT)).not.toBeInTheDocument();
@@ -62,8 +62,8 @@ describe('Modal', () => {
                     isOpen
                     actionButton={<div>action</div>}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(queryByText(CANCEL_BUTTON_TEXT)).toBeInTheDocument();
@@ -75,15 +75,15 @@ describe('Modal', () => {
                     isOpen
                     {...MODAL_PROPS}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(queryByText(MODAL_PROPS.headerText)).toBeInTheDocument();
             expect(queryByText(MODAL_PROPS.subHeaderText)).toBeInTheDocument();
         });
     });
-    
+
     describe('rendering child components', () => {
         it('renders action button', () => {
             const ACTION_BUTTON_TEXT = 'actionButtonText';
@@ -92,8 +92,8 @@ describe('Modal', () => {
                     isOpen
                     actionButton={<div>{ACTION_BUTTON_TEXT}</div>}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(queryByText(ACTION_BUTTON_TEXT)).toBeInTheDocument();
@@ -104,8 +104,8 @@ describe('Modal', () => {
                 <Modal
                     isOpen
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(container.querySelectorAll('div.dialogDivider')).toHaveLength(0);
@@ -118,8 +118,8 @@ describe('Modal', () => {
                     showTopDivider
                     showBottomDivider
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(container.querySelectorAll('div.dialogDivider')).toHaveLength(2);
@@ -130,8 +130,8 @@ describe('Modal', () => {
                 <Modal
                     isOpen
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(container.querySelector('button[aria-label="Close"]')).toBeInTheDocument();
@@ -143,8 +143,8 @@ describe('Modal', () => {
                     isOpen
                     isCloseIconVisible={false}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             expect(container.querySelector('button[aria-label="Close"]')).not.toBeInTheDocument();
@@ -159,8 +159,8 @@ describe('Modal', () => {
                     isOpen
                     handleClose={handleClose}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             fireEvent.click(container.querySelector('button[aria-label="Close"]'));
@@ -176,8 +176,8 @@ describe('Modal', () => {
                     handleClose={handleClose}
                     actionButton={<div>action</div>}
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             fireEvent.click(getByText(CANCEL_BUTTON_TEXT));
@@ -191,10 +191,10 @@ describe('Modal', () => {
                 <Modal
                     isOpen
                     handleClose={handleClose}
-                    className="dialogContainer"
+                    className='dialogContainer'
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             fireEvent.click(container.querySelector('div.dialogContainer'));
@@ -208,15 +208,57 @@ describe('Modal', () => {
                 <Modal
                     isOpen
                     handleClose={handleClose}
-                    className="dialogContainer"
+                    className='dialogContainer'
                 >
-               <div>modalText</div>
-            </Modal>
+                    <div>modalText</div>
+                </Modal>
             );
 
             fireEvent.click(container.querySelector('div.dialogContainer').firstChild);
 
             expect(handleClose).not.toHaveBeenCalled();
+        });
+
+        it('calls mockHandleBackdropClick when the user clicks outside the modal', () => {
+            const handleClose = jest.fn();
+            const mockHandleBackdropClick = jest.fn();
+
+            const { container } = render(
+                <Modal
+                    isOpen
+                    handleClose={handleClose}
+                    handleBackdropClick={mockHandleBackdropClick}
+                    className='dialogContainer'
+                >
+                    <div>modalText</div>
+                </Modal>
+            );
+
+            fireEvent.click(container.querySelector('div.dialogContainer'));
+
+            expect(mockHandleBackdropClick).toHaveBeenCalled();
+            expect(handleClose).not.toHaveBeenCalled();
+        });
+
+        it('calls handleClose when close icon is clicked', () => {
+            const handleClose = jest.fn();
+            const mockHandleBackdropClick = jest.fn();
+
+            const { container } = render(
+                <Modal
+                    isOpen
+                    handleClose={handleClose}
+                    handleBackdropClick={mockHandleBackdropClick}
+                    className='dialogContainer'
+                >
+                    <div>modalText</div>
+                </Modal>
+            );
+
+            fireEvent.click(container.querySelector('button[aria-label="Close"]'));
+
+            expect(mockHandleBackdropClick).not.toHaveBeenCalled();
+            expect(handleClose).toHaveBeenCalled();
         });
     });
 });
