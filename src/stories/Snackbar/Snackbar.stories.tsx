@@ -5,7 +5,7 @@ import Button from 'src/Button/Button';
 import { MESSAGE_TYPES } from 'src/Snackbar/Snackbar.util';
 import { StyledSnackbarButton } from 'src/Snackbar/snackbarStyles';
 import { useState } from 'react';
-import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
+import { ReactComponent as CloseIcon } from 'src/Snackbar/assets/closeIcon.svg';
 
 export default {
     title: 'Lakefront/Snackbar',
@@ -30,35 +30,38 @@ export default {
 const Template: Story<SnackbarProps> = (args) => {
     const [showMsg, setShowMsg] = useState<boolean>(false);
 
-        const showMessage = (value: boolean) => {
-             setShowMsg(value);
-        };
-        
-        const handleClose = () => {
-                showMessage(false);
-            };
+    const showMessage = (value: boolean) => {
+        setShowMsg(value);
+    };
 
-const button = <Button style={{
-    alignSelf: 'center',
-    transform: 'scale(0.8)'
-    }}
-    alternate className='closeIcon'
-    key='close'
-    aria-label='Close'
-    onClick={() => handleClose()}
-    icon={<CloseIcon />} 
-    />;
+    const handleClose = () => {
+        showMessage(false);
+    };
 
+    const button = (
+        <Button
+            style={{
+                alignSelf: 'center',
+                transform: 'scale(0.8)'
+            }}
+            alternate
+            className='closeIcon'
+            key='close'
+            aria-label='Close'
+            onClick={() => handleClose()}
+            icon={<CloseIcon />}
+        />
+    );
 
-return (
-    <>
-      <StyledSnackbarButton onClick={() => showMessage(true)}>
-          <p>Click to view snackbar </p>
-      </StyledSnackbarButton>
+    return (
+        <>
+            <StyledSnackbarButton onClick={() => showMessage(true)}>
+                <p>Click to view snackbar </p>
+            </StyledSnackbarButton>
 
-      <SnackbarComponent {...args} action = {button} open = {showMsg} onClose={handleClose} />
-    </>
-);
+            <SnackbarComponent {...args} action={button} open={showMsg} onClose={handleClose} />
+        </>
+    );
 };
 
 export const Snackbar = Template.bind({});
