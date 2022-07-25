@@ -2,10 +2,10 @@ import { ThemeProvider } from '@emotion/react';
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import theme from 'src/styles/theme';
-import { generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
+import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
-import { SnackbarWrapper, StyledSnackbarCloseButton, TRANSITION_CLOSE_TIME } from './snackbarStyles';
-import { ReactComponent as CloseIcon } from 'src/Snackbar/assets/closeIcon.svg';
+import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
+
 
 export interface SnackbarProps {
     /**
@@ -70,15 +70,7 @@ const Snackbar: FC<SnackbarProps> = ({
     message,
     type = MESSAGE_TYPES.INFO,
     renderInPortal = false,
-    
-    action = <StyledSnackbarCloseButton
-    alternate={true}
-    className='closeIcon'
-    key='close'
-    aria-label='Close'
-    onClick={() => onClose ? onClose('timeout') : undefined}
-    icon={<CloseIcon />}
-            />
+    action = createDefaultAction(() => onClose ? onClose('timeout') : undefined)
 }) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);

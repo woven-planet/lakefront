@@ -1,4 +1,4 @@
-import { generateAnchorOrigin, SnackbarOrigin, MESSAGE_TYPES, getIcon } from '../Snackbar.util';
+import { generateAnchorOrigin, SnackbarOrigin, MESSAGE_TYPES, getIcon, createDefaultAction } from '../Snackbar.util';
 
 const anchorOriginMock: SnackbarOrigin = {
     vertical: 'bottom',
@@ -82,5 +82,13 @@ describe('getIcon', () => {
         expect(getIcon(typeMock.SUCCESS)).toStrictEqual(<svg style={{ fill: '#378fee' }} />);
         expect(getIcon(typeMock.ERROR)).toStrictEqual(<svg style={{ fill: '#ef5042' }} />);
         expect(getIcon(typeMock.INFO)).toStrictEqual(<svg style={{ fill: '#ffffff' }} />);
+    });
+
+    describe('createDefaultAction', () => {
+        it('calls createDefaultAction with timeout value', () => {
+            const onClose = () => 'timeout';
+            
+            expect(createDefaultAction(onClose)).toBeDefined();
+        });
     });
 });

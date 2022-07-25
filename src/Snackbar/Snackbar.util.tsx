@@ -2,6 +2,8 @@ import colors from 'src/styles/lakefrontColors';
 import { ReactComponent as CheckCircle } from './assets/check_circle.svg';
 import { ReactComponent as Error } from './assets/error.svg';
 import { ReactComponent as ErrorOutline } from './assets/error_outline.svg';
+import { StyledSnackbarCloseButton } from './snackbarStyles';
+import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 
 export enum MESSAGE_TYPES {
     INFO = 'info',
@@ -15,6 +17,19 @@ export interface SnackbarOrigin {
     vertical: 'top' | 'bottom';
     horizontal: 'left' | 'center' | 'right';
 }
+
+export const createDefaultAction = (onClose: (reason: SnackbarCloseReason) => void) => {
+    return (
+        <StyledSnackbarCloseButton
+            alternate
+            className='closeIcon'
+            key='close'
+            aria-label='Close'
+            onClick={() => onClose ? onClose('timeout') : undefined}
+            icon={<CloseIcon />}
+        />
+    );
+};
 
 export const generateAnchorOrigin = (
     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] },
