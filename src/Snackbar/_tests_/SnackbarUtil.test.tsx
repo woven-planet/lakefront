@@ -6,7 +6,7 @@ const anchorOriginMock: SnackbarOrigin = {
 };
 
 const portalMock = {
-    style: { left: '', bottom: '' }
+    style: {left: '', bottom: '', right: '', top: ''}
 };
 
 beforeEach(() => {
@@ -14,13 +14,15 @@ beforeEach(() => {
     anchorOriginMock.horizontal = 'left';
     portalMock.style.left = '';
     portalMock.style.bottom = '';
+    portalMock.style.right = '';
+    portalMock.style.top = '';
 });
 
 describe('generateAnchorOrigin', () => {
-    it('sets left property to 0% when user sets horizontal left', () => {
+    it('sets left property to 24px when user sets horizontal left', () => {
         anchorOriginMock.horizontal = 'left';
         generateAnchorOrigin(anchorOriginMock, portalMock);
-        expect(portalMock.style.left).toEqual('0%');
+        expect(portalMock.style.left).toEqual('24px');
     });
 
     it('sets left property to 40% when user sets horizontal center', () => {
@@ -30,25 +32,25 @@ describe('generateAnchorOrigin', () => {
         expect(portalMock.style.left).toEqual('40%');
     });
 
-    it('sets left property to 85% when user sets horizontal right', () => {
+    it('sets right property to 24px when user sets horizontal right', () => {
         anchorOriginMock.horizontal = 'right';
 
         generateAnchorOrigin(anchorOriginMock, portalMock);
-        expect(portalMock.style.left).toEqual('85%');
+        expect(portalMock.style.right).toEqual('24px');
     });
 
-    it('sets bottom property to 0% when user sets vertical bottom', () => {
+    it('sets bottom property to 24px when user sets vertical bottom', () => {
         anchorOriginMock.vertical = 'bottom';
 
         generateAnchorOrigin(anchorOriginMock, portalMock);
-        expect(portalMock.style.bottom).toEqual('0%');
+        expect(portalMock.style.bottom).toEqual('24px');
     });
 
-    it('sets bottom property to 90% when user sets vertical top', () => {
+    it('sets top property to 24px when user sets vertical top', () => {
         anchorOriginMock.vertical = 'top';
 
         generateAnchorOrigin(anchorOriginMock, portalMock);
-        expect(portalMock.style.bottom).toEqual('90%');
+        expect(portalMock.style.top).toEqual('24px');
     });
 });
 
@@ -77,7 +79,7 @@ describe('getIcon', () => {
     it('has correct styling for each MESSAGE_TYPES', () => {
         const typeMock = MESSAGE_TYPES;
 
-        expect(getIcon(typeMock.SUCCESS)).toStrictEqual(<svg style={{ fill: '#45d686' }} />);
+        expect(getIcon(typeMock.SUCCESS)).toStrictEqual(<svg style={{ fill: '#378fee' }} />);
         expect(getIcon(typeMock.ERROR)).toStrictEqual(<svg style={{ fill: '#ef5042' }} />);
         expect(getIcon(typeMock.INFO)).toStrictEqual(<svg style={{ fill: '#ffffff' }} />);
     });

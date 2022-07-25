@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import Snackbar from '../index';
 import { MESSAGE_TYPES } from '../Snackbar.util';
@@ -28,14 +27,8 @@ const snackbarPropsOpen = {
 };
 
 const snackbarPropsClosed = {
-    action: button,
-    anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
-    autoHideDuration: 4000,
-    message: 'File transfer initiated.',
-    onClose: () => {},
+...snackbarPropsOpen,
     open: false,
-    type: MESSAGE_TYPES.SUCCESS,
-    renderInPortal: false
 };
 
 jest.useFakeTimers();
@@ -49,7 +42,6 @@ describe('<Snackbar>', () => {
     it('should not render snackbar when open is false', () => {
         const { container } = render(<Snackbar {...snackbarPropsClosed} />);
         expect(container.getElementsByClassName('snackbarOpen').length).toBe(0);
-        expect(container.getElementsByClassName('snackbarWrapper').length).toBe(1);
     });
 
     it('should render props with classNames when open is true', () => {
@@ -62,7 +54,7 @@ describe('<Snackbar>', () => {
         expect(container.getElementsByClassName('snackbarMessage').length).toBe(1);
         getByText('File transfer initiated.');
         expect(container.getElementsByClassName('snackbarIcon').length).toBe(1);
-        expect(container.querySelector('svg')).toContainHTML('<svg style="fill: #45d686;" />');
+        expect(container.querySelector('svg')).toContainHTML('<svg style="fill: #378fee;" />');
         expect(container.querySelector('button')).toBeEnabled();
         expect(container.querySelectorAll('div')).toHaveLength(5);
     });

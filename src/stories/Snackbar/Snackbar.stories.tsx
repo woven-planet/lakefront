@@ -1,11 +1,9 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import SnackbarComponent, { SnackbarProps } from 'src/Snackbar/index';
 import DocBlock from '.storybook/DocBlock';
-import Button from 'src/Button/Button';
 import { MESSAGE_TYPES } from 'src/Snackbar/Snackbar.util';
 import { StyledSnackbarButton } from 'src/Snackbar/snackbarStyles';
 import { useState } from 'react';
-import { ReactComponent as CloseIcon } from 'src/Snackbar/assets/closeIcon.svg';
 
 export default {
     title: 'Lakefront/Snackbar',
@@ -38,28 +36,13 @@ const Template: Story<SnackbarProps> = (args) => {
         showMessage(false);
     };
 
-    const button = (
-        <Button
-            style={{
-                alignSelf: 'center',
-                transform: 'scale(0.8)'
-            }}
-            alternate
-            className='closeIcon'
-            key='close'
-            aria-label='Close'
-            onClick={() => handleClose()}
-            icon={<CloseIcon />}
-        />
-    );
-
     return (
         <>
             <StyledSnackbarButton onClick={() => showMessage(true)}>
                 <p>Click to view snackbar </p>
             </StyledSnackbarButton>
 
-            <SnackbarComponent {...args} action={button} open={showMsg} onClose={handleClose} />
+            <SnackbarComponent {...args} open={showMsg} onClose={handleClose} />
         </>
     );
 };

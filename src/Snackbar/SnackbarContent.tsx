@@ -8,7 +8,7 @@ export interface SnackbarContentProps {
     /**
      * The action to display. It renders after the message, at the end of the snackbar.
      */
-    action?: ReactNode | ReactNode[];
+    action?: ReactNode;
     /**
      * The message to display.
      */
@@ -19,21 +19,17 @@ export interface SnackbarContentProps {
     type: MESSAGE_TYPES;
 }
 
-export type SnackbarContentClassKey = 'root' | 'message' | 'action';
-
 const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(
     ({ action, message, type, ...props }, ref) => {
         const icon = getIcon(type);
 
         return (
             <ThemeProvider theme={theme}>
-                <div {...props}>
+                <div { ...props}>
                     <StyledSnackbarContent className="snackbarContent" ref={ref}>
                         <StyledSnackbarMessage className="snackbarMessage">{message}</StyledSnackbarMessage>
                         <StyledMessageTypeIcons className="snackbarIcon">{icon}</StyledMessageTypeIcons>
-
-                        {!Array.isArray(action) && action}
-                        {Array.isArray(action) && action.map((eachAction) => eachAction?.toString())}
+                        {action}
                     </StyledSnackbarContent>
                 </div>
             </ThemeProvider>

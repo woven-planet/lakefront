@@ -10,15 +10,9 @@ const SnackbarContentPropsMock = {
 
 describe('SnackbarContent', () => {
     it('should render component as expected', () => {
-        const { container } = render(<SnackbarContent {...SnackbarContentPropsMock} />);
+        const { container, getByText } = render(<SnackbarContent {...SnackbarContentPropsMock} />);
         expect(container).toBeDefined();
-    });
-
-    it('should render component with array of actions', () => {
-        const { container, getByText } = render(
-            <SnackbarContent {...SnackbarContentPropsMock} action={[<button />, <div />]} />
-        );
         getByText('File transfer initiated.');
-        expect(container.querySelector('svg')).toContainHTML('style="fill: #45d686;"');
+        expect(container.querySelector('svg')).toContainHTML('style="fill: #378fee;"');
     });
 });

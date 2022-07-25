@@ -18,28 +18,24 @@ export interface SnackbarOrigin {
 
 export const generateAnchorOrigin = (
     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] },
-    portal: { style: { left: string; bottom: string } }
+    portal: { style: { left: string; bottom: string; right: string; top: string } }
 ) => {
     // set horizontal properties
     if (anchorOrigin.horizontal === 'left') {
-        portal.style.left = '0%';
+        portal.style.left = '24px';
     }
-
     if (anchorOrigin.horizontal === 'center') {
         portal.style.left = '40%';
     }
-
     if (anchorOrigin.horizontal === 'right') {
-        portal.style.left = '85%';
+        portal.style.right = '24px';
     }
-
     // set vertical properties
     if (anchorOrigin.vertical === 'bottom') {
-        portal.style.bottom = '0%';
+        portal.style.bottom = '24px';
     }
-
     if (anchorOrigin.vertical === 'top') {
-        portal.style.bottom = '90%';
+        portal.style.top = '24px';
     }
 };
 
@@ -48,7 +44,7 @@ export const getIcon = (type: MESSAGE_TYPES) => {
         case MESSAGE_TYPES.ERROR:
             return <Error style={{ fill: colors.saturatedRed }} />;
         case MESSAGE_TYPES.SUCCESS:
-            return <CheckCircle style={{ fill: colors.saturatedGreen }} />;
+            return <CheckCircle style={{ fill: colors.saturatedBlue }} />;
         case MESSAGE_TYPES.INFO:
         default:
             return <ErrorOutline style={{ fill: colors.white }} />;

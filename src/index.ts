@@ -95,3 +95,4 @@ export { default as theme } from './styles/theme';
 
 // Types
 export { SelectOption, TabDef } from './types/global';
+export {MESSAGE_TYPES as SNACKBAR_MESSAGE_TYPES} from './Snackbar/Snackbar.util';

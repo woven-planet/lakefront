@@ -4,13 +4,14 @@ import { createPortal } from 'react-dom';
 import theme from 'src/styles/theme';
 import { generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
-import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
+import { SnackbarWrapper, StyledSnackbarCloseButton, TRANSITION_CLOSE_TIME } from './snackbarStyles';
+import { ReactComponent as CloseIcon } from 'src/Snackbar/assets/closeIcon.svg';
 
 export interface SnackbarProps {
     /**
      * The action to display. It renders after the message, at the end of the snackbar.
      */
-    action?: ReactNode | ReactNode[];
+    action?: ReactNode;
     /**
      * The anchor of the `Snackbar`.
      */
@@ -66,10 +67,18 @@ const Snackbar: FC<SnackbarProps> = ({
     open,
     autoHideDuration = 4000,
     onClose,
-    action,
     message,
     type = MESSAGE_TYPES.INFO,
-    renderInPortal = false
+    renderInPortal = false,
+    
+    action = <StyledSnackbarCloseButton
+    alternate={true}
+    className='closeIcon'
+    key='close'
+    aria-label='Close'
+    onClick={() => onClose ? onClose('timeout') : undefined}
+    icon={<CloseIcon />}
+            />
 }) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);
@@ -135,8 +144,7 @@ const Snackbar: FC<SnackbarProps> = ({
     useEffect(() => {
         if (snackbarWrapperElement && portal) {
             generateAnchorOrigin(anchorOrigin, portal);
-            portal.style.position = 'fixed';
-            portal.style.zIndex = `${theme?.zIndex?.snackbar}`;
+            portal.style.padding = '4px 16px';
             portal.className = snackbarWrapperElement.className;
         }
     }, [update]);
@@ -187,7 +195,7 @@ const Snackbar: FC<SnackbarProps> = ({
 
     return (
         <ThemeProvider theme={theme}>
-            <SnackbarWrapper className="snackbarWrapper" ref={popoverNodeMounted}>
+            <SnackbarWrapper ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
                 {portal ? createPortal(popover, portal) : popover}
             </SnackbarWrapper>
         </ThemeProvider>
