@@ -1,4 +1,4 @@
-import { FilterMode, FilterSet, FilterValues } from '../types';
+import { FilterMode, FilterSet, FilterValues, UrlParameters } from '../types';
 import queryString from 'query-string';
 
 /**
@@ -17,7 +17,7 @@ export const USER_JSON_QUERY_PARAM = 'userJSON';
 /**
  * Returns the default value or fallback value of a requested url parameter.
  */
-export const getDefaultValue = (urlParams: queryString.ParsedQuery<string>, key: string, defaultValue: any) => {
+export const getDefaultValue = (urlParams: UrlParameters, key: string, defaultValue: any) => {
     if (urlParams[key]) {
         return Array.isArray(urlParams[key]) ? urlParams[key]?.[0] : urlParams[key];
     }
@@ -28,7 +28,7 @@ export const getDefaultValue = (urlParams: queryString.ParsedQuery<string>, key:
 /**
  * Returns the default value of `jsonView` parameter.
  */
-export const getDefaultJsonViewValue = (urlParams: queryString.ParsedQuery<string>) => {
+export const getDefaultJsonViewValue = (urlParams: UrlParameters) => {
     const val = getDefaultValue(urlParams, 'jsonView', false);
 
     // value will be a string if provided as a query string
