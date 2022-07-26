@@ -1,7 +1,7 @@
 import colors from 'src/styles/lakefrontColors';
 import { ReactComponent as CheckCircle } from './assets/check_circle.svg';
 import { ReactComponent as Error } from './assets/error.svg';
-import { ReactComponent as ErrorOutline } from './assets/error_outline.svg';
+import { ReactComponent as Info } from './assets/info.svg';
 import { StyledSnackbarCloseButton } from './snackbarStyles';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 
@@ -62,6 +62,6 @@ export const getIcon = (type: MESSAGE_TYPES) => {
             return <CheckCircle style={{ fill: colors.saturatedBlue }} />;
         case MESSAGE_TYPES.INFO:
         default:
-            return <ErrorOutline style={{ fill: colors.white }} />;
+            return <Info style={{ fill: colors.white }} />;
     }
 };
