@@ -36,8 +36,7 @@ export const parseInitialFilterValues = (location: Location, filters: FilterSet)
     const urlParams = queryString.parse(location.search);
     const initialFilterValues: FilterValues = {};
     Object.keys(filters).forEach((key) => {
-        const filter = filters[key];
-        // @ts-ignore
+        const filter = filters[key];       
         initialFilterValues[key] = filter.parseInitialFilterValue(urlParams[key]);
     });
     return initialFilterValues;
