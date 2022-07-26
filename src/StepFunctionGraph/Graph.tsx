@@ -233,8 +233,8 @@ export const StepFunctionGraph: FC<GraphProps> = ({
     );
 
     const calculateAndDraw = () => {
-        // @ts-ignore
-        if (canvasContainer.current && canvasContainer.current.getContext && json && json.States) {
+        
+        if (canvasContainer.current && json && json.States) {
             const { height, width } = canvasContainer.current.getBoundingClientRect();
             const ctx = canvasContainer.current.getContext('2d');
 

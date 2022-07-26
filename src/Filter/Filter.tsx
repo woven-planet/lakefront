@@ -43,8 +43,7 @@ export const Filter: FC<FilterComponentProps> = ({
     const urlParams = queryString.parse(location.search);
     const [isCollapsedState, setIsCollapsedState] = useState(false);
     const [activeSection, setActiveSection] = useState(initialActiveSection);
-    const [jsonQueryParams, setJsonQueryParams] = useState(
-        // @ts-ignore
+    const [jsonQueryParams, setJsonQueryParams] = useState(        
         isJSONInputAllowed ? { jsonView: getDefaultJsonViewValue(urlParams) } : {}
     );
     const [isJSONInputModified, setIsJSONInputModified] = useState(false);
