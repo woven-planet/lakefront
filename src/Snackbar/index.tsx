@@ -51,6 +51,8 @@ export interface SnackbarProps {
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
      */
     renderInPortal?: boolean;
+
+    className?: string;
 }
 
 /**
@@ -67,6 +69,7 @@ const Snackbar: FC<SnackbarProps> = ({
     open,
     autoHideDuration = 4000,
     onClose,
+    className,
     message,
     type = MESSAGE_TYPES.INFO,
     renderInPortal = false,
@@ -147,6 +150,7 @@ const Snackbar: FC<SnackbarProps> = ({
                 {open && (
                     <div className="content-snackbar-wrapper">
                         <SnackbarContent
+                            className={className}
                             id="snackbar-content"
                             ref={snackbarContentRef}
                             action={action}
@@ -187,7 +191,7 @@ const Snackbar: FC<SnackbarProps> = ({
 
     return (
         <ThemeProvider theme={theme}>
-            <SnackbarWrapper ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
+            <SnackbarWrapper className={className} ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
                 {portal ? createPortal(popover, portal) : popover}
             </SnackbarWrapper>
         </ThemeProvider>
