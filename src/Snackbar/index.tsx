@@ -51,7 +51,9 @@ export interface SnackbarProps {
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
      */
     renderInPortal?: boolean;
-
+    /**
+    * The classes to pass to the snackbar.
+    */
     className?: string;
 }
 
@@ -150,7 +152,6 @@ const Snackbar: FC<SnackbarProps> = ({
                 {open && (
                     <div className="content-snackbar-wrapper">
                         <SnackbarContent
-                            className={className}
                             id="snackbar-content"
                             ref={snackbarContentRef}
                             action={action}
