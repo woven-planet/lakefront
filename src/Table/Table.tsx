@@ -42,7 +42,7 @@ export interface TableProps {
     className?: string;
     /**
     * This is to set the initial sorting on the table.
-    * The first id provided will take precedence of other ids in array when sorted. Example: value --> title --> percentage.
+    * When an array of items is provided, the order dictates the priority of sorting. Example: value --> title --> percentage.
     */
     initialSortBy?: { id: string, desc: boolean}[] | { id: string, desc: boolean};
     
