@@ -1,5 +1,4 @@
 import { Dispatch, FC, MouseEventHandler, ReactElement, SetStateAction } from 'react';
-import { SelectOverlayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
 
@@ -439,26 +438,6 @@ export interface RadioFilterProps {
  * meant to override default text filter behaviour.
  */
  export interface RadioFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label'> {}
-
-/**
- * `SingleSelectFilterProps` are the props required to be supplied as the
- * first argument of the SingleSelectFilter component.
- */
- export interface SingleSelectFilterProps {
-    options: SelectOverlayOption[];
-    label: string;
-    description?: string;
-    selectPlaceholderLabel?: string;
-    filterLabelPrefix?: string;
-    initialValue?: string | number;
-    required?: boolean;
-}
-
-/**
- * `SingleSelectFilterOptions` is any valid `FilterModule` property (excluding description, label, and required)
- * meant to override default single select filter behaviour.
- */
- export interface SingleSelectFilterOptions extends Omit<Partial<FilterModule<string>>, 'description' | 'label' | 'required'> {}
 
 /**
  * `TextFilterOverrides` is any valid `FilterModule` property (excluding description and label)

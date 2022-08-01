@@ -3,7 +3,6 @@ import {
     ListFilter,
     MultiSelectFilter,
     RadioFilter,
-    SingleSelectFilter,
     TextFilter,
     DurationFilter
 } from 'src/Filter/modules';
@@ -115,13 +114,6 @@ export const FILTERS = {
             getFilterBarLabel: (value: string) => `Radio Filter: ${value}`
         }
     ),
-    singleSelectFilter: SingleSelectFilter({
-        label: 'Single Select Filter',
-        selectPlaceholderLabel: 'Select a color',
-        filterLabelPrefix: 'Single Select Filter',
-        options: SINGLE_SELECT_FILTER_OPTIONS,
-        description: 'SingleSelectFilter is a select dropdown control meant to single select a value.'
-    }),
     textFilter: TextFilter(
         'Text Filter',
         'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
