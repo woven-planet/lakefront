@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { SelectProps, SelectOption } from './Select';
+import { SelectProps } from './Select';
 import Select, { ValueType } from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';

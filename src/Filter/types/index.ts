@@ -1,7 +1,7 @@
 import { Dispatch, FC, MouseEventHandler, ReactElement, SetStateAction } from 'react';
-import { SelectOverlayOption } from 'src/Filter/modules/SingleSelectFilter/SelectOverlay';
 import { MultiSelectOption } from 'src/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
+import { SelectOption } from 'src/Select/Select';
 
 /**
  * FilterRenderProps are the required props of the renderComponent
@@ -445,7 +445,7 @@ export interface RadioFilterProps {
  * first argument of the SingleSelectFilter component.
  */
  export interface SingleSelectFilterProps {
-    options: SelectOverlayOption[];
+    options: SelectOption[];
     label: string;
     description?: string;
     selectPlaceholderLabel?: string;
