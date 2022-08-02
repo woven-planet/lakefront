@@ -84,6 +84,20 @@ const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percen
 { title: 'r1112_1_0', value: 22, percentage: 113.747, percentage_change: 5.7166473529, total: 0.193415712 },
 { title: 'r2110_1_0', value: 80, percentage: 304.77, percentage_change: 3.80969996, total: 0.2625626 }];
 
+const initialSortByCustomData = [
+    { title: 'car', value: 24, percentage: 166.992, percentage_change: 6.9579999999, total: 0.14371985 },
+    { title: 'truck', value: 22, percentage: 304.77, percentage_change: 15.814, total: 0.063491 },
+    { title: 'boat', value: 5, percentage: 25.68, percentage_change: 5.136, total: 0.1947675 },
+    { title: 'car', value: 51, percentage: 291.549, percentage_change: 5.7166473529, total: 0.1959277202 },
+    { title: 'boat', value: 51, percentage: 175.199, percentage_change: 4.4922282052, total: 0.2226686241 },
+    { title: 'car', value: 12, percentage: 80.672, percentage_change: 6.7266666, total: 0.148750612 },
+    { title: 'truck', value: 83, percentage: 275.087, percentage_change: 3.314819277, total: 0.3017716 },
+    { title: 'truck', value: 51, percentage: 130.419, percentage_change: 4.830333334, total: 0.20705373 },
+    { title: 'truck', value: 18, percentage: 97.505, percentage_change: 5.7166473529, total: 0.1746059897 },
+    { title: 'car', value: 22, percentage: 113.747, percentage_change: 5.7166473529, total: 0.193415712 },
+    { title: 'boat', value: 22, percentage: 47.442, percentage_change: 3.80969996, total: 0.2625626 }
+];
+
 const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [data, setData] = useState(args.data);
     const [dataToggle, setDataToggle] = useState(false);
@@ -93,15 +107,15 @@ const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => 
         const newData = dataToggle ? customData : [];
         setData(newData);
         setDataToggle(dataToggle => !dataToggle);
-    }
+    };
 
     const handleSort = (_, sortedBy) => {
         const newMsg = 'Sorting is applied on column name(s): ' ;
         const columnNamesAndSortDirection = sortedBy.map((sortedColumn) => {
-            const colName = columns.find(col => col.accessor === sortedColumn.id).Header 
+            const colName = columns.find(col => col.accessor === sortedColumn.id).Header;
              const sortDirection = sortedColumn.desc ? '(Descending Order)' : '(Ascending Order)';
-             return ` ${colName} ${sortDirection}`
-        })
+             return ` ${colName} ${sortDirection}`;
+        });
 
         setSortMsg(`${newMsg} ${columnNamesAndSortDirection}`);
     };
@@ -120,12 +134,32 @@ const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => 
     );
 };
 
+// initialSortBy one column
 export const Table = Template.bind({});
 Table.args = {
     columns: columns,
     data: customData,
     initialSortBy: { id: 'title', desc: false },
-    noDataMessage: "No data found",
+    noDataMessage: 'No data found',
+    options: {
+        disableSortRemove: true,
+        autoResetSortBy: true,
+        disableMultiSort: false
+    }
+};
+
+
+// initialSortBy array of which columns to sort in order
+export const TableWithInitialSortByArray = Template.bind({});
+TableWithInitialSortByArray.args = {
+    columns: columns,
+    data: initialSortByCustomData,
+    initialSortBy: [
+        {id: 'value', desc: false},
+        {id: 'title', desc: true},
+        {id: 'percentage', desc: true}
+    ],
+    noDataMessage: 'No data found',
     options: {
         disableSortRemove: true,
         autoResetSortBy: true,
@@ -138,7 +172,7 @@ TableWithMultiSortDisabled.args = {
     columns: columns,
     data: customData,
     initialSortBy: { id: 'title', desc: false },
-    noDataMessage: "No data found",
+    noDataMessage: 'No data found',
     options: {
         disableMultiSort: true
     }
@@ -149,7 +183,7 @@ TableWithCustomWidth.args = {
     columns: columnsWithWidth,
     data: customData,
     initialSortBy: { id: 'title', desc: false },
-    noDataMessage: "No data found",
+    noDataMessage: 'No data found',
     options: {
         disableMultiSort: false
     }
