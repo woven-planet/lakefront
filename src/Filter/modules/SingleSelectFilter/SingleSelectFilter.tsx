@@ -45,9 +45,9 @@ const SingleSelectFilter = (
             filterOptions.unshift({ label: selectPlaceholderLabel || 'Select', value: '' });
         }
 
-                const handleUpdate = (option: { currentTarget: { value: string | number | null | undefined } }) => {
-                    update(option.currentTarget.value);
-                };
+        const handleUpdate = (option: { currentTarget: { value: string | number | null | undefined } }) => {
+            update(option.currentTarget.value);
+        };
 
         return <Select
             key={name}
