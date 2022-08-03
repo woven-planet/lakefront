@@ -81,7 +81,7 @@ describe('SingleSelectFilter', () => {
     describe('isDefaultFilterValue', () => {
         const { isDefaultFilterValue } = SingleSelectFilter({}, {});
 
-        it(`returns true if value is empty string`, () => {
+        it('returns true if value is empty string', () => {
             expect(isDefaultFilterValue('')).toBe(true);
             expect(isDefaultFilterValue('a')).toBe(false);
             expect(isDefaultFilterValue()).toBe(false);
