@@ -79,7 +79,7 @@ export interface FilterModule<T> {
     /**
      * Parses filter value from browser url query param value(s) and pre-populates the filter value on init.
      */
-    parseInitialFilterValue(browserQueryUrlValue?: string | string[] | (string | null)[] | null | undefined): T | null | undefined;
+    parseInitialFilterValue(browserQueryUrlValue?: string | string[] | null | undefined): T | null | undefined;
     /**
      * Renders the filter input controls in the left filter drawer.
      */

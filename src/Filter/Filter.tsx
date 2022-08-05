@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import queryString from 'query-string';
-import { ContextSwitchMenuValue, FilterComponentProps, FilterMode } from './types';
+import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, UrlParameters } from './types';
 import { FILTER_MODE_OPTIONS, getCurrentBrowserQueryParams, getDefaultJsonViewValue } from './util';
 import { ThemeProvider } from '@emotion/react';
 import {
@@ -40,7 +40,7 @@ export const Filter: FC<FilterComponentProps> = ({
     updateHistory,
     badgeThreshold = 4
 }) => {
-    const urlParams = queryString.parse(location.search);
+    const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
     const [activeSection, setActiveSection] = useState(initialActiveSection);
     const [jsonQueryParams, setJsonQueryParams] = useState(        

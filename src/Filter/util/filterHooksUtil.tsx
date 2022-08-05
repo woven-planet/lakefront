@@ -1,5 +1,5 @@
 import queryString, { ParsedQuery } from 'query-string';
-import { FilterPostBody, FilterSet, FilterValues, Location } from '../types';
+import { FilterPostBody, FilterSet, FilterValues, Location, UrlParameters } from '../types';
 
 /**
  * Return the filter query string to be appended to API endpoint URL.
@@ -33,7 +33,7 @@ export const getApiPostBody = <T extends FilterPostBody = {}>(filters: FilterSet
  * pre-populate filter values on init.
  */
 export const parseInitialFilterValues = (location: Location, filters: FilterSet): FilterValues => {
-    const urlParams = queryString.parse(location.search);
+    const urlParams = queryString.parse(location.search) as UrlParameters;
     const initialFilterValues: FilterValues = {};
     Object.keys(filters).forEach((key) => {
         const filter = filters[key];       
