@@ -18,8 +18,19 @@ export interface DeviceProgressProps {
     total: number;
     /**
      * This is to set the capacity for the device progress bar.
+     * This should be a string percentage (e.g. 10%) to accurately
+     * generate the width of the progress (via css).
      */
     capacity: string;
+    /**
+     * This is the text to display after the capacity. By default, this value is empty.
+     */
+    capacitySubText?: string;
+    /**
+     * This is the location, respective to the progress bar, in which to display the capacity text.
+     * The default is "inside" the progress bar.
+     */
+    capacityLocation?: 'below' | 'inside';
     /**
      * This is to set the background color of the  progress bar.
      */
@@ -40,7 +51,9 @@ const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
     available,
     total,
     capacity,
-    backgroundColor = customTheme?.colors.saturatedTeal
+    backgroundColor = customTheme?.colors.saturatedTeal,
+    capacitySubText= '',
+    capacityLocation = 'inside'
 }) => {
     const formattedUsed = formatBytes(used);
     const formattedAvailable = formatBytes(available);
@@ -49,6 +62,9 @@ const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
     const usedResult = `${formattedUsed.value} ${formattedUsed.size}`;
     const availableResult = `${formattedAvailable.value} ${formattedAvailable.size}`;
     const totalResult = `${formattedTotal.value} ${formattedTotal.size}`;
+
+    const subTextWithSpace = capacitySubText ? ` ${capacitySubText}` : '';
+    const capacityText = `${capacity}${subTextWithSpace}`;
 
     return (
         <ThemeProvider theme={customTheme}>
@@ -60,11 +76,15 @@ const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
                         <RightText>Total: {totalResult}</RightText>
                     </TopText>
                     <ProgressBar >
-                        <Filler width={capacity} backgroundColor={backgroundColor} />
+                        <Filler width={capacity} backgroundColor={backgroundColor} className='progress-bar-fill'>
+                            {capacityLocation === 'inside' && <span>{capacityText}</span>}
+                        </Filler>
                     </ProgressBar>
-                    <BottomText>
-                        <span>{capacity} Full</span>
-                    </BottomText>
+                    {capacityLocation === 'below' && (
+                        <BottomText className='progress-bar-bottom-text'>
+                            <span>{capacityText}</span>
+                        </BottomText>
+                    )}
                 </>
             </ProgressBarContainer>
         </ThemeProvider>
