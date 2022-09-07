@@ -28,6 +28,21 @@ describe('<DeviceProgressBar />', () => {
             expect(container.getElementsByTagName('span')[0]).toHaveTextContent('Used: 0 B');
         });
 
+        it('implements the passed className', () => {
+            const className = 'device-progress-bar';
+            const { container } = render(
+                <DeviceProgressBar
+                    used={0}
+                    available={0}
+                    total={0}
+                    capacity='0%'
+                    className={className}
+                />
+            );
+
+            expect(container.querySelector(`.${className}`)).toBeInTheDocument();
+        });
+
         describe('capacity', () => {
             it('renders capacity within the progress-bar by default', () => {
                 const { container } = render(<DeviceProgressBar
