@@ -1,8 +1,34 @@
 import { FC } from 'react';
-import { ProgressBarContainer, TopText, CenterText, RightText, ProgressBar, Filler, BottomText } from './deviceProgressBarStyles';
+import {
+    ProgressBarContainer,
+    TopText,
+    CenterText,
+    RightText,
+    ProgressBar,
+    Filler,
+    BottomText,
+    Threshold as ThresholdDiv
+} from './deviceProgressBarStyles';
 import { ThemeProvider } from '@emotion/react';
 import { formatBytes } from './deviceProgressBarUtil';
 import customTheme from 'src/styles/theme';
+
+interface Threshold {
+    /**
+     * The unique id of the threshold.
+     */
+    id: string;
+    /**
+     * The percentage at which the threshold exists.
+     * This should be a string percentage (e.g. 10%) to accurately
+     * generate the width of the progress (via css).
+     */
+    percentage: string;
+    /**
+     * The color of the threshold. This defaults to `lakefrontColors.red` if left undefined.
+     */
+    color?: string;
+}
 
 export interface DeviceProgressProps {
     /**
@@ -40,27 +66,31 @@ export interface DeviceProgressProps {
      * These are the classes to apply to the component.
      */
     className?: string;
+    /**
+     * These are optional thresholds to set on the progress bar.
+     */
+    thresholds?: Threshold[];
 }
-
 
 
 /**
  * Device Progress Component
- * 
+ *
  * The Device Progress Component displays the used space, available space and the total space of the device in the
  * form of a bar. It also displays the percentage of the device that is full.
- * 
+ *
  */
 const DeviceProgressBar: FC<DeviceProgressProps> = ({
-    used,
-    available,
-    total,
-    capacity,
-    backgroundColor = customTheme?.colors.saturatedTeal,
-    capacitySubText= '',
-    capacityLocation = 'inside',
-    className
-}) => {
+                                                        used,
+                                                        available,
+                                                        total,
+                                                        capacity,
+                                                        backgroundColor = customTheme?.colors.saturatedTeal,
+                                                        capacitySubText = '',
+                                                        capacityLocation = 'inside',
+                                                        className,
+                                                        thresholds = []
+                                                    }) => {
     const formattedUsed = formatBytes(used);
     const formattedAvailable = formatBytes(available);
     const formattedTotal = formatBytes(total);
@@ -84,6 +114,9 @@ const DeviceProgressBar: FC<DeviceProgressProps> = ({
                     <ProgressBar className='progress-bar'>
                         <Filler width={capacity} backgroundColor={backgroundColor} className='progress-bar-fill'>
                             {capacityLocation === 'inside' && <span>{capacityText}</span>}
+                            {thresholds.map(({ id, percentage, color }) => (
+                                <ThresholdDiv key={id} className={`threshold-${id}`} percentage={percentage} color={color} />
+                            ))}
                         </Filler>
                     </ProgressBar>
                     {capacityLocation === 'below' && (

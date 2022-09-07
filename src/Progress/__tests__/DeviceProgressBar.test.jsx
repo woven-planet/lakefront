@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import DeviceProgressBar from '../DeviceProgressBar';
 import { mockDeviceData } from './mockDevices.data';
+import colors from 'src/styles/lakefrontColors';
 
 describe('<DeviceProgressBar />', () => {
     describe('general rendering', () => {
@@ -92,6 +93,45 @@ describe('<DeviceProgressBar />', () => {
                 />);
 
                 expect(container.querySelector('.progress-bar-fill').querySelector('span').innerHTML).toBe('0 of capacity');
+            });
+        });
+
+        describe('thresholds', () => {
+            it('renders each threshold on top of the progress bar with the correct percentage and color', () => {
+                const mockThresholds = [
+                    {
+                        id: 'warning',
+                        percentage: '50%',
+                        color: colors.yellow
+                    },
+                    {
+                        id: 'danger',
+                        percentage: '80%',
+                        color: colors.red
+                    },
+                ];
+                const { container } = render(
+                    <DeviceProgressBar
+                        used={0}
+                        available={0}
+                        total={0}
+                        capacity='0%'
+                        thresholds={mockThresholds}
+                    />
+                );
+
+                for (const threshold of mockThresholds) {
+                    expect(
+                        container
+                            .querySelector('.progress-bar-fill')
+                            .querySelector(`.threshold-${threshold.id}`)
+                    )
+                        .toHaveStyle({
+                                borderRight: `2px solid ${threshold.color}`,
+                                zIndex: 1,
+                                width: threshold.percentage
+                            });
+                }
             });
         });
     });

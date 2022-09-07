@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import DeviceProgressBarComponent, { DeviceProgressProps } from 'src/Progress/DeviceProgressBar';
 import DocBlock from '.storybook/DocBlock';
+import colors from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/Progress/DeviceProgress',
@@ -37,4 +38,26 @@ BarWithCapacityAndSubTextBelow.args = {
     capacity: '86%',
     capacityLocation: 'below',
     capacitySubText: 'Full'
+};
+
+export const BarWithThresholds = Template.bind({});
+BarWithThresholds.args = {
+    total: 1374389534720,
+    used: 1175916642304,
+    available: 198472892416,
+    capacity: '86%',
+    capacityLocation: 'below',
+    capacitySubText: 'Full',
+    thresholds: [
+        {
+            id: 'warning',
+            percentage: '50%',
+            color: colors.yellow
+        },
+        {
+            id: 'danger',
+            percentage: '80%',
+            color: colors.red
+        },
+    ]
 };
