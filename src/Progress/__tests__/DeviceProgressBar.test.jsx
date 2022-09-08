@@ -94,57 +94,5 @@ describe('<DeviceProgressBar />', () => {
 
             expect(container.querySelector(`.${className}`)).toBeInTheDocument();
         });
-
-        describe('capacity', () => {
-            it('renders capacity within the progress-bar by default', () => {
-                const { container } = render(<DeviceProgressBar
-                    used={0}
-                    available={0}
-                    total={0}
-                    capacity='73%'
-                />);
-
-                expect(container.querySelector('.progress-bar-bottom-text')).not.toBeInTheDocument();
-                expect(container.querySelector('.progress-bar-fill').innerHTML).toMatch(/73%/);
-            });
-
-            it('renders capacity below the bar when capacityLocation is "below"', () => {
-                const { container } = render(<DeviceProgressBar
-                    used={0}
-                    available={0}
-                    total={0}
-                    capacity='73%'
-                    capacityLocation='below'
-                />);
-
-                expect(container.querySelector('.progress-bar-fill').querySelector('span')).not.toBeInTheDocument();
-                expect(container.querySelector('.progress-bar-bottom-text').innerHTML).toMatch(/73%/);
-            });
-        });
-
-        describe('capacity sub-text', () => {
-            it('renders no subtext by default', () => {
-                const { container } = render(<DeviceProgressBar
-                    used={0}
-                    available={0}
-                    total={0}
-                    capacity={0}
-                />);
-
-                expect(container.querySelector('.progress-bar-fill').querySelector('span').innerHTML).toBe('0');
-            });
-
-            it('renders custom capacity subtext when provided', () => {
-                const { container } = render(<DeviceProgressBar
-                    used={0}
-                    available={0}
-                    total={0}
-                    capacity={0}
-                    capacitySubText='of capacity'
-                />);
-
-                expect(container.querySelector('.progress-bar-fill').querySelector('span').innerHTML).toBe('0 of capacity');
-            });
-        });
     });
 });
