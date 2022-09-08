@@ -112,11 +112,17 @@ const DeviceProgressBar: FC<DeviceProgressProps> = ({
                         <RightText>Total: {totalResult}</RightText>
                     </TopText>
                     <ProgressBar className='progress-bar'>
+                        {thresholds.map(({ id, percentage, color }) => (
+                            <ThresholdDiv
+                                key={id}
+                                id={`threshold-${id}`}
+                                className='progress-bar-threshold'
+                                percentage={percentage}
+                                color={color}
+                            />
+                        ))}
                         <Filler width={capacity} backgroundColor={backgroundColor} className='progress-bar-fill'>
                             {capacityLocation === 'inside' && <span>{capacityText}</span>}
-                            {thresholds.map(({ id, percentage, color }) => (
-                                <ThresholdDiv key={id} className={`threshold-${id}`} percentage={percentage} color={color} />
-                            ))}
                         </Filler>
                     </ProgressBar>
                     {capacityLocation === 'below' && (

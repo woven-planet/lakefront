@@ -43,7 +43,9 @@ export const Filler = styled.div<any>(({ width, backgroundColor, theme }) => ({
     alignItems: 'center',
     span: {
         marginLeft: '1em'
-    }
+    },
+    position: 'absolute',
+    zIndex: 1
 }));
 
 export const BottomText = styled.div({
@@ -59,5 +61,8 @@ interface ThresholdProps {
 
 export const Threshold = styled.div<ThresholdProps>(({ color = lakefrontColors.red, percentage }) => ({
     width: percentage,
-    borderRight: `2px solid ${color}`
+    borderRight: `4px solid ${color}`,
+    height: '100%',
+    position: 'absolute',
+    zIndex: 2,
 }));

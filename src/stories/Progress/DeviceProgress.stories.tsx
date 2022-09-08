@@ -46,12 +46,10 @@ BarWithThresholds.args = {
     used: 1175916642304,
     available: 198472892416,
     capacity: '86%',
-    capacityLocation: 'below',
-    capacitySubText: 'Full',
     thresholds: [
         {
             id: 'warning',
-            percentage: '50%',
+            percentage: '70%',
             color: colors.yellow
         },
         {

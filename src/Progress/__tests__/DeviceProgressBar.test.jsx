@@ -120,16 +120,25 @@ describe('<DeviceProgressBar />', () => {
                     />
                 );
 
+                expect(
+                    container
+                        .querySelector('.progress-bar')
+                        .querySelectorAll('.progress-bar-threshold')
+                ).toHaveLength(mockThresholds.length);
+
+
                 for (const threshold of mockThresholds) {
                     expect(
                         container
-                            .querySelector('.progress-bar-fill')
-                            .querySelector(`.threshold-${threshold.id}`)
+                            .querySelector('.progress-bar')
+                            .querySelector(`#threshold-${threshold.id}`)
                     )
                         .toHaveStyle({
-                                borderRight: `2px solid ${threshold.color}`,
-                                zIndex: 1,
-                                width: threshold.percentage
+                                width: threshold.percentage,
+                                borderRight: `4px solid ${threshold.color}`,
+                                height: '100%',
+                                position: 'absolute',
+                                zIndex: 2
                             });
                 }
             });
