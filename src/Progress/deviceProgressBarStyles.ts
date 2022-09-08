@@ -37,7 +37,12 @@ export const Filler = styled.div<any>(({ width, backgroundColor, theme }) => ({
     borderRadius: 'inherit',
     transition: 'width .2s ease-in',
     width: width,
-    backgroundColor: backgroundColor
+    backgroundColor: backgroundColor,
+    display: 'flex',
+    alignItems: 'center',
+    span: {
+        marginLeft: '1em'
+    }
 }));
 
 export const BottomText = styled.div({

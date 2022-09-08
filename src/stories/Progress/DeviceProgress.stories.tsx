@@ -16,18 +16,25 @@ export default {
 const Template: Story<DeviceProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <section style={{ display: 'inline-flex' }}>
-            <DeviceProgressBarComponent used={args.used}
-                available={args.available}
-                total={args.total}
-                capacity={args.capacity} />
+            <DeviceProgressBarComponent {...args} />
         </section>
     );
 };
 
-export const DeviceProgressBar = Template.bind({});
-DeviceProgressBar.args = {
+export const DefaultProgressBar = Template.bind({});
+DefaultProgressBar.args = {
     total: 1374389534720,
     used: 1175916642304,
     available: 198472892416,
     capacity: '86%'
+};
+
+export const BarWithCapacityAndSubTextBelow = Template.bind({});
+BarWithCapacityAndSubTextBelow.args = {
+    total: 1374389534720,
+    used: 1175916642304,
+    available: 198472892416,
+    capacity: '86%',
+    capacityLocation: 'below',
+    capacitySubText: 'Full'
 };
