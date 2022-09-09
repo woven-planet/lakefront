@@ -22,7 +22,7 @@ const columns = [
     {
         Header: 'TITLE',
         accessor: 'title',
-        Cell: ({ cell: { value } }) => value
+        Cell: ({ cell: { value } }) => value,
     },
     {
         Header: 'VALUE',
@@ -82,8 +82,8 @@ const ChevronContainer = styled.div({
     }
 });
 
-const columnsWithExpander = [
-    ...columns,
+const columnsWithWidthAndExpander = [
+    ...columnsWithWidth,
     {
         Header: '',
         id: 'expander',
@@ -124,6 +124,16 @@ const initialSortByCustomData = [
     { title: 'boat', value: 22, percentage: 47.442, percentage_change: 3.80969996, total: 0.2625626 }
 ];
 
+const StyledTD = styled.td({
+    padding: '0 1em',
+    td: {
+        paddingLeft: 0
+    },
+    'td:first-of-type': {
+        padding: '0.8rem'
+    }
+});
+
 const renderRowSubComponent = ({ row }) => {
     const { value, percentage, percentage_change, total } = row.original;
     const nestedData = [
@@ -131,13 +141,27 @@ const renderRowSubComponent = ({ row }) => {
         { title: 'doubled', value: 24 * 2, percentage: percentage * 2, percentage_change: percentage_change  * 2, total: total * 2 },
     ];
 
+    const subColumns = [
+        ...columnsWithWidthAndExpander
+        .slice(0, columnsWithWidthAndExpander.length - 1),
+        {
+            Header: '',
+            id: 'hiddenExpander',
+            disableSortBy: true,
+            Cell: () => null
+        }
+    ];
+
     return (
-        <tr style={{ paddingLeft: '1em' }}>
-            <td colSpan={columns.length}>
-                <div>
-                    <TableComponent columns={columns} data={nestedData} renderRowSubComponent={renderRowSubComponent} />
-                </div>
-            </td>
+        <tr>
+            <StyledTD colSpan={columnsWithWidthAndExpander.length}>
+                <TableComponent
+                    columns={subColumns}
+                    data={nestedData}
+                    renderRowSubComponent={renderRowSubComponent}
+                    hideHeaders
+                />
+            </StyledTD>
         </tr>
     );
 };
@@ -247,7 +271,7 @@ TableWithCustomWidth.args = {
 
 export const TableWithExpandableRows = Template.bind({});
 TableWithExpandableRows.args = {
-    columns: columnsWithExpander,
+    columns: columnsWithWidthAndExpander,
     data: initialSortByCustomData,
     noDataMessage: 'No data found',
     renderRowSubComponent

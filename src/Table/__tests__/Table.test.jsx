@@ -133,6 +133,18 @@ describe('<Table>', () => {
         expect(mockHandleSort).toHaveBeenCalledWith( {'desc': false, 'id': 'value'}, [{'desc': false, 'id': 'value'}, {'desc': true, 'id': 'title'}, {'desc': true, 'id': 'percentage'}]);
     });
 
+    it('displays header row by default', () => {
+        const { container } = render(<Table columns={columns} data={customData} />);
+
+        expect(container.querySelector('thead')).toHaveStyle({ visibility: 'visible' });
+    });
+
+    it('hides header row when hideHeaders is true', () => {
+        const { container } = render(<Table columns={columns} data={customData} hideHeaders />);
+
+        expect(container.querySelector('thead')).toHaveStyle({ visibility: 'collapse' });
+    });
+
     describe('table row expansion', () => {
         const renderRowSubComponent = ({ row }) => {
             const { value } = row.original;
