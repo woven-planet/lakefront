@@ -3,6 +3,10 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import Button from 'src/Button/Button';
 import TableComponent, { TableProps } from 'src/Table';
 import DocBlock from '.storybook/DocBlock';
+import styled from '@emotion/styled';
+import { ReactComponent as ChevronUp } from 'src/Collapsible/assets/chevron-up.svg';
+import { ReactComponent as ChevronDown } from 'src/Collapsible/assets/chevron-down.svg';
+import lakefrontColors from 'src/styles/lakefrontColors';
 
 export default {
     title: 'Lakefront/Table',
@@ -72,6 +76,28 @@ const columnsWithWidth = [
     }
 ];
 
+const ChevronContainer = styled.div({
+    svg: {
+        stroke: lakefrontColors.black
+    }
+});
+
+const columnsWithExpander = [
+    ...columns,
+    {
+        Header: '',
+        id: 'expander',
+        disableSortBy: true,
+        Cell: ({ row }) => {
+            return (
+                <ChevronContainer {...row.getToggleRowExpandedProps()}>
+                    {row.isExpanded ? <ChevronUp /> : <ChevronDown />}
+                </ChevronContainer>
+            );
+        }
+    }
+];
+
 const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percentage_change: 6.9579999999, total: 0.14371985 },
 { title: 'r2002_1_0', value: 3, percentage: 47.442, percentage_change: 15.814, total: 0.063491 },
 { title: 'r2010_1_0', value: 5, percentage: 25.68, percentage_change: 5.136, total: 0.1947675 },
@@ -98,6 +124,35 @@ const initialSortByCustomData = [
     { title: 'boat', value: 22, percentage: 47.442, percentage_change: 3.80969996, total: 0.2625626 }
 ];
 
+const renderRowSubComponent = ({ row }) => {
+    const { value, percentage, percentage_change, total } = row.original;
+    const nestedData = [
+        { title: 'halved', value: value / 2, percentage: percentage / 2, percentage_change: percentage_change / 2, total: total / 2 },
+        { title: 'doubled', value: 24 * 2, percentage: percentage * 2, percentage_change: percentage_change  * 2, total: total * 2 },
+    ];
+
+    return (
+        <tr style={{ paddingLeft: '1em' }}>
+            <td colSpan={columns.length}>
+                <div>
+                    <TableComponent columns={columns} data={nestedData} renderRowSubComponent={renderRowSubComponent} />
+                </div>
+            </td>
+        </tr>
+    );
+};
+
+const StyledTableComponent = styled(TableComponent)({
+    td: {
+        fontWeight: 'bold'
+    },
+    table: {
+        td: {
+            fontWeight: 'normal'
+        }
+    }
+});
+
 const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [data, setData] = useState(args.data);
     const [dataToggle, setDataToggle] = useState(false);
@@ -120,6 +175,8 @@ const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => 
         setSortMsg(`${newMsg} ${columnNamesAndSortDirection}`);
     };
 
+    const RenderTableComponent = args.renderRowSubComponent ? StyledTableComponent : TableComponent;
+
     return (
         <>
             <div style={{ marginTop: '10px', marginLeft: '10px' }}>
@@ -128,8 +185,7 @@ const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => 
                 {!dataToggle && <b>{sortMsg}</b>
                 }
             </div>
-            <TableComponent {...args} data={data} onChangeSort={handleSort}>
-            </TableComponent>
+            <RenderTableComponent {...args} data={data} onChangeSort={handleSort} />
         </>
     );
 };
@@ -187,4 +243,12 @@ TableWithCustomWidth.args = {
     options: {
         disableMultiSort: false
     }
+};
+
+export const TableWithExpandableRows = Template.bind({});
+TableWithExpandableRows.args = {
+    columns: columnsWithExpander,
+    data: initialSortByCustomData,
+    noDataMessage: 'No data found',
+    renderRowSubComponent
 };

@@ -35,6 +35,21 @@ const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percen
 { title: 'r2019_1_0', value: 51, percentage: 291.549, percentage_change: 5.7166473529, total: 0.1949277202 },
 { title: 'r2020_1_0', value: 31, percentage: 271.549, percentage_change: 5.7166473529, total: 0.1749277202 },
 { title: 'r2021_1_0', value: 41, percentage: 281.549, percentage_change: 5.7166473529, total: 0.1849277202 }];
+const columnsWithExpander = [
+    ...columns,
+    {
+        Header: '',
+        id: 'expander',
+        disableSortBy: true,
+        Cell: ({ row }) => {
+            return (
+                <div {...row.getToggleRowExpandedProps()}>
+                    {row.isExpanded ? '- collapse' : '+ expand'}
+                </div>
+            );
+        }
+    }
+];
 
 describe('<Table>', () => {
     it('renders properly', () => {
@@ -116,5 +131,46 @@ describe('<Table>', () => {
             initialSortBy={[{ id: 'value', desc: false }, { id: 'title', desc: true }, { id: 'percentage', desc: true }]} onChangeSort={mockHandleSort} />);
 
         expect(mockHandleSort).toHaveBeenCalledWith( {'desc': false, 'id': 'value'}, [{'desc': false, 'id': 'value'}, {'desc': true, 'id': 'title'}, {'desc': true, 'id': 'percentage'}]);
+    });
+
+    describe('table row expansion', () => {
+        const renderRowSubComponent = ({ row }) => {
+            const { value } = row.original;
+            return (
+                <div style={{ fontSize: '24px' }}>
+                    Value is {value}
+                </div>
+            );
+        };
+
+        it('renders the sub-row when row.expanded is true', () => {
+            const { queryByText, queryAllByText } = render(
+                <Table
+                    columns={columnsWithExpander}
+                    data={customData}
+                    renderRowSubComponent={renderRowSubComponent}
+                />
+            );
+
+            fireEvent.click(queryAllByText('+ expand')[0]);
+
+            expect(queryByText(`Value is ${customData[0].value}`)).toBeInTheDocument();
+        });
+
+        it('does not render the sub-row when row.expanded is false', () => {
+            const { queryByText, queryAllByText } = render(
+                <Table
+                    columns={columnsWithExpander}
+                    data={customData}
+                    renderRowSubComponent={renderRowSubComponent}
+                />
+            );
+
+            fireEvent.click(queryAllByText('+ expand')[0]);
+            expect(queryByText(`Value is ${customData[0].value}`)).toBeInTheDocument();
+
+            fireEvent.click(queryAllByText('- collapse')[0]);
+            expect(queryByText(`Value is ${customData[0].value}`)).not.toBeInTheDocument();
+        });
     });
 });
