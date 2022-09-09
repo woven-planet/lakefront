@@ -37,14 +37,14 @@ const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percen
 { title: 'r2021_1_0', value: 41, percentage: 281.549, percentage_change: 5.7166473529, total: 0.1849277202 }];
 
 describe('<Table>', () => {
-    it('check if table renders properly', () => {
+    it('renders properly', () => {
         const { container } = render(<Table columns={columns} data={customData} />);
 
         expect(container.querySelectorAll('tbody tr').length).toBe(6);
         expect(container.querySelector('table')).toHaveStyle('width: 100%;');
     });
 
-    it('checks if the column sorting is working', () => {
+    it('sorts columns correctly', () => {
         const mockHandleSort = jest.fn();
         const { container, getAllByRole } = render(<Table columns={columns} data={customData}
             initialSortBy={{ id: 'title', desc: false }} onChangeSort={mockHandleSort} />);
@@ -72,14 +72,14 @@ describe('<Table>', () => {
 
     });
 
-    it('check if message is displayed properly when data is not present', () => {
+    it('displays correct message when data is not present', () => {
         const { container } = render(<Table columns={columns} data={[]} noDataMessage='No data found' />);
 
         expect(container.innerHTML).toContain('No data found');
 
     });
 
-    it('check if the tooltip on the header indicates that multiple sort criteria is possible by shift-clicking to add to the sort.', () => {
+    it('displays tooltip on the header to indicate that multiple sort criteria is possible by shift-clicking to add to the sort.', () => {
         const { container } = render(<Table columns={columns} data={customData}
             initialSortBy={{ id: 'title', desc: false }} />);
 
