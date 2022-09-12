@@ -25,7 +25,7 @@ export const RightText = styled.span({
 
 export const ProgressBar = styled.div(({ theme }) => ({
     position: 'relative',
-    height: '40px',
+    height: '32px',
     borderRadius: '4px',
     border: '1px solid',
     borderColor: theme?.colors.mercury,

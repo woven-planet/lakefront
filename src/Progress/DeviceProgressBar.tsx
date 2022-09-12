@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { ProgressBarContainer, TopText, CenterText, RightText, ProgressBar, Filler, BottomText } from './deviceProgressBarStyles';
 import { ThemeProvider } from '@emotion/react';
 import { formatBytes } from './deviceProgressBarUtil';
@@ -35,6 +36,10 @@ export interface DeviceProgressProps {
      * This is to set the background color of the  progress bar.
      */
     backgroundColor?: string;
+    /**
+     * These are the classes to apply to the component.
+     */
+    className?: string;
 }
 
 
@@ -46,14 +51,15 @@ export interface DeviceProgressProps {
  * form of a bar. It also displays the percentage of the device that is full.
  * 
  */
-const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
+const DeviceProgressBar: FC<DeviceProgressProps> = ({
     used,
     available,
     total,
     capacity,
     backgroundColor = customTheme?.colors.saturatedTeal,
     capacitySubText= '',
-    capacityLocation = 'inside'
+    capacityLocation = 'inside',
+    className
 }) => {
     const formattedUsed = formatBytes(used);
     const formattedAvailable = formatBytes(available);
@@ -68,14 +74,14 @@ const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
 
     return (
         <ThemeProvider theme={customTheme}>
-            <ProgressBarContainer>
+            <ProgressBarContainer className={className}>
                 <>
-                    <TopText>
+                    <TopText className='progress-bar-top-text'>
                         <span>Used: {usedResult}</span>
                         <CenterText>Available: {availableResult}</CenterText>
                         <RightText>Total: {totalResult}</RightText>
                     </TopText>
-                    <ProgressBar >
+                    <ProgressBar className='progress-bar'>
                         <Filler width={capacity} backgroundColor={backgroundColor} className='progress-bar-fill'>
                             {capacityLocation === 'inside' && <span>{capacityText}</span>}
                         </Filler>

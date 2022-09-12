@@ -79,5 +79,20 @@ describe('<DeviceProgressBar />', () => {
                 expect(container.querySelector('.progress-bar-fill').querySelector('span').innerHTML).toBe('0 of capacity');
             });
         });
+
+        it('implements the passed className', () => {
+            const className = 'device-progress-bar';
+            const { container } = render(
+                <DeviceProgressBar
+                    used={0}
+                    available={0}
+                    total={0}
+                    capacity='0%'
+                    className={className}
+                />
+            );
+
+            expect(container.querySelector(`.${className}`)).toBeInTheDocument();
+        });
     });
 });
