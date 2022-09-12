@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { colors } from 'react-select/src/theme';
 import { theme } from 'src';
+import lakefrontColors from '../styles/lakefrontColors';
 
 export const ProgressBarContainer = styled.div({
     minHeight: '120px'
@@ -42,7 +43,9 @@ export const Filler = styled.div<any>(({ width, backgroundColor, theme }) => ({
     alignItems: 'center',
     span: {
         marginLeft: '1em'
-    }
+    },
+    position: 'absolute',
+    zIndex: 1
 }));
 
 export const BottomText = styled.div({
@@ -50,3 +53,16 @@ export const BottomText = styled.div({
     gridTemplateColumns: '5fr 10fr 5fr',
     paddingTop: '20px'
 });
+
+interface ThresholdProps {
+    color?: string;
+    percentage: string;
+}
+
+export const Threshold = styled.div<ThresholdProps>(({ color = lakefrontColors.red, percentage }) => ({
+    width: percentage,
+    borderRight: `4px solid ${color}`,
+    height: '100%',
+    position: 'absolute',
+    zIndex: 2,
+}));
