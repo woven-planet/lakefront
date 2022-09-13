@@ -35,16 +35,31 @@ const customData = [{ title: 'r2204_1_0', value: 24, percentage: 166.992, percen
 { title: 'r2019_1_0', value: 51, percentage: 291.549, percentage_change: 5.7166473529, total: 0.1949277202 },
 { title: 'r2020_1_0', value: 31, percentage: 271.549, percentage_change: 5.7166473529, total: 0.1749277202 },
 { title: 'r2021_1_0', value: 41, percentage: 281.549, percentage_change: 5.7166473529, total: 0.1849277202 }];
+const columnsWithExpander = [
+    ...columns,
+    {
+        Header: '',
+        id: 'expander',
+        disableSortBy: true,
+        Cell: ({ row }) => {
+            return (
+                <div {...row.getToggleRowExpandedProps()}>
+                    {row.isExpanded ? '- collapse' : '+ expand'}
+                </div>
+            );
+        }
+    }
+];
 
 describe('<Table>', () => {
-    it('check if table renders properly', () => {
+    it('renders properly', () => {
         const { container } = render(<Table columns={columns} data={customData} />);
 
         expect(container.querySelectorAll('tbody tr').length).toBe(6);
         expect(container.querySelector('table')).toHaveStyle('width: 100%;');
     });
 
-    it('checks if the column sorting is working', () => {
+    it('sorts columns correctly', () => {
         const mockHandleSort = jest.fn();
         const { container, getAllByRole } = render(<Table columns={columns} data={customData}
             initialSortBy={{ id: 'title', desc: false }} onChangeSort={mockHandleSort} />);
@@ -72,14 +87,14 @@ describe('<Table>', () => {
 
     });
 
-    it('check if message is displayed properly when data is not present', () => {
+    it('displays correct message when data is not present', () => {
         const { container } = render(<Table columns={columns} data={[]} noDataMessage='No data found' />);
 
         expect(container.innerHTML).toContain('No data found');
 
     });
 
-    it('check if the tooltip on the header indicates that multiple sort criteria is possible by shift-clicking to add to the sort.', () => {
+    it('displays tooltip on the header to indicate that multiple sort criteria is possible by shift-clicking to add to the sort.', () => {
         const { container } = render(<Table columns={columns} data={customData}
             initialSortBy={{ id: 'title', desc: false }} />);
 
@@ -116,5 +131,58 @@ describe('<Table>', () => {
             initialSortBy={[{ id: 'value', desc: false }, { id: 'title', desc: true }, { id: 'percentage', desc: true }]} onChangeSort={mockHandleSort} />);
 
         expect(mockHandleSort).toHaveBeenCalledWith( {'desc': false, 'id': 'value'}, [{'desc': false, 'id': 'value'}, {'desc': true, 'id': 'title'}, {'desc': true, 'id': 'percentage'}]);
+    });
+
+    it('displays header row by default', () => {
+        const { container } = render(<Table columns={columns} data={customData} />);
+
+        expect(container.querySelector('thead')).toHaveStyle({ visibility: 'visible' });
+    });
+
+    it('hides header row when hideHeaders is true', () => {
+        const { container } = render(<Table columns={columns} data={customData} hideHeaders />);
+
+        expect(container.querySelector('thead')).toHaveStyle({ visibility: 'collapse' });
+    });
+
+    describe('table row expansion', () => {
+        const renderRowSubComponent = ({ row }) => {
+            const { value } = row.original;
+            return (
+                <div style={{ fontSize: '24px' }}>
+                    Value is {value}
+                </div>
+            );
+        };
+
+        it('renders the sub-row when row.expanded is true', () => {
+            const { queryByText, queryAllByText } = render(
+                <Table
+                    columns={columnsWithExpander}
+                    data={customData}
+                    renderRowSubComponent={renderRowSubComponent}
+                />
+            );
+
+            fireEvent.click(queryAllByText('+ expand')[0]);
+
+            expect(queryByText(`Value is ${customData[0].value}`)).toBeInTheDocument();
+        });
+
+        it('does not render the sub-row when row.expanded is false', () => {
+            const { queryByText, queryAllByText } = render(
+                <Table
+                    columns={columnsWithExpander}
+                    data={customData}
+                    renderRowSubComponent={renderRowSubComponent}
+                />
+            );
+
+            fireEvent.click(queryAllByText('+ expand')[0]);
+            expect(queryByText(`Value is ${customData[0].value}`)).toBeInTheDocument();
+
+            fireEvent.click(queryAllByText('- collapse')[0]);
+            expect(queryByText(`Value is ${customData[0].value}`)).not.toBeInTheDocument();
+        });
     });
 });

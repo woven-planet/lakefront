@@ -71,15 +71,23 @@ export const StyledHeaderContent = styled.div({
 export const StyledArrowDown = styled(ArrowDown)({
     paddingLeft: 5,
     paddingTop: 3
-})
+});
 
 export const StyledArrowUp = styled(ArrowUp)({
     paddingLeft: 5,
     paddingTop: 3
-})
+});
 
 export const StyledUnsorted = styled(Unsorted)({
     marginLeft: 8,
     position: 'relative',
     top: 10
-})
+});
+
+interface HideableTHeadProps {
+    hide: boolean;
+}
+
+export const HideableTHead = styled.thead<HideableTHeadProps>(({ hide }) => ({
+    visibility: hide ? 'collapse' : 'visible'
+}));
