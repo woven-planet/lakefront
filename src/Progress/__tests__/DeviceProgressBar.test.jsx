@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import DeviceProgressBar from '../DeviceProgressBar';
 import { mockDeviceData } from './mockDevices.data';
+import colors from 'src/styles/lakefrontColors';
 
 describe('<DeviceProgressBar />', () => {
     describe('general rendering', () => {
@@ -26,6 +27,21 @@ describe('<DeviceProgressBar />', () => {
                 capacity={0}
             />);
             expect(container.getElementsByTagName('span')[0]).toHaveTextContent('Used: 0 B');
+        });
+
+        it('implements the passed className', () => {
+            const className = 'device-progress-bar';
+            const { container } = render(
+                <DeviceProgressBar
+                    used={0}
+                    available={0}
+                    total={0}
+                    capacity='0%'
+                    className={className}
+                />
+            );
+
+            expect(container.querySelector(`.${className}`)).toBeInTheDocument();
         });
 
         describe('capacity', () => {
@@ -77,6 +93,54 @@ describe('<DeviceProgressBar />', () => {
                 />);
 
                 expect(container.querySelector('.progress-bar-fill').querySelector('span').innerHTML).toBe('0 of capacity');
+            });
+        });
+
+        describe('thresholds', () => {
+            it('renders each threshold on top of the progress bar with the correct percentage and color', () => {
+                const mockThresholds = [
+                    {
+                        id: 'warning',
+                        percentage: '50%',
+                        color: colors.yellow
+                    },
+                    {
+                        id: 'danger',
+                        percentage: '80%',
+                        color: colors.red
+                    },
+                ];
+                const { container } = render(
+                    <DeviceProgressBar
+                        used={0}
+                        available={0}
+                        total={0}
+                        capacity='0%'
+                        thresholds={mockThresholds}
+                    />
+                );
+
+                expect(
+                    container
+                        .querySelector('.progress-bar')
+                        .querySelectorAll('.progress-bar-threshold')
+                ).toHaveLength(mockThresholds.length);
+
+
+                for (const threshold of mockThresholds) {
+                    expect(
+                        container
+                            .querySelector('.progress-bar')
+                            .querySelector(`#threshold-${threshold.id}`)
+                    )
+                        .toHaveStyle({
+                                width: threshold.percentage,
+                                borderRight: `4px solid ${threshold.color}`,
+                                height: '100%',
+                                position: 'absolute',
+                                zIndex: 2
+                            });
+                }
             });
         });
     });

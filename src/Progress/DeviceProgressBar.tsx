@@ -1,7 +1,34 @@
-import { ProgressBarContainer, TopText, CenterText, RightText, ProgressBar, Filler, BottomText } from './deviceProgressBarStyles';
+import { FC } from 'react';
+import {
+    ProgressBarContainer,
+    TopText,
+    CenterText,
+    RightText,
+    ProgressBar,
+    Filler,
+    BottomText,
+    Threshold as ThresholdDiv
+} from './deviceProgressBarStyles';
 import { ThemeProvider } from '@emotion/react';
 import { formatBytes } from './deviceProgressBarUtil';
 import customTheme from 'src/styles/theme';
+
+interface Threshold {
+    /**
+     * The unique id of the threshold.
+     */
+    id: string;
+    /**
+     * The percentage at which the threshold exists.
+     * This should be a string percentage (e.g. 10%) to accurately
+     * generate the width of the progress (via css).
+     */
+    percentage: string;
+    /**
+     * The color of the threshold. This defaults to `lakefrontColors.red` if left undefined.
+     */
+    color?: string;
+}
 
 export interface DeviceProgressProps {
     /**
@@ -35,26 +62,35 @@ export interface DeviceProgressProps {
      * This is to set the background color of the  progress bar.
      */
     backgroundColor?: string;
+    /**
+     * These are the classes to apply to the component.
+     */
+    className?: string;
+    /**
+     * These are optional thresholds to set on the progress bar.
+     */
+    thresholds?: Threshold[];
 }
-
 
 
 /**
  * Device Progress Component
- * 
+ *
  * The Device Progress Component displays the used space, available space and the total space of the device in the
  * form of a bar. It also displays the percentage of the device that is full.
- * 
+ *
  */
-const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
-    used,
-    available,
-    total,
-    capacity,
-    backgroundColor = customTheme?.colors.saturatedTeal,
-    capacitySubText= '',
-    capacityLocation = 'inside'
-}) => {
+const DeviceProgressBar: FC<DeviceProgressProps> = ({
+                                                        used,
+                                                        available,
+                                                        total,
+                                                        capacity,
+                                                        backgroundColor = customTheme?.colors.saturatedTeal,
+                                                        capacitySubText = '',
+                                                        capacityLocation = 'inside',
+                                                        className,
+                                                        thresholds = []
+                                                    }) => {
     const formattedUsed = formatBytes(used);
     const formattedAvailable = formatBytes(available);
     const formattedTotal = formatBytes(total);
@@ -68,14 +104,23 @@ const DeviceProgressBar: React.FC<DeviceProgressProps> = ({
 
     return (
         <ThemeProvider theme={customTheme}>
-            <ProgressBarContainer>
+            <ProgressBarContainer className={className}>
                 <>
-                    <TopText>
+                    <TopText className='progress-bar-top-text'>
                         <span>Used: {usedResult}</span>
                         <CenterText>Available: {availableResult}</CenterText>
                         <RightText>Total: {totalResult}</RightText>
                     </TopText>
-                    <ProgressBar >
+                    <ProgressBar className='progress-bar'>
+                        {thresholds.map(({ id, percentage, color }) => (
+                            <ThresholdDiv
+                                key={id}
+                                id={`threshold-${id}`}
+                                className='progress-bar-threshold'
+                                percentage={percentage}
+                                color={color}
+                            />
+                        ))}
                         <Filler width={capacity} backgroundColor={backgroundColor} className='progress-bar-fill'>
                             {capacityLocation === 'inside' && <span>{capacityText}</span>}
                         </Filler>
