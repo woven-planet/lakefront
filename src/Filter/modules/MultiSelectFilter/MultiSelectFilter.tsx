@@ -2,6 +2,8 @@ import { getUrlFromList } from 'src/Filter/util/filterUtil';
 import MultiSelect from './MultiSelect';
 import { FilterModule, MultiSelectFilterProps, MultiSelectFilterOptions } from 'src/Filter/types';
 
+const INITIAL_VALUE: [] = [];
+
 /**
  * MultiSelectFilter Component
  * 
@@ -22,7 +24,7 @@ const MultiSelectFilter = (
         options,
         label,
         description,
-        initialValue = [],
+        initialValue = INITIAL_VALUE,
         creatable = false,
         disableMenu = false,
         handleCreateItem,
@@ -106,7 +108,7 @@ const MultiSelectFilter = (
         if (browserQueryUrlValue) {
             return typeof browserQueryUrlValue === 'string' ? [browserQueryUrlValue] : browserQueryUrlValue;
         }
-        if (initialValue !== []) {
+        if (initialValue !== INITIAL_VALUE) {
             return typeof initialValue === 'string' ? [initialValue] : initialValue;
         }
 
