@@ -7,12 +7,12 @@ import { ReactComponent as MoreDetails } from './assets/moreDetails.svg';
 
 export interface CardProps {
     /**
-     * This will set the cards h1 heading.
-     */
+    * This will set the cards h1 heading.
+    */
     title: string;
     /**
-     * When clicked will fire a callback.
-     */
+    * When clicked will fire a callback.
+    */
     onClick?: () => void;
     /**
     * Description of the cards intent.
