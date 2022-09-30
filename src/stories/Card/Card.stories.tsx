@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import CardComponent, { CardProps } from 'src/Card/Card';
 import Snackbar from 'src/Snackbar';
 import { MESSAGE_TYPES } from 'src/Snackbar/Snackbar.util';
+import { StyledCard } from './CardStyles';
 
 export default {
     title: 'Lakefront/Card',
@@ -49,42 +50,42 @@ const MultiTemplateCard: Story<CardProps> = () => {
     return (
         <div>
             <Snackbar message='Clicked' open={showMsg} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} onClose={handleClose} type={MESSAGE_TYPES.SUCCESS} />
-            <CardComponent
+            <StyledCard
                 title='Card 1'
                 description='A description of the card being used.'
                 content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
             />
-            <CardComponent
+            <StyledCard
                 title='Card 2'
                 description='A description of the card being used.'
                 content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
             />
-            <CardComponent
+            <StyledCard
                 title='Card 3'
                 description='A description of the card being used.'
                 content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
             />
-            <CardComponent
+            <StyledCard
                 title='Card 4'
                 description='A description of the card being used.'
                 content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
             />
-            <CardComponent
+            <StyledCard
                 title='Card 5'
                 description='A description of the card being used.'
                 content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
             />
-            <CardComponent
+            <StyledCard
                 title='Card 6'
                 description='A description of the card being used.'
                 content={<span style={{ height: 250, width: 500 }}>Card content</span>}
