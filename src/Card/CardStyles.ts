@@ -21,7 +21,7 @@ export const StyledH1Title = styled.h1(() => ({
 export const StyledDescription = styled.p(() => ({
     gridArea: '2',
     marginTop: 'unset',
-    fontSize: 12
+    fontSize: 14
 }));
 
 export const StyledContentContainer = styled.div(() => ({

@@ -16,7 +16,7 @@ export interface CardProps {
     /**
     * Description of the card's intent.
     */
-    description: string;
+    description?: string;
     /**
     * This takes in any ReactNode to be displayed in the main content area of the card.
     */
