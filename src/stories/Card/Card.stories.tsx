@@ -26,10 +26,11 @@ const Template: Story<CardProps> = () => {
             <CardComponent
                 title='Card Title'
                 description='A description of the card being used.'
-                content={<span>Card content</span>}
                 disabled={false}
                 onClick={() => showMessage(true)}
-            />
+                >
+                <span>Card content</span>
+                </CardComponent>
         </div>
     );
 };

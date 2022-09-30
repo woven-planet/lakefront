@@ -1,8 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-import Button from 'src/Button/Button';
-import { CardContentContainer } from './CardStyles';
+import { CardContentContainer, StyledContentContainer, StyledDescription, StyledH1Title, StyledMoreDetailsButton } from './CardStyles';
 import { ReactComponent as MoreDetails } from './assets/moreDetails.svg';
 
 export interface CardProps {
@@ -11,37 +10,45 @@ export interface CardProps {
     */
     title: string;
     /**
-    * When clicked will fire a callback.
+    * This is the callback that is fired when the top-right arrow button is clicked.
     */
     onClick?: () => void;
     /**
-    * Description of the cards intent.
+    * Description of the card's intent.
     */
     description: string;
     /**
-    * This take in any ReactNode.
+    * This takes in any ReactNode to be displayed in the main content area of the card.
     */
     content?: ReactNode;
     /**
     * If the button should or shouldn't be disabled.
     */
     disabled?: boolean;
+    /**
+    * This is to set the class of the Card component.
+    */
+    className?: string;
+    /**
+    * This takes in any ReactNode to be displayed in the top right content area of the card.
+    */
+    topRightComponent?: ReactNode;
 }
 
 /**
  *  The Card Component is used to render a single Card, or a collection of Cards.
  */
-const Card: FC<CardProps> = ({ title, onClick, description, content, disabled }) => {
+const Card: FC<CardProps> = ({ title, onClick, description, className, children, content = children, topRightComponent, disabled }) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <CardContentContainer>
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <div>
-                    {content}
-                </div>
-                <Button
+            <CardContentContainer className={className}>
+                <StyledH1Title>{title}</StyledH1Title>
+                <StyledDescription>{description}</StyledDescription>
+                <StyledContentContainer>
+                    {content || children}
+                </StyledContentContainer>
+                {topRightComponent ? topRightComponent : <StyledMoreDetailsButton
                     disabled={disabled}
                     onClick={
                         disabled
@@ -51,6 +58,7 @@ const Card: FC<CardProps> = ({ title, onClick, description, content, disabled })
                     type='button'
                     icon={<MoreDetails />}
                 />
+                }
 
             </CardContentContainer>
         </ThemeProvider>

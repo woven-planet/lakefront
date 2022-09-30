@@ -19,9 +19,9 @@ describe('<Card />', () => {
         expect(container.querySelector('button')).toBeInTheDocument();
     });
 
-    it('calls onClick when clicked', async () => {
+    it('calls onClick when clicked and disabled is false', async () => {
         const click = jest.fn();
-        const { container, getByText } = render(
+        const { container } = render(
             <Card
                 title='My Card'
                 description='This is a card description.'
@@ -34,5 +34,23 @@ describe('<Card />', () => {
         await waitFor(() => fireEvent.click(button));
 
         expect(click).toHaveBeenCalled();
+    });
+
+    it('does not call onClick when disabled is true', async () => {
+        const click = jest.fn();
+        const { container } = render(
+            <Card
+                title='My Card'
+                description='This is a card description.'
+                content={<span>Span Content</span>}
+                disabled={true}
+                onClick={click}
+            />);
+
+        const button = container.querySelector('button');
+        await waitFor(() => fireEvent.click(button));
+
+        expect(click).not.toHaveBeenCalled();
+        expect(button).toBeDisabled();
     });
 });
