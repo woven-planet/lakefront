@@ -9,6 +9,7 @@ export const CardContentContainer = styled.div(() => ({
     border: `1px solid ${colors.alto}`,
     borderRadius: 3,
     padding: 10,
+    margin: 10,
 
     'h1': {
         fontSize: 20
