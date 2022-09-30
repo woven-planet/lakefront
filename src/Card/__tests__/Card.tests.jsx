@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import Card from '../Card'
+import { Button } from '@storybook/components';
 
 describe('<Card />', () => {
     it('renders CardProps', () => {
@@ -36,7 +37,7 @@ describe('<Card />', () => {
         expect(click).toHaveBeenCalled();
     });
 
-    it('does not call onClick when disabled is true', async () => {
+    it('does not call onClick when disabled is true', () => {
         const click = jest.fn();
         const { container } = render(
             <Card
@@ -48,9 +49,25 @@ describe('<Card />', () => {
             />);
 
         const button = container.querySelector('button');
-        await waitFor(() => fireEvent.click(button));
+        fireEvent.click(button);
 
         expect(click).not.toHaveBeenCalled();
         expect(button).toBeDisabled();
+    });
+
+    it('renders topRightComponent to override original Button.', () => {
+        const { container, getByText } = render(
+            <Card
+                title='My Card'
+                description='This is a card description.'
+                content={<span>Span Content</span>}
+                disabled={false}
+                topRightComponent={<button>Override button</button>}
+                onClick={() => undefined}
+            />);
+
+        const button = container.querySelector('button');
+
+        getByText('Override button');
     });
 });
