@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { colors } from 'react-select/src/theme';
 import { theme } from 'src';
+import lakefrontColors from '../styles/lakefrontColors';
 
 export const ProgressBarContainer = styled.div({
     minHeight: '120px'
@@ -25,7 +26,7 @@ export const RightText = styled.span({
 
 export const ProgressBar = styled.div(({ theme }) => ({
     position: 'relative',
-    height: '40px',
+    height: '32px',
     borderRadius: '4px',
     border: '1px solid',
     borderColor: theme?.colors.mercury,
@@ -37,7 +38,14 @@ export const Filler = styled.div<any>(({ width, backgroundColor, theme }) => ({
     borderRadius: 'inherit',
     transition: 'width .2s ease-in',
     width: width,
-    backgroundColor: backgroundColor
+    backgroundColor: backgroundColor,
+    display: 'flex',
+    alignItems: 'center',
+    span: {
+        marginLeft: '1em'
+    },
+    position: 'absolute',
+    zIndex: 1
 }));
 
 export const BottomText = styled.div({
@@ -45,3 +53,16 @@ export const BottomText = styled.div({
     gridTemplateColumns: '5fr 10fr 5fr',
     paddingTop: '20px'
 });
+
+interface ThresholdProps {
+    color?: string;
+    percentage: string;
+}
+
+export const Threshold = styled.div<ThresholdProps>(({ color = lakefrontColors.red, percentage }) => ({
+    width: percentage,
+    borderRight: `4px solid ${color}`,
+    height: '100%',
+    position: 'absolute',
+    zIndex: 2,
+}));

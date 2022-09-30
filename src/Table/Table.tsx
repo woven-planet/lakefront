@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggleProps } from 'react-table';
-import { StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
+import { HideableTHead, StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
@@ -56,6 +56,11 @@ export interface TableProps {
      * This is to set the row sub component on the table.
      */
     renderRowSubComponent?({ row }: { row: any }): React.ReactNode;
+    /**
+     * This allows displaying the table rows without headers.
+     * This is defaulted to false.
+     */
+    hideHeaders?: boolean;
 }
 
 type CustomTableOptions = TableState<object> & { sortBy: SortByOptions[] }
@@ -75,7 +80,9 @@ const Table: React.FC<TableProps> = ({ className,
     onChangeSort,
     initialSortBy,
     rowProps,
-    renderRowSubComponent }) => {
+    renderRowSubComponent,
+    hideHeaders = false
+}) => {
         /** initalSortBy must be memoized
          * https://react-table-v7.tanstack.com/docs/api/useSortBy#table-options
          */
@@ -112,7 +119,7 @@ const Table: React.FC<TableProps> = ({ className,
         return (
             <ThemeProvider theme={theme}>
                 <TableStyle {...getTableProps()} className={className} style={style}>
-                    <thead>
+                    <HideableTHead hide={hideHeaders}>
                         {headerGroups.map((headerGroup: any) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column: any) => (
@@ -137,7 +144,7 @@ const Table: React.FC<TableProps> = ({ className,
                                 ))}
                             </tr>
                         ))}
-                    </thead>
+                    </HideableTHead>
                     <tbody {...getTableBodyProps()}>
                         {rows.map((row: any) => {
                             prepareRow(row);
