@@ -31,8 +31,6 @@ describe('<Card />', () => {
             />);
 
         const button = container.querySelector('button');
-
-
         await waitFor(() => fireEvent.click(button));
 
         expect(click).toHaveBeenCalled();

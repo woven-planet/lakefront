@@ -11,25 +11,25 @@ export interface CardProps {
      */
     title: string;
     /**
-     * When clicked will open more details.
+     * When clicked will fire a callback.
      */
     onClick?: () => void;
     /**
-    * This should describe what the cards purpse is.
+    * Description of the cards intent.
     */
     description: string;
     /**
-    * This can be any ReactNode.
+    * This take in any ReactNode.
     */
     content?: ReactNode;
     /**
-    * A boolean that defines whether the more details button should be disabled.
+    * If the button should or shouldn't be disabled.
     */
     disabled?: boolean;
 }
 
 /**
- *  The Card Component is used to render a single Card or a collection of Cards.
+ *  The Card Component is used to render a single Card, or a collection of Cards.
  */
 const Card: FC<CardProps> = ({ title, onClick, description, content, disabled }) => {
 
