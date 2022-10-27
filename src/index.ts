@@ -47,7 +47,8 @@ export * from './components/ItemGrid';
 export { default as ItemResults } from './components/ItemResults';
 export * from './components/ItemResults';
 
-export { default as Loading } from './components/Loading/Loading';
+export { default as Loading } from './components/Loading';
+export * from './components/Loading';
 
 export { default as MaskableImage } from './components/MaskableImage/MaskableImage';
 

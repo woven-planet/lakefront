@@ -3,6 +3,7 @@ import { ReactComponent as SpinnerLogo } from './assets/tri_logo_monochrome.svg'
 import { StyledLoadingContainer } from './loadingStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
+
 export interface LoadingProps {
     /**
      * Determines if the component should rotate.
