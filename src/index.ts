@@ -63,6 +63,7 @@ export { default as Page } from './components/Page';
 export * from './components/Page';
 
 export { default as PlaybackBar } from './components/PlaybackBar';
+export * from './components/PlaybackBar';
 
 export { default as CircularProgress } from './components/Progress/CircularProgress';
 
