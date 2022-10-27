@@ -27,6 +27,7 @@ export { default as CopyButton } from './components/CopyButton';
 export * from './components/CopyButton';
 
 export { default as Drawer } from './components/Drawer';
+export * from './components/Drawer';
 
 export { default as Filter } from './components/Filter/Filter';
 export * from './components/Filter/util';
