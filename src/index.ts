@@ -80,7 +80,8 @@ export * from './components/RefreshToolbar';
 export { default as Select } from './components/Select';
 export * from './components/Select';
 
-export { default as SelectPopover } from './components/SelectPopover/SelectPopover';
+export { default as SelectPopover } from './components/SelectPopover';
+export * from './components/SelectPopover';
 
 export { default as Snackbar } from './components/Snackbar/index';
 
