@@ -24,6 +24,7 @@ export { default as Collapsible } from './components/Collapsible';
 export * from './components/Collapsible';
 
 export { default as CopyButton } from './components/CopyButton';
+export * from './components/CopyButton';
 
 export { default as Drawer } from './components/Drawer';
 
