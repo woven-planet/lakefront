@@ -89,9 +89,8 @@ export * from './components/Snackbar';
 export { default as SpeedInput } from './components/SpeedInput';
 export * from './components/SpeedInput';
 
-export { default as StackBanner } from './components/StackBanner/StackBanner';
-
-export { default as StackBannerRow } from './components/StackBanner/StackBannerRow';
+export { default as StackBanner } from './components/StackBanner';
+export * from './components/StackBanner';
 
 export * from './components/StatusTable';
 
