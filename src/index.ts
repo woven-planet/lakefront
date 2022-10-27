@@ -109,6 +109,7 @@ export { default as Table } from './components/Table';
 export * from './components/Table';
 
 export { default as Tabs } from './components/Tabs';
+export * from './components/Tabs';
 
 export { default as TextArea } from './components/TextArea/TextArea';
 
