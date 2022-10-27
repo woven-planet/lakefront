@@ -53,7 +53,8 @@ export * from './components/Loading';
 export { default as MaskableImage } from './components/MaskableImage';
 export * from './components/MaskableImage';
 
-export { default as Modal, ConfirmationModal } from './components/Modal';
+export { default as Modal } from './components/Modal';
+export * from './components/Modal';
 
 export { default as ModeSelector } from './components/ModeSelector/ModeSelector';
 
