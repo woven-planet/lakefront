@@ -92,6 +92,7 @@ export * from './components/SpeedInput';
 export { default as StackBanner } from './components/StackBanner';
 export * from './components/StackBanner';
 
+export { default as StatusTable } from './components/StatusTable';
 export * from './components/StatusTable';
 
 
