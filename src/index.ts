@@ -124,6 +124,5 @@ export * from './components/TypeaheadSearch';
 export { default as colors } from './styles/lakefrontColors';
 export { default as theme } from './styles/theme';
 
-// Types
+// Global Types
 export { SelectOption, TabDef } from './types/global';
-export {MESSAGE_TYPES as SNACKBAR_MESSAGE_TYPES} from './components/Snackbar/Snackbar.util';
