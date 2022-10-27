@@ -5,7 +5,7 @@ import MockTestRenderer from './TestRenderer.util';
 import { parallelExample, simpleExample } from './stepFunctionAuthoring.data';
 import { RESET_MODAL } from '../util';
 
-jest.mock('src/StepFunctionRenderer/StepFunctionRenderer', () => jest.fn((props) => <MockTestRenderer {...props} />));
+jest.mock('src/components/StepFunctionRenderer/StepFunctionRenderer', () => jest.fn((props) => <MockTestRenderer {...props} />));
 
 describe('StepFunctionAuthoring', () => {
     describe('general rendering', () => {
