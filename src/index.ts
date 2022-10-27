@@ -118,6 +118,7 @@ export { default as Toggle } from './components/Toggle';
 export * from './components/Toggle';
 
 export { default as TypeaheadSearch } from './components/TypeaheadSearch';
+export * from './components/TypeaheadSearch';
 
 // Theme
 export { default as colors } from './styles/lakefrontColors';
