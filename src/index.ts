@@ -17,7 +17,8 @@ export * from './components/Card';
 export { default as Checkbox } from './components/Checkbox';
 export * from './components/Checkbox';
 
-export { default as CheckboxGroup } from './components/CheckboxGroup/CheckboxGroup';
+export { default as CheckboxGroup } from './components/CheckboxGroup';
+export * from './components/CheckboxGroup';
 
 export { default as Collapsible } from './components/Collapsible/Collapsible';
 
