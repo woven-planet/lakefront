@@ -106,6 +106,7 @@ export { default as StepFunctionRenderer } from './components/StepFunctionRender
 export * from './components/StepFunctionRenderer';
 
 export { default as Table } from './components/Table';
+export * from './components/Table';
 
 export { default as Tabs } from './components/Tabs';
 
