@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import CollapsibleComponent, { CollapsibleProps } from 'src/Collapsible/Collapsible';
+import CollapsibleComponent, { CollapsibleProps } from 'src/components/Collapsible/Collapsible';
 import DocBlock from '.storybook/DocBlock';
 
 export default {

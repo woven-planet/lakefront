@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage, { SINGLE_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
 import SingleSelectFilterDocs, { SingleSelectFilterArgs, SINGLE_SELECT_FILTER_SOURCE_CODE } from './SingleSelectFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { SingleSelectFilter as SingleSelectFilterFunction } from 'src/Filter/modules';
+import { SingleSelectFilter as SingleSelectFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/SingleSelectFilter',

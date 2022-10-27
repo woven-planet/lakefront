@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage, { MULTI_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
 import MultiSelectFilterDocs, { MultiSelectFilterArgs, MULTI_SELECT_FILTER_SOURCE_CODE } from './MultiSelectFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { MultiSelectFilter as MultiSelectFilterFunction } from 'src/Filter/modules';
+import { MultiSelectFilter as MultiSelectFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/MultiSelectFilter',

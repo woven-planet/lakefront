@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import ModeSelectorComponent, { ModeSelectorProps } from 'src/ModeSelector/ModeSelector';
+import ModeSelectorComponent, { ModeSelectorProps } from 'src/components/ModeSelector/ModeSelector';
 import { SelectOption } from 'src/types/global';
 import lakefrontColors from '../../styles/lakefrontColors';
 

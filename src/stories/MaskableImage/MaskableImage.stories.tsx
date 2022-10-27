@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, useState, useEffect, useRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import MaskableImageComponent, { MaskableImageProps } from 'src/MaskableImage'
+import MaskableImageComponent, { MaskableImageProps } from 'src/components/MaskableImage'
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
 import imageFile from './__assets__/Nature.jpg';

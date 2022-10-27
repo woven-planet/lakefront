@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import StepFunctionRendererComponent from 'src/StepFunctionRenderer/StepFunctionRenderer';
-import { StepFunction } from 'src/StepFunctionRenderer/types';
+import StepFunctionRendererComponent from 'src/components/StepFunctionRenderer/StepFunctionRenderer';
+import { StepFunction } from 'src/components/StepFunctionRenderer/types';
 
 export default {
     title: 'Lakefront/StepFunctionRenderer',

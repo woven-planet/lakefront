@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import CardComponent, { CardProps } from 'src/Card/Card';
-import Snackbar from 'src/Snackbar';
-import { MESSAGE_TYPES } from 'src/Snackbar/Snackbar.util';
+import CardComponent, { CardProps } from 'src/components/Card/Card';
+import Snackbar from 'src/components/Snackbar';
+import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';
 import { StyledCard } from './CardStyles';
 
 export default {

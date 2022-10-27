@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import DrawerComponent, { DrawerProps } from 'src/Drawer';
+import DrawerComponent, { DrawerProps } from 'src/components/Drawer';
 import DocBlock from '.storybook/DocBlock';
-import Button from 'src/Button/Button';
+import Button from 'src/components/Button/Button';
 import { emerald } from 'src/styles/lakefrontColors';
 
 export default {

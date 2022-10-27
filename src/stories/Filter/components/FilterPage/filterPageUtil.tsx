@@ -6,7 +6,7 @@ import {
     SingleSelectFilter,
     TextFilter,
     DurationFilter
-} from 'src/Filter/modules';
+} from 'src/components/Filter/modules';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 export const MULTI_SELECT_FILTER_OPTIONS = [

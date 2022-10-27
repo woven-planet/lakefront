@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import SpeedInputComponent, { Mode, SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/SpeedInput/SpeedInput';
+import SpeedInputComponent, { Mode, SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/components/SpeedInput/SpeedInput';
 import { emerald } from 'src/styles/lakefrontColors';
 
 export default {

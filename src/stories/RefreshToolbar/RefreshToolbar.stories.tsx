@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useEffect, useState, useRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import RefreshToolbarComponent, { RefreshToolbarProps } from 'src/RefreshToolbar';
-import Button from 'src/Button/Button';
+import RefreshToolbarComponent, { RefreshToolbarProps } from 'src/components/RefreshToolbar';
+import Button from 'src/components/Button/Button';
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
 

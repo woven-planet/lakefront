@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useState, useRef, useEffect } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import PlaybackBarComponent, { PlaybackBarProps } from 'src/PlaybackBar';
+import PlaybackBarComponent, { PlaybackBarProps } from 'src/components/PlaybackBar';
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
 

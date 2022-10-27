@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage from '../components/FilterPage';
 import RadioFilterDocs, { RadioFilterArgs, RADIO_FILTER_SOURCE_CODE } from './RadioFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { RadioFilter as RadioFilterFunction } from 'src/Filter/modules';
+import { RadioFilter as RadioFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/RadioFilter',

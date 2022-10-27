@@ -2,9 +2,9 @@
 import { ComponentPropsWithoutRef, useState, useEffect, useRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import Input from 'src/Input/Input';
-import Button from 'src/Button/Button';
-import ItemResultComponent, { ItemResultsProps } from 'src/ItemResults';
+import Input from 'src/components/Input/Input';
+import Button from 'src/components/Button/Button';
+import ItemResultComponent, { ItemResultsProps } from 'src/components/ItemResults';
 import { emerald } from 'src/styles/lakefrontColors';
 import DocBlock from '.storybook/DocBlock';
 import { Primary } from '@storybook/addon-docs/blocks';

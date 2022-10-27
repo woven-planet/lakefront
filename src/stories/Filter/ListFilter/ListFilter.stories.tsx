@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import FilterPage from '../components/FilterPage';
 import DocBlock from '.storybook/DocBlock';
-import { ListFilter as ListFilterFunction } from 'src/Filter/modules';
+import { ListFilter as ListFilterFunction } from 'src/components/Filter/modules';
 import ListFilterDocs, { LIST_FILTER_SOURCE_CODE, ListFilterArgs } from './ListFilterDocs';
 import { listFilterOptions } from './listFilterUtil';
 

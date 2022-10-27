@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import CopyButtonComponent, { CopyButtonProps } from 'src/CopyButton';
-import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
-import Input from 'src/Input/Input';
+import CopyButtonComponent, { CopyButtonProps } from 'src/components/CopyButton';
+import { ButtonComponentProps, COLORS } from 'src/components/Button/buttonUtil';
+import Input from 'src/components/Input/Input';
 import DocBlock from '.storybook/DocBlock';
 import { green, saturatedRed } from 'src/styles/lakefrontColors';
 

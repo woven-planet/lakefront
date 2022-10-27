@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import Button from 'src/Button/Button';
-import { ButtonComponentProps, COLORS } from 'src/Button/buttonUtil';
+import Button from 'src/components/Button/Button';
+import { ButtonComponentProps, COLORS } from 'src/components/Button/buttonUtil';
 import ButtonsPage from './ButtonsPage';
 import DocBlock from '.storybook/DocBlock';
 

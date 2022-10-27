@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import Button from 'src/Button/Button';
-import TableComponent, { TableProps } from 'src/Table';
+import Button from 'src/components/Button/Button';
+import TableComponent, { TableProps } from 'src/components/Table';
 import DocBlock from '.storybook/DocBlock';
 import styled from '@emotion/styled';
-import { ReactComponent as ChevronUp } from 'src/Collapsible/assets/chevron-up.svg';
-import { ReactComponent as ChevronDown } from 'src/Collapsible/assets/chevron-down.svg';
+import { ReactComponent as ChevronUp } from 'src/components/Collapsible/assets/chevron-up.svg';
+import { ReactComponent as ChevronDown } from 'src/components/Collapsible/assets/chevron-down.svg';
 import lakefrontColors from 'src/styles/lakefrontColors';
 
 export default {

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MultiSelectFilterOptions, MultiSelectFilterProps } from 'src/Filter/types';
+import { MultiSelectFilterOptions, MultiSelectFilterProps } from 'src/components/Filter/types';
 import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface MultiSelectFilterArgs {

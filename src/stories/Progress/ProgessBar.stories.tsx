@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ProgressBarComponent, { ProgressBarProps } from 'src/Progress/ProgressBar';
+import ProgressBarComponent, { ProgressBarProps } from 'src/components/Progress/ProgressBar';
 import DocBlock from '.storybook/DocBlock';
 import { PROGRESS_COLOR_SCHEME } from 'src/stories/Progress/progressColors';
 import styled from '@emotion/styled';

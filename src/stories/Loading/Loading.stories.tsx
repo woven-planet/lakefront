@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import LoadingComponent, { LoadingProps } from 'src/Loading/Loading';
+import LoadingComponent, { LoadingProps } from 'src/components/Loading/Loading';
 import DocBlock from '.storybook/DocBlock';
 
 export default {

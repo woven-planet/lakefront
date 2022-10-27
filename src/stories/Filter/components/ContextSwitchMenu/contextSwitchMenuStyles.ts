@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Button from 'src/Button/Button';
+import Button from 'src/components/Button/Button';
 
 export const ButtonLabel = styled.div({
     fontFamily: "'Source Sans Pro', sans-serif",

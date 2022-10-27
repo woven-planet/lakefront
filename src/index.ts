@@ -1,95 +1,95 @@
 // Components
-export { default as AnchorCopy } from './AnchorCopy';
+export { default as AnchorCopy } from './components/AnchorCopy';
 
-export { default as BoundingBoxes } from './BoundingBoxes';
+export { default as BoundingBoxes } from './components/BoundingBoxes';
 
-export { default as BreadcrumbHeader, Breadcrumb, RouteProp } from './Breadcrumb';
+export { default as BreadcrumbHeader, Breadcrumb, RouteProp } from './components/Breadcrumb';
 
-export { default as Button } from './Button/Button';
+export { default as Button } from './components/Button/Button';
 
-export { default as Card } from './Card/Card';
+export { default as Card } from './components/Card/Card';
 
-export { default as Checkbox } from './Checkbox/Checkbox';
+export { default as Checkbox } from './components/Checkbox/Checkbox';
 
-export { default as CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+export { default as CheckboxGroup } from './components/CheckboxGroup/CheckboxGroup';
 
-export { default as Collapsible } from './Collapsible/Collapsible';
+export { default as Collapsible } from './components/Collapsible/Collapsible';
 
-export { default as CopyButton } from './CopyButton';
+export { default as CopyButton } from './components/CopyButton';
 
-export { default as Drawer } from './Drawer';
+export { default as Drawer } from './components/Drawer';
 
-export { default as Filter } from './Filter/Filter';
-export * from './Filter/util';
-export * from './Filter/types';
-export * from './Filter/modules';
+export { default as Filter } from './components/Filter/Filter';
+export * from './components/Filter/util';
+export * from './components/Filter/types';
+export * from './components/Filter/modules';
 
-export { default as Header } from './Page/Header';
+export { default as Header } from './components/Page/Header';
 
-export { default as IconButton } from './Button/IconButton';
+export { default as IconButton } from './components/Button/IconButton';
 
-export { default as Input } from './Input/Input';
+export { default as Input } from './components/Input/Input';
 
-export { default as ItemGrid } from './ItemGrid/ItemGrid';
+export { default as ItemGrid } from './components/ItemGrid/ItemGrid';
 
-export { default as ItemResults } from './ItemResults/ItemResults';
+export { default as ItemResults } from './components/ItemResults/ItemResults';
 
-export { default as Loading } from './Loading/Loading';
+export { default as Loading } from './components/Loading/Loading';
 
-export { default as MaskableImage } from './MaskableImage/MaskableImage';
+export { default as MaskableImage } from './components/MaskableImage/MaskableImage';
 
-export { default as Modal, ConfirmationModal } from './Modal';
+export { default as Modal, ConfirmationModal } from './components/Modal';
 
-export { default as ModeSelector } from './ModeSelector/ModeSelector';
+export { default as ModeSelector } from './components/ModeSelector/ModeSelector';
 
-export { default as Page } from './Page/Page';
+export { default as Page } from './components/Page/Page';
 
-export { default as PlaybackBar } from './PlaybackBar';
+export { default as PlaybackBar } from './components/PlaybackBar';
 
-export { default as CircularProgress } from './Progress/CircularProgress';
+export { default as CircularProgress } from './components/Progress/CircularProgress';
 
-export { default as ProgressBar } from './Progress/ProgressBar';
+export { default as ProgressBar } from './components/Progress/ProgressBar';
 
-export { default as PropertyList, Property, PropertyListVariable } from './PropertyList/PropertyList';
+export { default as PropertyList, Property, PropertyListVariable } from './components/PropertyList/PropertyList';
 
-export { default as DeviceProgressBar } from './Progress/DeviceProgressBar';
+export { default as DeviceProgressBar } from './components/Progress/DeviceProgressBar';
 
-export { default as RadioGroup } from './RadioGroup/RadioGroup';
+export { default as RadioGroup } from './components/RadioGroup/RadioGroup';
 
-export { default as RefreshToolbar, RefreshToolbarProps } from './RefreshToolbar';
+export { default as RefreshToolbar, RefreshToolbarProps } from './components/RefreshToolbar';
 
-export { default as Select } from './Select';
+export { default as Select } from './components/Select';
 
-export { default as SelectPopover } from './SelectPopover/SelectPopover';
+export { default as SelectPopover } from './components/SelectPopover/SelectPopover';
 
-export { default as Snackbar } from './Snackbar/index';
+export { default as Snackbar } from './components/Snackbar/index';
 
-export { default as SpeedInput } from './SpeedInput/SpeedInput';
+export { default as SpeedInput } from './components/SpeedInput/SpeedInput';
 
-export { default as StackBanner } from './StackBanner/StackBanner';
+export { default as StackBanner } from './components/StackBanner/StackBanner';
 
-export { default as StackBannerRow } from './StackBanner/StackBannerRow';
+export { default as StackBannerRow } from './components/StackBanner/StackBannerRow';
 
-export * from './StatusTable';
+export * from './components/StatusTable';
 
 
-export { default as StepFunctionAuthoring } from './StepFunctionAuthoring';
-export * from './StepFunctionAuthoring/util';
-export * from './StepFunctionAuthoring/types';
+export { default as StepFunctionAuthoring } from './components/StepFunctionAuthoring';
+export * from './components/StepFunctionAuthoring/util';
+export * from './components/StepFunctionAuthoring/types';
 
-export { default as StepFunctionGraph } from './StepFunctionGraph/Graph';
+export { default as StepFunctionGraph } from './components/StepFunctionGraph/Graph';
 
-export { default as StepFunctionRenderer } from './StepFunctionRenderer/StepFunctionRenderer';
+export { default as StepFunctionRenderer } from './components/StepFunctionRenderer/StepFunctionRenderer';
 
-export { default as Table } from './Table';
+export { default as Table } from './components/Table';
 
-export { default as Tabs } from './Tabs';
+export { default as Tabs } from './components/Tabs';
 
-export { default as TextArea } from './TextArea/TextArea';
+export { default as TextArea } from './components/TextArea/TextArea';
 
-export { default as Toggle } from './Toggle/Toggle';
+export { default as Toggle } from './components/Toggle/Toggle';
 
-export { default as TypeaheadSearch } from './TypeaheadSearch';
+export { default as TypeaheadSearch } from './components/TypeaheadSearch';
 
 // Theme
 export { default as colors } from './styles/lakefrontColors';
@@ -97,4 +97,4 @@ export { default as theme } from './styles/theme';
 
 // Types
 export { SelectOption, TabDef } from './types/global';
-export {MESSAGE_TYPES as SNACKBAR_MESSAGE_TYPES} from './Snackbar/Snackbar.util';
+export {MESSAGE_TYPES as SNACKBAR_MESSAGE_TYPES} from './components/Snackbar/Snackbar.util';

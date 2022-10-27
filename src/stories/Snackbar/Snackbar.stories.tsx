@@ -1,8 +1,8 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
-import SnackbarComponent, { SnackbarProps } from 'src/Snackbar/index';
+import SnackbarComponent, { SnackbarProps } from 'src/components/Snackbar/index';
 import DocBlock from '.storybook/DocBlock';
-import { MESSAGE_TYPES } from 'src/Snackbar/Snackbar.util';
-import { StyledSnackbarButton } from 'src/Snackbar/snackbarStyles';
+import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';
+import { StyledSnackbarButton } from 'src/components/Snackbar/snackbarStyles';
 import { useState } from 'react';
 
 export default {

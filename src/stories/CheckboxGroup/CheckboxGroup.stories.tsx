@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useState, useEffect } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import CheckboxGroupComponent, { CheckboxGroupProps } from 'src/CheckboxGroup/CheckboxGroup';
+import CheckboxGroupComponent, { CheckboxGroupProps } from 'src/components/CheckboxGroup/CheckboxGroup';
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
 

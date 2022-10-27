@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import HeaderComponent from 'src/Page/Header';
+import HeaderComponent from 'src/components/Page/Header';
 import DocBlock from '.storybook/DocBlock';
 
 export default {

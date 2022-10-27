@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Input from 'src/Input/Input';
+import Input from 'src/components/Input/Input';
 
 export const PreviewBar = styled(Input)({
     width: '100%',

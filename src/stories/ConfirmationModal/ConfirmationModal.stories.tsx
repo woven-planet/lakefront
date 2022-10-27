@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import ConfirmationModalComponent, { ConfirmationModalProps } from 'src/Modal/ConfirmationModal';
+import ConfirmationModalComponent, { ConfirmationModalProps } from 'src/components/Modal/ConfirmationModal';
 import DocBlock from '.storybook/DocBlock';
-import Button from 'src/Button/Button';
+import Button from 'src/components/Button/Button';
 
 export default {
     title: 'Lakefront/Modal/ConfirmationModal',

@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import FilterPage from './components/FilterPage';
-import FilterComponent from 'src/Filter/Filter';
+import FilterComponent from 'src/components/Filter/Filter';
 import DocBlock from '.storybook/DocBlock';
 
 export default {

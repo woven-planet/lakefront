@@ -2,7 +2,7 @@ import { FC } from 'react';
 import {
     DoubleMultiSelectFilterOptions,
     DoubleMultiSelectFilterProps
-} from 'src/Filter/types';
+} from 'src/components/Filter/types';
 import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface DoubleMultiSelectFilterArgs {

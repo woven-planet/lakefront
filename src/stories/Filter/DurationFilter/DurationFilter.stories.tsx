@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage from '../components/FilterPage';
 import DurationFilterDocs, { DurationFilterArgs, DURATION_FILTER_SOURCE_CODE } from './DurationFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { DurationFilter as DurationFilterFunction } from 'src/Filter/modules';
+import { DurationFilter as DurationFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/DurationFilter',
