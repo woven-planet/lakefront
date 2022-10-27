@@ -102,7 +102,8 @@ export * from './components/StepFunctionAuthoring/types';
 export { default as StepFunctionGraph } from './components/StepFunctionGraph';
 export * from './components/StepFunctionGraph';
 
-export { default as StepFunctionRenderer } from './components/StepFunctionRenderer/StepFunctionRenderer';
+export { default as StepFunctionRenderer } from './components/StepFunctionRenderer';
+export * from './components/StepFunctionRenderer';
 
 export { default as Table } from './components/Table';
 
