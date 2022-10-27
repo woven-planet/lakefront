@@ -78,6 +78,7 @@ export { default as RefreshToolbar } from './components/RefreshToolbar';
 export * from './components/RefreshToolbar';
 
 export { default as Select } from './components/Select';
+export * from './components/Select';
 
 export { default as SelectPopover } from './components/SelectPopover/SelectPopover';
 
