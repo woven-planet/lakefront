@@ -83,7 +83,8 @@ export * from './components/Select';
 export { default as SelectPopover } from './components/SelectPopover';
 export * from './components/SelectPopover';
 
-export { default as Snackbar } from './components/Snackbar/index';
+export { default as Snackbar } from './components/Snackbar';
+export * from './components/Snackbar';
 
 export { default as SpeedInput } from './components/SpeedInput/SpeedInput';
 
