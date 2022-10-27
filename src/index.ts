@@ -38,7 +38,8 @@ export { default as Header } from './components/Page/Header';
 
 export { default as IconButton } from './components/Button/IconButton';
 
-export { default as Input } from './components/Input/Input';
+export { default as Input } from './components/Input';
+export * from './components/Input';
 
 export { default as ItemGrid } from './components/ItemGrid/ItemGrid';
 
