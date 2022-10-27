@@ -20,7 +20,8 @@ export * from './components/Checkbox';
 export { default as CheckboxGroup } from './components/CheckboxGroup';
 export * from './components/CheckboxGroup';
 
-export { default as Collapsible } from './components/Collapsible/Collapsible';
+export { default as Collapsible } from './components/Collapsible';
+export * from './components/Collapsible';
 
 export { default as CopyButton } from './components/CopyButton';
 
