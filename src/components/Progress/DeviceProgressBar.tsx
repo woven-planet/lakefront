@@ -13,7 +13,7 @@ import { ThemeProvider } from '@emotion/react';
 import { formatBytes } from './deviceProgressBarUtil';
 import customTheme from 'src/styles/theme';
 
-interface Threshold {
+export interface DeviceProgressBarThreshold {
     /**
      * The unique id of the threshold.
      */
@@ -69,7 +69,7 @@ export interface DeviceProgressProps {
     /**
      * These are optional thresholds to set on the progress bar.
      */
-    thresholds?: Threshold[];
+    thresholds?: DeviceProgressBarThreshold[];
 }
 
 

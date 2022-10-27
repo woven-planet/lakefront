@@ -65,13 +65,10 @@ export * from './components/Page';
 export { default as PlaybackBar } from './components/PlaybackBar';
 export * from './components/PlaybackBar';
 
-export { default as CircularProgress } from './components/Progress/CircularProgress';
-
-export { default as ProgressBar } from './components/Progress/ProgressBar';
+export { default as ProgressBar } from './components/Progress';
+export * from './components/Progress';
 
 export { default as PropertyList, Property, PropertyListVariable } from './components/PropertyList/PropertyList';
-
-export { default as DeviceProgressBar } from './components/Progress/DeviceProgressBar';
 
 export { default as RadioGroup } from './components/RadioGroup/RadioGroup';
 
