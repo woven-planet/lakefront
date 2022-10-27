@@ -29,7 +29,7 @@ export * from './components/CopyButton';
 export { default as Drawer } from './components/Drawer';
 export * from './components/Drawer';
 
-export { default as Filter } from './components/Filter/Filter';
+export { default as Filter } from './components/Filter';
 export * from './components/Filter/util';
 export * from './components/Filter/types';
 export * from './components/Filter/modules';
