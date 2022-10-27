@@ -71,7 +71,8 @@ export * from './components/Progress';
 export { default as PropertyList } from './components/PropertyList';
 export * from './components/PropertyList';
 
-export { default as RadioGroup } from './components/RadioGroup/RadioGroup';
+export { default as RadioGroup } from './components/RadioGroup';
+export * from './components/RadioGroup';
 
 export { default as RefreshToolbar, RefreshToolbarProps } from './components/RefreshToolbar';
 
