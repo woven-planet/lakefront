@@ -1,5 +1,6 @@
 // Components
 export { default as AnchorCopy } from './components/AnchorCopy';
+export * from './components/AnchorCopy'
 
 export { default as BoundingBoxes } from './components/BoundingBoxes';
 
