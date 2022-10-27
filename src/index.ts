@@ -114,7 +114,8 @@ export * from './components/Tabs';
 export { default as TextArea } from './components/TextArea';
 export * from './components/TextArea';
 
-export { default as Toggle } from './components/Toggle/Toggle';
+export { default as Toggle } from './components/Toggle';
+export * from './components/Toggle';
 
 export { default as TypeaheadSearch } from './components/TypeaheadSearch';
 
