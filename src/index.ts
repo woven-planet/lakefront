@@ -41,7 +41,8 @@ export { default as IconButton } from './components/Button/IconButton';
 export { default as Input } from './components/Input';
 export * from './components/Input';
 
-export { default as ItemGrid } from './components/ItemGrid/ItemGrid';
+export { default as ItemGrid } from './components/ItemGrid';
+export * from './components/ItemGrid';
 
 export { default as ItemResults } from './components/ItemResults/ItemResults';
 
