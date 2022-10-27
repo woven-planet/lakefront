@@ -13,20 +13,10 @@ export interface SelectOption<T> {
     value: T;
 }
 
-
 /**
  * This is the structure of Tabs.
  */
 export interface TabDef {
     key: string;
     caption: string;
-}
-
-/**
- * This is the structure for Highlights.
- */
-export interface HighlightsProp {
-    start: number;
-    end: number;
-    playback: boolean;
 }
