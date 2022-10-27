@@ -111,7 +111,8 @@ export * from './components/Table';
 export { default as Tabs } from './components/Tabs';
 export * from './components/Tabs';
 
-export { default as TextArea } from './components/TextArea/TextArea';
+export { default as TextArea } from './components/TextArea';
+export * from './components/TextArea';
 
 export { default as Toggle } from './components/Toggle/Toggle';
 
