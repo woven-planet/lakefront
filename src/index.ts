@@ -5,7 +5,8 @@ export * from './components/AnchorCopy'
 export { default as BoundingBoxes } from './components/BoundingBoxes';
 export * from './components/BoundingBoxes'
 
-export { default as BreadcrumbHeader, Breadcrumb, RouteProp } from './components/Breadcrumb';
+export { default as BreadcrumbHeader } from './components/Breadcrumb';
+export * from './components/Breadcrumb';
 
 export { default as Button } from './components/Button/Button';
 
