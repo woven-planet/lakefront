@@ -50,7 +50,8 @@ export * from './components/ItemResults';
 export { default as Loading } from './components/Loading';
 export * from './components/Loading';
 
-export { default as MaskableImage } from './components/MaskableImage/MaskableImage';
+export { default as MaskableImage } from './components/MaskableImage';
+export * from './components/MaskableImage';
 
 export { default as Modal, ConfirmationModal } from './components/Modal';
 

@@ -6,7 +6,8 @@ import { MaskableImageContainer, MaskedImage, LoadingSpinner, DisplayImage, High
     from './maskableImageStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-export interface EpisodeImageTagProp {
+
+export interface ImageTagProps {
     id: number;
     name: string;
     model: string;
@@ -56,9 +57,9 @@ export interface MaskableImageProps {
      */
     highlighted?: boolean;
     /**
-     * This is to set the biunding box tags.
+     * This is to set the bounding box tags.
      */
-    boundingBoxTags?: EpisodeImageTagProp[];
+    boundingBoxTags?: ImageTagProps[];
     /**
      * This will set the show spinner property bey default.
      */
