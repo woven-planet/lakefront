@@ -8,7 +8,8 @@ export * from './components/BoundingBoxes'
 export { default as BreadcrumbHeader } from './components/Breadcrumb';
 export * from './components/Breadcrumb';
 
-export { default as Button } from './components/Button/Button';
+export { default as Button } from './components/Button';
+export * from './components/Button';
 
 export { default as Card } from './components/Card/Card';
 
