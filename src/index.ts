@@ -14,7 +14,8 @@ export * from './components/Button';
 export { default as Card } from './components/Card';
 export * from './components/Card';
 
-export { default as Checkbox } from './components/Checkbox/Checkbox';
+export { default as Checkbox } from './components/Checkbox';
+export * from './components/Checkbox';
 
 export { default as CheckboxGroup } from './components/CheckboxGroup/CheckboxGroup';
 
