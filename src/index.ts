@@ -74,7 +74,8 @@ export * from './components/PropertyList';
 export { default as RadioGroup } from './components/RadioGroup';
 export * from './components/RadioGroup';
 
-export { default as RefreshToolbar, RefreshToolbarProps } from './components/RefreshToolbar';
+export { default as RefreshToolbar } from './components/RefreshToolbar';
+export * from './components/RefreshToolbar';
 
 export { default as Select } from './components/Select';
 
