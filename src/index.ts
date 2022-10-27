@@ -44,7 +44,8 @@ export * from './components/Input';
 export { default as ItemGrid } from './components/ItemGrid';
 export * from './components/ItemGrid';
 
-export { default as ItemResults } from './components/ItemResults/ItemResults';
+export { default as ItemResults } from './components/ItemResults';
+export * from './components/ItemResults';
 
 export { default as Loading } from './components/Loading/Loading';
 
