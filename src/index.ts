@@ -59,7 +59,8 @@ export * from './components/Modal';
 export { default as ModeSelector } from './components/ModeSelector';
 export * from './components/ModeSelector';
 
-export { default as Page } from './components/Page/Page';
+export { default as Page } from './components/Page';
+export * from './components/Page';
 
 export { default as PlaybackBar } from './components/PlaybackBar';
 
