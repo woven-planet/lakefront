@@ -23,7 +23,8 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "test-watch": "jest --watch",
-    "update-readme": "node index.js"
+    "update-readme": "node index.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
