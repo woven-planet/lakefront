@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import RadioGroup, { RadioGroupProps } from 'src/RadioGroup/RadioGroup';
+import RadioGroup, { RadioGroupProps } from 'src/components/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';
 import { blue } from 'src/styles/lakefrontColors';
 

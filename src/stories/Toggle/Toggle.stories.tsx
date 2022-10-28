@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import ToggleComponent, { ToggleProps } from 'src/Toggle/Toggle';
+import ToggleComponent, { ToggleProps } from 'src/components/Toggle/Toggle';
 import { SelectOption } from 'src/types/global';
 
 export default {

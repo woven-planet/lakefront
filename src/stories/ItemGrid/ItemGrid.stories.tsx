@@ -2,7 +2,7 @@
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import ItemGridComponent, { ItemGridProps } from 'src/ItemGrid';
+import ItemGridComponent, { ItemGridProps } from 'src/components/ItemGrid';
 import DocBlock from '.storybook/DocBlock';
 import { ArgsTable } from '@storybook/components';
 

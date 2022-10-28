@@ -1,8 +1,8 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import SelectPopover, { SelectPopoverProps } from 'src/SelectPopover/SelectPopover';
+import SelectPopover, { SelectPopoverProps } from 'src/components/SelectPopover/SelectPopover';
 import DocBlock from '.storybook/DocBlock';
-import Button from 'src/Button/Button';
+import Button from 'src/components/Button/Button';
 import { blue } from 'src/styles/lakefrontColors';
 
 export default {

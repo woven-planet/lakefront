@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { AdditionalJSONFilterOptions } from 'src/Filter/types';
+import { AdditionalJSONFilterOptions } from 'src/components/Filter/types';
 import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface AdditionalJSONFilterArgs {

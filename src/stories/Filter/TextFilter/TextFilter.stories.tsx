@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage from '../components/FilterPage';
 import TextFilterDocs, { TextFilterArgs, TEXT_FILTER_SOURCE_CODE } from './TextFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { TextFilter as TextFilterFunction } from 'src/Filter/modules';
+import { TextFilter as TextFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/TextFilter',

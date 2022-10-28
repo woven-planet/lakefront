@@ -1,7 +1,7 @@
 
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import PropertyListComponent, { PropertyListProps, Property } from 'src/PropertyList';
+import PropertyListComponent, { PropertyListProps, Property } from 'src/components/PropertyList';
 import DocBlock from '.storybook/DocBlock';
 export default {
     title: 'Lakefront/PropertyList',

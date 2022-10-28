@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 
-import Loading from 'src/Loading/Loading';
-import { TypeaheadSearchResultProps } from 'src/TypeaheadSearch';
-import { TypeaheadResultItem } from 'src/TypeaheadSearch/TypeaheadResults';
+import Loading from 'src/components/Loading/Loading';
+import { TypeaheadSearchResultProps } from 'src/components/TypeaheadSearch';
+import { TypeaheadResultItem } from 'src/components/TypeaheadSearch/TypeaheadResults';
 import styled from '@emotion/styled';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';

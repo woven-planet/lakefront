@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import PageComponent, { PageProps } from 'src/Page/Page';
-import HeaderComponent from 'src/Page/Header';
+import PageComponent, { PageProps } from 'src/components/Page/Page';
+import HeaderComponent from 'src/components/Page/Header';
 import DocBlock from '.storybook/DocBlock';
 import FilterPageWithCollapse from '../Filter/components/FilterPage/FilterPageWithCollapse';
-import { RadioFilter as RadioFilterFunction } from 'src/Filter/modules';
+import { RadioFilter as RadioFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Page',

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import TextArea from 'src/TextArea/TextArea';
+import TextArea from 'src/components/TextArea/TextArea';
 
 export const ButtonWrapper = styled.div({
     display: 'flex',

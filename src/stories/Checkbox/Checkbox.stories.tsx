@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import CheckboxComponent, { CheckboxProps } from 'src/Checkbox/Checkbox';
+import CheckboxComponent, { CheckboxProps } from 'src/components/Checkbox/Checkbox';
 import DocBlock from '.storybook/DocBlock';
 import { action } from '@storybook/addon-actions';
 

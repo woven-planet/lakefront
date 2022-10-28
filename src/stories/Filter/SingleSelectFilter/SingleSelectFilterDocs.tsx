@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { SingleSelectFilterOptions, SingleSelectFilterProps } from 'src/Filter/types';
+import { SingleSelectFilterOptions, SingleSelectFilterProps } from 'src/components/Filter/types';
 import { createFilterSourceCode } from 'src/stories/Filter/filterStoriesUtil';
 
 export interface SingleSelectFilterArgs {

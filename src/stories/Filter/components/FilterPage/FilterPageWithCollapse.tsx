@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import Filter from 'src/Filter/Filter';
+import Filter from 'src/components/Filter/Filter';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-import { useFilter } from 'src/Filter/util';
+import { useFilter } from 'src/components/Filter/util';
 import { ContextSwitchMenu, FilterBar, FilterJSONConfirmationModal, FilterJSONInput, UrlPreview } from '..';
-import { FilterComponentProps, FilterSet } from 'src/Filter/types';
+import { FilterComponentProps, FilterSet } from 'src/components/Filter/types';
 import { PageWrapper, PageBodyWithCollapseSection } from './filterPageStyles';
 import { FILTERS, LOCATION } from './filterPageUtil';
-import CollapsibleComponent, { CollapsibleProps } from 'src/Collapsible/Collapsible';
+import CollapsibleComponent, { CollapsibleProps } from 'src/components/Collapsible/Collapsible';
 
 interface FilterPageProps {
     pageFilters?: FilterSet;

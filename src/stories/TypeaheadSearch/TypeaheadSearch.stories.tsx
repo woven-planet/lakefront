@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import TypeaheadSearch, { TypeaheadSearchProps } from 'src/TypeaheadSearch';
+import TypeaheadSearch, { TypeaheadSearchProps } from 'src/components/TypeaheadSearch';
 import DocBlock from '.storybook/DocBlock';
-import { TypeaheadResultItem } from 'src/TypeaheadSearch/TypeaheadResults';
+import { TypeaheadResultItem } from 'src/components/TypeaheadSearch/TypeaheadResults';
 import TypeaheadCustom, { LAKEFRONT_NAMES } from './TypeaheadCustomDemo';
 
 export default {

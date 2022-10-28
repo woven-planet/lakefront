@@ -5,11 +5,11 @@ import {
   WARNING_SEVERITY,
   ERROR_SEVERITY,
   StackBannerStoryContent,
-} from 'src/StackBanner/stackBannerUtil';
+} from 'src/components/StackBanner/stackBannerUtil';
 
 import StackBannerComponent, {
   StackBannerProps,
-} from 'src/StackBanner/StackBanner';
+} from 'src/components/StackBanner/StackBanner';
 import DocBlock from '.storybook/DocBlock';
 
 export default {

@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage from '../components/FilterPage';
 import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { DoubleMultiSelectFilter as DoubleMultiSelectFilterFunction } from 'src/Filter/modules';
+import { DoubleMultiSelectFilter as DoubleMultiSelectFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/DoubleMultiSelectFilter',

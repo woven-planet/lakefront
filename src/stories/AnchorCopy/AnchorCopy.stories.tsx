@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import AnchorCopyComponent, { AnchorCopyProps } from 'src/AnchorCopy';
-import Input from 'src/Input/Input';
+import AnchorCopyComponent, { AnchorCopyProps } from 'src/components/AnchorCopy';
+import Input from 'src/components/Input/Input';
 import DocBlock from '.storybook/DocBlock';
 import { green, saturatedRed, blue, storm } from 'src/styles/lakefrontColors';
 

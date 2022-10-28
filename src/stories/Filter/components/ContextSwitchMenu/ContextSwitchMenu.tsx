@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
-import SelectPopover, { SelectPopoverOption } from 'src/SelectPopover/SelectPopover';
-import { ContextSwitchMenuProps } from 'src/Filter/types';
+import SelectPopover, { SelectPopoverOption } from 'src/components/SelectPopover/SelectPopover';
+import { ContextSwitchMenuProps } from 'src/components/Filter/types';
 import { ButtonLabel, ContextSwitchContainer, DropdownButton } from './contextSwitchMenuStyles';
 import { ReactComponent as DownArrow } from '../assets/downArrow.svg';
 

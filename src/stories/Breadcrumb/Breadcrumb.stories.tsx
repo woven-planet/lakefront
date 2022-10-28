@@ -1,7 +1,7 @@
 
 import { Children, ComponentPropsWithoutRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import BreadcrumbHeaderComponent, { BreadcrumbHeaderProps } from 'src/Breadcrumb';
+import BreadcrumbHeaderComponent, { BreadcrumbHeaderProps } from 'src/components/Breadcrumb';
 import DocBlock from '.storybook/DocBlock';
 import { MemoryRouter } from 'react-router-dom';
 

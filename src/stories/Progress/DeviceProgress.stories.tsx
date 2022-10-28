@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import DeviceProgressBarComponent, { DeviceProgressProps } from 'src/Progress/DeviceProgressBar';
+import DeviceProgressBarComponent, { DeviceProgressProps } from 'src/components/Progress/DeviceProgressBar';
 import DocBlock from '.storybook/DocBlock';
 import colors from 'src/styles/lakefrontColors';
 

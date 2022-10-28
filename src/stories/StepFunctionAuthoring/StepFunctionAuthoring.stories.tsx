@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import StepFunctionAuthoring from 'src/StepFunctionAuthoring/StepFunctionAuthoring';
+import StepFunctionAuthoring from 'src/components/StepFunctionAuthoring/StepFunctionAuthoring';
 import { choiceJson } from '../StepFunctionGraph/stepFunctionGraphData';
 
 export default {

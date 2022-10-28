@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FilterPage from '../components/FilterPage';
 import AdditionalJSONFilterDocs, { AdditionalJSONFilterArgs, ADDITIONAL_JSON_SELECT_FILTER_SOURCE_CODE } from './AdditionalJSONFilterDocs';
 import DocBlock from '.storybook/DocBlock';
-import { AdditionalJSONFilter as AdditionalJSONFilterFunction } from 'src/Filter/modules';
+import { AdditionalJSONFilter as AdditionalJSONFilterFunction } from 'src/components/Filter/modules';
 
 export default {
     title: 'Lakefront/Filter/AdditionalJSONFilter',

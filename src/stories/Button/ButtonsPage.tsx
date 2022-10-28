@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Button from 'src/Button/Button';
+import Button from 'src/components/Button/Button';
 import styled from '@emotion/styled';
 import theme from 'src/styles/theme';
 

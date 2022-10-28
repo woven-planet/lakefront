@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 
-import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/BoundingBoxes';
+import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/components/BoundingBoxes';
 import DocBlock from '.storybook/DocBlock';
 import { emerald, mediumPurple, saturatedOrange } from 'src/styles/lakefrontColors';
 import styled from '@emotion/styled';

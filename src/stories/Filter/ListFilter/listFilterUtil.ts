@@ -1,4 +1,4 @@
-import { CheckboxGroupOption } from 'src/CheckboxGroup/CheckboxGroup';
+import { CheckboxGroupOption } from 'src/components/CheckboxGroup/CheckboxGroup';
 
 export const listFilterOptions: CheckboxGroupOption[] = [
     {

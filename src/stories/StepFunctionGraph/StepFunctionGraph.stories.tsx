@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 
 import DocBlock from '.storybook/DocBlock';
-import StepFunctionGraph, { GraphProps } from 'src/StepFunctionGraph/Graph';
+import StepFunctionGraph, { GraphProps } from 'src/components/StepFunctionGraph/Graph';
 import { choiceJson, mapInMap, longJson, simpleJson, complexJson } from './stepFunctionGraphData';
 import { useState } from 'react';
 
