@@ -2,17 +2,31 @@
 
 ## Adding New Components
 Currently there is no automated solution to verify components are exported and added to the documentation. Please update the following locations before submitting a pull request:
- - [Index](src/index.ts) - **Alphabetically** add your component to the list of exported components in the following format:
- 
- 
-    `export { default as ComponentName } from './path/to/ComponentName';`
 
- - [README => Components](README.md#components) - **Alphabetically** add a storybook link to your component. The url should be in the following format:
- 
- 
-    `https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-path--to-your-component`
- 
-    Note: You can find the the `path--to-your-component` to your component by running the project locally, navigating to your component, and copying it from the url.
+### [Index](src/index.ts)
+**Alphabetically** add your component and supporting exports (e.g. types, interfaces, util) to the [index.ts](src/index.ts) in the following format(s):
+```ts
+export { default as ComponentName } from './components/ComponentName';
+export * from './components/ComponentName';
+```
+
+*This will be made easier if in your new (ComponentName) folder you have the minimum structure:*
+```
+ComponentName
+\__ComponentName.tsx
+\__index.ts
+```
+
+*And the `ComponentName/index.ts` has the minimum contents:*
+```ts
+import ComponentName, { ComponentNameProps } from './ComponentName';
+
+export { ComponentNameProps };
+export default ComponentName;
+```
+
+### [README => Storybook Components Table](README.md#How to add components to this table)
+Update the [README.md Storybook components table](README.md#How to add components to this table).
 
 ## Using SVGs
 Although the project supports absolute paths, SVGs need to be imported with a relative path, e.g., <br />`import { ReactComponent as MySVG } from ../assets/MySVG.svg`

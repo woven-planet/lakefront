@@ -17,3 +17,12 @@ export const throttled = (delay: number, fn: any) => {
         return fn(...args);
     };
 };
+
+/**
+ * This is the structure for Highlights.
+ */
+export interface HighlightsProp {
+    start: number;
+    end: number;
+    playback: boolean;
+}

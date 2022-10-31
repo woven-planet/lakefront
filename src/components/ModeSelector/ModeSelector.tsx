@@ -5,7 +5,7 @@ import { LegendRow, ModeSelectorContainer } from './modeSelectorStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../../styles/theme';
 
-interface LegendRow {
+export interface ModeSelectorLegendRowProps {
     label: string;
     color: string;
 }
@@ -34,7 +34,7 @@ export interface ModeSelectorProps {
     /**
      * The legend symbol colors and labels.
      */
-    legend?: LegendRow[];
+    legend?: ModeSelectorLegendRowProps[];
     /**
      * The action to take on the selected mode value.
      */
