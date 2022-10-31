@@ -1,5 +1,6 @@
 ![main workflow](https://github.com/ToyotaResearchInstitute/lakefront/actions/workflows/main.yml/badge.svg)
 [![npm version](https://badge.fury.io/js/%40toyota-research-institute%2Flakefront.svg)](https://badge.fury.io/js/%40toyota-research-institute%2Flakefront)
+[![Featured on Openbase](https://badges.openbase.com/js/featured/@toyota-research-institute/lakefront.svg?token=H8dxc166as1T1Mc3WLm+9KDoF8fS40ckXfxItlaO8Aw=)](https://openbase.com/js/@toyota-research-institute/lakefront?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
 
 # lakefront
 Lakefront is a simple React component library.
