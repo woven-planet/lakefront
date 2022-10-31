@@ -76,6 +76,19 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         }
     };
 
+
+    componentDidMount = () => {
+        const itemsStateCopy = [...this.state.items];
+
+         const uniqueOptions = () => {
+            const eachOption = itemsStateCopy.map(option => option.value);
+             return eachOption.filter((unique, index) => unique.indexOf(unique) !== index);
+        };
+
+        this.setState({ items: uniqueOptions() });
+    };
+
+
     render() {
         const {
             items,
@@ -118,7 +131,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         placeholder={placeholder}
                         onChange={this.handleChange}
                         onCreateOption={this.handleCreate}
-                        options={this.state.items}
+                        options={items}
                         styles={MULTI_SELECT_STYLES}
                         theme={(defaultTheme) => ({
                             ...defaultTheme,
