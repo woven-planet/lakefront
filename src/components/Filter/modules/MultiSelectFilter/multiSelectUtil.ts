@@ -17,3 +17,8 @@ export const parseItems = (item: string, delimiter?: string): string[] => {
         .map((a) => a.trim())
         .filter((a) => a);
 };
+
+export const getUniqueOptions = (itemsStateCopy: MultiSelectOption[]): MultiSelectOption[] | string[] => {
+    const eachOption = itemsStateCopy.map(option => option.value);
+    return eachOption.filter((unique, index) => unique.indexOf(unique) !== index);
+};

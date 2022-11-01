@@ -1,10 +1,10 @@
 import { Component } from 'react';
 
-import Select, { OptionsType, InputProps } from 'react-select';
+import Select, { InputProps, OptionsType } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { SelectOption } from 'src/types/global';
 import { MULTI_SELECT_STYLES } from './multiSelectStyles';
-import { createUniqueOptions, parseItems } from './multiSelectUtil';
+import { createUniqueOptions, getUniqueOptions, parseItems } from './multiSelectUtil';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import MultiValueInput from './MultiValueInput';
@@ -76,16 +76,11 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         }
     };
 
-
     componentDidMount = () => {
         const itemsStateCopy = [...this.state.items];
+        const availableOptionsResult = getUniqueOptions(itemsStateCopy);
 
-         const uniqueOptions = () => {
-            const eachOption = itemsStateCopy.map(option => option.value);
-             return eachOption.filter((unique, index) => unique.indexOf(unique) !== index);
-        };
-
-        this.setState({ items: uniqueOptions() });
+        this.setState({ items: availableOptionsResult as MultiSelectOption[] });
     };
 
 
@@ -103,17 +98,17 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
 
         const disabledMenuComponents = disableMenu
             ? {
-                  DropdownIndicator: null,
-                  Menu: () => <></>
-              }
+                DropdownIndicator: null,
+                Menu: () => <></>
+            }
             : {};
 
         const parseMultiValueComponents = delimiter
             ? {
-                  Input: (props: Omit<InputProps, 'theme'>) => (
-                      <MultiValueInput {...props} handleCreate={this.handleCreate} />
-                  )
-              }
+                Input: (props: Omit<InputProps, 'theme'>) => (
+                    <MultiValueInput {...props} handleCreate={this.handleCreate} />
+                )
+            }
             : {};
 
         return (
