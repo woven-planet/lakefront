@@ -4,6 +4,7 @@ import customTheme from 'src/styles/theme';
 import { arc as d3arc, pie as d3pie } from 'd3-shape';
 import { select } from 'd3-selection';
 import { CircularProgressStyle, CenterTextStyle } from './circularProgressStyles';
+
 export interface CircularProgressProps {
     /** 
      * This is to set the width of the pie chart. 
@@ -39,6 +40,7 @@ interface PieData {
     tooltip?: boolean;
     key?: string;
 }
+
 /**
  * Circular Progress Component
  * 
@@ -120,6 +122,6 @@ const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme 
             </CircularProgressStyle>
         </ThemeProvider>
     );
-}
+};
 
 export default CircularProgress;

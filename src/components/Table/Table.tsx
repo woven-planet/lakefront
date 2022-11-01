@@ -5,7 +5,7 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 
-interface SortByOptions {
+export interface TableSortByOptions {
     id: string;
     desc: boolean;
 }
@@ -51,7 +51,7 @@ export interface TableProps {
      * The first argument is the sorted column and the second argument is the sortBy array
      * (for if table is sorted by multiple columns).
      */
-    onChangeSort?({ id, desc }: SortByOptions, sortedBy?: SortByOptions[]): void;
+    onChangeSort?({ id, desc }: TableSortByOptions, sortedBy?: TableSortByOptions[]): void;
     /**
      * This is to set the row sub component on the table.
      */
@@ -63,7 +63,7 @@ export interface TableProps {
     hideHeaders?: boolean;
 }
 
-type CustomTableOptions = TableState<object> & { sortBy: SortByOptions[] }
+type CustomTableOptions = TableState<object> & { sortBy: TableSortByOptions[] }
 
 /**
  *  The Table Component is used to render table with specified columns and data.

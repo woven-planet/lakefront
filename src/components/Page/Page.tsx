@@ -23,6 +23,6 @@ const Page: FC<PageProps> = ({ children, className }) => {
             </StyledPage>
         </ThemeProvider>
     );
-}
+};
 
 export default Page;
