@@ -80,7 +80,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         const itemsStateCopy = [...this.state.items];
         const availableOptionsResult = getUniqueOptions(itemsStateCopy);
 
-        this.setState({ items: availableOptionsResult as MultiSelectOption[] });
+        this.setState({ items: availableOptionsResult });
     };
 
 
@@ -126,7 +126,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         placeholder={placeholder}
                         onChange={this.handleChange}
                         onCreateOption={this.handleCreate}
-                        options={items}
+                        options={this.state.items}
                         styles={MULTI_SELECT_STYLES}
                         theme={(defaultTheme) => ({
                             ...defaultTheme,

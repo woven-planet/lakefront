@@ -81,7 +81,12 @@ describe('getUniqueOptions', () => {
             ];
         const availableOptionsResult = getUniqueOptions(itemsStateMock);
 
-        expect(availableOptionsResult).toMatchObject(['sizes', 'shapes', 'colors']);
+        expect(availableOptionsResult).toMatchObject(
+            [
+                { 'label': 'sizes', 'value': 'sizes' },
+                { 'label': 'shapes', 'value': 'shapes' },
+                { 'label': 'colors', 'value': 'colors' }
+            ]);
 
         expect(availableOptionsResult).toHaveLength(3);
     });
