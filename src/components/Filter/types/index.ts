@@ -328,6 +328,10 @@ export interface FilterComponentProps {
      * a badge displaying the number of applied filters.
      */
     badgeThreshold?: number;
+    /**
+     * The classes to pass to the filter container.
+     */
+    className?: string;
 }
 
 /**
