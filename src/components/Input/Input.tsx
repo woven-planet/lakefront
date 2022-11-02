@@ -16,7 +16,14 @@ export interface InputProps {
      * If required is provided, the label of the input component will be displayed with a red asterisk at its end.
      */
     required?: boolean;
-
+    /**
+     * The classes to pass to the input.
+     */
+    className?: string;
+    /**
+     * The classes to pass to the input label.
+     */
+    labelClassName?: string;
 }
 
 /**
@@ -26,9 +33,15 @@ export interface InputProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const Input: FC<InputProps & ComponentPropsWithRef<'input'>> = forwardRef(({ label, error = '', required, ...props }, ref) => (
+const Input: FC<InputProps & ComponentPropsWithRef<'input'>> = forwardRef(({
+    label,
+    error = '',
+    required,
+    labelClassName,
+    ...props
+}, ref) => (
         <ThemeProvider theme={theme}>
-            <StyledLabel error={error}>
+            <StyledLabel error={error} className={labelClassName}>
                 {label && <span>{label}{required && <span className="required-field">*</span>}</span>}
                 <StyledInput ref={ref} error={error} {...props} />
                 <div>{error}</div>
