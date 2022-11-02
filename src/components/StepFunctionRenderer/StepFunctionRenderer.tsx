@@ -22,7 +22,8 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({
     handleContextClickNode,
     handleCloseContextMenu,
     handleSelectedNode,
-    onGraphCreate
+    onGraphCreate,
+    className
 }) => {
     const [renderError, setRenderError] = useState(false);
     const containerRef = useRef(null);
@@ -134,7 +135,7 @@ const StepFunctionRenderer: FC<StepFunctionRendererProps> = ({
 
     return (
         <ThemeProvider theme={theme}>
-            <StepFunctionRendererContainer ref={containerRef}>
+            <StepFunctionRendererContainer ref={containerRef} className={className}>
                 {!renderError && (
                     <OuterSvg ref={outerSvgRef}>
                         <g ref={innerGroupRef} />

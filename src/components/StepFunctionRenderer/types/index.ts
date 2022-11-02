@@ -95,4 +95,8 @@ export interface StepFunctionRendererProps {
      * should be provided.
      */
     stepFunctionJSON: StepFunction;
+    /**
+     * The classes to pass to the step function renderer container.
+     */
+    className?: string;
 }
