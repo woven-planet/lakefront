@@ -5,10 +5,14 @@ import StackBannerRow, { StackBannerRowProps } from './StackBannerRow';
 import theme from 'src/styles/theme';
 
 export interface StackBannerProps {
-  /**
-   * The rows to display in the stack banner.
-   */
-  rows: StackBannerRowProps[];
+    /**
+     * The rows to display in the stack banner.
+     */
+    rows: StackBannerRowProps[];
+    /**
+     * The classes to pass to the stack banner.
+     */
+    className?: string;
 }
 
 /**
