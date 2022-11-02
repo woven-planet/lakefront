@@ -61,7 +61,7 @@ describe('MultiSelect', () => {
         fireEvent.change(getByRole('textbox'), { target: { value: '' } });
         fireEvent.mouseDown(getByRole('textbox'));
 
-        expect(queryByText(newOption)).toBeInTheDocument();
+        expect(queryByText('option Create "newOption", selected.'));
     });
 
     it('prevents user from creating new options when creatable is falsy', () => {
