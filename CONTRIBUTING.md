@@ -1,31 +1,73 @@
 # Contributing
 
 ## Adding New Components
-Currently there is no automated solution to verify components are exported and added to the documentation. Please update the following locations before submitting a pull request:
+Currently, there is no automated solution to verify components are consistently structured, exported, and documented.
+Please ensure the following steps are followed before submitting a pull request:
 
-### [Index](src/index.ts)
-**Alphabetically** add your component and supporting exports (e.g. types, interfaces, util) to the [index.ts](src/index.ts) in the following format(s):
-```ts
-export { default as ComponentName } from './components/ComponentName';
-export * from './components/ComponentName';
-```
-
-*This will be made easier if in your new (ComponentName) folder you have the minimum structure:*
+### Use minimum component folder structure
+Your new `ComponentName` folder should have the minimum structure:
 ```
 ComponentName
 \__ComponentName.tsx
 \__index.ts
 ```
 
-*And the `ComponentName/index.ts` has the minimum contents:*
+With the `ComponentName/index.ts` having the minimum contents:
 ```ts
 import ComponentName, { ComponentNameProps } from './ComponentName';
 
 export { ComponentNameProps };
 export default ComponentName;
 ```
+See the [next section](#Use minimum component file structure) on what the `ComponentName.tsx` should contain.
 
-### [README => Storybook Components Table](README.md#How to add components to this table)
+### Use minimum component file structure
+The (`ComponentName.tsx`) file should resemble:
+
+```tsx
+import { FC } from 'react';
+import { ThemeProvider } from '@emotion/react';
+import theme from 'src/styles/theme';
+
+export interface ComponentNameProps {
+    /**
+     * The classes to pass to the component.
+     */
+    className?: string;
+}
+
+/**
+ * ComponentName Component
+ *
+ * The ComponentName component does things such as stuff.
+ *
+ */
+const ComponentName: FC<ComponentNameProps> = ({ className }) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={className}>
+          content here
+      </div>
+    </ThemeProvider>
+  );
+};
+
+export default ComponentName;
+
+```
+This will allow:
+- external applications to easily consume Lakefront theming.
+- overriding and/or making styled versions of the component.
+- storybook plugins to generate component and props descriptions.
+
+### Add exports in [Index.ts](src/index.ts)
+**Alphabetically** add your component and supporting exports (e.g. types, interfaces, util) to the [index.ts](src/index.ts) in the following format(s):
+```ts
+export { default as ComponentName } from './components/ComponentName';
+export * from './components/ComponentName';
+```
+
+### Add entries in [README => Storybook Components Table](README.md#How to add components to this table)
 Update the [README.md Storybook components table](README.md#How to add components to this table).
 
 ## Using SVGs
