@@ -30,6 +30,10 @@ export interface SelectPopoverProps {
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
      */
     renderInPortal?: boolean;
+    /**
+     * The classes to pass to the select popover.
+     */
+    className?: string;
 }
 
 /**
@@ -47,7 +51,8 @@ const SelectPopover: FC<SelectPopoverProps> = (
         options,
         handleClick,
         renderInPortal = false,
-        visible = false
+        visible = false,
+        className
     }) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [popoverElement, setPopoverElement] = useState<HTMLElement | null>(null);
@@ -126,7 +131,7 @@ const SelectPopover: FC<SelectPopoverProps> = (
 
     return (
         <ThemeProvider theme={theme}>
-            <StyledSelectPopoverWrapper ref={popoverNodeMounted}>
+            <StyledSelectPopoverWrapper ref={popoverNodeMounted} className={className}>
                 {children}
                 {
                     portal ? (
