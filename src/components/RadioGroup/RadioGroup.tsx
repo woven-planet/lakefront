@@ -37,6 +37,14 @@ import {
      * The action that should be run when a radio button is selected.
      */
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    /**
+     * The classes to pass to the radio group.
+     */
+    className?: string;
+    /**
+     * The classes to pass to the radio group label.
+     */
+    labelClassName?: string;
   }
 
   /**
@@ -51,6 +59,7 @@ import {
     value,
     disabled = false,
     onChange = () => null,
+    labelClassName,
     ...props
   }) => {
 
@@ -70,7 +79,7 @@ import {
           const disableOption = disabled || option.disabled;
 
           return (
-            <StyledLabel disabled={disableOption}>
+            <StyledLabel disabled={disableOption} className={labelClassName}>
               <StyledRadioGroup
                 {...props}
                 name={name}
