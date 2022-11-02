@@ -77,15 +77,16 @@ describe('getUniqueOptions', () => {
                 { 'label': 'colors', 'value': 'colors' },
                 { 'label': 'sizes', 'value': 'sizes' },
                 { 'label': 'shapes', 'value': 'shapes' },
+                { 'label': 'colors', 'value': 'colors' },
                 { 'label': 'colors', 'value': 'colors' }
             ];
         const availableOptionsResult = getUniqueOptions(itemsStateMock);
 
         expect(availableOptionsResult).toMatchObject(
             [
+                { 'label': 'colors', 'value': 'colors' },
                 { 'label': 'sizes', 'value': 'sizes' },
-                { 'label': 'shapes', 'value': 'shapes' },
-                { 'label': 'colors', 'value': 'colors' }
+                { 'label': 'shapes', 'value': 'shapes' }
             ]);
 
         expect(availableOptionsResult).toHaveLength(3);
