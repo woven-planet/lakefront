@@ -30,6 +30,10 @@ interface StepFunctionAuthoringProps {
      * a configuration with a single task node will be used.
      */
     initialGraphState?: StepFunctionJSON;
+    /**
+     * The classes to pass to the step function authoring container.
+     */
+    className?: string;
 }
 
 /**
@@ -40,7 +44,7 @@ interface StepFunctionAuthoringProps {
  * and includes all of the panning and highlighting functionality. Added to that functionality is right-click actions allowing
  * for contextual updates to the graph.
  */
-const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphState }) => {
+const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphState, className }) => {
     // Graph State
     // Save copy of initial graph state since JSONBuilder mutates data
     const originalGraphStateRef = useRef(initialGraphState ? { ...initialGraphState } : initialGraphState);
@@ -587,7 +591,7 @@ const StepFunctionAuthoring: FC<StepFunctionAuthoringProps> = ({ initialGraphSta
 
     return (
         <ThemeProvider theme={theme}>
-            <Wrapper>
+            <Wrapper className={className}>
                 <div>
                     <StepFunctionRenderer
                         stepFunctionJSON={json as StepFunction}
