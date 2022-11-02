@@ -35,6 +35,14 @@ export interface CheckboxProps {
    * The action that should be run when the checked state changes.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * The classes to pass to the checkbox.
+   */
+  className?: string;
+  /**
+   * The classes to pass to the checkbox label.
+   */
+  labelClassName?: string;
 }
 
 /**
@@ -52,6 +60,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   label = '',
   disabled = false,
   onChange = () => null,
+  labelClassName,
   ...props
 }) => {
   const showIcon = indeterminate || checked;
@@ -65,7 +74,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledLabel disabled={disabled} indeterminate={indeterminate}>
+      <StyledLabel disabled={disabled} indeterminate={indeterminate} className={labelClassName}>
         <StyledCheckbox
           {...props}
           indeterminate={indeterminate}
