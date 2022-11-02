@@ -1,10 +1,10 @@
 import { Component } from 'react';
 
-import Select, { OptionsType, InputProps } from 'react-select';
+import Select, { InputProps, OptionsType } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { SelectOption } from 'src/types/global';
 import { MULTI_SELECT_STYLES } from './multiSelectStyles';
-import { createUniqueOptions, parseItems } from './multiSelectUtil';
+import { createUniqueOptions, getUniqueOptions, parseItems } from './multiSelectUtil';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import MultiValueInput from './MultiValueInput';
@@ -76,6 +76,14 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         }
     };
 
+    componentDidMount = () => {
+        const itemsStateCopy = [...this.state.items];
+        const availableOptionsResult = getUniqueOptions(itemsStateCopy);
+
+        this.setState({ items: availableOptionsResult });
+    };
+
+
     render() {
         const {
             items,
@@ -90,17 +98,17 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
 
         const disabledMenuComponents = disableMenu
             ? {
-                  DropdownIndicator: null,
-                  Menu: () => <></>
-              }
+                DropdownIndicator: null,
+                Menu: () => <></>
+            }
             : {};
 
         const parseMultiValueComponents = delimiter
             ? {
-                  Input: (props: Omit<InputProps, 'theme'>) => (
-                      <MultiValueInput {...props} handleCreate={this.handleCreate} />
-                  )
-              }
+                Input: (props: Omit<InputProps, 'theme'>) => (
+                    <MultiValueInput {...props} handleCreate={this.handleCreate} />
+                )
+            }
             : {};
 
         return (

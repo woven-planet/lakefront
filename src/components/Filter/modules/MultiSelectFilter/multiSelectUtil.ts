@@ -1,4 +1,5 @@
 import { MultiSelectOption } from './MultiSelect';
+import * as R from 'ramda';
 
 export const createOption = (label: string): MultiSelectOption => ({
     label,
@@ -16,4 +17,9 @@ export const parseItems = (item: string, delimiter?: string): string[] => {
         .split(delimiter)
         .map((a) => a.trim())
         .filter((a) => a);
+};
+
+export const getUniqueOptions = (itemsStateCopy: MultiSelectOption[]): MultiSelectOption[] => {
+
+    return R.uniqBy(R.prop('value'), itemsStateCopy);
 };
