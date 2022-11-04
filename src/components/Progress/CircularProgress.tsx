@@ -32,6 +32,10 @@ export interface CircularProgressProps {
             fgColor: string;
         };
     };
+    /**
+     * The classes to pass to the circular progress.
+     */
+    className?: string;
 }
 
 interface PieData {
@@ -46,7 +50,7 @@ interface PieData {
  * 
  * The Circular Progress component is used to render the arcs depending on the value provided for each label.
  */
-const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme }) => {
+const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme, className }) => {
 
     var width = Math.abs(width);
     const svgRef = useRef<SVGSVGElement>(null);
@@ -112,7 +116,7 @@ const CircularProgress: FC<CircularProgressProps> = ({ width, text, data, theme 
 
     return (
         <ThemeProvider theme={customTheme}>
-            <CircularProgressStyle width={width} ref={htmlRef}>
+            <CircularProgressStyle width={width} ref={htmlRef} className={className}>
                 <svg width={width} height={width} ref={svgRef}>
                     <circle cx={radius} cy={radius} r={circleRadius} fill="transparent" stroke={customTheme?.colors.selago} />
                     <g transform={`translate(${width / 2} ,  ${width / 2})`} />

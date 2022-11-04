@@ -47,6 +47,10 @@ export interface ButtonProps {
      * with an HTML element such as "a", or even a complex component such as a react router Link.
      */
     as?: ElementType | keyof JSX.IntrinsicElements;
+    /**
+     * The classes to pass to the button.
+     */
+    className?: string;
 }
 
 export type Icon = ReactElement<SVGElement> | boolean | string | undefined;

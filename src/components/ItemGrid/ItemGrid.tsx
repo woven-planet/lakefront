@@ -2,31 +2,30 @@ import React, { useCallback, useState } from 'react';
 import { ItemGridContainer } from './itemGridStyles';
 
 export interface ItemGridProps {
-
     /**
      * This is the max number of columns that populates in a row.
      */
     maxColumns: number;
-
     /**
      * This is to set the minimum width for each column.
      */
     columnWidthMin?: string;
-
     /**
      * This to set the gap between rows and columns.
      */
     gridGap?: { rowGap?: number; columnGap?: number };
-
     /**
      * This would recalculate the size if set to true.
      */
     shouldRecalculateSize?: boolean;
-
     /**
      * This is to set the inner width.
      */
     innerWidth?: number;
+    /**
+     * The classes to pass to the item grid.
+     */
+    className?: string;
 }
 
 /**
@@ -35,7 +34,15 @@ export interface ItemGridProps {
  * This component is used to display the items in a grid. The component takes initial props like the maximum columns
  * that needs to be displayed in each row, sets the minimum width for each column and the grid gap between rows and columns.
  */
-const ItemGrid: React.FC<ItemGridProps> = ({ children, maxColumns, columnWidthMin = '0', gridGap = {}, shouldRecalculateSize = true, innerWidth = 0 }) => {
+const ItemGrid: React.FC<ItemGridProps> = ({
+    children,
+    maxColumns,
+    columnWidthMin = '0',
+    gridGap = {},
+    shouldRecalculateSize = true,
+    innerWidth = 0,
+    className
+}) => {
     const { rowGap = 0, columnGap = 0 } = gridGap;
     const [columnWidth, setColumnWidth] = useState<number>(0);
 
@@ -55,7 +62,7 @@ const ItemGrid: React.FC<ItemGridProps> = ({ children, maxColumns, columnWidthMi
     }, [innerWidth]);
 
     return (
-        <div ref={gridContainerRef}>
+        <div ref={gridContainerRef} className={className}>
             <ItemGridContainer columnWidthMin={columnWidthMin} columnWidth={columnWidth} rowGap={rowGap} columnGap={columnGap}>
                 {children}
             </ItemGridContainer>

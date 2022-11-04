@@ -38,6 +38,10 @@ export interface GraphProps {
      * should be provided.
      */
     json: any;
+    /**
+     * The classes to pass to the step function graph container.
+     */
+    className?: string;
 }
 const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
 const DEFAULT_ZOOM = 2;
@@ -59,7 +63,8 @@ export const StepFunctionGraph: FC<GraphProps> = ({
     handleContextClickNode,
     handleSelectedNode,
     highlightedKey,
-    json
+    json,
+    className
 }) => {
     const globalOffset = useMemo(
         () => ({
@@ -439,7 +444,7 @@ export const StepFunctionGraph: FC<GraphProps> = ({
 
     return (
         <ThemeProvider theme={theme}>
-            <GraphContainer ref={graphRef}>
+            <GraphContainer ref={graphRef} className={className}>
                 <StyledCanvas ref={canvasContainer} />
                 <GraphControls>
                     <div onClick={handleRecenter}>

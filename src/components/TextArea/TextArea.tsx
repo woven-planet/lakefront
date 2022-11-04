@@ -12,7 +12,14 @@ export interface TextAreaProps {
      * If not empty, the TextArea component will be displayed in an error state with the provided error message.
      */
     error?: string;
-
+    /**
+     * The classes to pass to the text area.
+     */
+    className?: string;
+    /**
+     * The classes to pass to the text area label.
+     */
+    labelClassName?: string;
 }
 
 /**
@@ -22,10 +29,10 @@ export interface TextAreaProps {
  * in this component and should be handled in the consuming app.
  *
  */
-const TextArea: FC<TextAreaProps & ComponentPropsWithRef<'textarea'>> = forwardRef(({ label, error = '', ...props }, ref) => {
+const TextArea: FC<TextAreaProps & ComponentPropsWithRef<'textarea'>> = forwardRef(({ label, error = '', labelClassName, ...props }, ref) => {
     return (
         <ThemeProvider theme={theme}>
-            <StyledLabel error={error}>
+            <StyledLabel error={error} className={labelClassName}>
                 {label && <span>{label}</span>}
                 <StyledTextArea ref={ref} error={error} {...props} />
                 <div>{error}</div>

@@ -73,6 +73,10 @@ export interface TypeaheadSearchProps {
      * The action to run using the entered search text on submit.
      */
     submitSearch: (searchText: string) => void;
+    /**
+     * The classes to pass to the typeahead search container.
+     */
+    className?: string;
 }
 
 /**
@@ -121,6 +125,7 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     placement = 'bottom-end',
     renderInPortal = false,
     submitSearch,
+    className,
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
@@ -263,7 +268,12 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
 
     return (
         <ThemeProvider theme={theme}>
-            <TypeaheadSearchContainer ref={searchInputContainerRef} placement={placement} resultOpen={resultsOpen}>
+            <TypeaheadSearchContainer
+                ref={searchInputContainerRef}
+                placement={placement}
+                resultOpen={resultsOpen}
+                className={className}
+            >
                 <form onSubmit={handleSearchSubmit}>
                     <div className="inputWrapper" ref={popoverNodeMounted}>
                         <Input

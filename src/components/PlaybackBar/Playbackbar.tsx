@@ -30,6 +30,10 @@ export interface PlaybackBarProps {
      * This is to highlight a particular section of the playback component in green.
      */
     highlights: HighlightsProp[];
+    /**
+     * The classes to pass to the playback bar.
+     */
+    className?: string;
 }
 
 /**
@@ -45,11 +49,13 @@ const PlaybackBar: FC<PlaybackBarProps> = ({ currentDuration,
     endDuration,
     highlights,
     maxSlider,
-    setSlider }) => {
+    setSlider,
+    className
+}) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <PlaybackStyle>
+            <PlaybackStyle className={className}>
                 <PlaySlider>
                     <span>{currentDuration}</span>
                     <Slider

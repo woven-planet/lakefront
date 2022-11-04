@@ -38,7 +38,8 @@ export const Filter: FC<FilterComponentProps> = ({
     location,
     onToggleCollapsed,
     updateHistory,
-    badgeThreshold = 4
+    badgeThreshold = 4,
+    className
 }) => {
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
@@ -105,6 +106,7 @@ export const Filter: FC<FilterComponentProps> = ({
                 showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
                 isCollapsed={isCollapsed}
                 hideFilterBar={hideFilterBar}
+                className={className}
             >
                 <SidePanel className="sidePanel">
                     <FilterHeader className="filterHeader">

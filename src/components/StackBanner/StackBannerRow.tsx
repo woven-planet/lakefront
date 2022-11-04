@@ -8,12 +8,12 @@ export interface StackBannerRowProps {
    */
   key: string;
   /**
-   * The main content to be displayed in in the banner.
+   * The main content to be displayed in the banner.
    */
   content?: ReactElement<any>;
   /**
-   * The svg icon to display. If an svg is provided, the svg will be used.
-   * If explicity true or left undefined, a default flag icon will be displayed.
+   * The svg icon to display. If a svg is provided, the svg will be used.
+   * If explicitly true or left undefined, a default flag icon will be displayed.
    * If explicitly false, no icon will be displayed.
    */
   icon?: StackBannerIcon;
@@ -26,6 +26,10 @@ export interface StackBannerRowProps {
    * The action to run when the banner is clicked.
    */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
+  /**
+   * The classes to pass to the stack banner row.
+   */
+  className?: string;
 }
 
 /**

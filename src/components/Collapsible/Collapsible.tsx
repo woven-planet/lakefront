@@ -46,6 +46,10 @@ export interface CollapsibleProps {
    * This is to render icon for expand/collapse control.
    */
   icon?: ReactElement<SVGElement> | boolean | string | undefined;
+  /**
+   * The classes to pass to the collapsible.
+   */
+  className?: string;
 }
 
 /**
@@ -82,11 +86,10 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
     if (onClick) {
       onClick();
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      {
         <StyledCollapsible {...props} onClick={handleClick}>
           <div className="topCollapsible">
             {icon &&
@@ -107,7 +110,6 @@ const Collapsible: FC<CollapsibleProps & Pick<ComponentPropsWithoutRef<'div'>, E
           {divider && <div className="divider" />}
           <div className={`bottomCollapsible ${isExpanded ? 'expanded' : 'collapsed'}`}>{children}</div>
         </StyledCollapsible>
-      }
     </ThemeProvider>
   );
 };

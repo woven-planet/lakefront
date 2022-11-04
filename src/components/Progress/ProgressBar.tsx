@@ -27,6 +27,10 @@ export interface ProgressBarProps {
             fgColor: string;
         };
     };
+    /**
+     * The classes to pass to the progress bar.
+     */
+    className?: string;
 }
 
 /**
@@ -35,13 +39,13 @@ export interface ProgressBarProps {
  * The Progress Bar Component is used to render the bar. The bar displays each section in a given color and the width
  * of each section is calculated according to the value provide.
  */
-const ProgressBar: React.FC<ProgressBarProps> = ({ data, theme, total, width }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ data, theme, total, width, className }) => {
 
     let leftPosition = 0;
 
     return (
         <ThemeProvider theme={customTheme}>
-            <ProgressStyle width={width}>
+            <ProgressStyle width={width} className={className}>
                 {data.map(({ label, value }) => {
                     if (label === 'pending' || value === 0) {
                         return null;
