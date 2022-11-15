@@ -47,16 +47,19 @@ const ListFilter = (
         }
     },
     getBrowserQueryUrlValue: value => value && Array.from(value),
-    getDefaultFilterValue: () => new Set(options.map(item => item.value)),
+    getDefaultFilterValue: () => new Set(),
     isDefaultFilterValue: value => {
         if (value) {
+            console.log('value', value);
             if (value.size === 0) {
                 return true;
             }
-            return value.size === options.length;
+            return value.size === listFilterOptions.initialValue?.length;
         }
         return false;
     },
+
+
     getFilterBarLabel: value => {
         if (value) {
             return Array.from(value)
@@ -74,7 +77,7 @@ const ListFilter = (
                 .map(item => {
                     const itemLabel = options.find(i => i.value === item);
                     return String(itemLabel?.label);
-                })
+                });
         }
         return [];
     },
@@ -101,6 +104,7 @@ const ListFilter = (
             options={options}
             selected={value}
             allLabel={listFilterOptions.allLabel}
+            // children={listFilterOptions.initialValue}
         />
     ),
     ...listFilterOverrides,

@@ -41,7 +41,16 @@ const ListFilterTemplate: Story = (args: ListFilterArgs) => {
     return <FilterPage pageFilters={pageFilters} />;
 };
 
+ const ListFilterTemplateOneValue: Story = (args: ListFilterArgs) => {
+    const pageFilters = {
+        listFilter: ListFilterFunction(args.options, args.label, args.description, args.listFilterOptions)
+    };
+
+    return <FilterPage pageFilters={pageFilters} />;
+};
+
 export const ListFilter = ListFilterTemplate.bind({});
+export const ListFilterOneInitialValue = ListFilterTemplateOneValue.bind({});
 
 ListFilter.args = {
     label: 'List Filter',
@@ -50,4 +59,26 @@ ListFilter.args = {
     listFilterOptions: {
         allLabel: 'All Test Data'
     }
+};
+
+ListFilterOneInitialValue.args = {
+    label: 'List Filter One Initial Value',
+    description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.',
+    listFilterOptions: {
+        initialValue: 'good',
+    },
+    options: [
+        {
+            label: 'Good',
+            value: 'good'
+        },
+        {
+            label: 'Better',
+            value: 'better'
+        },
+        {
+            label: 'Best',
+            value: 'best'
+        }
+    ]
 };
