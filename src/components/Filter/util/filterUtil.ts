@@ -53,7 +53,7 @@ export const getFilterAppliedCount = (filters: FilterSet, filterValues: FilterVa
  * Default behavior is that when all items are selected, nothing is returned.
  */
 
-export const getUrlFromList = (name: string, list: string[] | Set<string>, count: number, initialValue?: boolean) => {
+export const getUrlFromList = (name: string, list: string[] | Set<string>, count: number, initialValue: boolean = false) => {
     const listSize = Array.isArray(list) ? list.length : list.size;
 
     // if all items in list selected, pass empty string in url filter
