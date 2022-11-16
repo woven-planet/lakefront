@@ -34,7 +34,7 @@ const ListFilter = (
     getFilterCount: (value) => value?.size ?? 0,
     getApiQueryUrl: (key, value) => {
         if (value) {
-            return getUrlFromList(key, value, options.length);
+            return getUrlFromList(key, value, options.length, Boolean(listFilterOptions.initialValue));
         }
         return '';
     },
@@ -47,14 +47,20 @@ const ListFilter = (
         }
     },
     getBrowserQueryUrlValue: value => value && Array.from(value),
-    getDefaultFilterValue: () => new Set(),
+    getDefaultFilterValue: () => listFilterOptions.initialValue ?
+        new Set([listFilterOptions.initialValue].flat()) :
+        new Set(options.map(item => item.value)),
+
     isDefaultFilterValue: value => {
-        if (value) {
-            console.log('value', value);
+        if (value && !listFilterOptions.initialValue) {
             if (value.size === 0) {
                 return true;
             }
-            return value.size === listFilterOptions.initialValue?.length;
+            return value.size === options.length;
+        }
+        if (value && listFilterOptions.initialValue) {
+            const initialValueSet = new Set([listFilterOptions.initialValue].flat());
+            return value.size === initialValueSet.size;
         }
         return false;
     },
@@ -104,7 +110,6 @@ const ListFilter = (
             options={options}
             selected={value}
             allLabel={listFilterOptions.allLabel}
-            // children={listFilterOptions.initialValue}
         />
     ),
     ...listFilterOverrides,

@@ -88,4 +88,14 @@ describe('getUrlFromList', () => {
             expect(getUrlFromList('item', new Set(), 2)).toBe('');
         });
     });
+
+    describe('when initialValue is passed', () => {
+        it('returns the full url when initial value is true', () => {
+            expect(getUrlFromList('item', new Set(['good', 'better', 'best']), 3, true)).toBe('&item=good&item=better&item=best');
+        });
+
+        it('returns "" when initial value is false with all options selected', () => {
+            expect(getUrlFromList('item', new Set(['good', 'better', 'best']), 3, false)).toBe('');
+        });
+    });
 });
