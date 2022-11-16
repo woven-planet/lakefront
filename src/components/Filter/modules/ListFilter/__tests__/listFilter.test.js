@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import ListFilter from '../ListFilter';
+import { listFilterOptions } from '../../../../../stories/Filter/ListFilter/listFilterUtil';
 
 const options = [
     {
@@ -38,7 +39,7 @@ describe('ListFilter', () => {
     });
 
     describe('getApiQueryUrl', () => {
-        const { getApiQueryUrl } = ListFilter(options, '', '');
+        const { getApiQueryUrl } = ListFilter(options, '', '', { initialValue: 'first name' });
 
         it('returns the proper url when there is a value', () => {
             expect(getApiQueryUrl('a', ['first name'])).toBe('&a=first+name');
@@ -85,10 +86,10 @@ describe('ListFilter', () => {
     });
 
     describe('getDefaultFilterValue', () => {
-        const { getDefaultFilterValue } = ListFilter(options, '', '');
+        const { getDefaultFilterValue } = ListFilter(options, '', '', {initialValue: options[0].value});
 
         it('returns a default set based on the options', () => {
-            const defaultValues = new Set([options[0].value, options[1].value]);
+            const defaultValues = new Set([options[0].value]);
 
             expect(getDefaultFilterValue('a')).toStrictEqual(defaultValues);
             expect(getDefaultFilterValue(1)).toStrictEqual(defaultValues);
@@ -97,7 +98,7 @@ describe('ListFilter', () => {
     });
 
     describe('isDefaultFilterValue', () => {
-        const { isDefaultFilterValue } = ListFilter(options, '', '');
+        const { isDefaultFilterValue } = ListFilter(options, '', '', false);
         const defaultValues = new Set([options[0].value, options[1].value]);
 
         it('returns true if value is equal to empty string', () => {

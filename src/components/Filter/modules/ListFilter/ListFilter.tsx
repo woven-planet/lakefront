@@ -1,6 +1,7 @@
 import { getUrlFromList } from 'src/components/Filter/util/filterUtil';
 import CheckboxGroup, { CheckboxGroupOption } from 'src/components/CheckboxGroup/CheckboxGroup';
 import { FilterModule, ListFilterOverrides } from 'src/components/Filter/types';
+import * as R from 'ramda';
 
 export interface ListFilterOptions {
     allLabel?: string;
@@ -59,8 +60,9 @@ const ListFilter = (
             return value.size === options.length;
         }
         if (value && listFilterOptions.initialValue) {
-            const initialValueSet = new Set([listFilterOptions.initialValue].flat());
-            return value.size === initialValueSet.size;
+            const initialValueSet = new Set([listFilterOptions.initialValue].flat().sort());
+
+            return R.equals(value, initialValueSet);
         }
         return false;
     },

@@ -41,16 +41,8 @@ const ListFilterTemplate: Story = (args: ListFilterArgs) => {
     return <FilterPage pageFilters={pageFilters} />;
 };
 
- const ListFilterTemplateOneValue: Story = (args: ListFilterArgs) => {
-    const pageFilters = {
-        listFilter: ListFilterFunction(args.options, args.label, args.description, args.listFilterOptions)
-    };
-
-     return <FilterPage pageFilters={pageFilters} />;
- };
-
 export const ListFilter = ListFilterTemplate.bind({});
-export const ListFilterOneInitialValue = ListFilterTemplateOneValue.bind({});
+export const ListFilterOneInitialValue = ListFilterTemplate.bind({});
 
 ListFilter.args = {
     label: 'List Filter',
