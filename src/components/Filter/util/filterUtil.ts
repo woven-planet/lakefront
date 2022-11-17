@@ -52,11 +52,11 @@ export const getFilterAppliedCount = (filters: FilterSet, filterValues: FilterVa
  * Given a list (Array or Set) of string, return a query string representation.
  * Default behavior is that when all items are selected, nothing is returned.
  */
-export const getUrlFromList = (name: string, list: string[] | Set<string>, count: number) => {
+export const getUrlFromList = (name: string, list: string[] | Set<string>, count: number, hasInitialValue: boolean = false) => {
     const listSize = Array.isArray(list) ? list.length : list.size;
 
     // if all items in list selected, pass empty string in url filter
-    if (listSize === count || listSize === 0) {
+    if ((listSize === count || listSize === 0) && !hasInitialValue) {
         return '';
     }
 
@@ -66,4 +66,9 @@ export const getUrlFromList = (name: string, list: string[] | Set<string>, count
         url.append(name, item);
     }
     return `&${url}`;
+};
+
+// compare Set values
+export const areSetsEqual = (xs: Set<string>, ys: Set<string>) => {
+   return xs.size === ys.size && [...xs].every((x) => ys.has(x));
 };

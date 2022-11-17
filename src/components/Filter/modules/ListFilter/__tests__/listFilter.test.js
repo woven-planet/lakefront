@@ -1,6 +1,7 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import ListFilter from '../ListFilter';
+import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 const options = [
     {
@@ -28,7 +29,7 @@ describe('ListFilter', () => {
         const { getFilterCount } = ListFilter(options, '', '');
 
         it('returns the the value size', () => {
-            expect(getFilterCount(new Set([1,2,3]))).toBe(3);
+            expect(getFilterCount(new Set([1, 2, 3]))).toBe(3);
         });
 
         it('returns 0 when a falsy value is provided', () => {
@@ -38,17 +39,41 @@ describe('ListFilter', () => {
     });
 
     describe('getApiQueryUrl', () => {
-        const { getApiQueryUrl } = ListFilter(options, '', '');
+        it('returns the proper url when initialValue and option values are equal', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '', { initialValue: options.map(initial => initial.value) });
+            const setValue = new Set(options.map(initial => initial.value));
+            expect(getApiQueryUrl('a', setValue)).toBe('&a=test+1&a=test+2');
+        });
 
-        it('returns the proper url when there is a value', () => {
-            expect(getApiQueryUrl('a', ['first name'])).toBe('&a=first+name');
+        it('returns an empty url when no initialValue is provided and the current setValue === length of options', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '', {});
+            expect(getApiQueryUrl('a', new Set(options))).toBe('');
+        });
+
+        it('returns the proper url when there is a value with no initialValue', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '');
+            expect(getApiQueryUrl('a', new Set(['first name']))).toBe('&a=first+name');
+        });
+
+        it('returns empty url when key && value are undefined', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '');
+            expect(getApiQueryUrl(undefined, undefined)).toBe('');
+        });
+
+        it('returns empty url when value is undefined', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '');
+            expect(getApiQueryUrl('a', undefined)).toBe('');
+        });
+
+        it('returns undefined url when key is undefined', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '');
+            expect(getApiQueryUrl(undefined, new Set(['a']))).toBe('&undefined=a');
         });
 
         it('returns an empty string when value is falsy', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '');
             expect(getApiQueryUrl('a', '')).toBe('');
             expect(getApiQueryUrl('a', null)).toBe('');
-            expect(getApiQueryUrl('a', 0)).toBe('');
-            expect(getApiQueryUrl('a')).toBe('');
         });
     });
 
@@ -85,25 +110,45 @@ describe('ListFilter', () => {
     });
 
     describe('getDefaultFilterValue', () => {
-        const { getDefaultFilterValue } = ListFilter(options, '', '');
-
-        it('returns a default set based on the options', () => {
-            const defaultValues = new Set([options[0].value, options[1].value]);
+        it('returns a default set when initialValue is provided', () => {
+            const { getDefaultFilterValue } = ListFilter(options, '', '', { initialValue: options[0].value });
+            const defaultValues = new Set([options[0].value]);
 
             expect(getDefaultFilterValue('a')).toStrictEqual(defaultValues);
             expect(getDefaultFilterValue(1)).toStrictEqual(defaultValues);
             expect(getDefaultFilterValue()).toStrictEqual(defaultValues);
         });
+
+        it('returns a default set when initialValue is not provided', () => {
+            const { getDefaultFilterValue } = ListFilter(options, '', '');
+
+            expect(getDefaultFilterValue()).toStrictEqual(new Set([options[0].value, options[1].value]));
+        });
     });
 
     describe('isDefaultFilterValue', () => {
-        const { isDefaultFilterValue } = ListFilter(options, '', '');
-        const defaultValues = new Set([options[0].value, options[1].value]);
+        it('returns true if value is equal to empty string or empty Set', () => {
+            const { isDefaultFilterValue } = ListFilter(options, '', '');
+            const defaultValues = new Set([options[0].value, options[1].value]);
 
-        it('returns true if value is equal to empty string', () => {
             expect(isDefaultFilterValue(defaultValues)).toBe(true);
             expect(isDefaultFilterValue('a')).toBe(false);
             expect(isDefaultFilterValue()).toBe(false);
+            expect(isDefaultFilterValue(new Set(null))).toBe(true);
+        });
+
+        it('returns true when value and initialValue are truthy', () => {
+            const { isDefaultFilterValue } = ListFilter(options, '', '', { initialValue: [options[0].value, options[1].value] });
+            const defaultValues = new Set(['test 1', 'test 2']);
+
+            expect(isDefaultFilterValue(defaultValues)).toBe(true);
+        });
+
+        it('returns false when value and initialValue are falsy', () => {
+            const { isDefaultFilterValue } = ListFilter(options, '', '', { initialValue: [options[0].value, options[1].value] });
+            const defaultValues = new Set(['a', 'b']);
+
+            expect(isDefaultFilterValue(defaultValues)).toBe(false);
         });
     });
 
@@ -125,7 +170,7 @@ describe('ListFilter', () => {
         const oneOption = new Set([options[0].value]);
 
         it('returns array of values provided', () => {
-            expect(getFilterSectionLabel(allOptions)).toMatchObject(['Test 1','Test 2']);
+            expect(getFilterSectionLabel(allOptions)).toMatchObject(['Test 1', 'Test 2']);
             expect(getFilterSectionLabel(oneOption)).toMatchObject(['Test 1']);
         });
 

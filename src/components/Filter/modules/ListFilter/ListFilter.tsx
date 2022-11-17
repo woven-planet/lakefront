@@ -1,4 +1,4 @@
-import { getUrlFromList } from 'src/components/Filter/util/filterUtil';
+import { areSetsEqual, getUrlFromList } from 'src/components/Filter/util/filterUtil';
 import CheckboxGroup, { CheckboxGroupOption } from 'src/components/CheckboxGroup/CheckboxGroup';
 import { FilterModule, ListFilterOverrides } from 'src/components/Filter/types';
 
@@ -34,7 +34,7 @@ const ListFilter = (
     getFilterCount: (value) => value?.size ?? 0,
     getApiQueryUrl: (key, value) => {
         if (value) {
-            return getUrlFromList(key, value, options.length);
+            return getUrlFromList(key, value, options.length, Boolean(listFilterOptions.initialValue));
         }
         return '';
     },
@@ -47,16 +47,26 @@ const ListFilter = (
         }
     },
     getBrowserQueryUrlValue: value => value && Array.from(value),
-    getDefaultFilterValue: () => new Set(options.map(item => item.value)),
+    getDefaultFilterValue: () => listFilterOptions.initialValue ?
+        new Set([listFilterOptions.initialValue].flat()) :
+        new Set(options.map(item => item.value)),
+
     isDefaultFilterValue: value => {
-        if (value) {
+        if (value && !listFilterOptions.initialValue) {
             if (value.size === 0) {
                 return true;
             }
             return value.size === options.length;
         }
+        if (value && listFilterOptions.initialValue) {
+            const initialValueSet = new Set([listFilterOptions.initialValue].flat());
+
+            return areSetsEqual(initialValueSet, value);
+        }
         return false;
     },
+
+
     getFilterBarLabel: value => {
         if (value) {
             return Array.from(value)
@@ -74,7 +84,7 @@ const ListFilter = (
                 .map(item => {
                     const itemLabel = options.find(i => i.value === item);
                     return String(itemLabel?.label);
-                })
+                });
         }
         return [];
     },

@@ -42,6 +42,7 @@ const ListFilterTemplate: Story = (args: ListFilterArgs) => {
 };
 
 export const ListFilter = ListFilterTemplate.bind({});
+export const ListFilterOneInitialValue = ListFilterTemplate.bind({});
 
 ListFilter.args = {
     label: 'List Filter',
@@ -50,4 +51,26 @@ ListFilter.args = {
     listFilterOptions: {
         allLabel: 'All Test Data'
     }
+};
+
+ListFilterOneInitialValue.args = {
+    label: 'List Filter One Initial Value',
+    description: 'ListFilter is a checkbox group control meant to be used for multiple filter value combinations.',
+    listFilterOptions: {
+        initialValue: 'better',
+    },
+    options: [
+        {
+            label: 'Good',
+            value: 'good'
+        },
+        {
+            label: 'Better',
+            value: 'better'
+        },
+        {
+            label: 'Best',
+            value: 'best'
+        }
+    ]
 };
