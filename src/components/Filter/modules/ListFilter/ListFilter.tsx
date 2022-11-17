@@ -60,9 +60,10 @@ const ListFilter = (
             return value.size === options.length;
         }
         if (value && listFilterOptions.initialValue) {
-            const initialValueSet = new Set([listFilterOptions.initialValue].flat().sort());
+            const sortedInitialValueSet = new Set([listFilterOptions.initialValue].flat().sort());
+            const [sortedValue] = [value].flat().sort();
 
-            return R.equals(value, initialValueSet);
+            return R.equals(sortedValue, sortedInitialValueSet);
         }
         return false;
     },

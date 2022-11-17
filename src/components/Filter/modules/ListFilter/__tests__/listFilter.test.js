@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import ListFilter from '../ListFilter';
-import { listFilterOptions } from '../../../../../stories/Filter/ListFilter/listFilterUtil';
+import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
 const options = [
     {
@@ -45,6 +45,11 @@ describe('ListFilter', () => {
             expect(getApiQueryUrl('a', setValue)).toBe('&a=test+1&a=test+2');
         });
 
+        it('returns an empty url when no initialValue is provided and the current setValue === length of options', () => {
+            const { getApiQueryUrl } = ListFilter(options, '', '', {});
+            expect(getApiQueryUrl('a', new Set(options))).toBe('');
+        });
+
         it('returns the proper url when there is a value with no initialValue', () => {
             const { getApiQueryUrl } = ListFilter(options, '', '');
             expect(getApiQueryUrl('a', new Set(['first name']))).toBe('&a=first+name');
@@ -67,7 +72,7 @@ describe('ListFilter', () => {
 
         it('returns an empty string when value is falsy', () => {
             const { getApiQueryUrl } = ListFilter(options, '', '');
-            expect(getApiQueryUrl('a', new Set())).toBe('');
+            expect(getApiQueryUrl('a', '')).toBe('');
             expect(getApiQueryUrl('a', null)).toBe('');
         });
     });
