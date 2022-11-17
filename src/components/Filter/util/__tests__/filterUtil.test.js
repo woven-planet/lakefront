@@ -1,4 +1,10 @@
-import { getDefaultValue, getDefaultJsonViewValue, getFilterAppliedCount, getUrlFromList } from '../filterUtil';
+import {
+    getDefaultValue,
+    getDefaultJsonViewValue,
+    getFilterAppliedCount,
+    getUrlFromList,
+    areSetsEqual
+} from '../filterUtil';
 import { FILTERS } from 'src/components/Filter/__tests__/filter.data';
 
 describe('getDefaultValue', () => {
@@ -96,6 +102,19 @@ describe('getUrlFromList', () => {
 
         it('returns "" when initial value is false with all options selected', () => {
             expect(getUrlFromList('item', new Set(['good', 'better', 'best']), 3, false)).toBe('');
+        });
+    });
+
+    describe('areSetsEqual', () => {
+        const initialValueSet = new Set(['better']);
+        it('returns expected results when comparing equal Sets ', () => {
+            const valueSet = new Set(['better']);
+            expect(areSetsEqual(initialValueSet, valueSet)).toBe(true);
+        });
+
+        it('returns expected results when comparing non equal Sets ', () => {
+            const valueSet = new Set(['best']);
+            expect(areSetsEqual(initialValueSet, valueSet)).toBe(false);
         });
     });
 });
