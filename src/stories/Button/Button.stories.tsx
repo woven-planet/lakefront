@@ -87,6 +87,7 @@ Destructive.args = {
 export const PrimaryDefaultIcon = Template.bind({});
 PrimaryDefaultIcon.args = {
     ...Primary.args,
+    iconLabel: 'Optional label text',
     icon: true
 };
 
@@ -107,6 +108,7 @@ export const PrimaryIconButton = Template.bind({});
 PrimaryIconButton.args = {
     children: undefined,
     color: 'primary',
+    iconLabel: 'Optional label text',
     icon: true,
     iconPosition: undefined
 };

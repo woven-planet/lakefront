@@ -29,6 +29,7 @@ const Button: FC<ButtonComponentProps> = ({
     children,
     icon = false,
     iconPosition = 'left',
+    iconLabel = '',
     ...props
 }) => {
     // When an icon is supplied we need to render the IconButton component inside the Button
@@ -52,6 +53,7 @@ const Button: FC<ButtonComponentProps> = ({
                         {children}
                     </IconButton>
                 </ButtonComponent>
+                <div>{iconLabel}</div>
             </ThemeProvider>
         );
     } else {
