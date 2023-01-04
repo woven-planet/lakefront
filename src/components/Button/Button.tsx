@@ -10,7 +10,7 @@ import {
     shouldUseMappedIcon
 } from './buttonUtil';
 import theme from 'src/styles/theme';
-import { IconLabelStyles, StyledDiv } from './buttonStyles';
+import { StyledDiv } from './buttonStyles';
 
 /**
  * Button Component
@@ -57,7 +57,7 @@ const Button: FC<ButtonComponentProps> = ({
                                 {children}
                             </IconButton>
                         </ButtonComponent>
-                        <IconLabelStyles className='icon-label'>{iconLabel}</IconLabelStyles>
+                        <div className='icon-label'>{iconLabel}</div>
                     </StyledDiv>
                 </ThemeProvider>
             );
