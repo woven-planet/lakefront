@@ -10,6 +10,7 @@ import {
     shouldUseMappedIcon
 } from './buttonUtil';
 import theme from 'src/styles/theme';
+import { IconLabelStyles, StyledDiv } from './buttonStyles';
 
 /**
  * Button Component
@@ -46,6 +47,21 @@ const Button: FC<ButtonComponentProps> = ({
             throw new InvalidButtonColorError(color);
         }
 
+        if (iconLabel) {
+            const { className, ...rest } = props;
+            return (
+                <ThemeProvider theme={theme}>
+                    <StyledDiv className={className}>
+                        <ButtonComponent alternate={alternate} {...rest} isIconOnly={isIconOnly}>
+                            <IconButton icon={defaultIcon} iconPosition={iconPosition}>
+                                {children}
+                            </IconButton>
+                        </ButtonComponent>
+                        <IconLabelStyles className='icon-label'>{iconLabel}</IconLabelStyles>
+                    </StyledDiv>
+                </ThemeProvider>
+            );
+        }
         return (
             <ThemeProvider theme={theme}>
                 <ButtonComponent alternate={alternate} {...props} isIconOnly={isIconOnly}>
@@ -53,7 +69,6 @@ const Button: FC<ButtonComponentProps> = ({
                         {children}
                     </IconButton>
                 </ButtonComponent>
-                <div>{iconLabel}</div>
             </ThemeProvider>
         );
     } else {
