@@ -67,6 +67,10 @@ export interface IconComponentProps {
      * When icon is defined, the position can be specified via the iconPosition prop.
      */
     iconPosition?: 'left' | 'right';
+    /**
+     * Allows text to render under icon button.
+     */
+    iconLabel?: string;
 }
 
 export type ButtonComponentProps = ButtonProps & IconComponentProps & ComponentPropsWithoutRef<'button'>;

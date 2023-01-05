@@ -10,6 +10,7 @@ import {
     shouldUseMappedIcon
 } from './buttonUtil';
 import theme from 'src/styles/theme';
+import { StyledDiv } from './buttonStyles';
 
 /**
  * Button Component
@@ -29,6 +30,7 @@ const Button: FC<ButtonComponentProps> = ({
     children,
     icon = false,
     iconPosition = 'left',
+    iconLabel = '',
     ...props
 }) => {
     // When an icon is supplied we need to render the IconButton component inside the Button
@@ -45,6 +47,21 @@ const Button: FC<ButtonComponentProps> = ({
             throw new InvalidButtonColorError(color);
         }
 
+        if (iconLabel) {
+            const { className, ...rest } = props;
+            return (
+                <ThemeProvider theme={theme}>
+                    <StyledDiv className={className}>
+                        <ButtonComponent alternate={alternate} {...rest} isIconOnly={isIconOnly}>
+                            <IconButton icon={defaultIcon} iconPosition={iconPosition}>
+                                {children}
+                            </IconButton>
+                        </ButtonComponent>
+                        <div className='icon-label'>{iconLabel}</div>
+                    </StyledDiv>
+                </ThemeProvider>
+            );
+        }
         return (
             <ThemeProvider theme={theme}>
                 <ButtonComponent alternate={alternate} {...props} isIconOnly={isIconOnly}>
