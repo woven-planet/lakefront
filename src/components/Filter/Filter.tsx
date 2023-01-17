@@ -14,6 +14,13 @@ import {
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
 import { FilterSectionHeader } from './components';
+import FilterBar from '../../stories/Filter/components/FilterBar';
+import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
+import IconButton from '../Button/IconButton';
+import { Button } from '../../index';
+import { FilterItem } from '../../stories/Filter/components/FilterBar/FilterBar';
+import Select from 'react-select';
+import { MULTI_SELECT_STYLES } from './modules/MultiSelectFilter/multiSelectStyles';
 
 /**
  * Filter Component
@@ -100,7 +107,7 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
-    return (
+        return (
         <ThemeProvider theme={theme}>
             <FilterContainer
                 showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
@@ -123,6 +130,17 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
+
+                    {filters && (!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
+                        <FiltersSection className='filters'>
+                            {Object.entries(filters)
+                                .filter(([, f]) => !f.inputHidden)
+                                .map(([key, filter]) => (
+
+                                <FilterValueChips value={filterValues[key]} visible={true} key={key} />
+                                ))}
+                        </FiltersSection>
+                    )}
 
                     {(!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
                         <FiltersSection className="filters">

@@ -24,6 +24,23 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     }
 }));
 
+export const SvgCloseStyles = styled.div({
+    transform: 'scale(0.5)',
+    alignSelf: 'center',
+
+    'button': {
+        '&:hover': {
+            backgroundColor: 'unset'
+        },
+        '&::before': {
+            backgroundImage: 'unset'
+        },
+        '&::after': {
+            backgroundImage: 'unset'
+        }
+    }
+});
+
 export const FilterValueChipsContainer = styled.div({
     display: 'flex',
     flexDirection: 'row',
