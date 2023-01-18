@@ -18,6 +18,7 @@ const TestComponent = (props: Omit<UsePopoverProps, 'popoverContainer'>) => {
 
 let createObserverSpy: jest.SpyInstance;
 let mockIntersectionObserver: IntersectionObserver;
+let intersectionChange = jest.fn();
 
 beforeAll(() => {
     jest.useFakeTimers('modern');
@@ -36,12 +37,21 @@ beforeEach(() => {
         disconnect: () => null,
         takeRecords: () => [],
     };
-    createObserverSpy = jest.spyOn(usePopoverUtil, 'createObserver').mockImplementation(() => mockIntersectionObserver);
+    createObserverSpy = jest.spyOn(usePopoverUtil, 'createObserver').mockImplementation((callBack) => {
+        intersectionChange = jest.fn(callBack);
+        return mockIntersectionObserver;
+    });
 });
 
 afterAll(() => {
     jest.useRealTimers();
 });
+
+const simulateIntersection = () => {
+    act(() => {
+        intersectionChange();
+    });
+};
 
 describe('usePopover', () => {
     it('is a function', () => {
@@ -75,7 +85,7 @@ describe('usePopover', () => {
         });
 
         describe('portal assignment', () => {
-            it('does not observe, set portal, or set update when portal already exists with truthy popoverContainer', () => {
+            it('does not observe, set portal, or set update callback when portal already exists with truthy popoverContainer', () => {
                 const { result } = renderHook(() => usePopover({
                     renderInPortal: true,
                     popoverContainer: null
@@ -83,10 +93,12 @@ describe('usePopover', () => {
 
                 expect(mockIntersectionObserver.observe).not.toHaveBeenCalled();
                 expect(result.current.portal).toBeNull();
+
+                simulateIntersection();
                 expect(result.current.update).toBe(0);
             });
 
-            it('observes, sets portal, and sets update when portal does not exist with truthy popoverContainer', () => {
+            it('observes, sets portal, and sets update callback when portal does not exist with truthy popoverContainer', () => {
                 const { container } = render(<div/>);
                 const { result } = renderHook(() => usePopover({
                     renderInPortal: true,
@@ -95,7 +107,24 @@ describe('usePopover', () => {
 
                 expect(mockIntersectionObserver.observe).toHaveBeenCalledWith(container);
                 expect(result.current.portal).not.toBeNull();
-                expect(result.current.update).toBe(0);
+
+                simulateIntersection();
+                expect(result.current.update).toBe(1672791120000);
+            });
+
+            it('stops observing and removes appended div on unmount', () => {
+                const { baseElement, unmount } = render(
+                    <TestComponent renderInPortal />
+                );
+
+                expect(baseElement.children).toHaveLength(2);
+                expect(baseElement.querySelector('#lakefront-portal-container')).toBeInTheDocument();
+                expect(mockIntersectionObserver.unobserve).not.toHaveBeenCalled();
+
+                unmount();
+
+                expect(mockIntersectionObserver.unobserve).toHaveBeenCalled();
+                expect(baseElement.querySelector('#lakefront-portal-container')).not.toBeInTheDocument();
             });
         });
     });

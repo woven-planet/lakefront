@@ -39,23 +39,33 @@ const usePopover = ({ popoverContainer, portalId, renderInPortal }: UsePopoverPr
         let portalElement: HTMLElement;
 
         if (renderInPortal && bodyElement) {
-                portalElement = document.createElement('div');
-                portalElement.id = portalId || 'lakefront-portal-container';
+            portalElement = document.createElement('div');
+            portalElement.id = portalId || 'lakefront-portal-container';
 
-                if (!portal) {
-                    bodyElement.appendChild(portalElement);
-                }
-
-                if (!portal && popoverContainer) {
-                    observer = createObserver(() => {
-                        setUpdate(new Date().getTime());
-                    });
-
-                    observer.observe(popoverContainer);
-                    setPortal(portalElement);
-                }
+            if (!portal) {
+                bodyElement.appendChild(portalElement);
             }
-    }, [renderInPortal]);
+
+            if (!portal && popoverContainer) {
+                observer = createObserver(() => {
+                    setUpdate(new Date().getTime());
+                });
+
+                observer.observe(popoverContainer);
+                setPortal(portalElement);
+            }
+        }
+
+        return () => {
+            if (popoverContainer && observer) {
+                observer.unobserve(popoverContainer);
+            }
+
+            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
+                bodyElement.removeChild(portalElement);
+            }
+        };
+    }, [popoverContainer, renderInPortal]);
 
     // renderInPortal styling
     // useEffect
