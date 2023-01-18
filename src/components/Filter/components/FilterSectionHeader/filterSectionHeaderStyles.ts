@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ReactComponent as CloseLabel } from '../../assets/closeLabel.svg';
+import { colors } from '../../../../index';
 
 export const FilterValueChip = styled.div(({ theme }) => ({
     display: 'flex',
@@ -24,22 +25,61 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     }
 }));
 
-export const SvgCloseStyles = styled.div({
-    transform: 'scale(0.5)',
-    alignSelf: 'center',
+export const FilterValueHeaderChip = styled.div(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 2,
+    margin: 2,
+    backgroundColor: theme?.colors?.akoya,
+    flexGrow: 1,
+    maxWidth: '90%',
+    fontSize: 14,
+    fontWeight: 600,
+    color: theme?.colors?.gunpowder,
+    height: 24,
+    div: {
+        maxWidth: '90%',
+        width: 100,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+    }
+}));
 
+export const SvgCloseStyles = styled.div(({ theme }) => ({
+    
     'button': {
+        borderRadius: 2,
+        border: `solid 1px ${theme.colors.selago}`,
+        backgroundColor: theme.colors.akoya,
+        color: theme.colors.gunpowder,
+
+
+        'div.filterItem': {
+            display: 'grid',
+            gridTemplateColumns: '1fr 20px',
+
+            '.filterItemClose': {
+                gridArea: '1 / 2'
+            }
+        },
+        transform: 'scale(0.8)',
         '&:hover': {
-            backgroundColor: 'unset'
+            backgroundColor: colors.akoya
         },
         '&::before': {
             backgroundImage: 'unset'
         },
         '&::after': {
             backgroundImage: 'unset'
+        },
+        'span': {
+            gridArea: '1',
+            width: 100
         }
     }
-});
+}));
 
 export const FilterValueChipsContainer = styled.div({
     display: 'flex',

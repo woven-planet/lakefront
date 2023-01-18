@@ -1,4 +1,4 @@
-import { FilterValueChip, SvgCloseStyles } from './filterSectionHeaderStyles';
+import { FilterValueChip, FilterValueHeaderChip, SvgCloseStyles } from './filterSectionHeaderStyles';
 import { FilterModule } from 'src/components/Filter/types';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 import  Button from 'src/components/Button/Button';
@@ -19,13 +19,30 @@ export const createChips = (value: string | string[]) => {
                     return null;
                 }
 
+                return <FilterValueChip key={`${content}-${idx}`}><div>{content} </div></FilterValueChip>;
+            })}
+        </>
+    );
+};
+
+export const createHeaderChips = (value: string | string[]) => {
+    const chips = Array.isArray(value) ? value : [value];
+
+    if (!chips?.length) {
+        return null;
+    }
+
+    return (
+        <>
+            {chips.map((content: string, idx: number) => {
+                if (!content) {
+                    return null;
+                }
+
                 return (
-                    <FilterValueChip key={`${content}-${idx}`}>
+                    <FilterValueHeaderChip key={`${content}-${idx}`}>
                         <div>{content} </div>
-                        <SvgCloseStyles>
-                            <Button icon={<CloseIcon />} type='reset' />
-                        </SvgCloseStyles>
-                    </FilterValueChip>
+                    </FilterValueHeaderChip>
                 );
             })}
         </>
