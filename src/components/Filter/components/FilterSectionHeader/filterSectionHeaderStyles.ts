@@ -48,7 +48,7 @@ export const FilterValueHeaderChip = styled.div(({ theme }) => ({
 }));
 
 export const SvgCloseStyles = styled.div(({ theme }) => ({
-    
+
     'button': {
         borderRadius: 2,
         border: `solid 1px ${theme.colors.selago}`,
@@ -75,8 +75,12 @@ export const SvgCloseStyles = styled.div(({ theme }) => ({
             backgroundImage: 'unset'
         },
         'span': {
-            gridArea: '1',
-            width: 100
+
+            display: 'flex',
+            justifyContent: 'center',
+            height: 40,
+            alignItems: 'center',
+            width: 150
         }
     }
 }));

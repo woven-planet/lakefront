@@ -94,8 +94,11 @@ export interface FilterModule<T> {
      * Note: should also delete this filter's key & value from the provided API post body, so that
      * unparsed JSON can be identified and separated into its own pseudo-filter.
      */
-    getFilterValueFromApiPostBody?(key: string, mutableApiPostBody: FilterPostBody | null | undefined):
-        T | null | undefined;
+    getFilterValueFromApiPostBody?(key: string, mutableApiPostBody: FilterPostBody | null | undefined): T | null | undefined;
+    /**
+     * Partially clear a filter when a filter has multiple selected options.
+     */
+    clearPartialSingleFilter?(): T | null;
 }
 
 /**

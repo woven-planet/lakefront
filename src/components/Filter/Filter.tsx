@@ -21,11 +21,9 @@ import theme from 'src/styles/theme';
 import { FilterSectionHeader } from './components';
 import FilterBar from '../../stories/Filter/components/FilterBar';
 import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
-import { createChips, createHeaderChips } from './components/FilterSectionHeader/filterSectionHeaderUtil';
-import { SvgCloseStyles } from './components/FilterSectionHeader/filterSectionHeaderStyles';
-import Button from '../Button';
+
 import { ReactComponent as CloseIcon } from './util/assets/closeIcon.svg';
-import { FilterItem } from '../../stories/Filter/components/FilterBar/FilterBar';
+import { SvgCloseStyles } from './components/FilterSectionHeader/filterSectionHeaderStyles';
 
 /**
  * Filter Component
@@ -112,8 +110,8 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
-    const filterKeys = Object.keys(filters);
-    const filterCount = getFilterAppliedCount(filters, filterValues);
+    // const filterKeys = Object.keys(filters);
+    // const filterCount = getFilterAppliedCount(filters, filterValues);
 
         return (
         <ThemeProvider theme={theme}>
@@ -143,22 +141,23 @@ export const Filter: FC<FilterComponentProps> = ({
                         <FiltersSection className='filters'>
                             {Object.entries(filters)
                                 .filter(([, f]) => !f.inputHidden)
-                                .map(([key, filter]) => (
+                                .map(([key, filter]) => {
+                                    const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
+                                    const itemFilterArrayLabels = Array.isArray(itemFilterLabelValues) ? itemFilterLabelValues : [itemFilterLabelValues];
+
+                                    return (
                                         <SvgCloseStyles>
-                                        {filterValues[key] && key && (
-                                            <Button
-                                                // iconPosition='right'
-                                                // key={filterValues[key]}
-                                                // icon={filterValues[key] ? <CloseIcon /> : undefined}
-                                                color='secondary'
-                                                // children={createHeaderChips(filterValues[key])}
-                                                // type='reset'
-                                            >
-                                              <FilterItem key={key} clearFilter={() => clearFilter(key)} item={filters[key]} value={filterValues[key] ?? undefined} name={key} />
-                                              </Button>
-                                        )}
-                                    </SvgCloseStyles>
-                                ))}
+                                            {filterValues[key] && (
+                                                <FilterValueChips
+                                                    item={filters[key]}
+                                                    clearFilter={() => clearFilter(key)}
+                                                    key={key}
+                                                    value={itemFilterArrayLabels.map((label) => label)}
+                                                    visible={true} />
+                                            )}
+                                        </SvgCloseStyles>
+                                    );
+                                })}
                         </FiltersSection>
                     )}
 
