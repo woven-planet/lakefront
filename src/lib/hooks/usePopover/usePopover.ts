@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { createObserver } from './usePopoverUtil';
 
+export interface PortalStyles {
+    className?: string;
+    styles?: Partial<CSSStyleDeclaration>;
+}
+
 export interface UsePopoverProps {
     /**
      * This is the container where the popover will reside
@@ -16,10 +21,7 @@ export interface UsePopoverProps {
      * This is the className and styles to apply to the portal. This is useful for setting
      * styles since the portal will render outside the majority of your css scope.
      */
-    portalStyles?: {
-        className?: string;
-        styles?: Partial<CSSStyleDeclaration>;
-    };
+    portalStyles?: PortalStyles;
     /**
      * When true, a div will be appended to the body in order to render the desired content through it.
      * This is useful when the content would be inside a scrollable container or one with "overflow: hidden"

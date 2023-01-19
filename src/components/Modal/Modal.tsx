@@ -4,7 +4,6 @@ import Button from 'src/components/Button/Button';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import { createPortal } from 'react-dom';
-
 import {
     Dialog,
     DialogButtonContainer,
@@ -14,6 +13,7 @@ import {
     DialogSubHeader,
     DialogTitleContainer
 } from './modalStyles';
+import usePopover, { PortalStyles } from 'src/lib/hooks/usePopover';
 
 export const CANCEL_BUTTON_TEXT = 'Cancel';
 
@@ -76,6 +76,11 @@ export interface ModalProps {
      */
     dialogWidth?: false | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     /**
+     * This is the id to assign to the appended div when rendering in a portal.
+     * This defaults to `lakefront-portal-container`.
+     */
+    portalId?: string;
+    /**
      * When true, the component will mount a div to the body and render the dialog through it.
      * This is useful when the dialog would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
@@ -92,91 +97,71 @@ export interface ModalProps {
  * Modal Component
  *
  * The Modal component is a UI blocking dialog overlay.
- * The state is not managed inside this component and visibility (via the `isOpen` prop) needs to be maintained in the parent component.
- * While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used
- * to append a div to the body.
+ * The state is not managed inside this component and visibility (via the `isOpen` prop) needs to be maintained in the
+ * parent component. While the default rendering behavior is often sufficient, the `renderInPortal` prop can be used to
+ * append a div to the body.
  *
  */
 const Modal: FC<ModalProps> = ({
-                                   handleClose,
-                                   handleBackdropClick = handleClose,
-                                   isOpen,
-                                   headerText = '',
-                                   isCloseIconVisible = true,
-                                   actionButton,
-                                   cancelButtonText = CANCEL_BUTTON_TEXT,
-                                   subHeaderText = '',
-                                   children,
-                                   showTopDivider = false,
-                                   showBottomDivider = false,
-                                   dialogWidth = 'sm',
-                                   renderInPortal = false,
-                                   className
-                               }) => {
-
-    const [portal, setPortal] = useState<HTMLElement | null>(null);
+    handleClose,
+    handleBackdropClick = handleClose,
+    isOpen,
+    headerText = '',
+    isCloseIconVisible = true,
+    actionButton,
+    cancelButtonText = CANCEL_BUTTON_TEXT,
+    subHeaderText = '',
+    children,
+    showTopDivider = false,
+    showBottomDivider = false,
+    dialogWidth = 'sm',
+    portalId,
+    renderInPortal = false,
+    className
+}) => {
     const [dialogElement, setDialogElement] = useState<HTMLElement | null>(null);
-    const [update, setUpdate] = useState<number>(0);
     const [bodyOverflow, setBodyOverflow] = useState<string>('');
     const bodyOverflowRef = useRef(false);
+    const portalStyles: PortalStyles = useMemo(() => {
+        if (dialogElement) {
+            return {
+                className: dialogElement.className,
+                styles: {
+                    display: isOpen ? 'flex' : 'none',
+                    backgroundColor: 'rgb(0,0,0), rgba(0,0,0,0.4)',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                    zIndex: `${theme?.zIndex?.modal}`
+                }
+            };
+        }
+
+        return {};
+    }, [dialogElement, isOpen]);
+    const { portal } = usePopover({
+        popoverContainer: dialogElement,
+        portalStyles,
+        portalId,
+        renderInPortal
+    });
 
     useEffect(() => {
-        const bodyElementHTMLCollection = document.getElementsByTagName('body');
-        const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
-        let observer: IntersectionObserver;
-        let portalElement: HTMLElement;
-
-        if (renderInPortal && bodyElement) {
-            portalElement = document.createElement('div');
-            portalElement.onclick = (e) => {
-                if (e.target !== portalElement) {
+        if (portal) {
+            portal.onclick = (e) => {
+                if (e.target !== portal) {
                     return;
                 }
                 if (handleClose) {
                     handleClose();
                 }
             };
-
-            if (!portal) {
-                bodyElement.appendChild(portalElement);
-            }
-
-            if (!portal && dialogElement) {
-                observer = new IntersectionObserver(() => {
-                    setUpdate(new Date().getTime());
-                });
-
-                observer.observe(dialogElement);
-                setPortal(portalElement);
-            }
         }
-
-        return () => {
-            if (dialogElement && observer) {
-                observer.unobserve(dialogElement);
-            }
-
-            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
-                bodyElement.removeChild(portalElement);
-            }
-        };
-    }, [dialogElement, renderInPortal]);
-
-    useEffect(() => {
-        if (dialogElement && portal) {
-            portal.style.display = isOpen ? 'flex' : 'none';
-            portal.style.backgroundColor = 'rgb(0,0,0), rgba(0,0,0,0.4)';
-            portal.style.width = '100%';
-            portal.style.height = '100%';
-            portal.style.justifyContent = 'center';
-            portal.style.alignItems = 'center';
-            portal.style.position = 'fixed';
-            portal.style.top = '0';
-            portal.style.left = '0';
-            portal.style.zIndex = `${theme?.zIndex?.modal}`;
-            portal.className = dialogElement.className;
-        }
-    }, [update]);
+    }, [portal]);
 
     useEffect(() => {
         if (document) {
@@ -197,40 +182,29 @@ const Modal: FC<ModalProps> = ({
         setDialogElement(node);
     };
 
-    const dialog = useMemo(
-        () => (
-            <>
-                {isOpen && (
-                    <Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
-                        <DialogTitleContainer>
-                            {headerText}
-                            {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
-                            {isCloseIconVisible ? (
-                                <Button
-                                    className='closeIcon'
-                                    aria-label='Close'
-                                    onClick={handleClose}
-                                    icon={<CloseIcon />}
-                                />
-                            ) : (
-                                <span />
-                            )}
-                            {showTopDivider && <DialogDivider className='dialogDivider' />}
-                        </DialogTitleContainer>
-                        <DialogContent>{children}</DialogContent>
-                        {showBottomDivider && <DialogDivider className='dialogDivider' />}
-                        {actionButton && (
-                            <DialogButtonContainer>
-                                <Button color='secondary' onClick={handleClose}>
-                                    {cancelButtonText}
-                                </Button>
-                                {actionButton}
-                            </DialogButtonContainer>
-                        )}
-                    </Dialog>
-                )}
-            </>
-        ),
+    const dialog = useMemo(() => (<>
+        {isOpen && (<Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
+            <DialogTitleContainer>
+                {headerText}
+                {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
+                {isCloseIconVisible ? (<Button
+                    className='closeIcon'
+                    aria-label='Close'
+                    onClick={handleClose}
+                    icon={<CloseIcon />}
+                />) : (<span />)}
+                {showTopDivider && <DialogDivider className='dialogDivider' />}
+            </DialogTitleContainer>
+            <DialogContent>{children}</DialogContent>
+            {showBottomDivider && <DialogDivider className='dialogDivider' />}
+            {actionButton && (<DialogButtonContainer>
+                <Button color='secondary' onClick={handleClose}>
+                    {cancelButtonText}
+                </Button>
+                {actionButton}
+            </DialogButtonContainer>)}
+        </Dialog>)}
+    </>),
         [
             children,
             headerText,
@@ -243,14 +217,12 @@ const Modal: FC<ModalProps> = ({
         ]
     );
 
-    return (
-        <ThemeProvider theme={theme}>
-            <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className}
-                             onClick={handleBackdropClick}>
-                {portal ? createPortal(dialog, portal) : dialog}
-            </DialogContainer>
-        </ThemeProvider>
-    );
+    return (<ThemeProvider theme={theme}>
+        <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className}
+                         onClick={handleBackdropClick}>
+            {portal ? createPortal(dialog, portal) : dialog}
+        </DialogContainer>
+    </ThemeProvider>);
 };
 
 export default Modal;
