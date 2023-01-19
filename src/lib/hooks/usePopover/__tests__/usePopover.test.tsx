@@ -127,5 +127,54 @@ describe('usePopover', () => {
                 expect(baseElement.querySelector('#lakefront-portal-container')).not.toBeInTheDocument();
             });
         });
+
+        describe('portal styling', () => {
+            it('does not apply provided portal styles after update when popoverContainer is null', () => {
+                const { result } = renderHook(() => usePopover({
+                    renderInPortal: true,
+                    popoverContainer: null,
+                    portalStyles: {
+                        className: 'custom-portal',
+                        styles: {
+                            display: 'flex',
+                            width: '100%'
+                        }
+                    }
+                }));
+
+                const portal = result.current.portal as HTMLElement;
+
+                expect(portal).toBeNull();
+            });
+
+            it('applies provided portal styles after update when popoverContainer and portal are available', () => {
+                const { container } = render(<div/>);
+
+                const { result } = renderHook(() => usePopover({
+                    renderInPortal: true,
+                    popoverContainer: container,
+                    portalStyles: {
+                        className: 'custom-portal',
+                        styles: {
+                            display: 'flex',
+                            width: '100%'
+                        }
+                    }
+                }));
+
+                const portal = result.current.portal as HTMLElement;
+
+                expect(portal.className).toBe('');
+                expect(portal.style.display).toBe('');
+                expect(portal.style.width).toBe('');
+
+                // trigger update
+                simulateIntersection();
+
+                expect(portal.className).toBe('custom-portal');
+                expect(portal.style.display).toBe('flex');
+                expect(portal.style.width).toBe('100%');
+            });
+        });
     });
 });

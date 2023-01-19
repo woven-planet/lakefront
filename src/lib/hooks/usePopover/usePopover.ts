@@ -13,6 +13,14 @@ export interface UsePopoverProps {
      */
     portalId?: string;
     /**
+     * This is the className and styles to apply to the portal. This is useful for setting
+     * styles since the portal will render outside the majority of your css scope.
+     */
+    portalStyles?: {
+        className?: string;
+        styles?: Partial<CSSStyleDeclaration>;
+    };
+    /**
      * When true, a div will be appended to the body in order to render the desired content through it.
      * This is useful when the content would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. It uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
@@ -26,10 +34,14 @@ interface UsePopoverResult {
     update: number;
 }
 
-const usePopover = ({ popoverContainer, portalId, renderInPortal }: UsePopoverProps): UsePopoverResult => {
+const usePopover = ({
+    popoverContainer,
+    portalId,
+    portalStyles = {},
+    renderInPortal
+}: UsePopoverProps): UsePopoverResult => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [update, setUpdate] = useState<number>(0);
-
 
     // renderInPortal setup
     useEffect(() => {
@@ -68,7 +80,20 @@ const usePopover = ({ popoverContainer, portalId, renderInPortal }: UsePopoverPr
     }, [popoverContainer, renderInPortal]);
 
     // renderInPortal styling
-    // useEffect
+    useEffect(() => {
+        if (popoverContainer && portal) {
+            const {
+                className = '',
+                styles = {}
+            } = portalStyles;
+
+            portal.className = className;
+
+            for (const [key, value] of Object.entries(styles)) {
+                (portal.style as any)[key] = value;
+            }
+        }
+    }, [update]);
 
     return {
         portal,
