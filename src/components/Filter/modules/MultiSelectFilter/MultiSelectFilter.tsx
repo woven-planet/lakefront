@@ -49,6 +49,11 @@ const MultiSelectFilter = (
     },
     getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => [],
+
+    clearPartialSingleFilter: (value) => {
+        return null;
+    },
+
     isDefaultFilterValue: (value) => {
         if (value) {
             if (value.length === 0) {

@@ -1,42 +1,25 @@
-import { FilterValueChip, FilterValueHeaderChip } from './filterSectionHeaderStyles';
+import { FilterValueChip } from './filterSectionHeaderStyles';
 import { FilterModule } from 'src/components/Filter/types';
 
 export const DEFAULT_FILTER_COUNT = 1;
 
-export const createChips = (value: string | string[]) => {
+export const createChips = (value: string | string[], onClose?: () => void, item?: FilterModule<any>, showX?: boolean) => {
     const chips = Array.isArray(value) ? value : [value];
 
     if (!chips?.length) {
         return null;
     }
-
+    // item?.label
     return (
         <>
             {chips.map((content: string, idx: number) => {
                 if (!content) {
                     return null;
                 }
-                return <FilterValueChip key={`${content}-${idx}`}><div>{content} </div></FilterValueChip>;
-            })}
-        </>
-    );
-};
-
-export const createHeaderChips = (value: string | string[], filterLabel?: string) => {
-    const chips = Array.isArray(value) ? value : [value];
-
-    if (!chips?.length) {
-        return null;
-    }
-
-    return (
-        <>
-            {chips.map((content: string, idx: number) => {
-                if (!content) {
-                    return null;
-                }
-                console.log('content', content);
-                return <FilterValueHeaderChip key={`${content}-${idx}`}><div>{content} </div></FilterValueHeaderChip>;
+                return <FilterValueChip key={`${content}-${idx}`}>
+                    <div>{content}</div>
+                    {showX && onClose && <span onClick={onClose}>x</span>}
+                </FilterValueChip>;
             })}
         </>
     );

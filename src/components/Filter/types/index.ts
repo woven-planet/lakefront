@@ -98,7 +98,7 @@ export interface FilterModule<T> {
     /**
      * Partially clear a filter when a filter has multiple selected options.
      */
-    clearPartialSingleFilter?(): T | null;
+    clearPartialSingleFilter?(value: string | string[]): T | null | undefined;
 }
 
 /**
@@ -143,7 +143,7 @@ export interface FilterHooks<T = FilterPostBody> {
     /**
      * The function to clear a particular filter.
      */
-    clearFilter(name: string): void;
+    clearFilter(name: string | string[], clearPartial?: boolean): void;
     /**
      * The function to clear all current filters.
      */

@@ -1,35 +1,31 @@
 import { FC } from 'react';
-import { createChips, createHeaderChips } from './filterSectionHeaderUtil';
-import { FilterValueChipsContainer, SvgCloseStyles } from './filterSectionHeaderStyles';
+import { createChips } from './filterSectionHeaderUtil';
+import { FilterValueChip, FilterValueChipsContainer } from './filterSectionHeaderStyles';
 import { FilterModule } from '../../types';
 
 interface FilterValueChipsProps {
     value: string | string[];
     visible?: boolean;
     item: FilterModule<any>;
-    clearFilter(name: string, clearPartial?: boolean): void;
+    notDefaultValues?: boolean;
+
+    clearFilter(name: string | string[], clearPartial?: boolean): void;
 }
 
-const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, clearFilter, item }) => {
+const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, clearFilter, item, notDefaultValues }) => {
     if (!visible) {
         return null;
     }
 
     const handleCloseIcon = () => {
-        clearFilter(item.label, false);
+        clearFilter(value, true);
     };
-    console.log('value', value);
 
-    const itemLabel = item.getFilterBarLabel(value);
-    const itemFilterLabelValues = item.getFilterSectionLabel(value);
 
     return (
-            <FilterValueChipsContainer>
-                {createChips(value)}
-                { !item.required && value && !item.getDefaultFilterValue() && createHeaderChips(value) && <span onClick={handleCloseIcon}> x</span>}
-            </FilterValueChipsContainer>
-
-
+        <FilterValueChipsContainer>
+            {createChips(value, handleCloseIcon, item, notDefaultValues)}
+        </FilterValueChipsContainer>
     );
 };
 

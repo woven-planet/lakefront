@@ -22,8 +22,6 @@ import { FilterSectionHeader } from './components';
 import FilterBar from '../../stories/Filter/components/FilterBar';
 import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
 
-import { ReactComponent as CloseIcon } from './util/assets/closeIcon.svg';
-import { SvgCloseStyles } from './components/FilterSectionHeader/filterSectionHeaderStyles';
 
 /**
  * Filter Component
@@ -110,8 +108,6 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
-    // const filterKeys = Object.keys(filters);
-    // const filterCount = getFilterAppliedCount(filters, filterValues);
 
         return (
         <ThemeProvider theme={theme}>
@@ -143,19 +139,18 @@ export const Filter: FC<FilterComponentProps> = ({
                                 .filter(([, f]) => !f.inputHidden)
                                 .map(([key, filter]) => {
                                     const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
-                                    const itemFilterArrayLabels = Array.isArray(itemFilterLabelValues) ? itemFilterLabelValues : [itemFilterLabelValues];
 
                                     return (
-                                        <SvgCloseStyles>
-                                            {filterValues[key] && (
+                                            filterValues[key] && (
                                                 <FilterValueChips
                                                     item={filters[key]}
-                                                    clearFilter={() => clearFilter(key)}
+                                                    clearFilter={(name, clearPartial) => clearFilter(name, clearPartial)}
                                                     key={key}
-                                                    value={itemFilterArrayLabels.map((label) => label)}
+                                                    notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
+                                                    value={itemFilterLabelValues}
                                                     visible={true} />
-                                            )}
-                                        </SvgCloseStyles>
+                                            )
+
                                     );
                                 })}
                         </FiltersSection>

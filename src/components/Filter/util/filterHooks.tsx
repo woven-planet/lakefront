@@ -54,18 +54,22 @@ export const useFilter = <T extends FilterPostBody>(
         });
     };
 
-    const clearFilter = (name: string, clearPartial?: boolean) => {
-        if (filters[name] && clearPartial) {
-            const singleFilterValue = filters[name].clearPartialSingleFilter?.();
+    const clearFilter = (name: string | string[], clearPartial?: boolean) => {
+        if (Array.isArray(name) && name && clearPartial) {
+            console.log('filterHooks name', name);
+            // const singleFilterValue = name.map((name) => filters[name].clearPartialSingleFilter);
+            const singleFilterValue = name.map((name) => filters[name]?.clearPartialSingleFilter(name) ? filters[name].clearPartialSingleFilter(name) : name);
+
+            console.log('singleFilterValue', singleFilterValue);
 
             updateFilterValues({
                 ...filterValues,
-                [name]: singleFilterValue
+                name: singleFilterValue
             });
         }
 
         // required filters are not cleared or reset
-        if (!filters[name].required) {
+        if (typeof name === 'string' && !filters[name].required) {
             const defaultValue = filters[name].getDefaultFilterValue();
 
             updateFilterValues({
