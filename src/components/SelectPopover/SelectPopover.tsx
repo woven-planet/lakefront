@@ -1,9 +1,8 @@
 import { FC, ReactElement, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
-import { createPortal } from 'react-dom';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-import usePopover, { PortalStyles } from 'src/lib/hooks/usePopover';
+import usePopover, { PortalStyles, PopoverContent } from 'src/lib/hooks/usePopover';
 
 export interface SelectPopoverOption {
     name: ReactElement | string;
@@ -93,41 +92,22 @@ const SelectPopover: FC<SelectPopoverProps> = (
         setPopoverElement(node);
     };
 
-    const popover = useMemo(
-      () => (
-        <>
-          {visible && options.length > 0 && (
-            <StyledSelectPopover>
-              {options.map(({ name, value, key, disabled }) => (
-                <SelectPopoverItem
-                  key={key ?? name.toString()}
-                  onClick={() => !disabled && handleClick(value)}
-                  disabled={disabled}
-                >
-                  {name}
-                </SelectPopoverItem>
-              ))}
-            </StyledSelectPopover>
-          )}
-        </>
-      ),
-      [children, options]
-    );
-
-    return (
-        <ThemeProvider theme={theme}>
+    return (<ThemeProvider theme={theme}>
             <StyledSelectPopoverWrapper ref={popoverNodeMounted} className={className}>
                 {children}
-                {
-                    portal ? (
-                        createPortal(popover, portal)
-                    ) : (
-                        popover
-                    )
-                }
+                <PopoverContent portal={portal} deps={[children, options]}>
+                    {visible && options.length > 0 && (<StyledSelectPopover>
+                            {options.map(({ name, value, key, disabled }) => (<SelectPopoverItem
+                                    key={key ?? name.toString()}
+                                    onClick={() => !disabled && handleClick(value)}
+                                    disabled={disabled}
+                                >
+                                    {name}
+                                </SelectPopoverItem>))}
+                        </StyledSelectPopover>)}
+                </PopoverContent>
             </StyledSelectPopoverWrapper>
-        </ThemeProvider>
-    );
+        </ThemeProvider>);
 };
 
 export default SelectPopover;

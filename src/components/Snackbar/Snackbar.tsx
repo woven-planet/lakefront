@@ -1,11 +1,10 @@
 import { ThemeProvider } from '@emotion/react';
-import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import theme from 'src/styles/theme';
 import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
-import usePopover, { PortalStyles } from 'src/lib/hooks/usePopover';
+import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 
 export interface SnackbarProps {
     /**
@@ -122,24 +121,6 @@ const Snackbar: FC<SnackbarProps> = ({
         }
     }, [update, portal]);
 
-    const popover = useMemo(() => {
-        return (
-            <>
-                {open && (
-                    <div className="content-snackbar-wrapper">
-                        <SnackbarContent
-                            id="snackbar-content"
-                            ref={snackbarContentRef}
-                            action={action}
-                            message={message}
-                            type={type}
-                        />
-                    </div>
-                )}
-            </>
-        );
-    }, [open]);
-
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setSnackbarWrapperElement(node);
     };
@@ -169,7 +150,19 @@ const Snackbar: FC<SnackbarProps> = ({
     return (
         <ThemeProvider theme={theme}>
             <SnackbarWrapper className={className} ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
-                {portal ? createPortal(popover, portal) : popover}
+                <PopoverContent portal={portal} deps={[open]}>
+                    {open && (
+                        <div className="content-snackbar-wrapper">
+                            <SnackbarContent
+                                id="snackbar-content"
+                                ref={snackbarContentRef}
+                                action={action}
+                                message={message}
+                                type={type}
+                            />
+                        </div>
+                    )}
+                </PopoverContent>
             </SnackbarWrapper>
         </ThemeProvider>
     );

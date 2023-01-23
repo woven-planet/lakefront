@@ -3,17 +3,10 @@ import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 import Button from 'src/components/Button/Button';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
-import { createPortal } from 'react-dom';
 import {
-    Dialog,
-    DialogButtonContainer,
-    DialogContainer,
-    DialogContent,
-    DialogDivider,
-    DialogSubHeader,
-    DialogTitleContainer
+    Dialog, DialogButtonContainer, DialogContainer, DialogContent, DialogDivider, DialogSubHeader, DialogTitleContainer
 } from './modalStyles';
-import usePopover, { PortalStyles } from 'src/lib/hooks/usePopover';
+import usePopover, { PortalStyles, PopoverContent } from 'src/lib/hooks/usePopover';
 
 export const CANCEL_BUTTON_TEXT = 'Cancel';
 
@@ -125,8 +118,7 @@ const Modal: FC<ModalProps> = ({
     const portalStyles: PortalStyles = useMemo(() => {
         if (dialogElement) {
             return {
-                className: dialogElement.className,
-                styles: {
+                className: dialogElement.className, styles: {
                     display: isOpen ? 'flex' : 'none',
                     backgroundColor: 'rgb(0,0,0), rgba(0,0,0,0.4)',
                     width: '100%',
@@ -144,10 +136,7 @@ const Modal: FC<ModalProps> = ({
         return {};
     }, [dialogElement, isOpen]);
     const { portal } = usePopover({
-        popoverContainer: dialogElement,
-        portalStyles,
-        portalId,
-        renderInPortal
+        popoverContainer: dialogElement, portalStyles, portalId, renderInPortal
     });
 
     useEffect(() => {
@@ -182,47 +171,37 @@ const Modal: FC<ModalProps> = ({
         setDialogElement(node);
     };
 
-    const dialog = useMemo(() => (<>
-        {isOpen && (<Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
-            <DialogTitleContainer>
-                {headerText}
-                {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
-                {isCloseIconVisible ? (<Button
-                    className='closeIcon'
-                    aria-label='Close'
-                    onClick={handleClose}
-                    icon={<CloseIcon />}
-                />) : (<span />)}
-                {showTopDivider && <DialogDivider className='dialogDivider' />}
-            </DialogTitleContainer>
-            <DialogContent>{children}</DialogContent>
-            {showBottomDivider && <DialogDivider className='dialogDivider' />}
-            {actionButton && (<DialogButtonContainer>
-                <Button color='secondary' onClick={handleClose}>
-                    {cancelButtonText}
-                </Button>
-                {actionButton}
-            </DialogButtonContainer>)}
-        </Dialog>)}
-    </>),
-        [
-            children,
-            headerText,
-            subHeaderText,
-            isCloseIconVisible,
-            showTopDivider,
-            showBottomDivider,
-            actionButton,
-            cancelButtonText
-        ]
-    );
-
     return (<ThemeProvider theme={theme}>
-        <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className}
-                         onClick={handleBackdropClick}>
-            {portal ? createPortal(dialog, portal) : dialog}
-        </DialogContainer>
-    </ThemeProvider>);
+            <DialogContainer ref={dialogNodeMounted} isOpen={isOpen} className={className}
+                             onClick={handleBackdropClick}>
+                <PopoverContent
+                    portal={portal}
+                    deps={[children, headerText, subHeaderText, isCloseIconVisible, showTopDivider, showBottomDivider, actionButton, cancelButtonText]}
+                >
+                    {isOpen && (<Dialog dialogWidth={dialogWidth} onClick={(e) => e.stopPropagation()}>
+                        <DialogTitleContainer>
+                            {headerText}
+                            {subHeaderText && <DialogSubHeader>{subHeaderText}</DialogSubHeader>}
+                            {isCloseIconVisible ? (<Button
+                                className='closeIcon'
+                                aria-label='Close'
+                                onClick={handleClose}
+                                icon={<CloseIcon />}
+                            />) : (<span />)}
+                            {showTopDivider && <DialogDivider className='dialogDivider' />}
+                        </DialogTitleContainer>
+                        <DialogContent>{children}</DialogContent>
+                        {showBottomDivider && <DialogDivider className='dialogDivider' />}
+                        {actionButton && (<DialogButtonContainer>
+                            <Button color='secondary' onClick={handleClose}>
+                                {cancelButtonText}
+                            </Button>
+                            {actionButton}
+                        </DialogButtonContainer>)}
+                    </Dialog>)}
+                </PopoverContent>
+            </DialogContainer>
+        </ThemeProvider>);
 };
 
 export default Modal;
