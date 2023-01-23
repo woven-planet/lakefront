@@ -54,22 +54,40 @@ export const useFilter = <T extends FilterPostBody>(
         });
     };
 
-    const clearFilter = (name: string | string[], clearPartial?: boolean) => {
-        if (Array.isArray(name) && name && clearPartial) {
-            console.log('filterHooks name', name);
-            // const singleFilterValue = name.map((name) => filters[name].clearPartialSingleFilter);
-            const singleFilterValue = name.map((name) => filters[name]?.clearPartialSingleFilter(name) ? filters[name].clearPartialSingleFilter(name) : name);
+    // const clearFilter = (name: string) => {
+    //     // required filters are not cleared or reset
+    //     if (!filters[name].required) {
+    //         const defaultValue = filters[name].getDefaultFilterValue();
+    //
+    //         updateFilterValues({
+    //             ...filterValues,
+    //             [name]: defaultValue
+    //         });
+    //     }
+    // };
+
+
+    const clearFilter = (name: string, value?: any) => {
+        const clearPartial = filters[name].clearPartialSingleFilter;
+
+        if (value && clearPartial) {
+            console.log('name Array', name);
+
+            const singleFilterValue = clearPartial(filterValues[name], value);
+
 
             console.log('singleFilterValue', singleFilterValue);
 
             updateFilterValues({
                 ...filterValues,
-                name: singleFilterValue
+                [name]: singleFilterValue
             });
+            return;
         }
 
         // required filters are not cleared or reset
-        if (typeof name === 'string' && !filters[name].required) {
+        if (!filters[name].required) {
+            console.log('name string', name);
             const defaultValue = filters[name].getDefaultFilterValue();
 
             updateFilterValues({

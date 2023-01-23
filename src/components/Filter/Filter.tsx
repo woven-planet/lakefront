@@ -138,19 +138,20 @@ export const Filter: FC<FilterComponentProps> = ({
                             {Object.entries(filters)
                                 .filter(([, f]) => !f.inputHidden)
                                 .map(([key, filter]) => {
+                                    // const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
                                     const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
+                                    // console.log('itemFilterLabelValues', itemFilterLabelValues);
                                     return (
-                                            filterValues[key] && (
-                                                <FilterValueChips
-                                                    item={filters[key]}
-                                                    clearFilter={(name, clearPartial) => clearFilter(name, clearPartial)}
-                                                    key={key}
-                                                    notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
-                                                    value={itemFilterLabelValues}
-                                                    visible={true} />
-                                            )
-
+                                        <FilterValueChips
+                                            item={filters[key]}
+                                            clearFilter={clearFilter}
+                                            key={key}
+                                            name={key}
+                                            notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
+                                            value={itemFilterLabelValues}
+                                            // value={filterValues[key]}
+                                            visible={true} />
                                     );
                                 })}
                         </FiltersSection>

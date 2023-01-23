@@ -73,9 +73,13 @@ export interface FilterModule<T> {
      */
     getFilterBarLabel(value: T): string;
     /**
-     * Generates the array of values to be displayed on this filter's section in the filter pane.
+     * Generates the array of labels to be displayed on this filter's section in the filter pane.
      */
     getFilterSectionLabel(value: T): string | string[];
+    /**
+     * Generates the array of labels to be displayed on this filter's section in the filter pane.
+     */
+    // getFilterSectionValues(value: T): string | string[];
     /**
      * Parses filter value from browser url query param value(s) and pre-populates the filter value on init.
      */
@@ -98,7 +102,7 @@ export interface FilterModule<T> {
     /**
      * Partially clear a filter when a filter has multiple selected options.
      */
-    clearPartialSingleFilter?(value: string | string[]): T | null | undefined;
+    clearPartialSingleFilter?(originalValue: T, value: string): T | null | undefined;
 }
 
 /**
@@ -143,7 +147,7 @@ export interface FilterHooks<T = FilterPostBody> {
     /**
      * The function to clear a particular filter.
      */
-    clearFilter(name: string | string[], clearPartial?: boolean): void;
+    clearFilter(name: string | string[], value?: any): void;
     /**
      * The function to clear all current filters.
      */

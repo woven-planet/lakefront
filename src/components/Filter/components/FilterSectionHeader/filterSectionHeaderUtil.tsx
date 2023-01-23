@@ -3,22 +3,24 @@ import { FilterModule } from 'src/components/Filter/types';
 
 export const DEFAULT_FILTER_COUNT = 1;
 
-export const createChips = (value: string | string[], onClose?: () => void, item?: FilterModule<any>, showX?: boolean) => {
-    const chips = Array.isArray(value) ? value : [value];
+export const createChips = (values: string | string[], name: string, onClose?: (name: string, value: any) => void, item?: FilterModule<any>, showX?: boolean) => {
+    const chips = Array.isArray(values) ? values : [values];
 
     if (!chips?.length) {
         return null;
     }
     // item?.label
+
     return (
         <>
             {chips.map((content: string, idx: number) => {
                 if (!content) {
                     return null;
                 }
+
                 return <FilterValueChip key={`${content}-${idx}`}>
                     <div>{content}</div>
-                    {showX && onClose && <span onClick={onClose}>x</span>}
+                    {showX && onClose && <span onClick={() => onClose(name, content)}>x</span>}
                 </FilterValueChip>;
             })}
         </>

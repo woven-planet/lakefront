@@ -50,8 +50,9 @@ const MultiSelectFilter = (
     getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => [],
 
-    clearPartialSingleFilter: (value) => {
-        return null;
+    clearPartialSingleFilter: (originalValue, value) => {
+
+        return originalValue.filter((original) => original !== value);
     },
 
     isDefaultFilterValue: (value) => {

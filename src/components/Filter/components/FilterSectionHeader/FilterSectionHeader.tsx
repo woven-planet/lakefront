@@ -26,12 +26,19 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
 }) => {
     const handleClear: MouseEventHandler<SVGElement> = (event) => {
         event.stopPropagation();
+        console.log('FSH name', name);
         clearFilter(name);
     };
 
     const filterApplied = !filter.isDefaultFilterValue(value);
     const filterCount = getFilterCount(value, filter, filterApplied);
     const showChips = filterCount < badgeThreshold;
+
+
+// const test = filter.clearPartialSingleFilter(value);
+
+// console.log('test', test);
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -51,7 +58,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
             </FilterSectionHeaderContainer>
             {
                 children ?? (
-                    <FilterValueChips item={filter} clearFilter={() => clearFilter} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    <FilterValueChips item={filter} name={''} clearFilter={() => undefined} visible={showChips} value={filter.getFilterSectionLabel(value)} />
                 )
             }
         </ThemeProvider>

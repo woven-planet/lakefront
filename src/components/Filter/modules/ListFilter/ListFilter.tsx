@@ -66,6 +66,16 @@ const ListFilter = (
         return false;
     },
 
+    clearPartialSingleFilter: (originalValue, label) => {
+        const itemValue = options.find(i => i.label === label);
+
+        const copySetValues = new Set(originalValue);
+
+         itemValue && copySetValues.delete(itemValue.value);
+
+        console.log('copySet value', label);
+        return copySetValues;
+    },
 
     getFilterBarLabel: value => {
         if (value) {

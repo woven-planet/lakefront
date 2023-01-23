@@ -8,23 +8,20 @@ interface FilterValueChipsProps {
     visible?: boolean;
     item: FilterModule<any>;
     notDefaultValues?: boolean;
+    name: string;
 
-    clearFilter(name: string | string[], clearPartial?: boolean): void;
+    clearFilter(name: string, value?: any): void;
 }
 
-const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, clearFilter, item, notDefaultValues }) => {
+const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, name, clearFilter, item, notDefaultValues }) => {
     if (!visible) {
         return null;
     }
 
-    const handleCloseIcon = () => {
-        clearFilter(value, true);
-    };
-
 
     return (
         <FilterValueChipsContainer>
-            {createChips(value, handleCloseIcon, item, notDefaultValues)}
+            {createChips(value, name, clearFilter, item, notDefaultValues)}
         </FilterValueChipsContainer>
     );
 };
