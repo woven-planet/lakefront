@@ -1,8 +1,7 @@
 import DocBlock from '.storybook/DocBlock';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { PopoverContent as PopoverContentComponent, PortalStyles } from 'src/lib/hooks/usePopover';
+import usePopover, { PopoverContent as PopoverContentComponent, PortalStyles } from 'src/lib/hooks/usePopover';
 import { useMemo, useState } from 'react';
-import usePopover from '../../lib/hooks/usePopover';
 
 export default {
     title: 'Lakefront/PopoverContent',
