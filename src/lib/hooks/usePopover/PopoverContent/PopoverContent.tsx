@@ -21,7 +21,10 @@ interface PopoverContentProps {
  *
  * The PopoverContent component is a support component to the `usePopover` hook.
  * It is meant to handle the memoization of content to be rendered and logically
- * switch between rendering content within or outside a portal as needed.
+ * switch between rendering content within or outside a portal as needed. Under the hood,
+ * all Lakefront popover components (Modal, Snackbar, et. al) utilize this component. View
+ * the [PopoverContent stories source code](https://github.com/ToyotaResearchInstitute/lakefront/blob/main/src/stories/PopoverContent/PopoverContent.stories)
+ * for a more detailed look on how to implement.
  */
 const PopoverContent: FC<PopoverContentProps> = ({ portal, children, deps }) => {
     const memoizedChildren = useMemo(() => <>{children}</>, [...deps]);
