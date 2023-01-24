@@ -142,7 +142,6 @@ export const Filter: FC<FilterComponentProps> = ({
                                 .map(([key, filter]) => {
                                     const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
-                                    console.log('itemFilterLabelValues', itemFilterLabelValues);
                                     return (
                                         <FilterValueChips
                                             label={filters[key].label}

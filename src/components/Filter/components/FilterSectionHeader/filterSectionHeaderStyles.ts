@@ -24,10 +24,13 @@ export const FilterValueChip = styled.div(({ theme }) => ({
         whiteSpace: 'nowrap'
     },
     'span': {
+        display: 'flex',
+        alignItems: 'flex-start',
         gridArea: '1 / 2',
         cursor: 'pointer',
         fontWeight: 100,
-        padding: 5
+        height: 25,
+        paddingLeft: 15
     }
 }));
 

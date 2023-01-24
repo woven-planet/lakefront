@@ -288,4 +288,19 @@ describe('MultiSelectFilter', () => {
             expect(queryByText('colors')).not.toBeInTheDocument();
         });
     });
+
+    describe('clearPartialSingleFilter', () => {
+        const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }];
+        const { clearPartialSingleFilter } = MultiSelectFilter({ options });
+
+        it('clears part of the filter if value exists', () => {
+            const result = clearPartialSingleFilter(['a', 'b'], 'a');
+            expect(result).toStrictEqual(['b']);
+        });
+
+        it('returns original array when value is not provided', () => {
+            const result = clearPartialSingleFilter(['a', 'b'], '');
+            expect(result).toStrictEqual(['a', 'b']);
+        });
+    });
 });

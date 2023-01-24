@@ -61,8 +61,6 @@ export const useFilter = <T extends FilterPostBody>(
         if (value && clearPartial) {
             const singleFilterValue = clearPartial(filterValues[name], value);
 
-            console.log('singleFilterValue', singleFilterValue);
-
             updateFilterValues({
                 ...filterValues,
                 [name]: singleFilterValue

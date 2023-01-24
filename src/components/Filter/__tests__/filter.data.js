@@ -10,6 +10,7 @@ export const BASE_FILTER = {
     getBrowserQueryUrlValue: (value) => value,
     getDefaultFilterValue: () => '',
     isDefaultFilterValue: (value) => value === '',
+    clearPartialSingleFilter: (name, value) => value,
     getFilterBarLabel: (value) => value,
     getFilterSectionLabel: (value) => value,
     parseInitialFilterValue: (browserQueryUrlValue) => browserQueryUrlValue || '',
