@@ -51,6 +51,15 @@ export const Snackbar = Template.bind({});
 
 Snackbar.args = {
     anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+    renderInPortal: false,
+    message: 'File transfer initiated.',
+    type: MESSAGE_TYPES.SUCCESS
+};
+
+export const PortalSnackbar = Template.bind({});
+
+PortalSnackbar.args = {
+    anchorOrigin: { vertical: 'top', horizontal: 'right' },
     renderInPortal: true,
     message: 'File transfer initiated.',
     type: MESSAGE_TYPES.SUCCESS

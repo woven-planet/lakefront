@@ -9,7 +9,6 @@ import {
     useMemo,
     useState
 } from 'react';
-import { createPortal } from 'react-dom';
 import { ReactComponent as SearchIcon } from './assets/search.svg';
 import useDebounce from 'src/lib/hooks/useDebounce';
 import Input from 'src/components/Input/Input';
@@ -17,6 +16,7 @@ import { SearchResultsPopover, TypeaheadSearchContainer } from './typeaheadSearc
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import TypeaheadResults, { TypeaheadResultItem } from './TypeaheadResults';
+import usePopover, { PortalStyles, PopoverContent } from 'src/lib/hooks/usePopover';
 
 export interface TypeaheadSearchResultProps {
     searchText: string;
@@ -64,6 +64,11 @@ export interface TypeaheadSearchProps {
      */
     placement?: 'bottom-start' | 'bottom-end';
     /**
+     * This is the id to assign to the appended div when rendering in a portal.
+     * This defaults to `lakefront-portal-container`.
+     */
+    portalId?: string;
+    /**
      * When true, the component will mount a div to the body and render the search results through it.
      * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
@@ -110,7 +115,7 @@ export interface TypeaheadSearchProps {
  * </TypeaheadSearch>
  * ```
  *
- * ❗ **Note: In order to use the built in handler to close the popover when selecting a**
+ * ❗ **Note: In order to use the built-in handler to close the popover when selecting a**
  * **result from the list, you'll need to spread in the props (as shown above).**
  */
 const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input'>> = ({
@@ -123,15 +128,40 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
     onResultSelect,
     placeholder,
     placement = 'bottom-end',
+    portalId,
     renderInPortal = false,
     submitSearch,
     className,
     ...restInputProps
 }) => {
     const searchInputContainerRef = createRef<HTMLDivElement>();
-    const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [popoverElement, setPopoverElement] = useState<HTMLElement | null>(null);
-    const [update, setUpdate] = useState<number>(0);
+    const portalStyles: PortalStyles = useMemo(() => {
+        className = 'type-ahead-search-portal';
+
+        if (popoverElement) {
+            const { left, bottom } = popoverElement.getBoundingClientRect();
+
+            return {
+                className,
+                styles: {
+                    position: 'absolute',
+                    [placement === 'bottom-start' ? 'left' : 'right']: `${left}px`,
+                    top: `${bottom + window.scrollY}px`
+                }
+            };
+        }
+
+        return {
+            className
+        };
+    }, [placement, popoverElement, window.scrollY]);
+    const { portal } = usePopover({
+        popoverContainer: popoverElement,
+        portalStyles,
+        portalId,
+        renderInPortal
+    });
 
     const [searchTextChanged, setSearchTextChanged] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -193,78 +223,9 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
         setSearchTextChanged(false);
     }, [initialSearchText]);
 
-    useEffect(() => {
-        const bodyElementHTMLCollection = document.getElementsByTagName('body');
-        const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
-        let observer: IntersectionObserver;
-        let portalElement: HTMLElement;
-
-        if (renderInPortal && bodyElement) {
-            portalElement = document.createElement('div');
-
-            if (!portal) {
-                bodyElement.appendChild(portalElement);
-            }
-
-            if (!portal && popoverElement) {
-                observer = new IntersectionObserver(() => {
-                    setUpdate(new Date().getTime());
-                });
-
-                observer.observe(popoverElement);
-                setPortal(portalElement);
-            }
-        }
-
-        return () => {
-            if (popoverElement && observer) {
-                observer.unobserve(popoverElement);
-            }
-
-            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
-                bodyElement.removeChild(portalElement);
-            }
-        };
-    }, [popoverElement, renderInPortal]);
-
-    useEffect(() => {
-        if (popoverElement && portal) {
-            const { left, bottom } = popoverElement.getBoundingClientRect();
-
-            portal.style.position = 'absolute';
-            portal.style[placement === 'bottom-start' ? 'left' : 'right'] = `${left}px`;
-            portal.style.top = `${bottom + window.scrollY}px`;
-        }
-    }, [update]);
-
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setPopoverElement(node);
     };
-
-    const popover = useMemo(() => {
-        return (
-            <>
-                {resultsOpen && (
-                    <SearchResultsPopover className="searchResultsPopover" placement={placement}>
-                        {debouncedSearchText &&
-                            children &&
-                            children({
-                                searchText: debouncedSearchText,
-                                fetchResults,
-                                onResultSelect: handleResultSelect
-                            })}
-                        {debouncedSearchText && !children && (
-                            <TypeaheadResults
-                                debouncedText={debouncedSearchText}
-                                fetchResults={fetchResults}
-                                onResultSelect={handleResultSelect}
-                            />
-                        )}
-                    </SearchResultsPopover>
-                )}
-            </>
-        );
-    }, [children, resultsOpen, debouncedSearchText, popoverElement, placement]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -286,7 +247,24 @@ const TypeaheadSearch: FC<TypeaheadSearchProps & ComponentPropsWithoutRef<'input
                             autoFocus={autoFocus}
                             className="typeaheadInput"
                         />
-                        {portal ? createPortal(popover, portal) : popover}
+                        <PopoverContent
+                            portal={portal}
+                            deps={[children, resultsOpen, debouncedSearchText, popoverElement, placement]}
+                        >
+                            {resultsOpen && (
+                                <SearchResultsPopover className='searchResultsPopover' placement={placement}>
+                                    {debouncedSearchText && children && children({
+                                        searchText: debouncedSearchText,
+                                        fetchResults,
+                                        onResultSelect: handleResultSelect
+                                    })}
+                                    {debouncedSearchText && !children && (<TypeaheadResults
+                                            debouncedText={debouncedSearchText}
+                                            fetchResults={fetchResults}
+                                            onResultSelect={handleResultSelect}
+                                        />)}
+                                </SearchResultsPopover>)}
+                        </PopoverContent>
                     </div>
                 </form>
                 <SearchIcon className="typeaheadSearchIcon" />
