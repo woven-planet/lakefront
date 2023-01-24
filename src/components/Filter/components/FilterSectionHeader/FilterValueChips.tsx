@@ -6,21 +6,20 @@ import { FilterModule } from '../../types';
 interface FilterValueChipsProps {
     value: string | string[];
     visible?: boolean;
-    item?: FilterModule<any>;
+    label?: FilterModule<any>['label'];
     notDefaultValues?: boolean;
     name: string;
     clearFilter(name: string, value?: any): void;
 }
 
-const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, name, clearFilter, item, notDefaultValues }) => {
+const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, name, clearFilter, label, notDefaultValues }) => {
     if (!visible) {
         return null;
     }
 
-
     return (
         <FilterValueChipsContainer>
-            {createChips(value, name, clearFilter, item, notDefaultValues)}
+            {createChips(value, name, clearFilter, label, notDefaultValues)}
         </FilterValueChipsContainer>
     );
 };

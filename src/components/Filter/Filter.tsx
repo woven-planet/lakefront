@@ -108,6 +108,8 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
+    const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
+
 
         return (
         <ThemeProvider theme={theme}>
@@ -133,7 +135,7 @@ export const Filter: FC<FilterComponentProps> = ({
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
 
-                    {(!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
+                    {standardMode && (
                         <FiltersSection className='filters'>
                             {Object.entries(filters)
                                 .filter(([, f]) => !f.inputHidden)
@@ -143,7 +145,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                     console.log('itemFilterLabelValues', itemFilterLabelValues);
                                     return (
                                         <FilterValueChips
-                                            item={filters[key]}
+                                            label={filters[key].label}
                                             clearFilter={clearFilter}
                                             key={key}
                                             name={key}
@@ -155,7 +157,7 @@ export const Filter: FC<FilterComponentProps> = ({
                         </FiltersSection>
                     )}
 
-                    {(!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
+                    {standardMode && (
                         <FiltersSection className='filters'>
                             {Object.entries(filters)
                                 .filter(([, f]) => !f.inputHidden)

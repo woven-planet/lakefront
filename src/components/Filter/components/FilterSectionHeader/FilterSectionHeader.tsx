@@ -33,7 +33,6 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     const filterCount = getFilterCount(value, filter, filterApplied);
     const showChips = filterCount < badgeThreshold;
 
-
     return (
         <ThemeProvider theme={theme}>
             <FilterSectionHeaderContainer onClick={onClick}>
@@ -52,7 +51,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
             </FilterSectionHeaderContainer>
             {
                 children ?? (
-                    <FilterValueChips item={filter} name={''} clearFilter={() => undefined} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    <FilterValueChips label={filter.label} name={''} clearFilter={() => undefined} visible={showChips} value={filter.getFilterSectionLabel(value)} />
                 )
             }
         </ThemeProvider>

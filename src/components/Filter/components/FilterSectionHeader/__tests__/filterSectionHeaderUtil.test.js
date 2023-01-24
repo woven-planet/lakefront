@@ -30,16 +30,15 @@ describe('createChips', () => {
     });
 
     it('renders chips with an "x" when showX is truthy', () => {
-        const { container, getAllByText, debug } = render(
+        const { container, getAllByText } = render(
             <div>
                 chips
-                {createChips(['a', 'b'], '', () => undefined, {label: 'Item Label'}, true)}
+                {createChips(['a', 'b'], '', () => undefined, 'label text', true)}
             </div>
         );
 
-        debug();
         expect(container.querySelector('span').innerHTML).toBe('x');
-        getAllByText('Item Label');
+        expect(getAllByText('label text')).toHaveLength(2);
     });
 
     it('clicks x and validates callback onClose', () => {
@@ -47,7 +46,7 @@ describe('createChips', () => {
         const { container } = render(
             <div>
                 chips
-                {createChips(['chip a', 'chip b'], 'Some Filter', onCloseMock, {label: 'Item Label'}, true)}
+                {createChips(['chip a', 'chip b'], 'Some Filter', onCloseMock, 'Item Label', true)}
             </div>
         );
 
