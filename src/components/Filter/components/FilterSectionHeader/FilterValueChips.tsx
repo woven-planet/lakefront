@@ -1,15 +1,14 @@
 import { FC } from 'react';
 import { createChips } from './filterSectionHeaderUtil';
-import { FilterValueChip, FilterValueChipsContainer } from './filterSectionHeaderStyles';
+import { FilterValueChipsContainer } from './filterSectionHeaderStyles';
 import { FilterModule } from '../../types';
 
 interface FilterValueChipsProps {
     value: string | string[];
     visible?: boolean;
-    item: FilterModule<any>;
+    item?: FilterModule<any>;
     notDefaultValues?: boolean;
     name: string;
-
     clearFilter(name: string, value?: any): void;
 }
 

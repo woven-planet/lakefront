@@ -54,27 +54,12 @@ export const useFilter = <T extends FilterPostBody>(
         });
     };
 
-    // const clearFilter = (name: string) => {
-    //     // required filters are not cleared or reset
-    //     if (!filters[name].required) {
-    //         const defaultValue = filters[name].getDefaultFilterValue();
-    //
-    //         updateFilterValues({
-    //             ...filterValues,
-    //             [name]: defaultValue
-    //         });
-    //     }
-    // };
-
 
     const clearFilter = (name: string, value?: any) => {
         const clearPartial = filters[name].clearPartialSingleFilter;
 
         if (value && clearPartial) {
-            console.log('name Array', name);
-
             const singleFilterValue = clearPartial(filterValues[name], value);
-
 
             console.log('singleFilterValue', singleFilterValue);
 
@@ -87,7 +72,6 @@ export const useFilter = <T extends FilterPostBody>(
 
         // required filters are not cleared or reset
         if (!filters[name].required) {
-            console.log('name string', name);
             const defaultValue = filters[name].getDefaultFilterValue();
 
             updateFilterValues({

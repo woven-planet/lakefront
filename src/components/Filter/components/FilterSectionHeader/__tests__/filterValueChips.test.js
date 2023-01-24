@@ -8,6 +8,8 @@ describe('FilterValueChips', () => {
         const { queryByText } = render(
             <FilterValueChips
                 value={VALUE}
+                name=''
+                clearFilter={() => undefined}
                 visible={false}
             />
         );
@@ -19,6 +21,8 @@ describe('FilterValueChips', () => {
         const { queryByText } = render(
             <FilterValueChips
                 value={VALUE}
+                name=''
+                clearFilter={() => undefined}
                 visible
             />
         );

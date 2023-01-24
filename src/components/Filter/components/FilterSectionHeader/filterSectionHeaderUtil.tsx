@@ -1,4 +1,4 @@
-import { FilterValueChip } from './filterSectionHeaderStyles';
+import { FilterLabels, FilterValueChip } from './filterSectionHeaderStyles';
 import { FilterModule } from 'src/components/Filter/types';
 
 export const DEFAULT_FILTER_COUNT = 1;
@@ -9,7 +9,6 @@ export const createChips = (values: string | string[], name: string, onClose?: (
     if (!chips?.length) {
         return null;
     }
-    // item?.label
 
     return (
         <>
@@ -17,9 +16,12 @@ export const createChips = (values: string | string[], name: string, onClose?: (
                 if (!content) {
                     return null;
                 }
-
+console.log('name', name);
                 return <FilterValueChip key={`${content}-${idx}`}>
-                    <div>{content}</div>
+                    <div>
+                        {content}
+                    </div>
+                    <FilterLabels>{item?.label}</FilterLabels>
                     {showX && onClose && <span onClick={() => onClose(name, content)}>x</span>}
                 </FilterValueChip>;
             })}

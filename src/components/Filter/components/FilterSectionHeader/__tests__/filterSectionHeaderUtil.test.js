@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { createChips, getFilterCount } from '../filterSectionHeaderUtil';
+import FilterValueChips from '../FilterValueChips';
 
 describe('createChips', () => {
     it('returns null if value is array with no length', () => {
@@ -25,7 +26,34 @@ describe('createChips', () => {
             </div>
         );
 
-        expect(getByText('chips').querySelectorAll('div')).toHaveLength(4);
+        expect(getByText('chips').querySelectorAll('div')).toHaveLength(6);
+    });
+
+    it('renders chips with an "x" when showX is truthy', () => {
+        const { container, getAllByText, debug } = render(
+            <div>
+                chips
+                {createChips(['a', 'b'], '', () => undefined, {label: 'Item Label'}, true)}
+            </div>
+        );
+
+        debug();
+        expect(container.querySelector('span').innerHTML).toBe('x');
+        getAllByText('Item Label');
+    });
+
+    it('clicks x and validates callback onClose', () => {
+        const onCloseMock = jest.fn();
+        const { container } = render(
+            <div>
+                chips
+                {createChips(['chip a', 'chip b'], 'Some Filter', onCloseMock, {label: 'Item Label'}, true)}
+            </div>
+        );
+
+        const x = container.querySelector('span');
+       fireEvent.click(x);
+       expect(onCloseMock).toBeCalledWith('Some Filter', 'chip a');
     });
 });
 

@@ -138,10 +138,9 @@ export const Filter: FC<FilterComponentProps> = ({
                             {Object.entries(filters)
                                 .filter(([, f]) => !f.inputHidden)
                                 .map(([key, filter]) => {
-                                    // const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
                                     const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
-                                    // console.log('itemFilterLabelValues', itemFilterLabelValues);
+                                    console.log('itemFilterLabelValues', itemFilterLabelValues);
                                     return (
                                         <FilterValueChips
                                             item={filters[key]}
@@ -150,7 +149,6 @@ export const Filter: FC<FilterComponentProps> = ({
                                             name={key}
                                             notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
                                             value={itemFilterLabelValues}
-                                            // value={filterValues[key]}
                                             visible={true} />
                                     );
                                 })}

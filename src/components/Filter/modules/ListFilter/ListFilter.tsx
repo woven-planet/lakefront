@@ -73,7 +73,7 @@ const ListFilter = (
 
          itemValue && copySetValues.delete(itemValue.value);
 
-        console.log('copySet value', label);
+        // console.log('copySet value', label);
         return copySetValues;
     },
 
