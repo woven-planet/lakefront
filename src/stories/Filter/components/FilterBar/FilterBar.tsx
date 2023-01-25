@@ -4,7 +4,7 @@ import { FilterBarProps, FilterModule } from 'src/components/Filter/types';
 import { FilterBarContainer } from './filterBarStyles';
 
 interface FilterItemProps {
-    clearFilter(name: string): void;
+    clearFilter?(name: string): void;
     name: string;
     item: FilterModule<any>;
     value: any;
@@ -14,7 +14,7 @@ export const FilterItem: FC<FilterItemProps> = (props) => {
     const { name, clearFilter, item, value } = props;
 
     const handleCloseIcon = () => {
-        clearFilter(name);
+      clearFilter ? clearFilter(name) : undefined;
     };
 
     if (item.isDefaultFilterValue(value)) {

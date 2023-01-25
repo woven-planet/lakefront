@@ -135,6 +135,8 @@ const DoubleMultiSelectFilter = (
                             <FilterValueChips
                                 visible={firstVisible && firstLength < badgeThreshold}
                                 value={value?.firstSelect}
+                                clearFilter={() => undefined}
+                                name=''
                             />
                         </FilterSection>
                     )
@@ -149,6 +151,8 @@ const DoubleMultiSelectFilter = (
                             <FilterValueChips
                                 visible={secondVisible && secondLength < badgeThreshold}
                                 value={value?.secondSelect}
+                                clearFilter={() => undefined}
+                                name=''
                             />
                         </FilterSection>
                     )
