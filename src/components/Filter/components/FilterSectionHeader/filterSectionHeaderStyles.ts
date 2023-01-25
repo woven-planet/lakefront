@@ -2,26 +2,47 @@ import styled from '@emotion/styled';
 import { ReactComponent as CloseLabel } from '../../assets/closeLabel.svg';
 
 export const FilterValueChip = styled.div(({ theme }) => ({
-    display: 'flex',
+    display: 'grid',
     alignItems: 'center',
     justifyContent: 'center',
-    border: `solid 1px ${theme?.colors?.mercury}`,
+    border: `solid 2px ${theme?.colors?.mercury}`,
     padding: 2,
     margin: 2,
-    borderRadius: 2,
+    borderRadius: 3,
     backgroundColor: theme?.colors?.akoya,
     flexGrow: 1,
-    maxWidth: '50%',
+    maxWidth: '45%',
     fontSize: 12,
     fontWeight: 600,
     color: theme?.colors?.gunpowder,
-    height: 24,
+    minHeight: 28,
     div: {
-        maxWidth: '90%',
+        maxWidth: '100%',
+        width: 'auto',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'nowrap'
+    },
+    'span': {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gridArea: '1 / 2',
+        cursor: 'pointer',
+        fontWeight: 100,
+        paddingLeft: 10,
+        'svg': {
+            height: 10,
+            width: 10,
+            padding: 2
+        }
     }
+}));
+
+export const FilterLabels = styled.div(({ theme }) => ({
+    color: theme?.colors?.gunpowder,
+    fontWeight: 400,
+    width: 80,
+    fontSize: 10
 }));
 
 export const FilterValueChipsContainer = styled.div({

@@ -188,4 +188,71 @@ describe('useFilter', () => {
             })
         });
     });
+
+    describe('when a filter has the required property set to false', () => {
+        it('clears filter name when calling clearFilter with no passed value', () => {
+            const FILTERS_WITH_NOT_REQUIRED_PHRASES = {
+                ...FILTERS,
+                phrases: {
+                    ...FILTERS.phrases,
+                    required: false
+                }
+            };
+            const { result } = renderHook(() => useFilter(FILTERS_WITH_NOT_REQUIRED_PHRASES, false, LOCATION, () => null));
+
+            act(() => {
+                result.current.updateFilter('phrases', PHRASE_DEMO);
+            });
+            expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
+
+            act(() => {
+                result.current.clearFilter('phrases');
+            });
+            expect(result.current.filterValues.phrases).toBe('');
+        });
+
+        it('clears part of the filter value when value is passed and clearPartialSingleFilter is defined', () => {
+            const FILTERS_WITH_NOT_REQUIRED_PHRASES = {
+                ...FILTERS,
+                phrases: {
+                    ...FILTERS.phrases,
+                    required: false
+                }
+            };
+
+            const { result } = renderHook(() => useFilter(FILTERS_WITH_NOT_REQUIRED_PHRASES, false, LOCATION, () => null));
+
+            act(() => {
+                result.current.updateFilter('phrases', PHRASE_DEMO);
+            });
+            expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
+
+            act(() => {
+                result.current.clearFilter('phrases', 'phrases');
+            });
+            expect(result.current.filterValues.phrases).toBe('phrases');
+        });
+
+        it('does not clear part of filter if value is provided and clearPartialSingleFilter is not defined', () => {
+            const FILTERS_WITH_NOT_REQUIRED_PHRASES = {
+                ...FILTERS,
+                phrases: {
+                    ...FILTERS.phrases,
+                    required: false,
+                    clearPartialSingleFilter: undefined
+                }
+            };
+            const { result } = renderHook(() => useFilter(FILTERS_WITH_NOT_REQUIRED_PHRASES, false, LOCATION, () => null));
+
+            act(() => {
+                result.current.updateFilter('phrases', PHRASE_DEMO);
+            });
+            expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
+
+            act(() => {
+                result.current.clearFilter('phrases', 'phrases');
+            });
+            expect(result.current.filterValues.phrases).toBe('');
+        });
+    });
 });

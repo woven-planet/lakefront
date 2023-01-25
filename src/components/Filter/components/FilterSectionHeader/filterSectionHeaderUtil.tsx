@@ -1,10 +1,11 @@
-import { FilterValueChip } from './filterSectionHeaderStyles';
+import { FilterLabels, FilterValueChip } from './filterSectionHeaderStyles';
 import { FilterModule } from 'src/components/Filter/types';
+import { ReactComponent as CloseIcon } from 'src/components/Modal/assets/closeIcon.svg';
 
 export const DEFAULT_FILTER_COUNT = 1;
 
-export const createChips = (value: string | string[]) => {
-    const chips = Array.isArray(value) ? value : [value];
+export const createChips = (values: string | string[], name: string, onClose?: (name: string, value: any) => void, label?: FilterModule<any>['label'], showX?: boolean) => {
+    const chips = Array.isArray(values) ? values : [values];
 
     if (!chips?.length) {
         return null;
@@ -17,11 +18,13 @@ export const createChips = (value: string | string[]) => {
                     return null;
                 }
 
-                return (
-                    <FilterValueChip key={`${content}-${idx}`}>
-                        <div>{content}</div>
-                    </FilterValueChip>
-                );
+                return <FilterValueChip key={`${content}-${idx}`}>
+                    <div>
+                        {content}
+                    </div>
+                    <FilterLabels>{label}</FilterLabels>
+                    {showX && onClose && <span onClick={() => onClose(name, content)}><CloseIcon/></span>}
+                </FilterValueChip>;
             })}
         </>
     );

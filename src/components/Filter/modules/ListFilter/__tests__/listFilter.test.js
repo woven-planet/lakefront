@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import ListFilter from '../ListFilter';
 import { listFilterOptions } from 'src/stories/Filter/ListFilter/listFilterUtil';
 
@@ -272,6 +272,26 @@ describe('ListFilter', () => {
                 <div>{renderComponent({ name: 'name', value: '1', update: () => null })}</div>
             );
             expect(queryByRole('label')).not.toBeInTheDocument();
+        });
+    });
+
+    describe('clearPartialSingleFilter', () => {
+        const options = [{ value: 'a', label: 'A [b]' }, { value: 'b', label: 'B [a]' }];
+        const { clearPartialSingleFilter } = ListFilter(options, '', '');
+        const allOptions = new Set([options[0].value, options[1].value]);
+
+        it('clears part of the filter if value exists', () => {
+            const result = clearPartialSingleFilter(allOptions, options[0].label);
+            expect(result.size).toBe(1);
+            expect(result.has(options[1].value)).toBe(true);
+            expect(result.has(options[0].value)).toBe(false);
+        });
+
+        it('returns original Set when selectedLabel is not provided', () => {
+            const result = clearPartialSingleFilter(allOptions, '');
+            expect(result.size).toBe(2);
+            expect(result.has(options[0].value)).toBe(true);
+            expect(result.has(options[1].value)).toBe(true);
         });
     });
 });

@@ -54,7 +54,20 @@ export const useFilter = <T extends FilterPostBody>(
         });
     };
 
-    const clearFilter = (name: string) => {
+
+    const clearFilter = (name: string, value?: any) => {
+        const clearPartial = filters[name].clearPartialSingleFilter;
+
+        if (value && clearPartial) {
+            const singleFilterValue = clearPartial(filterValues[name], value);
+
+            updateFilterValues({
+                ...filterValues,
+                [name]: singleFilterValue
+            });
+            return;
+        }
+
         // required filters are not cleared or reset
         if (!filters[name].required) {
             const defaultValue = filters[name].getDefaultFilterValue();

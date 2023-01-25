@@ -51,7 +51,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
             </FilterSectionHeaderContainer>
             {
                 children ?? (
-                    <FilterValueChips visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    <FilterValueChips label={filter.label} name={''} visible={showChips} value={filter.getFilterSectionLabel(value)} />
                 )
             }
         </ThemeProvider>

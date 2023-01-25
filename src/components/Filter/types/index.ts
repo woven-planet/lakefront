@@ -73,7 +73,7 @@ export interface FilterModule<T> {
      */
     getFilterBarLabel(value: T): string;
     /**
-     * Generates the array of values to be displayed on this filter's section in the filter pane.
+     * Generates the array of labels to be displayed on this filter's section in the filter pane.
      */
     getFilterSectionLabel(value: T): string | string[];
     /**
@@ -94,8 +94,11 @@ export interface FilterModule<T> {
      * Note: should also delete this filter's key & value from the provided API post body, so that
      * unparsed JSON can be identified and separated into its own pseudo-filter.
      */
-    getFilterValueFromApiPostBody?(key: string, mutableApiPostBody: FilterPostBody | null | undefined):
-        T | null | undefined;
+    getFilterValueFromApiPostBody?(key: string, mutableApiPostBody: FilterPostBody | null | undefined): T | null | undefined;
+    /**
+     * Partially clear a filter when a filter has multiple selected options.
+     */
+    clearPartialSingleFilter?(originalValue: T, value: string): T | null | undefined;
 }
 
 /**
@@ -140,7 +143,7 @@ export interface FilterHooks<T = FilterPostBody> {
     /**
      * The function to clear a particular filter.
      */
-    clearFilter(name: string): void;
+    clearFilter(name: string | string[], value?: any): void;
     /**
      * The function to clear all current filters.
      */

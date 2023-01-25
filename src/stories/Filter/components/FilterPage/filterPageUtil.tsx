@@ -95,7 +95,10 @@ export const FILTERS = {
             description: 'MultiSelectFilter is a select dropdown control meant to multi select a value.'
         },
         {
-            getDefaultFilterValue: () => ['colors']
+            getDefaultFilterValue: () => ['colors'],
+            isDefaultFilterValue(value): boolean {
+                return value.length === 1 && value[0] === 'colors';
+            }
         }
     ),
     listFilter: ListFilter(
@@ -106,7 +109,7 @@ export const FILTERS = {
     radioFilter: RadioFilter(
         {
             label: 'Radio Filter',
-            defaultValue: '',
+            defaultValue: RADIO_FILTER_OPTIONS[0].value,
             initialValue: RADIO_FILTER_OPTIONS[0].value,
             options: RADIO_FILTER_OPTIONS,
             description: 'RadioFilter is a radio group control meant to single select a value.'
@@ -126,6 +129,7 @@ export const FILTERS = {
         'Text Filter',
         'TextFilter is a text input control meant to be used as a keyword(s) search. (Tab or Enter to apply)',
         {
+            isDefaultFilterValue: (value) => value === 'lakefront',
             getDefaultFilterValue: () => 'lakefront',
             parseInitialFilterValue: (browserQueryUrlValue: string): string => browserQueryUrlValue || 'lakefront',
             getFilterBarLabel: (value: string) => `Text Filter: ${value}`

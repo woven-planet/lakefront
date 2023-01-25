@@ -1,7 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import queryString from 'query-string';
 import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, UrlParameters } from './types';
-import { FILTER_MODE_OPTIONS, getCurrentBrowserQueryParams, getDefaultJsonViewValue } from './util';
+import {
+    FILTER_MODE_OPTIONS,
+    getCurrentBrowserQueryParams,
+    getDefaultJsonViewValue,
+    getFilterAppliedCount
+} from './util';
 import { ThemeProvider } from '@emotion/react';
 import {
     FilterContainer,
@@ -14,6 +19,9 @@ import {
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
 import { FilterSectionHeader } from './components';
+import FilterBar from '../../stories/Filter/components/FilterBar';
+import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
+
 
 /**
  * Filter Component
@@ -100,7 +108,10 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
-    return (
+    const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
+    const panelVisible = Object.entries(filters).filter(([, f]) => !f.inputHidden);
+
+        return (
         <ThemeProvider theme={theme}>
             <FilterContainer
                 showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
@@ -123,36 +134,52 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
+                    <div className='header-chips'>
+                        {standardMode && (
+                            <FiltersSection className='filters'>
+                                {panelVisible
+                                    .map(([key, filter]) => {
+                                        const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
-                    {(!isJSONInputAllowed || !jsonQueryParams.jsonView) && (
-                        <FiltersSection className="filters">
-                            {Object.entries(filters)
-                                .filter(([, f]) => !f.inputHidden)
+                                        return (
+                                            <FilterValueChips
+                                                label={filters[key].label}
+                                                clearFilter={clearFilter}
+                                                key={key}
+                                                name={key}
+                                                notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
+                                                value={itemFilterLabelValues}
+                                                visible={true} />
+                                        );
+                                    })}
+                            </FiltersSection>
+                        )}
+                    </div>
+                    {standardMode && (
+                        <FiltersSection className='filters'>
+                            {panelVisible
                                 .map(([key, filter]) => (
                                     <section key={key}>
-                                        {
-                                            filter.renderSectionHeader ? (
-                                                filter.renderSectionHeader({
-                                                    activeSection,
-                                                    filter,
-                                                    name: key,
-                                                    onClick: () => toggleSection(key),
-                                                    clearFilter,
-                                                    value: filterValues[key],
-                                                    badgeThreshold
-                                                })
-                                            ) : (
-                                                <FilterSectionHeader
-                                                    activeSection={activeSection}
-                                                    filter={filter}
-                                                    name={key}
-                                                    onClick={() => toggleSection(key)}
-                                                    clearFilter={clearFilter}
-                                                    value={filterValues[key]}
-                                                    badgeThreshold={badgeThreshold}
-                                                />
-                                            )
-                                        }
+                                        {filter.renderSectionHeader ? (
+                                            filter.renderSectionHeader({
+                                                activeSection,
+                                                filter,
+                                                name: key,
+                                                onClick: () => toggleSection(key),
+                                                clearFilter,
+                                                value: filterValues[key],
+                                                badgeThreshold
+                                            })
+                                        ) : (
+                                            <FilterSectionHeader
+                                                activeSection={activeSection}
+                                                filter={filter}
+                                                name={key}
+                                                onClick={() => toggleSection(key)}
+                                                clearFilter={clearFilter}
+                                                value={filterValues[key]}
+                                                badgeThreshold={badgeThreshold} />
+                                        )}
                                         {activeSection === key && (
                                             <>
                                                 <FilterSectionDescription>

@@ -54,7 +54,7 @@ describe('FilterSectionHeader', () => {
     });
 
     it('shows the clear button when filters have been applied', () => {
-        const { getByText, container } = render(
+        const { getAllByText, container } = render(
             <FilterSectionHeader
                 {...FILTER_SECTION_PROPS}
                 value={['a', 'b', 'c']}
@@ -62,18 +62,19 @@ describe('FilterSectionHeader', () => {
         );
 
         expect(container.querySelector('svg[aria-label="clear"]')).toBeInTheDocument();
-        getByText(FILTER_SECTION_PROPS.filter.label);
+        const labels = getAllByText(FILTER_SECTION_PROPS.filter.label);
+        expect(labels).toHaveLength(4);
     });
 
     it('Calls onClick when header is clicked', () => {
-        const { getByText } = render(
+        const { getAllByText } = render(
             <FilterSectionHeader
                 {...FILTER_SECTION_PROPS}
                 value={['a', 'b', 'c']}
             />
         );
-
-        fireEvent.click(getByText(FILTER_SECTION_PROPS.filter.label));
+        const headerLabel = getAllByText(FILTER_SECTION_PROPS.filter.label);
+        fireEvent.click(headerLabel[0]);
         expect(FILTER_SECTION_PROPS.onClick).toHaveBeenCalled();
     });
 
