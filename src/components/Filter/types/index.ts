@@ -77,9 +77,6 @@ export interface FilterModule<T> {
      */
     getFilterSectionLabel(value: T): string | string[];
     /**
-     * Generates the array of labels to be displayed on this filter's section in the filter pane.
-     */
-    /**
      * Parses filter value from browser url query param value(s) and pre-populates the filter value on init.
      */
     parseInitialFilterValue(browserQueryUrlValue?: string | string[] | null | undefined): T | null | undefined;

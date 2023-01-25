@@ -1,5 +1,6 @@
 import { FilterLabels, FilterValueChip } from './filterSectionHeaderStyles';
 import { FilterModule } from 'src/components/Filter/types';
+import { ReactComponent as CloseIcon } from 'src/components/Modal/assets/closeIcon.svg';
 
 export const DEFAULT_FILTER_COUNT = 1;
 
@@ -22,7 +23,7 @@ export const createChips = (values: string | string[], name: string, onClose?: (
                         {content}
                     </div>
                     <FilterLabels>{label}</FilterLabels>
-                    {showX && onClose && <span onClick={() => onClose(name, content)}>x</span>}
+                    {showX && onClose && <span onClick={() => onClose(name, content)}><CloseIcon/></span>}
                 </FilterValueChip>;
             })}
         </>

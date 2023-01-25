@@ -43,9 +43,13 @@ export const SidePanel = styled.div(({ theme }) => ({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         textTransform: 'uppercase',
-        borderBottom: theme?.borders?.primary,
         height: 21,
         padding: '0 0 10px'
+    },
+    '.header-chips': {
+        borderTop: 'unset',
+        borderBottom: theme?.borders?.primary,
+        paddingBottom: 15
     },
     section: { padding: '16px 0', borderBottom: theme?.borders?.primary },
     '.options': {

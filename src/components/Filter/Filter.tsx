@@ -109,7 +109,7 @@ export const Filter: FC<FilterComponentProps> = ({
     };
 
     const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
-
+    const panelVisible = Object.entries(filters).filter(([, f]) => !f.inputHidden);
 
         return (
         <ThemeProvider theme={theme}>
@@ -134,30 +134,30 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
-                    {standardMode && (
-                        <FiltersSection className='filters'>
-                            {Object.entries(filters)
-                                .filter(([, f]) => !f.inputHidden)
-                                .map(([key, filter]) => {
-                                    const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
+                    <div className='header-chips'>
+                        {standardMode && (
+                            <FiltersSection className='filters'>
+                                {panelVisible
+                                    .map(([key, filter]) => {
+                                        const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
-                                    return (
-                                        <FilterValueChips
-                                            label={filters[key].label}
-                                            clearFilter={clearFilter}
-                                            key={key}
-                                            name={key}
-                                            notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
-                                            value={itemFilterLabelValues}
-                                            visible={true} />
-                                    );
-                                })}
-                        </FiltersSection>
-                    )}
+                                        return (
+                                            <FilterValueChips
+                                                label={filters[key].label}
+                                                clearFilter={clearFilter}
+                                                key={key}
+                                                name={key}
+                                                notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
+                                                value={itemFilterLabelValues}
+                                                visible={true} />
+                                        );
+                                    })}
+                            </FiltersSection>
+                        )}
+                    </div>
                     {standardMode && (
                         <FiltersSection className='filters'>
-                            {Object.entries(filters)
-                                .filter(([, f]) => !f.inputHidden)
+                            {panelVisible
                                 .map(([key, filter]) => (
                                     <section key={key}>
                                         {filter.renderSectionHeader ? (

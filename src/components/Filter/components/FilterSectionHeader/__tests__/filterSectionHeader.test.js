@@ -62,7 +62,8 @@ describe('FilterSectionHeader', () => {
         );
 
         expect(container.querySelector('svg[aria-label="clear"]')).toBeInTheDocument();
-        getAllByText(FILTER_SECTION_PROPS.filter.label);
+        const labels = getAllByText(FILTER_SECTION_PROPS.filter.label);
+        expect(labels).toHaveLength(4);
     });
 
     it('Calls onClick when header is clicked', () => {

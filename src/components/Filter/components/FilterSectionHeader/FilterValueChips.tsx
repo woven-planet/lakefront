@@ -9,7 +9,7 @@ interface FilterValueChipsProps {
     label?: FilterModule<any>['label'];
     notDefaultValues?: boolean;
     name: string;
-    clearFilter(name: string, value?: any): void;
+    clearFilter?(name: string, value?: any): void;
 }
 
 const FilterValueChips: FC<FilterValueChipsProps> = ({ value, visible, name, clearFilter, label, notDefaultValues }) => {

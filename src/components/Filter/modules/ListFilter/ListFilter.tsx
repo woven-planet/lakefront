@@ -50,7 +50,6 @@ const ListFilter = (
     getDefaultFilterValue: () => listFilterOptions.initialValue ?
         new Set([listFilterOptions.initialValue].flat()) :
         new Set(options.map(item => item.value)),
-
     isDefaultFilterValue: value => {
         if (value && !listFilterOptions.initialValue) {
             if (value.size === 0) {
@@ -65,7 +64,6 @@ const ListFilter = (
         }
         return false;
     },
-
     clearPartialSingleFilter: (originalValue, selectedLabel) => {
         const itemValue = options.find(i => i.label === selectedLabel);
         const copySetValues = new Set(originalValue);
@@ -73,7 +71,6 @@ const ListFilter = (
 
         return copySetValues;
     },
-
     getFilterBarLabel: value => {
         if (value) {
             return Array.from(value)

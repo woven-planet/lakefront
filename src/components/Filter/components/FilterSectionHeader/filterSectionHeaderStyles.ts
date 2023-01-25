@@ -5,10 +5,10 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     display: 'grid',
     alignItems: 'center',
     justifyContent: 'center',
-    border: `solid 1px ${theme?.colors?.mercury}`,
+    border: `solid 2px ${theme?.colors?.mercury}`,
     padding: 2,
     margin: 2,
-    borderRadius: 2,
+    borderRadius: 3,
     backgroundColor: theme?.colors?.akoya,
     flexGrow: 1,
     maxWidth: '45%',
@@ -29,14 +29,17 @@ export const FilterValueChip = styled.div(({ theme }) => ({
         gridArea: '1 / 2',
         cursor: 'pointer',
         fontWeight: 100,
-        height: 20,
         paddingLeft: 10,
-        paddingBottom: 5
+        'svg': {
+            height: 10,
+            width: 10,
+            padding: 2
+        }
     }
 }));
 
 export const FilterLabels = styled.div(({ theme }) => ({
-    color: theme?.colors?.pavement,
+    color: theme?.colors?.gunpowder,
     fontWeight: 400,
     width: 80,
     fontSize: 10
