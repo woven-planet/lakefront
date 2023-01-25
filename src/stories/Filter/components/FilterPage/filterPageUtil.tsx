@@ -97,7 +97,6 @@ export const FILTERS = {
         {
             getDefaultFilterValue: () => ['colors'],
             isDefaultFilterValue(value): boolean {
-                // console.log('value impl', value);
                 return value.length === 1 && value[0] === 'colors';
             }
         }

@@ -12,7 +12,6 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     backgroundColor: theme?.colors?.akoya,
     flexGrow: 1,
     maxWidth: '45%',
-    width: 0,
     fontSize: 12,
     fontWeight: 600,
     color: theme?.colors?.gunpowder,
