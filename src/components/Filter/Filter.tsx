@@ -134,7 +134,6 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
-
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {Object.entries(filters)
@@ -155,7 +154,6 @@ export const Filter: FC<FilterComponentProps> = ({
                                 })}
                         </FiltersSection>
                     )}
-
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {Object.entries(filters)

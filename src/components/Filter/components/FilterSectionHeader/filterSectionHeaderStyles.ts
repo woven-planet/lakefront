@@ -6,19 +6,20 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     border: `solid 1px ${theme?.colors?.mercury}`,
-    padding: 3,
-    margin: 3,
+    padding: 2,
+    margin: 2,
     borderRadius: 2,
     backgroundColor: theme?.colors?.akoya,
     flexGrow: 1,
     maxWidth: '45%',
-    zoom: '95%',
+    width: 0,
     fontSize: 12,
     fontWeight: 600,
     color: theme?.colors?.gunpowder,
-    minHeight: 30,
+    minHeight: 28,
     div: {
         maxWidth: '100%',
+        width: 'auto',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
@@ -29,8 +30,9 @@ export const FilterValueChip = styled.div(({ theme }) => ({
         gridArea: '1 / 2',
         cursor: 'pointer',
         fontWeight: 100,
-        height: 25,
-        paddingLeft: 15
+        height: 20,
+        paddingLeft: 10,
+        paddingBottom: 5
     }
 }));
 
