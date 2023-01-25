@@ -1,11 +1,10 @@
 import { ThemeProvider } from '@emotion/react';
-import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import theme from 'src/styles/theme';
 import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
-
+import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 
 export interface SnackbarProps {
     /**
@@ -46,6 +45,11 @@ export interface SnackbarProps {
      */
     type: MESSAGE_TYPES;
     /**
+     * This is the id to assign to the appended div when rendering in a portal.
+     * This defaults to `lakefront-portal-container`.
+     */
+    portalId?: string;
+    /**
      * When true, the component will mount a div to the body and render the popover through it.
      * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
      * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed.
@@ -74,13 +78,17 @@ const Snackbar: FC<SnackbarProps> = ({
     className,
     message,
     type = MESSAGE_TYPES.INFO,
+    portalId,
     renderInPortal = false,
     action = createDefaultAction(() => onClose ? onClose('timeout') : undefined)
 }) => {
-    const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);
-    const [update, setUpdate] = useState<number>(0);
     const snackbarContentRef = useRef<HTMLDivElement | null>(null);
+    const { portal, update } = usePopover({
+        popoverContainer: snackbarWrapperElement,
+        portalId,
+        renderInPortal
+    });
 
     useEffect(() => {
         toggleSnackbarOpen();
@@ -106,63 +114,12 @@ const Snackbar: FC<SnackbarProps> = ({
     }, [open, autoHideDuration]);
 
     useEffect(() => {
-        const bodyElementHTMLCollection = document.getElementsByTagName('body');
-        const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
-        let observer: IntersectionObserver;
-        let portalElement: HTMLElement;
-
-        if (renderInPortal && bodyElement) {
-            portalElement = document.createElement('div');
-
-            if (!portal) {
-                bodyElement.appendChild(portalElement);
-            }
-
-            if (!portal && snackbarWrapperElement) {
-                observer = new IntersectionObserver(() => {
-                    setUpdate(new Date().getTime());
-                });
-                observer.observe(snackbarWrapperElement);
-                setPortal(portalElement);
-            }
-        }
-
-        return () => {
-            if (snackbarWrapperElement && observer) {
-                observer.unobserve(snackbarWrapperElement);
-            }
-
-            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
-                bodyElement.removeChild(portalElement);
-            }
-        };
-    }, [snackbarWrapperElement, renderInPortal]);
-
-    useEffect(() => {
         if (snackbarWrapperElement && portal) {
             generateAnchorOrigin(anchorOrigin, portal);
             portal.style.padding = '4px 16px';
             portal.className = snackbarWrapperElement.className;
         }
-    }, [update]);
-
-    const popover = useMemo(() => {
-        return (
-            <>
-                {open && (
-                    <div className="content-snackbar-wrapper">
-                        <SnackbarContent
-                            id="snackbar-content"
-                            ref={snackbarContentRef}
-                            action={action}
-                            message={message}
-                            type={type}
-                        />
-                    </div>
-                )}
-            </>
-        );
-    }, [open]);
+    }, [update, portal]);
 
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setSnackbarWrapperElement(node);
@@ -193,7 +150,19 @@ const Snackbar: FC<SnackbarProps> = ({
     return (
         <ThemeProvider theme={theme}>
             <SnackbarWrapper className={className} ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
-                {portal ? createPortal(popover, portal) : popover}
+                <PopoverContent portal={portal} deps={[open]}>
+                    {open && (
+                        <div className="content-snackbar-wrapper">
+                            <SnackbarContent
+                                id="snackbar-content"
+                                ref={snackbarContentRef}
+                                action={action}
+                                message={message}
+                                type={type}
+                            />
+                        </div>
+                    )}
+                </PopoverContent>
             </SnackbarWrapper>
         </ThemeProvider>
     );

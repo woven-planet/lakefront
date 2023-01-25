@@ -65,6 +65,9 @@ export * from './components/Page';
 export { default as PlaybackBar } from './components/PlaybackBar';
 export * from './components/PlaybackBar';
 
+export { default as usePopover } from './lib/hooks/usePopover';
+export * from './lib/hooks/usePopover';
+
 export { default as ProgressBar } from './components/Progress';
 export * from './components/Progress';
 

@@ -1,8 +1,8 @@
-import { FC, ReactElement, useEffect, useMemo, useState } from 'react';
+import { FC, ReactElement, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
-import { createPortal } from 'react-dom';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
+import usePopover, { PortalStyles, PopoverContent } from 'src/lib/hooks/usePopover';
 
 export interface SelectPopoverOption {
     name: ReactElement | string;
@@ -24,6 +24,11 @@ export interface SelectPopoverProps {
      * Determines whether the popover is visible. A key can be provided if the name is not unique.
      */
     visible: boolean;
+    /**
+     * This is the id to assign to the appended div when rendering in a portal.
+     * This defaults to `lakefront-portal-container`.
+     */
+    portalId?: string;
     /**
      * When true, the component will mount a div to the body and render the popover through it.
      * This is useful when the popover would be inside a scrollable container or one with "overflow: hidden"
@@ -50,99 +55,59 @@ const SelectPopover: FC<SelectPopoverProps> = (
         children,
         options,
         handleClick,
+        portalId,
         renderInPortal = false,
         visible = false,
         className
     }) => {
-    const [portal, setPortal] = useState<HTMLElement | null>(null);
     const [popoverElement, setPopoverElement] = useState<HTMLElement | null>(null);
-    const [update, setUpdate] = useState<number>(0);
+    const portalStyles: PortalStyles = useMemo(() => {
+        const className = 'select-popover-portal';
 
-    useEffect(() => {
-        const bodyElementHTMLCollection = document.getElementsByTagName('body');
-        const bodyElement = bodyElementHTMLCollection.length > 0 ? bodyElementHTMLCollection.item(0) : null;
-        let observer: IntersectionObserver;
-        let portalElement: HTMLElement;
-
-        if (renderInPortal && bodyElement) {
-            portalElement = document.createElement('div');
-
-            if (!portal) {
-                bodyElement.appendChild(portalElement);
-            }
-
-            if (!portal && popoverElement) {
-                observer = new IntersectionObserver(
-                    () => {
-                        setUpdate(new Date().getTime());
-                    }
-                );
-
-                observer.observe(popoverElement);
-                setPortal(portalElement);
-            }
-        }
-
-        return () => {
-            if (popoverElement && observer) {
-                observer.unobserve(popoverElement);
-            }
-
-            if (portalElement && bodyElement && bodyElement.contains(portalElement)) {
-                bodyElement.removeChild(portalElement);
-            }
-        };
-    }, [popoverElement, renderInPortal]);
-
-    useEffect(() => {
-        if (popoverElement && portal) {
+        if (popoverElement) {
             const { left, bottom, width } = popoverElement.getBoundingClientRect();
 
-            portal.style.position = 'absolute';
-            portal.style.left = `${left + (width / 2)}px`;
-            portal.style.top = `${bottom + window.scrollY}px`;
+            return {
+                className,
+                styles: {
+                    position: 'absolute',
+                    left: `${left + (width / 2)}px`,
+                    top: `${bottom + window.scrollY}px`
+                }
+            };
         }
-    }, [update]);
+
+        return {
+            className
+        };
+    }, [popoverElement, window.scrollY]);
+    const { portal } = usePopover({
+        popoverContainer: popoverElement,
+        portalStyles,
+        portalId,
+        renderInPortal
+    });
 
     const popoverNodeMounted = (node: HTMLDivElement) => {
         setPopoverElement(node);
     };
 
-    const popover = useMemo(
-      () => (
-        <>
-          {visible && options.length > 0 && (
-            <StyledSelectPopover>
-              {options.map(({ name, value, key, disabled }) => (
-                <SelectPopoverItem
-                  key={key ?? name.toString()}
-                  onClick={() => !disabled && handleClick(value)}
-                  disabled={disabled}
-                >
-                  {name}
-                </SelectPopoverItem>
-              ))}
-            </StyledSelectPopover>
-          )}
-        </>
-      ),
-      [children, options]
-    );
-
-    return (
-        <ThemeProvider theme={theme}>
+    return (<ThemeProvider theme={theme}>
             <StyledSelectPopoverWrapper ref={popoverNodeMounted} className={className}>
                 {children}
-                {
-                    portal ? (
-                        createPortal(popover, portal)
-                    ) : (
-                        popover
-                    )
-                }
+                <PopoverContent portal={portal} deps={[children, options]}>
+                    {visible && options.length > 0 && (<StyledSelectPopover>
+                            {options.map(({ name, value, key, disabled }) => (<SelectPopoverItem
+                                    key={key ?? name.toString()}
+                                    onClick={() => !disabled && handleClick(value)}
+                                    disabled={disabled}
+                                >
+                                    {name}
+                                </SelectPopoverItem>))}
+                        </StyledSelectPopover>)}
+                </PopoverContent>
             </StyledSelectPopoverWrapper>
-        </ThemeProvider>
-    );
+        </ThemeProvider>);
 };
 
 export default SelectPopover;
