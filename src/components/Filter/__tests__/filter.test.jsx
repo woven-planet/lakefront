@@ -177,4 +177,34 @@ describe('Filter', () => {
             getByText('FilterBar');
         });
     });
+
+    describe('preset filter dropdown functionality', () => {
+        it('does not display dropdown when there is not a filter mapping or if the filter mapping is empty', () => {
+            const { container, rerender } = render(
+                <TestComponent  />
+            );
+
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeNull();
+
+             rerender(
+                <TestComponent filterMapping={{}} />
+            );
+
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeNull();
+        });
+
+        it('displays dropdown when there is a filter mapping', () => {
+            const filterMapping = {
+                easyMode: {
+                    phrases: ''
+                }
+            };
+            const { container } = render(
+                <TestComponent filterMapping={filterMapping} />
+            );
+
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeInTheDocument();
+        });
+    });
+
 });

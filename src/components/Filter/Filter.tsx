@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import queryString from 'query-string';
-import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, UrlParameters } from './types';
+import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, FilterSet, UrlParameters } from './types';
 import {
     FILTER_MODE_OPTIONS,
     getCurrentBrowserQueryParams,
@@ -21,7 +21,7 @@ import theme from 'src/styles/theme';
 import { FilterSectionHeader } from './components';
 import FilterBar from '../../stories/Filter/components/FilterBar';
 import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
-
+import Select from '../Select';
 
 /**
  * Filter Component
@@ -47,7 +47,8 @@ export const Filter: FC<FilterComponentProps> = ({
     onToggleCollapsed,
     updateHistory,
     badgeThreshold = 4,
-    className
+    className,
+    filterMapping
 }) => {
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
@@ -111,6 +112,22 @@ export const Filter: FC<FilterComponentProps> = ({
     const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
     const panelVisible = Object.entries(filters).filter(([, f]) => !f.inputHidden);
 
+    const presetFilterDropdownOptions = [
+        { label: 'Dev Mode', value: 'devMode' },
+        { label: 'Prod Mode', value: 'prodMode' }
+    ];
+
+    const examplePresetFilterMapping = {
+        devMode: {
+            listFilter: new Set(['first', 'second', 'third']),
+            radioFilter: 'north'
+        },
+        prodMode: {
+            listFilter: new Set(['third', 'fourth']),
+            radioFilter: 'east'
+        },
+    };
+
         return (
         <ThemeProvider theme={theme}>
             <FilterContainer
@@ -155,6 +172,9 @@ export const Filter: FC<FilterComponentProps> = ({
                             </FiltersSection>
                         )}
                     </div>
+                    {filterMapping && Object.keys(filterMapping).length &&
+                        <Select aria-label="preset-filter-dropdown"
+                                options={presetFilterDropdownOptions} onChange={() => null} value={'prod_mode'}/>}
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {panelVisible

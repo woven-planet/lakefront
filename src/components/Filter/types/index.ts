@@ -335,6 +335,13 @@ export interface FilterComponentProps {
      * The classes to pass to the filter container.
      */
     className?: string;
+    /**
+     * This is the mapping for the preset filter dropdown. Each key in this map should match the type of filter passed
+     * in the filter set.
+     */
+    filterMapping?: {
+        [key: string]: any;
+    };
 }
 
 /**
