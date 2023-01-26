@@ -112,6 +112,8 @@ exports[`<MaskableImage /> should loading spinner when showSpinnerOnLoad is true
         class="css-mqm9zm"
       >
         <svg
+          aria-details="woven-loading-spinner"
+          aria-label="loading"
           height="24"
           width="24"
         />
