@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, within, getAllByText } from '@testing-library/react';
 
 import { Filter } from '../Filter';
 import { FILTERS, LOCATION } from './filter.data';
@@ -211,7 +211,21 @@ describe('Filter', () => {
         });
 
         it('selects prod mode from the dropdown menu', () => {
-
+            const filterMapping = {
+                devMode: {
+                    phrases: 'easy'
+                },
+                prodMode: {
+                    phrases: 'hard'
+                }
+            };
+            const { container, getAllByText } = render(
+                <TestComponent filterMapping={filterMapping}/>
+            );
+            fireEvent.change(container.getElementsByTagName('select')[0], {
+                target: { value: 'prodMode' }
+            });
+            expect(getAllByText('hard')[0]).toBeInTheDocument();
         });
     });
 

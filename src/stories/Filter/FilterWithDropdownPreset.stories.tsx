@@ -72,7 +72,16 @@ FilterWithPresets.args = {
     isJSONInputAllowed: true,
     filterMapping: {
         easyMode: {
-            phrases: ''
-        }
+            doubleMultiSelectFilter: {
+                firstSelect: ['hi'],
+                secondSelect: ['what up']
+            }
+        },
+        hardMode: {
+            doubleMultiSelectFilter: {
+                firstSelect: ['hello world'],
+                secondSelect: ['this is difficult']
+            }
+        },
     },
 };

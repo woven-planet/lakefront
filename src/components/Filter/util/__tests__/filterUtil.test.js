@@ -3,7 +3,7 @@ import {
     getDefaultJsonViewValue,
     getFilterAppliedCount,
     getUrlFromList,
-    areSetsEqual
+    areSetsEqual, convertToFilterDropdownOptions
 } from '../filterUtil';
 import { FILTERS } from 'src/components/Filter/__tests__/filter.data';
 
@@ -120,6 +120,16 @@ describe('getUrlFromList', () => {
 });
 
 describe('preset filter dropdown options', () => {
+    it('returns empty array if provided empty filterMapping', () => {
+        const emptyFilterMapping = {};
+
+        expect(convertToFilterDropdownOptions(emptyFilterMapping)).toStrictEqual([]);
+    });
+
+    it('returns empty array if provided undefined filterMapping', () => {
+        expect(convertToFilterDropdownOptions(undefined)).toStrictEqual([]);
+    });
+
     it('converts filter mapping to filter dropdown options', () => {
         const filterMapping = {
             devMode: {
@@ -130,7 +140,7 @@ describe('preset filter dropdown options', () => {
             }
         };
 
-        expect(convertToFilterDropdownOptions(filterMapping)).toBe([
+        expect(convertToFilterDropdownOptions(filterMapping)).toStrictEqual([
             {label: 'Dev Mode', value: 'devMode'},
             {label: 'Prod Mode', value: 'prodMode'}
         ]);

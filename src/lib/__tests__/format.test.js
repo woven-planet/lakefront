@@ -128,5 +128,9 @@ describe('format', () => {
         it('converts thisStringIsGood to This String Is Good', () => {
             expect(humanizeCamelCase('thisStringIsGood')).toBe('This String Is Good');
         });
+
+        it('leaves an empty string as an empty string', () => {
+            expect(humanizeCamelCase()).toBe('');
+        });
     });
 });
