@@ -72,3 +72,6 @@ export const getUrlFromList = (name: string, list: string[] | Set<string>, count
 export const areSetsEqual = (xs: Set<string>, ys: Set<string>) => {
    return xs.size === ys.size && [...xs].every((x) => ys.has(x));
 };
+
+export const convertToFilterDropdownOptions = (filterMapping: { [key: string]: any; }) => {
+};

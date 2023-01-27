@@ -118,3 +118,21 @@ describe('getUrlFromList', () => {
         });
     });
 });
+
+describe('preset filter dropdown options', () => {
+    it('converts filter mapping to filter dropdown options', () => {
+        const filterMapping = {
+            devMode: {
+                phrases: ''
+            },
+            prodMode: {
+                phrases: ''
+            }
+        };
+
+        expect(convertToFilterDropdownOptions(filterMapping)).toBe([
+            {label: 'Dev Mode', value: 'devMode'},
+            {label: 'Prod Mode', value: 'prodMode'}
+        ]);
+    });
+});

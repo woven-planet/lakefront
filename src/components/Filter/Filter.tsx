@@ -4,8 +4,7 @@ import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, FilterSet, Ur
 import {
     FILTER_MODE_OPTIONS,
     getCurrentBrowserQueryParams,
-    getDefaultJsonViewValue,
-    getFilterAppliedCount
+    getDefaultJsonViewValue
 } from './util';
 import { ThemeProvider } from '@emotion/react';
 import {
@@ -48,7 +47,7 @@ export const Filter: FC<FilterComponentProps> = ({
     updateHistory,
     badgeThreshold = 4,
     className,
-    filterMapping
+    filterMapping,
 }) => {
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
@@ -112,22 +111,6 @@ export const Filter: FC<FilterComponentProps> = ({
     const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
     const panelVisible = Object.entries(filters).filter(([, f]) => !f.inputHidden);
 
-    const presetFilterDropdownOptions = [
-        { label: 'Dev Mode', value: 'devMode' },
-        { label: 'Prod Mode', value: 'prodMode' }
-    ];
-
-    const examplePresetFilterMapping = {
-        devMode: {
-            listFilter: new Set(['first', 'second', 'third']),
-            radioFilter: 'north'
-        },
-        prodMode: {
-            listFilter: new Set(['third', 'fourth']),
-            radioFilter: 'east'
-        },
-    };
-
         return (
         <ThemeProvider theme={theme}>
             <FilterContainer
@@ -174,7 +157,10 @@ export const Filter: FC<FilterComponentProps> = ({
                     </div>
                     {filterMapping && Object.keys(filterMapping).length &&
                         <Select aria-label="preset-filter-dropdown"
-                                options={presetFilterDropdownOptions} onChange={() => null} value={'prod_mode'}/>}
+                                options={presetFilterDropdownOptions} onChange={() => null}
+                                value={presetFilterDropdownOptions[0].value}
+                        />
+                    }
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {panelVisible
