@@ -7,6 +7,7 @@ describe('Loading', () => {
     const renderWovenIcon = 'primary';
     const renderTRIIcon = 'secondary';
     const logo = (props) => <svg {...props} />;
+
     it('renders with no label by default', () => {
         const { container } = render(<Loading />);
         const noDivs = container.firstChild.querySelectorAll('div');
@@ -44,7 +45,7 @@ describe('Loading', () => {
         const { container } = render(<Loading height={10} width={10} svg={logo} />);
         const [svg] = container.querySelectorAll('svg');
 
-        expect(svg.getAttributeNames()).toHaveLength(4);
+        expect(svg.getAttributeNames()).toHaveLength(3);
         expect(svg).toHaveAttribute('height', '10');
         expect(svg).toHaveAttribute('width', '10');
     });
@@ -73,14 +74,14 @@ describe('Loading', () => {
     it('renders the Svg instead of icon variant (secondary) when "svg" is truthy', () => {
         const { container } = render(<Loading svg={logo} iconVariant={renderTRIIcon} />);
 
-        expect(container.querySelector('svg[aria-details="false"]')).toBeInTheDocument();
+        expect(container.querySelector('svg[aria-details]')).not.toBeInTheDocument();
         expect(container.querySelector('svg[aria-label="loading"]')).toBeInTheDocument();
     });
 
     it('renders the Svg instead of icon variant (primary) when "svg" is truthy', () => {
         const { container } = render(<Loading svg={logo} iconVariant={renderWovenIcon} />);
 
-        expect(container.querySelector('svg[aria-details="false"]')).toBeInTheDocument();
+        expect(container.querySelector('svg[aria-details]')).not.toBeInTheDocument();
         expect(container.querySelector('svg[aria-label="loading"]')).toBeInTheDocument();
     });
 });

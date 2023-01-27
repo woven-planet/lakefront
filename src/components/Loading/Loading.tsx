@@ -67,7 +67,7 @@ const Loading: FC<LoadingProps> = (
                 spinDirection={spinDirection}
                 labelPosition={labelPosition}
             >
-                <Svg height={height} aria-label='loading' aria-details={!svg && ariaDetails}
+                <Svg height={height} aria-label='loading' aria-details={svg ? undefined : ariaDetails}
                      width={width} {...logoProps} />
                 {
                     label && <div>{label}</div>
