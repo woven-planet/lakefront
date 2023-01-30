@@ -22,7 +22,7 @@ export const useFilter = <T extends FilterPostBody>(
     userFilters: FilterSet,
     supportJSON = false,
     location: Location,
-    updateHistory: UpdateHistory
+    updateHistory: UpdateHistory,
 ): FilterHooks<T> => {
     const filters = useMemo(() => {
         return supportJSON ? { ...userFilters, [USER_JSON_QUERY_PARAM]: AdditionalJSONFilter() } : userFilters;
@@ -31,12 +31,13 @@ export const useFilter = <T extends FilterPostBody>(
     const [filterValues, setFilterValues] = useState(parseInitialFilterValues(location, filters));
     const filterUrl = useMemo(() => getApiQueryUrl(filters, filterValues), [filters, filterValues]);
     const filterPostBody = useMemo(() => getApiPostBody<T>(filters, filterValues), [filters, filterValues]);
+    const [presetValues, setInitialPresetValues] = useState({});
 
     // initialize the filter values based on url params and default values
     useEffect(() => {
-        const initialFilterValues = parseInitialFilterValues(location, filters);
+        const initialFilterValues = parseInitialFilterValues(location, filters, presetValues);
         setFilterValues(initialFilterValues);
-    }, [filters]);
+    }, [filters, presetValues]);
 
     // update the filter values in the state, and update the browser url
     const updateFilterValues = (values: FilterValues) => {
@@ -77,6 +78,10 @@ export const useFilter = <T extends FilterPostBody>(
                 [name]: defaultValue
             });
         }
+    };
+
+    const initializePresetValues = (presetValues: { [key: string]: any; }) => {
+        setInitialPresetValues(presetValues);
     };
 
     const clearAllFilters = () => {
@@ -122,6 +127,7 @@ export const useFilter = <T extends FilterPostBody>(
         updateFilter,
         clearFilter,
         clearAllFilters,
-        applyApiPostBody
+        applyApiPostBody,
+        initializePresetValues,
     };
 };

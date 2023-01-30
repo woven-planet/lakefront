@@ -32,14 +32,14 @@ export const getApiPostBody = <T extends FilterPostBody = {}>(filters: FilterSet
  * Parse filter values from browser url query param values to
  * pre-populate filter values on init.
  */
-export const parseInitialFilterValues = (location: Location, filters: FilterSet): FilterValues => {
+export const parseInitialFilterValues = (location: Location, filters: FilterSet, presetValues?: { [key: string]: any; }): FilterValues => {
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const initialFilterValues: FilterValues = {};
     Object.keys(filters).forEach((key) => {
         const filter = filters[key];       
         initialFilterValues[key] = filter.parseInitialFilterValue(urlParams[key]);
     });
-    return initialFilterValues;
+    return {...initialFilterValues, ...presetValues};
 };
 
 /**

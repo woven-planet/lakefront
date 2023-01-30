@@ -64,7 +64,7 @@ export const Filter: FC<FilterComponentProps> = ({
     // use isCollapsed prop if provided to track state externally, otherwise track state internally
     const isCollapsed = isCollapsedProp === undefined ? isCollapsedState : isCollapsedProp;
 
-    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters } = filterHooks;
+    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters, initializePresetValues } = filterHooks;
 
     // save the additional query parameters in the browser url
     useEffect(() => {
@@ -83,9 +83,9 @@ export const Filter: FC<FilterComponentProps> = ({
     }, [additionalQueryParams, jsonQueryParams]);
 
     useEffect(() => {
-        if (presetFilterDropdownOptions.length){
+        if (presetFilterDropdownOptions.length && filterMapping){
             console.log(presetFilterDropdownOptions[0].value);
-            updateFiltersWithPresets(presetFilterDropdownOptions[0].value);
+            initializePresetValues(filterMapping[presetFilterDropdownOptions[0].value]);
         }
     }, [presetFilterDropdownOptions]);
 
@@ -120,12 +120,12 @@ export const Filter: FC<FilterComponentProps> = ({
 
     const updateFiltersWithPresets = (value: string) => {
         if (filterMapping) {
-            setPresetFilterValue(value);
             const filtersToPreset = filterMapping[value];
             console.log(filtersToPreset);
             Object.entries(filtersToPreset).forEach(([key, value]) => {
                 updateFilter(key, value);
             });
+            setPresetFilterValue(value);
         }
     };
 

@@ -28,10 +28,17 @@ describe('getApiPostBody', () => {
 });
 
 describe('parseInitialFilterValues', () => {
-    it('returns the correctly parsed intial filter values', () => {
+    it('returns the correctly parsed initial filter values', () => {
         expect(parseInitialFilterValues(FILTER_HOOKS_UTIL_LOCATION, FILTERS)).toMatchObject({
             keywords: KEYWORD_DEMO,
             phrases: PHRASE_DEMO
+        });
+    });
+
+    it('overrides parsed values with preset values', () => {
+        expect(parseInitialFilterValues(FILTER_HOOKS_UTIL_LOCATION, FILTERS, { phrases: 'overridden phrase' })).toMatchObject({
+            keywords: KEYWORD_DEMO,
+            phrases: 'overridden phrase'
         });
     });
 });
