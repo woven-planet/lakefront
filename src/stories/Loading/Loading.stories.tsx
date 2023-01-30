@@ -2,6 +2,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 
 import LoadingComponent, { LoadingProps } from 'src/components/Loading/Loading';
 import DocBlock from '.storybook/DocBlock';
+import {ReactComponent as CycleDemo} from './assets/cycle-demo.svg';
 
 export default {
     title: 'Lakefront/Loading',
@@ -27,7 +28,20 @@ const Template: Story<LoadingProps> = (args) => (
     </div>
 );
 
-export const Loading = Template.bind({});
+export const LoadingWithDefaultWovenIcon = Template.bind({});
+LoadingWithDefaultWovenIcon.args = {
+    iconVariant: 'primary'
+};
+
+export const LoadingWithTRIIcon = Template.bind({});
+LoadingWithTRIIcon.args ={
+    iconVariant: 'secondary'
+};
+
+export const LoadingWithSvgAsIcon = Template.bind({});
+LoadingWithSvgAsIcon.args ={
+    svg: CycleDemo
+};
 
 export const LoadingWithLabel = Template.bind({});
 LoadingWithLabel.args = {
