@@ -1,8 +1,8 @@
 import { ElementType, FC, ReactElement } from 'react';
-import { ReactComponent as SpinnerLogo } from './assets/tri_logo_monochrome.svg';
 import { StyledLoadingContainer } from './loadingStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
+import { displayIcon, iconOptions } from './loadingUtil';
 
 export interface LoadingProps {
     /**
@@ -33,7 +33,11 @@ export interface LoadingProps {
      * The SVG image to be shown when loading.
      */
     svg?: ElementType;
-     /**
+    /**
+     * The icon variant to display if svg isn't provided.
+     */
+    iconVariant?: string;
+    /**
      * Additional styles.
      */
     className?: string;
@@ -48,10 +52,13 @@ const Loading: FC<LoadingProps> = (
         height = 24,
         width = 24,
         svg,
+        iconVariant = 'primary',
         className,
         ...logoProps
     }) => {
-    const Svg = svg ? svg : SpinnerLogo;
+    const Svg = svg ? svg : displayIcon(iconVariant);
+    const ariaDetails = iconVariant === 'secondary' ? iconOptions.secondary['aria-details'] : iconOptions.primary['aria-details'];
+
     return (
         <ThemeProvider theme={theme}>
             <StyledLoadingContainer
@@ -60,7 +67,8 @@ const Loading: FC<LoadingProps> = (
                 spinDirection={spinDirection}
                 labelPosition={labelPosition}
             >
-                <Svg height={height} width={width} {...logoProps} />
+                <Svg height={height} aria-label='loading' aria-details={svg ? undefined : ariaDetails}
+                     width={width} {...logoProps} />
                 {
                     label && <div>{label}</div>
                 }
