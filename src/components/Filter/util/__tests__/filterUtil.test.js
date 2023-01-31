@@ -3,7 +3,8 @@ import {
     getDefaultJsonViewValue,
     getFilterAppliedCount,
     getUrlFromList,
-    areSetsEqual, convertToFilterDropdownOptions
+    areSetsEqual,
+    convertToFilterDropdownOptions
 } from '../filterUtil';
 import { FILTERS } from 'src/components/Filter/__tests__/filter.data';
 

@@ -154,7 +154,7 @@ export interface FilterHooks<T = FilterPostBody> {
     applyApiPostBody(apiPostBody: T): void;
 
     /**
-     * The function sets initial filter preset values
+     * The function sets initial filter preset values.
      */
     initializePresetValues(presetValues: { [key: string]: any; }): void;
 }

@@ -117,13 +117,13 @@ export const Filter: FC<FilterComponentProps> = ({
         setActiveSection(newSection);
     };
 
-    const updateFiltersWithPresets = (value: string) => {
+    const updateFiltersWithPresets = (filterMappingKey: string) => {
         if (filterMapping) {
-            const filtersToPreset = filterMapping[value];
+            const filtersToPreset = filterMapping[filterMappingKey];
             Object.entries(filtersToPreset).forEach(([key, value]) => {
                 updateFilter(key, value);
             });
-            setPresetFilterValue(value);
+            setPresetFilterValue(filterMappingKey);
         }
     };
 
