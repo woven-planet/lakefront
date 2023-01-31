@@ -22,7 +22,7 @@ export const useFilter = <T extends FilterPostBody>(
     userFilters: FilterSet,
     supportJSON = false,
     location: Location,
-    updateHistory: UpdateHistory,
+    updateHistory: UpdateHistory
 ): FilterHooks<T> => {
     const filters = useMemo(() => {
         return supportJSON ? { ...userFilters, [USER_JSON_QUERY_PARAM]: AdditionalJSONFilter() } : userFilters;
@@ -128,6 +128,6 @@ export const useFilter = <T extends FilterPostBody>(
         clearFilter,
         clearAllFilters,
         applyApiPostBody,
-        initializePresetValues,
+        initializePresetValues
     };
 };

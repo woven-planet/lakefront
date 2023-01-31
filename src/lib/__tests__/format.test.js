@@ -7,7 +7,7 @@ import {
     pascalToCamelCase,
     formatLatLong,
     formatCelsiusTemperature,
-    humanizeCamelCase,
+    humanizeCamelCase
 } from '../format';
 
 describe('format', () => {
@@ -32,26 +32,26 @@ describe('format', () => {
         });
     });
 
-    test('digitGroupSeparator', () => {
+    it('digitGroupSeparator', () => {
         expect(digitGroupSeparator(5432)).toBe('5,432');
         expect(digitGroupSeparator('hello')).toBe('0');
         expect(digitGroupSeparator({})).toBe('0');
     });
 
-    test('formatNumber', () => {
+    it('formatNumber', () => {
         expect(formatNumber(12345.123456789, 3)).toBe('12345.123');
 
         // check if number is rounded up to the last digit
         expect(formatNumber(12345.123219, 5)).toBe('12345.12322');
     });
 
-    test('humanize', () => {
+    it('humanize', () => {
         expect(humanize('humpy_dumpy')).toBe('Humpy Dumpy');
 
         expect(humanize('humpy-dumpy')).toBe('Humpy Dumpy');
     });
 
-    test('pascalToCamelCase', () => {
+    it('pascalToCamelCase', () => {
         expect(pascalToCamelCase('VERSION_INFO')).toBe('versionInfo');
 
         expect(pascalToCamelCase('ROBOTS')).toBe('robots');
