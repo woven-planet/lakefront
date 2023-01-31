@@ -84,7 +84,6 @@ export const Filter: FC<FilterComponentProps> = ({
 
     useEffect(() => {
         if (presetFilterDropdownOptions.length && filterMapping){
-            console.log(presetFilterDropdownOptions[0].value);
             initializePresetValues(filterMapping[presetFilterDropdownOptions[0].value]);
         }
     }, [presetFilterDropdownOptions]);
@@ -121,7 +120,6 @@ export const Filter: FC<FilterComponentProps> = ({
     const updateFiltersWithPresets = (value: string) => {
         if (filterMapping) {
             const filtersToPreset = filterMapping[value];
-            console.log(filtersToPreset);
             Object.entries(filtersToPreset).forEach(([key, value]) => {
                 updateFilter(key, value);
             });
