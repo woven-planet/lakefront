@@ -12,6 +12,22 @@ describe('useFilter', () => {
         expect(filterValues.phrases).toBe('');
     });
 
+    it ('should set initial preset values', () => {
+       const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
+
+        act(() => {
+            result.current.initializePresetValues({
+                keywords: KEYWORD_DEMO,
+                phrases: 'overridden phrase'
+            });
+        });
+        const { filterValues } = result.current;
+        expect(filterValues).toMatchObject({
+            keywords: KEYWORD_DEMO,
+            phrases: 'overridden phrase'
+        });
+    });
+
     it('update filter works', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 

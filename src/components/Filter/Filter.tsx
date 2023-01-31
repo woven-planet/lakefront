@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import queryString from 'query-string';
-import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, UrlParameters } from './types';
+import { ContextSwitchMenuValue, FilterComponentProps, FilterMode, FilterSet, UrlParameters } from './types';
 import {
     FILTER_MODE_OPTIONS,
     getCurrentBrowserQueryParams,
     getDefaultJsonViewValue,
-    getFilterAppliedCount
+    convertToFilterDropdownOptions
 } from './util';
 import { ThemeProvider } from '@emotion/react';
 import {
@@ -21,7 +21,7 @@ import theme from 'src/styles/theme';
 import { FilterSectionHeader } from './components';
 import FilterBar from '../../stories/Filter/components/FilterBar';
 import FilterValueChips from './components/FilterSectionHeader/FilterValueChips';
-
+import Select from '../Select';
 
 /**
  * Filter Component
@@ -47,8 +47,10 @@ export const Filter: FC<FilterComponentProps> = ({
     onToggleCollapsed,
     updateHistory,
     badgeThreshold = 4,
-    className
+    className,
+    filterMapping,
 }) => {
+    const presetFilterDropdownOptions = useMemo(() => convertToFilterDropdownOptions(filterMapping), [filterMapping]);
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
     const [activeSection, setActiveSection] = useState(initialActiveSection);
@@ -57,11 +59,12 @@ export const Filter: FC<FilterComponentProps> = ({
     );
     const [isJSONInputModified, setIsJSONInputModified] = useState(false);
     const [isJSONModifiedModalShowing, setIsJSONModifiedModalShowing] = useState(false);
+    const [presetFilterValue, setPresetFilterValue] = useState('');
 
     // use isCollapsed prop if provided to track state externally, otherwise track state internally
     const isCollapsed = isCollapsedProp === undefined ? isCollapsedState : isCollapsedProp;
 
-    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters } = filterHooks;
+    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters, initializePresetValues } = filterHooks;
 
     // save the additional query parameters in the browser url
     useEffect(() => {
@@ -78,6 +81,12 @@ export const Filter: FC<FilterComponentProps> = ({
         };
         updateHistory({ search: queryString.stringify(newQueryParams), hash: location.hash });
     }, [additionalQueryParams, jsonQueryParams]);
+
+    useEffect(() => {
+        if (presetFilterDropdownOptions.length && filterMapping){
+            initializePresetValues(filterMapping[presetFilterDropdownOptions[0].value]);
+        }
+    }, [presetFilterDropdownOptions]);
 
     const toggleCollapsed = () => {
         const collapsedState = !isCollapsed;
@@ -106,6 +115,20 @@ export const Filter: FC<FilterComponentProps> = ({
     const toggleSection = (section: string) => {
         const newSection = activeSection === section ? '' : section;
         setActiveSection(newSection);
+    };
+
+    const updateFiltersWithPresets = (filterMappingKey: string) => {
+        if (filterMapping) {
+            const filtersToPreset = filterMapping[filterMappingKey];
+            Object.entries(filtersToPreset).forEach(([key, value]) => {
+                updateFilter(key, value);
+            });
+            setPresetFilterValue(filterMappingKey);
+        }
+    };
+
+    const presetFilters = (event: ChangeEvent<HTMLInputElement>) => {
+        updateFiltersWithPresets(event.target.value);
     };
 
     const standardMode = !isJSONInputAllowed || !jsonQueryParams.jsonView;
@@ -155,6 +178,12 @@ export const Filter: FC<FilterComponentProps> = ({
                             </FiltersSection>
                         )}
                     </div>
+                    {filterMapping && Object.keys(filterMapping).length &&
+                        <Select aria-label="preset-filter-dropdown"
+                                options={presetFilterDropdownOptions} onChange={presetFilters}
+                                value={presetFilterValue}
+                        />
+                    }
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {panelVisible

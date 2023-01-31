@@ -3,7 +3,8 @@ import {
     getDefaultJsonViewValue,
     getFilterAppliedCount,
     getUrlFromList,
-    areSetsEqual
+    areSetsEqual,
+    convertToFilterDropdownOptions
 } from '../filterUtil';
 import { FILTERS } from 'src/components/Filter/__tests__/filter.data';
 
@@ -116,5 +117,33 @@ describe('getUrlFromList', () => {
             const valueSet = new Set(['best']);
             expect(areSetsEqual(initialValueSet, valueSet)).toBe(false);
         });
+    });
+});
+
+describe('preset filter dropdown options', () => {
+    it('returns empty array if provided empty filterMapping', () => {
+        const emptyFilterMapping = {};
+
+        expect(convertToFilterDropdownOptions(emptyFilterMapping)).toStrictEqual([]);
+    });
+
+    it('returns empty array if provided undefined filterMapping', () => {
+        expect(convertToFilterDropdownOptions(undefined)).toStrictEqual([]);
+    });
+
+    it('converts filter mapping to filter dropdown options', () => {
+        const filterMapping = {
+            devMode: {
+                phrases: ''
+            },
+            prodMode: {
+                phrases: ''
+            }
+        };
+
+        expect(convertToFilterDropdownOptions(filterMapping)).toStrictEqual([
+            {label: 'Dev Mode', value: 'devMode'},
+            {label: 'Prod Mode', value: 'prodMode'}
+        ]);
     });
 });

@@ -113,3 +113,14 @@ export const formatCelsiusTemperature = (celsiusTemp = 0, measurementSystem = 'm
 
     return `${Math.round(temp)}° ${unit}`;
 };
+
+/**
+ * Receives a camelCase string and returns a properly formatted human-readable string.
+ * @param strToConvert
+ * @returns {string}
+ */
+export const humanizeCamelCase = (strToConvert = '') => {
+   return strToConvert
+       .replace(/([A-Z])/g, ' $1')
+       .replace(/^./, function(str){ return str.toUpperCase(); });
+};

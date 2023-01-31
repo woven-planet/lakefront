@@ -1,5 +1,6 @@
 import { FilterMode, FilterSet, FilterValues, UrlParameters } from '../types';
-import queryString from 'query-string';
+import { humanizeCamelCase } from 'src/lib/format.js';
+import { SelectOption } from 'src/types/global';
 
 /**
  * FILTER_MODE_OPTIONS
@@ -71,4 +72,17 @@ export const getUrlFromList = (name: string, list: string[] | Set<string>, count
 // compare Set values
 export const areSetsEqual = (xs: Set<string>, ys: Set<string>) => {
    return xs.size === ys.size && [...xs].every((x) => ys.has(x));
+};
+
+export const convertToFilterDropdownOptions = (filterMapping?: { [key: string]: any; }): SelectOption<string>[] => {
+    if (!filterMapping) {
+        return [];
+    }
+
+    const filterNames = Object.keys(filterMapping);
+
+    return filterNames.map(value => ({
+        label: humanizeCamelCase(value),
+        value
+    }));
 };

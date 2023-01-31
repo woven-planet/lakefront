@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, within, getAllByText } from '@testing-library/react';
 
 import { Filter } from '../Filter';
 import { FILTERS, LOCATION } from './filter.data';
@@ -177,4 +177,56 @@ describe('Filter', () => {
             getByText('FilterBar');
         });
     });
+
+    describe('preset filter dropdown functionality', () => {
+        it('does not display dropdown when there is not a filter mapping', () => {
+            const { container } = render(
+                <TestComponent  />
+            );
+
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeNull();
+        });
+
+        it('does not display dropdown if the filter mapping is empty', () => {
+            const { container } = render(
+                <TestComponent  filterMapping={{}} />
+            );
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeNull();
+        });
+
+        it('displays dropdown when there is a filter mapping', () => {
+            const filterMapping = {
+                devMode: {
+                    phrases: ''
+                },
+                prodMode: {
+                    phrases: ''
+                }
+            };
+            const { container } = render(
+                <TestComponent filterMapping={filterMapping}/>
+            );
+
+            expect(container.querySelector('select[aria-label="preset-filter-dropdown"]')).toBeInTheDocument();
+        });
+
+        it('selects prod mode from the dropdown menu', () => {
+            const filterMapping = {
+                devMode: {
+                    phrases: 'easy'
+                },
+                prodMode: {
+                    phrases: 'hard'
+                }
+            };
+            const { container, getAllByText } = render(
+                <TestComponent filterMapping={filterMapping}/>
+            );
+            fireEvent.change(container.getElementsByTagName('select')[0], {
+                target: { value: 'prodMode' }
+            });
+            expect(getAllByText('hard')[0]).toBeInTheDocument();
+        });
+    });
+
 });
