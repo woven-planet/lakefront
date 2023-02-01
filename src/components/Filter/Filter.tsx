@@ -190,7 +190,12 @@ export const Filter: FC<FilterComponentProps> = ({
                                     })}
                                 </FilterChipsContainer>
                                 <FilterPaneControls>
-                                    <FilterControl color='secondary'>Reset Filters</FilterControl>
+                                    <FilterControl
+                                        color='secondary'
+                                        onClick={resetAllFilters}
+                                    >
+                                        Reset Filters
+                                    </FilterControl>
                                 </FilterPaneControls>
                             </FiltersSection>
                         )}
