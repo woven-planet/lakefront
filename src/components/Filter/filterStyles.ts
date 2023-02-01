@@ -67,6 +67,13 @@ export const FilterHeader = styled.h2({
     }
 });
 
+export const FilterChipsContainer = styled.div({
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: 4,
+});
+
 export const FiltersSection = styled.div({
     position: 'relative',
     '> span': {
@@ -84,4 +91,8 @@ export const FilterSectionDescription = styled.p({
 
 export const FilterSectionBody = styled.div({
     marginTop: 8
+});
+
+export const PresetFiltersContainer = styled.div({
+    marginBottom: 10
 });

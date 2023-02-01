@@ -14,7 +14,9 @@ import {
     FilterSectionDescription,
     FilterHeader,
     FiltersSection,
-    SidePanel
+    SidePanel,
+    PresetFiltersContainer,
+    FilterChipsContainer
 } from './filterStyles';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
@@ -157,11 +159,20 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
+                    {filterMapping && Object.keys(filterMapping).length &&
+                        <PresetFiltersContainer>
+                            <Select aria-label="preset-filter-dropdown"
+                                    options={presetFilterDropdownOptions} onChange={presetFilters}
+                                    value={presetFilterValue}
+                            />
+                        </PresetFiltersContainer>
+                    }
                     <div className='header-chips'>
                         {standardMode && (
                             <FiltersSection className='filters'>
-                                {panelVisible
-                                    .map(([key, filter]) => {
+                                <FilterChipsContainer>
+                                    {panelVisible
+                                    .map(([key]) => {
                                         const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
                                         return (
@@ -175,15 +186,10 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 visible={true} />
                                         );
                                     })}
+                                </FilterChipsContainer>
                             </FiltersSection>
                         )}
                     </div>
-                    {filterMapping && Object.keys(filterMapping).length &&
-                        <Select aria-label="preset-filter-dropdown"
-                                options={presetFilterDropdownOptions} onChange={presetFilters}
-                                value={presetFilterValue}
-                        />
-                    }
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {panelVisible

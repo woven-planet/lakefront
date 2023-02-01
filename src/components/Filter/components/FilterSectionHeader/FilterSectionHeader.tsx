@@ -13,6 +13,7 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import FilterValueChips from './FilterValueChips';
 import { getFilterCount } from './filterSectionHeaderUtil';
+import { FilterChipsContainer } from 'src/components/Filter/filterStyles';
 
 const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     activeSection = '',
@@ -51,7 +52,9 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
             </FilterSectionHeaderContainer>
             {
                 children ?? (
-                    <FilterValueChips label={filter.label} name={''} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    <FilterChipsContainer>
+                        <FilterValueChips label={filter.label} name={''} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    </FilterChipsContainer>
                 )
             }
         </ThemeProvider>
