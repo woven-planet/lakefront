@@ -64,7 +64,7 @@ export const Filter: FC<FilterComponentProps> = ({
     // use isCollapsed prop if provided to track state externally, otherwise track state internally
     const isCollapsed = isCollapsedProp === undefined ? isCollapsedState : isCollapsedProp;
 
-    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters, initializePresetValues } = filterHooks;
+    const { filters, filterValues, updateFilter, resetFilter, resetAllFilters, initializePresetValues } = filterHooks;
 
     // save the additional query parameters in the browser url
     useEffect(() => {
@@ -167,7 +167,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                         return (
                                             <FilterValueChips
                                                 label={filters[key].label}
-                                                clearFilter={clearFilter}
+                                                resetFilter={resetFilter}
                                                 key={key}
                                                 name={key}
                                                 notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
@@ -195,7 +195,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 filter,
                                                 name: key,
                                                 onClick: () => toggleSection(key),
-                                                clearFilter,
+                                                resetFilter,
                                                 value: filterValues[key],
                                                 badgeThreshold
                                             })
@@ -205,7 +205,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 filter={filter}
                                                 name={key}
                                                 onClick={() => toggleSection(key)}
-                                                clearFilter={clearFilter}
+                                                resetFilter={resetFilter}
                                                 value={filterValues[key]}
                                                 badgeThreshold={badgeThreshold} />
                                         )}
@@ -247,8 +247,8 @@ export const Filter: FC<FilterComponentProps> = ({
                     <FilterBar
                         filters={filters}
                         filterValues={filterValues}
-                        clearFilter={clearFilter}
-                        clearAllFilter={clearAllFilters}
+                        resetFilter={resetFilter}
+                        resetAllFilters={resetAllFilters}
                     />
                 )}
 

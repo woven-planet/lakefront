@@ -12,7 +12,7 @@ const FILTER_SECTION_PROPS = {
     },
     name: 'a',
     onClick: jest.fn(),
-    clearFilter: jest.fn(),
+    resetFilter: jest.fn(),
     value: '',
     badgeThreshold: 4
 };
@@ -78,7 +78,7 @@ describe('FilterSectionHeader', () => {
         expect(FILTER_SECTION_PROPS.onClick).toHaveBeenCalled();
     });
 
-    it('Calls clearFilter on clear button click', () => {
+    it('Calls resetFilter on clear button click', () => {
         const { container } = render(
             <FilterSectionHeader
                 {...FILTER_SECTION_PROPS}
@@ -87,6 +87,6 @@ describe('FilterSectionHeader', () => {
         );
 
         fireEvent.click(container.querySelector('svg[aria-label="clear"]'));
-        expect(FILTER_SECTION_PROPS.clearFilter).toHaveBeenCalled();
+        expect(FILTER_SECTION_PROPS.resetFilter).toHaveBeenCalled();
     });
 });

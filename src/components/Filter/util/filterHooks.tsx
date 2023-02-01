@@ -16,7 +16,7 @@ import {
  * The useFilter hook is primarily designed to use with the Filter
  * component, but can be used standalone to maintain filter state.
  * The state as it applies to the current url and a dynamic api post body
- * can be updated and/or cleared using this hook.
+ * can be updated and/or reset using this hook.
  */
 export const useFilter = <T extends FilterPostBody>(
     userFilters: FilterSet,
@@ -56,7 +56,7 @@ export const useFilter = <T extends FilterPostBody>(
     };
 
 
-    const clearFilter = (name: string, value?: any) => {
+    const resetFilter = (name: string, value?: any) => {
         const clearPartial = filters[name].clearPartialSingleFilter;
 
         if (value && clearPartial) {
@@ -84,7 +84,7 @@ export const useFilter = <T extends FilterPostBody>(
         setInitialPresetValues(presetValues);
     };
 
-    const clearAllFilters = () => {
+    const resetAllFilters = () => {
         const newFilterValues: FilterValues = {};
 
         Object.keys(filters).forEach((key) => {
@@ -125,8 +125,8 @@ export const useFilter = <T extends FilterPostBody>(
         filterPostBody,
         filterValues,
         updateFilter,
-        clearFilter,
-        clearAllFilters,
+        resetFilter,
+        resetAllFilters,
         applyApiPostBody,
         initializePresetValues
     };

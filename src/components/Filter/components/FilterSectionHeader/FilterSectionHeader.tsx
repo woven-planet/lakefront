@@ -16,7 +16,7 @@ import { getFilterCount } from './filterSectionHeaderUtil';
 
 const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     activeSection = '',
-    clearFilter,
+    resetFilter,
     filter,
     name,
     onClick,
@@ -26,7 +26,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
 }) => {
     const handleClear: MouseEventHandler<SVGElement> = (event) => {
         event.stopPropagation();
-        clearFilter(name);
+        resetFilter(name);
     };
 
     const filterApplied = !filter.isDefaultFilterValue(value);

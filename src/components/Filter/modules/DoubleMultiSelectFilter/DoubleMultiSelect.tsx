@@ -76,7 +76,7 @@ const DoubleMultiSelect: FC<DoubleMultiSelectProps> = ({ value, onChange, option
         <div>
             <FilterTitle>
                 <FilterLabel>{options.firstSelect.label}</FilterLabel>
-                <FilterClear onClick={() => handleClear('firstSelect')}>clear all</FilterClear>
+                <FilterClear onClick={() => handleClear('firstSelect')}>reset all</FilterClear>
             </FilterTitle>
             <MultiSelect
                 value={selectedFirst}
@@ -89,7 +89,7 @@ const DoubleMultiSelect: FC<DoubleMultiSelectProps> = ({ value, onChange, option
             />
             <FilterTitle>
                 <FilterLabel>{options.secondSelect.label}</FilterLabel>
-                <FilterClear onClick={() => handleClear('secondSelect')}>clear all</FilterClear>
+                <FilterClear onClick={() => handleClear('secondSelect')}>reset all</FilterClear>
             </FilterTitle>
             <MultiSelect
                 value={selectedSecond}

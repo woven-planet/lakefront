@@ -30,7 +30,7 @@ export const FilterBarContainer = styled.div(({ theme }) => ({
             cursor: 'pointer'
         }
     },
-    '.clearAll': {
+    '.resetAll': {
         color: theme.colors.saturatedBlue,
         cursor: 'pointer'
     }
