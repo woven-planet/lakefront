@@ -16,7 +16,9 @@ import {
     FiltersSection,
     SidePanel,
     PresetFiltersContainer,
-    FilterChipsContainer
+    FilterChipsContainer,
+    FilterPaneControls,
+    FilterControl
 } from './filterStyles';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
@@ -170,7 +172,7 @@ export const Filter: FC<FilterComponentProps> = ({
                     <div className='header-chips'>
                         {standardMode && (
                             <FiltersSection className='filters'>
-                                <FilterChipsContainer>
+                                <FilterChipsContainer className='filter-chips-container'>
                                     {panelVisible
                                     .map(([key]) => {
                                         const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
@@ -187,6 +189,9 @@ export const Filter: FC<FilterComponentProps> = ({
                                         );
                                     })}
                                 </FilterChipsContainer>
+                                <FilterPaneControls>
+                                    <FilterControl color='secondary'>Reset Filters</FilterControl>
+                                </FilterPaneControls>
                             </FiltersSection>
                         )}
                     </div>

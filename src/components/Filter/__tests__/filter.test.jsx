@@ -229,4 +229,16 @@ describe('Filter', () => {
         });
     });
 
+    describe('reset filters functionality', () => {
+        it('displays a "Reset Filters" control in container after filter chips container', () => {
+            const { container } = render(
+                <TestComponent isJSONInputAllowed FilterBar={FilterBar} hideFilterBar={false} />
+            );
+
+            const filterChipsContainer = container.querySelector('.filter-chips-container');
+            const controlsContainer = filterChipsContainer.nextElementSibling;
+
+            within(controlsContainer).getByText('Reset Filters');
+        });
+    });
 });

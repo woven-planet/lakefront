@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FilterContainerProps } from './types';
+import Button from '../Button';
 
 const FILTER_BAR_HEIGHT = 48;
 
@@ -49,7 +50,6 @@ export const SidePanel = styled.div(({ theme }) => ({
     '.header-chips': {
         borderTop: 'unset',
         borderBottom: theme?.borders?.primary,
-        paddingBottom: 15
     },
     section: { padding: '16px 0', borderBottom: theme?.borders?.primary },
     '.options': {
@@ -95,4 +95,17 @@ export const FilterSectionBody = styled.div({
 
 export const PresetFiltersContainer = styled.div({
     marginBottom: 10
+});
+
+export const FilterPaneControls = styled.div({
+    margin: '4px 0',
+    display: 'flex',
+    flexDirection: 'row-reverse',
+});
+
+export const FilterControl = styled(Button)({
+    height: 30,
+    border: 'none',
+    fontSize: 14,
+    display: 'flex'
 });
