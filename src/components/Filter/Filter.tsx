@@ -50,7 +50,7 @@ export const Filter: FC<FilterComponentProps> = ({
     location,
     onToggleCollapsed,
     updateHistory,
-    badgeThreshold = 4,
+    badgeThreshold = 1,
     className,
     filterMapping,
 }) => {

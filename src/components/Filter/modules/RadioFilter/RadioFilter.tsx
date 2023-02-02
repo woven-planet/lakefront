@@ -47,6 +47,9 @@ const RadioFilter = (
             />
         </RadioGroupContainer>
     ),
+    getFilterCount(value?: string): number {
+        return value ? 1 : 0;
+    },
     ...radioFilterOptions,
     description,
     label

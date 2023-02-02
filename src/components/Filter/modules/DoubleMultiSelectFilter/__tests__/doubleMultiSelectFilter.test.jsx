@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import DoubleMultiSelectFilter from '../DoubleMultiSelectFilter';
 
 export const DOUBLE_MULTI_SELECT_FILTER_OPTIONS = {
@@ -200,6 +200,44 @@ describe('DoubleMultiSelectFilter', () => {
             expect(container.querySelector('input[name="first"]')).toBeInTheDocument();
             expect(container.querySelector('input[name="second"]')).toBeInTheDocument();
             getByText('a');
+        });
+    });
+
+    describe('renderSectionHeader', () => {
+        const doubleMultiSelectFilter = DoubleMultiSelectFilter({ ...DEFAULT_PROPS, label: 'Section Header' }, {});
+        const { renderSectionHeader } = doubleMultiSelectFilter;
+
+        it('returns the expected component', () => {
+            const sectionHeaderProps = {
+                filter: doubleMultiSelectFilter,
+                name: 'dbl',
+                value: { firstSelect: ['a'], secondSelect: ['b', 'c'] },
+                resetFilter: () => null,
+                badgeThreshold: 1
+            };
+
+            const { getByText } = render(<div>{renderSectionHeader(sectionHeaderProps)}</div>);
+
+            getByText('Section Header');
+            const firstFilter = getByText('First Filter');
+            const secondFilter = getByText('Second Filter');
+            within(firstFilter.nextElementSibling).getByText('1');
+            within(secondFilter.nextElementSibling).getByText('2');
+        });
+
+        it('overrides filter count to hide extra badge count', () => {
+            const sectionHeaderProps = {
+                filter: doubleMultiSelectFilter,
+                name: 'dbl',
+                value: { firstSelect: ['a'], secondSelect: ['b', 'c'] },
+                resetFilter: () => null,
+                badgeThreshold: 1
+            };
+
+            const { container } = render(<div>{renderSectionHeader(sectionHeaderProps)}</div>);
+            const badge = container.querySelector('div[aria-details="count of applied filters"]');
+
+            expect(badge).not.toBeInTheDocument();
         });
     });
 

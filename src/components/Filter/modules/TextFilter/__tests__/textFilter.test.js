@@ -186,4 +186,20 @@ describe('TextFilter', () => {
             expect(queryByRole('textbox')).not.toBeInTheDocument();
         });
     });
+
+    describe('getFilterCount', () => {
+        const { getFilterCount } = TextFilter('', '');
+
+        it('returns 0 when the filter value is blank', () => {
+            expect(getFilterCount('')).toBe(0);
+        });
+
+        it('returns 0 when the filter value is undefined', () => {
+            expect(getFilterCount()).toBe(0);
+        });
+
+        it('returns 1 when the filter has a value', () => {
+            expect(getFilterCount('a')).toBe(1);
+        });
+    });
 });
