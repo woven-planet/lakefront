@@ -141,13 +141,13 @@ export interface FilterHooks<T = FilterPostBody> {
      */
     updateFilter(name: string, value: any): void;
     /**
-     * The function to clear a particular filter.
+     * The function to reset a particular filter.
      */
-    clearFilter(name: string | string[], value?: any): void;
+    resetFilter(name: string | string[], value?: any): void;
     /**
-     * The function to clear all current filters.
+     * The function to reset all current filters.
      */
-    clearAllFilters(): void;
+    resetAllFilters(): void;
     /**
      * The function to determine how filters update the post body.
      */
@@ -173,7 +173,7 @@ export interface FilterSectionHeaderProps {
     name: string;
     value: any;
     onClick?: MouseEventHandler<HTMLHeadingElement>;
-    clearFilter: (name: string) => void;
+    resetFilter: (name: string) => void;
     badgeThreshold: number;
 }
 
@@ -242,8 +242,8 @@ export interface ContextSwitchMenuProps {
 export interface FilterBarProps {
     filters: FilterSet;
     filterValues: FilterValues;
-    clearFilter?: (name: string) => void;
-    clearAllFilter?: () => void;
+    resetFilter?: (name: string) => void;
+    resetAllFilters?: () => void;
 }
 
 /**

@@ -7,7 +7,6 @@ export const FilterValueChip = styled.div(({ theme }) => ({
     justifyContent: 'center',
     border: `solid 2px ${theme?.colors?.mercury}`,
     padding: 2,
-    margin: 2,
     borderRadius: 3,
     backgroundColor: theme?.colors?.akoya,
     flexGrow: 1,
@@ -44,14 +43,6 @@ export const FilterLabels = styled.div(({ theme }) => ({
     width: 80,
     fontSize: 10
 }));
-
-export const FilterValueChipsContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginTop: 2
-});
 
 export const ClearButton = styled(CloseLabel)(({ theme }) => ({
     marginRight: 8,

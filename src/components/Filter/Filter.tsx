@@ -14,7 +14,11 @@ import {
     FilterSectionDescription,
     FilterHeader,
     FiltersSection,
-    SidePanel
+    SidePanel,
+    PresetFiltersContainer,
+    FilterChipsContainer,
+    FilterPaneControls,
+    FilterControl
 } from './filterStyles';
 import { ReactComponent as FilterIcon } from './assets/filterIcon.svg';
 import theme from 'src/styles/theme';
@@ -64,7 +68,7 @@ export const Filter: FC<FilterComponentProps> = ({
     // use isCollapsed prop if provided to track state externally, otherwise track state internally
     const isCollapsed = isCollapsedProp === undefined ? isCollapsedState : isCollapsedProp;
 
-    const { filters, filterValues, updateFilter, clearFilter, clearAllFilters, initializePresetValues } = filterHooks;
+    const { filters, filterValues, updateFilter, resetFilter, resetAllFilters, initializePresetValues } = filterHooks;
 
     // save the additional query parameters in the browser url
     useEffect(() => {
@@ -157,17 +161,26 @@ export const Filter: FC<FilterComponentProps> = ({
                             ))}
                         <FilterIcon className="filterMenuIcon" onClick={toggleCollapsed} />
                     </FilterHeader>
+                    {filterMapping && Object.keys(filterMapping).length &&
+                        <PresetFiltersContainer>
+                            <Select aria-label="preset-filter-dropdown"
+                                    options={presetFilterDropdownOptions} onChange={presetFilters}
+                                    value={presetFilterValue}
+                            />
+                        </PresetFiltersContainer>
+                    }
                     <div className='header-chips'>
                         {standardMode && (
                             <FiltersSection className='filters'>
-                                {panelVisible
-                                    .map(([key, filter]) => {
+                                <FilterChipsContainer className='filter-chips-container'>
+                                    {panelVisible
+                                    .map(([key]) => {
                                         const itemFilterLabelValues = filters[key].getFilterSectionLabel(filterValues[key]);
 
                                         return (
                                             <FilterValueChips
                                                 label={filters[key].label}
-                                                clearFilter={clearFilter}
+                                                resetFilter={resetFilter}
                                                 key={key}
                                                 name={key}
                                                 notDefaultValues={filters[key] ? !filters[key].isDefaultFilterValue(filterValues[key]) : false}
@@ -175,15 +188,18 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 visible={true} />
                                         );
                                     })}
+                                </FilterChipsContainer>
+                                <FilterPaneControls>
+                                    <FilterControl
+                                        color='secondary'
+                                        onClick={resetAllFilters}
+                                    >
+                                        Reset Filters
+                                    </FilterControl>
+                                </FilterPaneControls>
                             </FiltersSection>
                         )}
                     </div>
-                    {filterMapping && Object.keys(filterMapping).length &&
-                        <Select aria-label="preset-filter-dropdown"
-                                options={presetFilterDropdownOptions} onChange={presetFilters}
-                                value={presetFilterValue}
-                        />
-                    }
                     {standardMode && (
                         <FiltersSection className='filters'>
                             {panelVisible
@@ -195,7 +211,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 filter,
                                                 name: key,
                                                 onClick: () => toggleSection(key),
-                                                clearFilter,
+                                                resetFilter,
                                                 value: filterValues[key],
                                                 badgeThreshold
                                             })
@@ -205,7 +221,7 @@ export const Filter: FC<FilterComponentProps> = ({
                                                 filter={filter}
                                                 name={key}
                                                 onClick={() => toggleSection(key)}
-                                                clearFilter={clearFilter}
+                                                resetFilter={resetFilter}
                                                 value={filterValues[key]}
                                                 badgeThreshold={badgeThreshold} />
                                         )}
@@ -247,8 +263,8 @@ export const Filter: FC<FilterComponentProps> = ({
                     <FilterBar
                         filters={filters}
                         filterValues={filterValues}
-                        clearFilter={clearFilter}
-                        clearAllFilter={clearAllFilters}
+                        resetFilter={resetFilter}
+                        resetAllFilters={resetAllFilters}
                     />
                 )}
 

@@ -9,7 +9,7 @@ describe('FilterValueChips', () => {
             <FilterValueChips
                 value={VALUE}
                 name=''
-                clearFilter={() => undefined}
+                resetFilter={() => undefined}
                 visible={false}
             />
         );
@@ -22,7 +22,7 @@ describe('FilterValueChips', () => {
             <FilterValueChips
                 value={VALUE}
                 name=''
-                clearFilter={() => undefined}
+                resetFilter={() => undefined}
                 visible
             />
         );

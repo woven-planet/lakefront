@@ -13,10 +13,11 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import FilterValueChips from './FilterValueChips';
 import { getFilterCount } from './filterSectionHeaderUtil';
+import { FilterChipsContainer } from 'src/components/Filter/filterStyles';
 
 const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     activeSection = '',
-    clearFilter,
+    resetFilter,
     filter,
     name,
     onClick,
@@ -26,7 +27,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
 }) => {
     const handleClear: MouseEventHandler<SVGElement> = (event) => {
         event.stopPropagation();
-        clearFilter(name);
+        resetFilter(name);
     };
 
     const filterApplied = !filter.isDefaultFilterValue(value);
@@ -51,7 +52,9 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
             </FilterSectionHeaderContainer>
             {
                 children ?? (
-                    <FilterValueChips label={filter.label} name={''} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    <FilterChipsContainer>
+                        <FilterValueChips label={filter.label} name={''} visible={showChips} value={filter.getFilterSectionLabel(value)} />
+                    </FilterChipsContainer>
                 )
             }
         </ThemeProvider>

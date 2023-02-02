@@ -4,17 +4,17 @@ import { FilterBarProps, FilterModule } from 'src/components/Filter/types';
 import { FilterBarContainer } from './filterBarStyles';
 
 interface FilterItemProps {
-    clearFilter?(name: string): void;
+    resetFilter?(name: string): void;
     name: string;
     item: FilterModule<any>;
     value: any;
 }
 
 export const FilterItem: FC<FilterItemProps> = (props) => {
-    const { name, clearFilter, item, value } = props;
+    const { name, resetFilter, item, value } = props;
 
     const handleCloseIcon = () => {
-      clearFilter ? clearFilter(name) : undefined;
+        resetFilter ? resetFilter(name) : undefined;
     };
 
     if (item.isDefaultFilterValue(value)) {
@@ -32,7 +32,7 @@ export const FilterItem: FC<FilterItemProps> = (props) => {
 };
 
 const FilterBar: FC<FilterBarProps> = (props) => {
-    const { filters, filterValues, clearFilter, clearAllFilter } = props;
+    const { filters, filterValues, resetFilter, resetAllFilters } = props;
     const [isMinimized, setMinimized] = useState(false);
     const filterBarRef = useRef<HTMLDivElement>(null);
 
@@ -61,15 +61,15 @@ const FilterBar: FC<FilterBarProps> = (props) => {
                             name={key}
                             item={filters[key]}
                             value={filterValues[key]}
-                            clearFilter={clearFilter}
+                            resetFilter={resetFilter}
                         />
                     ))}
                 </>
             )}
 
             {filterCount > 0 && (
-                <span onClick={clearAllFilter} className="clearAll">
-                    Clear All
+                <span onClick={resetAllFilters} className="resetAll">
+                    Reset All
                 </span>
             )}
         </FilterBarContainer>

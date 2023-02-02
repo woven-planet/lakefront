@@ -6,12 +6,18 @@ import { Filter } from '../Filter';
 import { FILTERS, LOCATION } from './filter.data';
 import { useFilter } from '../util';
 
+const mockUseFilter = jest.fn(useFilter);
+
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 afterAll(cleanup);
 
 const TestComponent = (props = {}) => {
     const location = { ...LOCATION };
     const updateHistory = jest.fn;
-    const filterHooks = useFilter(FILTERS, false, location, updateHistory);
+    const filterHooks = mockUseFilter(FILTERS, false, location, updateHistory);
 
     return <Filter filterHooks={filterHooks} location={location} updateHistory={updateHistory} {...props} />;
 };
@@ -78,7 +84,7 @@ describe('Filter', () => {
         const TestComponentWithCallback = () => {
             const location = { ...LOCATION };
             const updateHistory = jest.fn;
-            const filterHooks = useFilter(FILTERS, false, location, updateHistory);
+            const filterHooks = mockUseFilter(FILTERS, false, location, updateHistory);
 
             return (
                 <Filter
@@ -229,4 +235,39 @@ describe('Filter', () => {
         });
     });
 
+    describe('reset filters functionality', () => {
+        it('displays a "Reset Filters" control in container after filter chips container', () => {
+            const { container } = render(
+                <TestComponent isJSONInputAllowed FilterBar={FilterBar} hideFilterBar={false} />
+            );
+
+            const filterChipsContainer = container.querySelector('.filter-chips-container');
+            const controlsContainer = filterChipsContainer.nextElementSibling;
+
+            within(controlsContainer).getByText('Reset Filters');
+        });
+
+        it('calls filter hook resetFilters when button is clicked', () => {
+            const resetAllFilters = jest.fn();
+            mockUseFilter.mockReturnValueOnce({
+                filters: {},
+                filterUrl: '',
+                filterPostBody: {},
+                filterValues: {},
+                updateFilter: () => null,
+                resetFilter: () => null,
+                resetAllFilters,
+                applyApiPostBody: () => null,
+                initializePresetValues: () => null
+            });
+            const { getByText } = render(
+                <TestComponent isJSONInputAllowed FilterBar={FilterBar} hideFilterBar={false} />
+            );
+
+            expect(resetAllFilters).not.toHaveBeenCalled();
+
+            fireEvent.click(getByText('Reset Filters'));
+            expect(resetAllFilters).toHaveBeenCalled();
+        });
+    });
 });

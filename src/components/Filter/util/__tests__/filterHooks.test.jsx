@@ -79,7 +79,7 @@ describe('useFilter', () => {
         expect(filterPostBody).toEqual({});
     });
 
-    it('clear all filters works', () => {
+    it('reset all filters works', () => {
         const { result } = renderHook(() => useFilter(FILTERS, false, LOCATION, () => null));
 
         act(() => {
@@ -96,7 +96,7 @@ describe('useFilter', () => {
         });
 
         act(() => {
-            result.current.clearAllFilters();
+            result.current.resetAllFilters();
         });
 
         act(() => {
@@ -105,7 +105,7 @@ describe('useFilter', () => {
         });
     });
 
-    it('clear all filter sets default value.', () => {
+    it('reset all filter sets default value.', () => {
         const FILTERS_WITH_DEFAULT_PHRASES = {
             ...FILTERS,
             phrases: {
@@ -131,7 +131,7 @@ describe('useFilter', () => {
         });
 
         act(() => {
-            result.current.clearAllFilters();
+            result.current.resetAllFilters();
         });
 
         act(() => {
@@ -149,7 +149,7 @@ describe('useFilter', () => {
             }
         };
 
-        it('should not change filter value when calling clearFilter', () => {
+        it('should not change filter value when calling resetFilter', () => {
             const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, () => null));
 
             act(() => {
@@ -158,12 +158,12 @@ describe('useFilter', () => {
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
             act(() => {
-                result.current.clearFilter('phrases');
+                result.current.resetFilter('phrases');
             });
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
         });
 
-        it('should keep existing filter value for required filter only when calling clearAllFilters', () => {
+        it('should keep existing filter value for required filter only when calling resetAllFilters', () => {
             const { result } = renderHook(() => useFilter(FILTERS_WITH_REQUIRED_PHRASES, false, LOCATION, () => null));
 
             act(() => {
@@ -177,7 +177,7 @@ describe('useFilter', () => {
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
             act(() => {
-                result.current.clearAllFilters();
+                result.current.resetAllFilters();
             });
 
             // keywords is cleared/reset, but phrases is not changed
@@ -206,7 +206,7 @@ describe('useFilter', () => {
     });
 
     describe('when a filter has the required property set to false', () => {
-        it('clears filter name when calling clearFilter with no passed value', () => {
+        it('resets filter name when calling resetFilter with no passed value', () => {
             const FILTERS_WITH_NOT_REQUIRED_PHRASES = {
                 ...FILTERS,
                 phrases: {
@@ -222,7 +222,7 @@ describe('useFilter', () => {
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
             act(() => {
-                result.current.clearFilter('phrases');
+                result.current.resetFilter('phrases');
             });
             expect(result.current.filterValues.phrases).toBe('');
         });
@@ -244,7 +244,7 @@ describe('useFilter', () => {
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
             act(() => {
-                result.current.clearFilter('phrases', 'phrases');
+                result.current.resetFilter('phrases', 'phrases');
             });
             expect(result.current.filterValues.phrases).toBe('phrases');
         });
@@ -266,7 +266,7 @@ describe('useFilter', () => {
             expect(result.current.filterValues.phrases).toBe(PHRASE_DEMO);
 
             act(() => {
-                result.current.clearFilter('phrases', 'phrases');
+                result.current.resetFilter('phrases', 'phrases');
             });
             expect(result.current.filterValues.phrases).toBe('');
         });
