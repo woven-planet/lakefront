@@ -102,7 +102,7 @@ const DoubleMultiSelectFilter = (
         />
     ),
     renderSectionHeader: (sectionHeaderParams) => {
-        const { badgeThreshold, value } = sectionHeaderParams;
+        const { badgeThreshold, value, filter } = sectionHeaderParams;
         const {
             firstSelect: { label: firstLabel },
             secondSelect: { label: secondLabel }
@@ -122,9 +122,16 @@ const DoubleMultiSelectFilter = (
                 <div>{secondLength}</div>
             </FilterBadge>
         );
+        const hideBadgeOverride = () => 0;
 
         return (
-            <FilterSectionHeader {...sectionHeaderParams}>
+            <FilterSectionHeader
+                {...sectionHeaderParams}
+                filter={{
+                    ...filter,
+                    getFilterCount: hideBadgeOverride
+                }}
+            >
                 {
                     firstVisible && (
                         <FilterSection>

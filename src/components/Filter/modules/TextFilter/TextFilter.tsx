@@ -40,6 +40,9 @@ const TextFilter = (
     renderComponent: ({ name, value, update }) => (
         <TextSearch key={name} onChange={update} value={value} type={textFilterOptions.type} />
     ),
+    getFilterCount(value?: string): number {
+        return value ? 1 : 0;
+    },
     ...textFilterOverrides,
     description,
     label

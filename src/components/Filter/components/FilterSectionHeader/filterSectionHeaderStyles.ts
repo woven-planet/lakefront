@@ -68,12 +68,14 @@ export const FilterBadge = styled.div(({ theme }) => ({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 12,
-    marginLeft: 6,
+    margin: '0 6px',
     width: 24,
     height: 24,
     borderRadius: 14,
     border: `solid 1px ${theme?.colors?.mercury}`,
-    backgroundColor: theme?.colors?.akoya
+    backgroundColor: theme?.colors?.akoya,
+    minWidth: 24,
+    minHeight: 24,
 }));
 
 export const FilterDetails = styled.div({

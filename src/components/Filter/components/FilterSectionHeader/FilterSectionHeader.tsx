@@ -40,7 +40,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
                 <FilterDetails>
                     {filter.label}
                     {!showChips && (
-                        <FilterBadge>
+                        <FilterBadge className='filter-badge' aria-details='count of applied filters'>
                             <div>{filterCount}</div>
                         </FilterBadge>
                     )}

@@ -150,6 +150,22 @@ describe('RadioFilter', () => {
         });
     });
 
+    describe('getFilterCount', () => {
+        const { getFilterCount } = RadioFilter({ options: RADIO_FILTER_OPTIONS }, {});
+
+        it('returns 0 when the filter value is blank', () => {
+            expect(getFilterCount('')).toBe(0);
+        });
+
+        it('returns 0 when the filter value is undefined', () => {
+            expect(getFilterCount()).toBe(0);
+        });
+
+        it('returns 1 when the filter has a value', () => {
+            expect(getFilterCount('a')).toBe(1);
+        });
+    });
+
     describe('radioFilterOptions', () => {
         const filterModuleKeys = [
             'label',

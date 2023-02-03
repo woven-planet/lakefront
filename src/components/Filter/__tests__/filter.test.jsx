@@ -1,10 +1,9 @@
 import React from 'react';
-
 import { render, fireEvent, cleanup, within, getAllByText } from '@testing-library/react';
-
 import { Filter } from '../Filter';
 import { FILTERS, LOCATION } from './filter.data';
 import { useFilter } from '../util';
+import * as FilterSectionHeader from 'src/components/Filter/components/FilterSectionHeader';
 
 const mockUseFilter = jest.fn(useFilter);
 
@@ -13,6 +12,11 @@ beforeEach(() => {
 });
 
 afterAll(cleanup);
+
+const mockBadges = () => {
+    jest.spyOn(FilterSectionHeader, 'default')
+        .mockImplementation(({ badgeThreshold }) => <div>badge: {badgeThreshold}</div>);
+};
 
 const TestComponent = (props = {}) => {
     const location = { ...LOCATION };
@@ -268,6 +272,26 @@ describe('Filter', () => {
 
             fireEvent.click(getByText('Reset Filters'));
             expect(resetAllFilters).toHaveBeenCalled();
+        });
+    });
+
+    describe('badge display', () => {
+        it('defaults to 1 as the threshold if left undefined', () => {
+            mockBadges();
+            const { getAllByText } = render(
+                <TestComponent FilterBar={FilterBar} />
+            );
+
+            expect(getAllByText('badge: 1')).toHaveLength(2);
+        });
+
+        it('makes use of provided badge threshold', () => {
+            mockBadges();
+            const { getAllByText } = render(
+                <TestComponent FilterBar={FilterBar} badgeThreshold={4} />
+            );
+
+            expect(getAllByText('badge: 4')).toHaveLength(2);
         });
     });
 });
