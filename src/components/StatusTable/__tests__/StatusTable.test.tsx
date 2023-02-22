@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import StatusTable from '../StatusTable';
 import StatusRow, { Status } from '../StatusRow';
 import StatusCellBadge from '../StatusCellBadge';
+import { createRoot } from 'react-dom/client';
 
 const mockTableHeaders = [
     {
@@ -18,7 +18,11 @@ const mockTableHeaders = [
 
 describe('<StatusTable />', function () {
     it('should render properly', () => {
-        const { container } = render(
+        // const container = document.getElementById('root' || 'docs-root');
+        // const container = document.getElementById('app-root-dir');
+        const container = document.getElementById('app');
+        const root = createRoot(container!);
+        root.render(
             <StatusTable headers={mockTableHeaders} handleSort={jest.fn()}>
                 <StatusRow status={Status.RUNNING}>
                     <td>First</td>

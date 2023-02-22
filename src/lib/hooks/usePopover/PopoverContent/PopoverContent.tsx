@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, ReactNode, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PopoverContentProps {
@@ -7,6 +7,10 @@ interface PopoverContentProps {
      * content will be rendered in the closest parent node.
      */
     portal: HTMLElement | null;
+    /**
+     * When provided, these children will be memoized and render as the content.
+     */
+    children?: ReactNode;
     /**
      * This is an array of dependency values to check when determining
      * if the memoized content should be recalculated. If none of the values

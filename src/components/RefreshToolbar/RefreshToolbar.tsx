@@ -18,6 +18,10 @@ export interface RefreshToolbarProps {
      */
     className?: string;
     /**
+     * The additional content to display if desired.
+     */
+    children?: ReactNode;
+    /**
      * This is to set to false if you want to apply your own container styling (with className prop or a wrapper)
      */
     standalone?: boolean;

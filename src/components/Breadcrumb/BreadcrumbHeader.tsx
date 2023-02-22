@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import Breadcrumb, { RouteProp } from './Breadcrumb';
 import { Container, Content } from './breadcrumbStyles';
@@ -22,6 +22,10 @@ export interface BreadcrumbHeaderProps {
      * If set to true, this will not display any routes. 
      */
     hideRoutes?: boolean;
+    /**
+     * Children to display as the content.
+     */
+    children?: ReactNode
 }
 
 /**

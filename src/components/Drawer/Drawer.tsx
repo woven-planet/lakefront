@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { DrawerContainer } from './drawerStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
@@ -6,6 +6,10 @@ import Button from 'src/components/Button/Button';
 import { ReactComponent as CloseIcon } from './assets/closeIcon.svg';
 
 export interface DrawerProps {
+    /**
+     * Children to display below the containers close button.
+     */
+    children?: ReactNode;
     /**
      * This is the initial display state of the component. When true, the drawer will be displayed.
      * When false, the drawer will be hidden.
@@ -15,6 +19,7 @@ export interface DrawerProps {
      * This is an action to run when the drawer is closed.
      */
     onClose(): void;
+
     /**
      * This is the width for the drawer.
      */
