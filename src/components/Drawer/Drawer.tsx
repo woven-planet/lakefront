@@ -19,7 +19,6 @@ export interface DrawerProps {
      * This is an action to run when the drawer is closed.
      */
     onClose(): void;
-
     /**
      * This is the width for the drawer.
      */

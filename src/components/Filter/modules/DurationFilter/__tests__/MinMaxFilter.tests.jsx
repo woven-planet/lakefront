@@ -30,7 +30,6 @@ describe('<MinMaxInput />', () => {
         // negative number does not work
         fireEvent.change(minInput, { target: { value: '-7' } });
         await waitFor(() => expect(onChangeCallback).toHaveBeenCalledTimes(7));
-
         expect(onChangeCallback.mock.calls[6][0]).toBeNull();
     });
 
