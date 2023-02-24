@@ -1,14 +1,10 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor, render } from '@testing-library/react';
 import MinMaxInput from '../MinMaxInput';
-import { createRoot } from 'react-dom/client';
-import { render } from 'react-dom';
 
 describe('<MinMaxInput />', () => {
     it('number entry works', async () => {
         const onChangeCallback = jest.fn();
-        const container = document.getElementById('app');
-        const root = createRoot(container);
-        root.render(<MinMaxInput value={{}} onChange={onChangeCallback} allowNegativeInput={false} />);
+        render(<MinMaxInput value={{}} onChange={onChangeCallback} allowNegativeInput={false} />);
 
         const minInput = screen.getByLabelText('min-input');
         fireEvent.change(minInput, { target: { value: '10' } });
@@ -33,15 +29,14 @@ describe('<MinMaxInput />', () => {
 
         // negative number does not work
         fireEvent.change(minInput, { target: { value: '-7' } });
-        await waitFor(() => expect(onChangeCallback).toHaveBeenCalledTimes(6));
+        await waitFor(() => expect(onChangeCallback).toHaveBeenCalledTimes(7));
+
         expect(onChangeCallback.mock.calls[6][0]).toBeNull();
     });
 
     it('number checking works', async () => {
         const onChangeCallback = jest.fn();
-        const container = document.getElementById('app');
-        const root = createRoot(container);
-        root.render(<MinMaxInput value={{ min: 10, max: 20 }} onChange={onChangeCallback} allowNegativeInput={true} />);
+        render(<MinMaxInput value={{ min: 10, max: 20 }} onChange={onChangeCallback} allowNegativeInput={true} />);
 
         const minInput = screen.getByLabelText('min-input');
 
@@ -60,7 +55,7 @@ describe('<MinMaxInput />', () => {
         // forcing a lower max number will not work
         const maxInput = screen.getByLabelText('max-input');
         fireEvent.change(maxInput, { target: { value: '5' } });
-        await waitFor(() => expect(onChangeCallback).toHaveBeenCalledTimes(2));
+        await waitFor(() => expect(onChangeCallback).toHaveBeenCalledTimes(3));
         expect(onChangeCallback.mock.calls[2][0].max).toBeUndefined();
     });
 });

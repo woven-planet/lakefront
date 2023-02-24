@@ -32,14 +32,14 @@ import { theme } from '@toyota-research-institute/lakefront';
 Here is a quick example to get you started, **it's all you need**:
 
 ```jsx
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Button } from '@toyota-research-institute/lakefront';
 
 function App() {
     return <Button>Hello World</Button>;
 }
 
-ReactDOM.render(<App />, document.querySelector('#app'));
+createRoot.render(<App />, document.querySelector('#app'));
 
 ```
 ## Contributing
