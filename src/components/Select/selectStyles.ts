@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { lightenDarkenColor } from 'src/styles/stylesUtil';
-import { GroupTypeBase, Styles } from 'react-select';
 import { Theme } from '@emotion/react';
 import { SelectOption } from 'src/types/global';
 import { ReactComponent as baselineExpandSvg } from './baseline-expand_more-24px.svg';
 import theme from 'src/styles/theme';
+import { GetStyles, GroupBase } from 'react-select/dist/declarations/src/types';
 
 export const SelectStyles = styled.div({
     select: {
@@ -21,8 +21,8 @@ interface SelectState {
     theme: Theme;
 }
 
-export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, GroupTypeBase<SelectOption<any>>>> = {
-    control: (defaultStyles, state) => ({
+export const SELECT_OVERLAY_STYLES: Partial<GetStyles<SelectOption<any>, true, GroupBase<SelectOption<any>>>> = {
+    control: (defaultStyles: SelectState, state: SelectState) => ({
         ...defaultStyles,
         flexWrap: undefined,
         display: 'flex',
@@ -50,11 +50,11 @@ export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, Grou
             outline: 0
         }
     }),
-    valueContainer: (defaultStyles) => ({
+    valueContainer: (defaultStyles: SelectState) => ({
         ...defaultStyles,
         padding: '2px 4px'
     }),
-    menu: (defaultStyles, state) => ({
+    menu: (defaultStyles: SelectState, state: SelectState) => ({
         ...defaultStyles,
         backgroundColor: state.theme.colors.white,
         border: `1px solid ${state.theme?.colors?.cinder}`,
@@ -64,13 +64,13 @@ export const SELECT_OVERLAY_STYLES: Partial<Styles<SelectOption<any>, true, Grou
         marginTop: 8,
         zIndex: 9999
     }),
-    menuList: (defaultStyles) => ({
+    menuList: (defaultStyles: SelectState) => ({
         ...defaultStyles,
         overflowY: 'auto',
         overflowX: 'hidden',
         maxHeight: undefined
     }),
-    option: (defaultStyles, state) => ({
+    option: (defaultStyles: SelectState, state: SelectState) => ({
         ...defaultStyles,
         alignItems: 'center',
         color: state.selectProps.isDisabled ?

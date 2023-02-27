@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import Select, { InputProps, OptionsType } from 'react-select';
+import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { SelectOption } from 'src/types/global';
 import { MULTI_SELECT_STYLES } from './multiSelectStyles';
@@ -8,6 +8,8 @@ import { createUniqueOptions, getUniqueOptions, parseItems } from './multiSelect
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import MultiValueInput from './MultiValueInput';
+import { GroupBase, OnChangeValue } from 'react-select/dist/declarations/src/types';
+import { SelectComponents } from 'react-select/dist/declarations/src/components';
 
 export type MultiSelectOption = SelectOption<string>;
 
@@ -51,7 +53,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
         };
     }
 
-    handleChange = (selectedOptions: MultiSelectOption[] | OptionsType<MultiSelectOption> | null) => {
+    handleChange = (selectedOptions: OnChangeValue<MultiSelectOption, true> | null) => {
         const items = selectedOptions ? selectedOptions.map((option: MultiSelectOption) => option.value) : [];
         this.setState({ selected: items });
         this.props.selectItem(items);
@@ -103,9 +105,9 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
             }
             : {};
 
-        const parseMultiValueComponents = delimiter
+        const parseMultiValueComponents: Partial<SelectComponents<unknown, true, GroupBase<unknown>>> | undefined = delimiter
             ? {
-                Input: (props: Omit<InputProps, 'theme'>) => (
+                Input: (props) => (
                     <MultiValueInput {...props} handleCreate={this.handleCreate} />
                 )
             }
@@ -124,13 +126,14 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         isMulti
                         name={title}
                         placeholder={placeholder}
-                        onChange={this.handleChange}
+                        onChange={(value) => this.handleChange(value as MultiSelectOption[])}
                         onCreateOption={this.handleCreate}
                         options={this.state.items}
                         styles={MULTI_SELECT_STYLES}
                         theme={(defaultTheme) => ({
                             ...defaultTheme,
                             colors: {
+                                ...defaultTheme.colors,
                                 ...theme.colors,
                                 primary: theme.colors.white,
                                 primary25: theme.colors.mercury,
@@ -151,6 +154,7 @@ export class MultiSelect extends Component<MultiSelectProps, MultiSelectState> {
                         theme={(defaultTheme) => ({
                             ...defaultTheme,
                             colors: {
+                                ...defaultTheme.colors,
                                 ...theme.colors,
                                 primary: theme.colors.white,
                                 primary25: theme.colors.mercury,

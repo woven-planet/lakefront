@@ -223,7 +223,7 @@ describe('MultiSelectFilter', () => {
         it('returns the expected component', () => {
             const update = () => null;
             const { getByRole, getByText } = render(<div>{renderComponent({ name: 'name', value: ['colors'], update })}</div>);
-            getByRole('textbox');
+            getByRole('combobox');
             getByText('colors');
         });
     });
@@ -284,7 +284,7 @@ describe('MultiSelectFilter', () => {
             const update = () => null;
             const { queryByRole, queryByText } = render(<div>{renderComponent({ name: 'name', value: ['colors'], update })}</div>);
 
-            expect(queryByRole('textbox')).not.toBeInTheDocument();
+            expect(queryByRole('combobox')).not.toBeInTheDocument();
             expect(queryByText('colors')).not.toBeInTheDocument();
         });
     });

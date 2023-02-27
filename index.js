@@ -26,7 +26,7 @@ function readReadMe() {
     } else {
         generateReadMe(true);
     }
-};
+}
 
 function generateReadMe(rightColumn) {
     fs.readFile(MUSTACHE_MAIN_DIR, (err, data) => {

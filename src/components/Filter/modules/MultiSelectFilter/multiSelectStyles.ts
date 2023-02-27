@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { GroupTypeBase, Styles } from 'react-select';
 import { MultiSelectOption } from './MultiSelect';
 import { lightenDarkenColor } from 'src/styles/stylesUtil';
 import TextArea from 'src/components/TextArea/TextArea';
+import { GetStyles, GroupBase } from 'react-select/dist/declarations/src/types';
 
 const DARKEN_LEAST = -10;
 
-export const MULTI_SELECT_STYLES: Partial<Styles<MultiSelectOption, true, GroupTypeBase<MultiSelectOption>>> = {
-    control: (styles, state) => ({
+export const MULTI_SELECT_STYLES: Partial<GetStyles<MultiSelectOption, true, GroupBase<MultiSelectOption>>> = {
+    control: (styles: any, state: { theme: { colors: { mercury: any; storm: any; white: string | undefined; }; }; isFocused: any; }) => ({
         ...styles,
         backgroundColor: '#ffffff',
         borderRadius: 4,
@@ -23,14 +23,14 @@ export const MULTI_SELECT_STYLES: Partial<Styles<MultiSelectOption, true, GroupT
             outline: 0
         }
     }),
-    multiValue: (styles, state) => ({
+    multiValue: (styles: any, state: { theme: { colors: { selago: string | undefined; }; }; }) => ({
         ...styles,
         backgroundColor: state.theme.colors.selago,
         ':hover': {
             backgroundColor: lightenDarkenColor(state.theme.colors.selago, DARKEN_LEAST)
         }
     }),
-    option: (styles, state) => ({
+    option: (styles: any, state: { isFocused: any; theme: { colors: { selago: any; }; }; }) => ({
         ...styles,
         backgroundColor: state.isFocused ? state.theme.colors.selago : '#ffffff'
     })

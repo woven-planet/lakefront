@@ -31,7 +31,7 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.mouseDown(getByRole('combobox'));
 
         for (const option of MULTI_SELECT_FILTER_OPTIONS) {
             getByText(option.label);
@@ -52,14 +52,14 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.mouseDown(getByRole('combobox'));
         expect(queryByText(newOption)).not.toBeInTheDocument();
 
-        fireEvent.change(getByRole('textbox'), { target: { value: newOption } });
-        fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
+        fireEvent.change(getByRole('combobox'), { target: { value: newOption } });
+        fireEvent.keyDown(getByRole('combobox'), { key: 'Enter', code: 'Enter' });
         // Make sure to clear input text
-        fireEvent.change(getByRole('textbox'), { target: { value: '' } });
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.change(getByRole('combobox'), { target: { value: '' } });
+        fireEvent.mouseDown(getByRole('combobox'));
 
         expect(queryByText('option Create "newOption", selected.'));
     });
@@ -77,14 +77,14 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.mouseDown(getByRole('combobox'));
         expect(queryByText(newOption)).not.toBeInTheDocument();
 
-        fireEvent.change(getByRole('textbox'), { target: { value: newOption } });
-        fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
+        fireEvent.change(getByRole('combobox'), { target: { value: newOption } });
+        fireEvent.keyDown(getByRole('combobox'), { key: 'Enter', code: 'Enter' });
         // Make sure to clear input text
-        fireEvent.change(getByRole('textbox'), { target: { value: '' } });
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.change(getByRole('combobox'), { target: { value: '' } });
+        fireEvent.mouseDown(getByRole('combobox'));
 
         expect(queryByText(newOption)).not.toBeInTheDocument();
     });
@@ -103,8 +103,8 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 'text' } });
-        fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
+        fireEvent.change(getByRole('combobox'), { target: { value: 'text' } });
+        fireEvent.keyDown(getByRole('combobox'), { key: 'Enter', code: 'Enter' });
 
         expect(handleCreateItem).toHaveBeenCalled();
     });
@@ -123,8 +123,8 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 'text' } });
-        fireEvent.keyDown(getByRole('textbox'), { key: 'Enter', code: 'Enter' });
+        fireEvent.change(getByRole('combobox'), { target: { value: 'text' } });
+        fireEvent.keyDown(getByRole('combobox'), { key: 'Enter', code: 'Enter' });
 
         expect(selectItem).toHaveBeenCalledWith(['text']);
     });
@@ -144,7 +144,7 @@ describe('MultiSelect', () => {
             />
         );
 
-        fireEvent.mouseDown(getByRole('textbox'));
+        fireEvent.mouseDown(getByRole('combobox'));
 
         for (const option of MULTI_SELECT_FILTER_OPTIONS) {
             queryByText(option.label);

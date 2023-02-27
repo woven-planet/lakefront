@@ -37,9 +37,9 @@
     "mustache": "^4.2.0",
     "query-string": "^7.0.0",
     "ramda": "^0.27.1",
-    "react-router-dom": "^5.1.2",
-    "react-select": "^4.3.1",
-    "react-table": "^7.7.0",
+    "react-router-dom": "^6.8.1",
+    "react-select": "^5.7.0",
+    "react-table": "^7.8.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -71,8 +71,8 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.1.0",
-    "@types/react-select": "^4.0.17",
-    "@types/react-table": "^7.7.9",
+    "@types/react-select": "^5.0.1",
+    "@types/react-table": "^7.7.14",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
