@@ -28,9 +28,7 @@ exports[`<RefreshToolbar /> renders button as correctly-styled icon 1`] = `
       />
       <div
         class="css-ybfxeh"
-      >
-        
-      </div>
+      />
     </div>
   </div>
 </div>
@@ -64,9 +62,7 @@ exports[`<RefreshToolbar /> renders tooltip on hover 1`] = `
       />
       <div
         class="css-ybfxeh"
-      >
-        
-      </div>
+      />
     </div>
   </div>
 </div>

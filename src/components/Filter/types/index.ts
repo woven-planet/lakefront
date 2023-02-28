@@ -1,4 +1,4 @@
-import { Dispatch, FC, MouseEventHandler, ReactElement, SetStateAction } from 'react';
+import { Dispatch, FC, MouseEventHandler, ReactElement, ReactNode, SetStateAction } from 'react';
 import { MultiSelectOption } from 'src/components/Filter/modules/MultiSelectFilter/MultiSelect';
 import { JSONObject } from 'src/types/global';
 import { SelectOption } from 'src/components/Select/Select';
@@ -175,6 +175,7 @@ export interface FilterSectionHeaderProps {
     onClick?: MouseEventHandler<HTMLHeadingElement>;
     resetFilter: (name: string) => void;
     badgeThreshold: number;
+    children?: ReactNode;
 }
 
 /**
@@ -290,6 +291,10 @@ export interface FilterComponentProps {
      * the end user to edit the filter JSON parameters and values.
      */
     FilterJSONInput?: FC<FilterJSONInputProps>;
+    /**
+     * The children to display at the bottom of the filter container.
+     */
+    children?: ReactNode
     /**
      * Additional query params that can be provided separate from
      * the current filters.

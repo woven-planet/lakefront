@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementType, ReactElement } from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, ReactNode } from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { ReactComponent as Add } from './assets/add.svg';
 import { ReactComponent as Delete } from './assets/delete.svg';
@@ -63,6 +63,10 @@ export interface IconComponentProps {
      * (Future) When a string, an icon lookup/conversion will be attempted.
      */
     icon?: Icon;
+    /**
+     * When provided will display next to icon.
+     */
+    children?: ReactNode;
     /**
      * When icon is defined, the position can be specified via the iconPosition prop.
      */

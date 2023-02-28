@@ -134,7 +134,7 @@ const MaskableImage: FC<MaskableImageProps> = ({
         onSelect && onSelect(selectedState);
     };
 
-    const containerRef = useCallback((node) => {
+    const containerRef = useCallback((node: { getBoundingClientRect: () => { height: number; width: number; }; }) => {
         if (node && boundingBoxTags) {
             const { height, width } = node.getBoundingClientRect();
             setBoundingBoxDimensions({ height, width });

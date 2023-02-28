@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import { colors } from 'react-select/src/theme';
-import { theme } from 'src/index';
-import lakefrontColors from '../../styles/lakefrontColors';
+import lakefrontColors from 'src/styles/lakefrontColors';
 
 export const ProgressBarContainer = styled.div({
     minHeight: '120px'

@@ -1,7 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { ReactNode, RefCallback, useCallback, useState } from 'react';
 import { ItemGridContainer } from './itemGridStyles';
 
 export interface ItemGridProps {
+    /**
+     * The children to render inside the grid container.
+     */
+    children?: ReactNode;
     /**
      * This is the max number of columns that populates in a row.
      */
@@ -46,7 +50,7 @@ const ItemGrid: React.FC<ItemGridProps> = ({
     const { rowGap = 0, columnGap = 0 } = gridGap;
     const [columnWidth, setColumnWidth] = useState<number>(0);
 
-    const gridContainerRef = useCallback(node => {
+    const gridContainerRef: RefCallback<any> = useCallback((node: { getBoundingClientRect: () => { width: number; }; }) => {
         if (node && shouldRecalculateSize) {
             const { width } = node.getBoundingClientRect();
 

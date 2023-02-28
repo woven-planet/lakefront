@@ -18,6 +18,10 @@ export interface CardProps {
     */
     description?: string;
     /**
+     * Display content as a child node.
+     */
+    children?: ReactNode;
+    /**
     * This takes in any ReactNode to be displayed in the main content area of the card.
     */
     content?: ReactNode;

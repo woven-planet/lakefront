@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import Select from '../Select';
-import { select } from 'd3-selection';
 
 const options = [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }];
 const onChangeCallback = jest.fn();
