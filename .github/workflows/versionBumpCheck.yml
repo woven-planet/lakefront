@@ -2,7 +2,7 @@ name: Version Bump Check
 # Description:
   # In this workflow we check for keywords in commit message to determine if
   # a specific version bump is necessary. This check runs on every push and can
-  # perform version updates before and during a pull request.
+  # perform version updates before and during a pull request. 
 
 on: push
 
