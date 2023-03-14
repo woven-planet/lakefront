@@ -22,7 +22,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          bump-policy: 'last-commit'
           skip-tag:  'true'
           minor-wording:  'minor,Minor,MINOR,add,Adds,ADD,ADDS,new,New,NEW,feat,Feat,FEAT,feature,Feature,FEATURE,features,Features,FEATURES'
           major-wording:  'major,MAJOR,cut-major,Cut-Major,break,Break,BREAK,breaking,Breaking,BREAKING'
