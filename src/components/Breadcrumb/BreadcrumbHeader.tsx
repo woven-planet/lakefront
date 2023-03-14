@@ -1,5 +1,4 @@
 import { FC, ReactNode, RefAttributes } from 'react';
-
 import Breadcrumb, { RouteProp } from './Breadcrumb';
 import { Container, Content } from './breadcrumbStyles';
 import { LinkProps } from 'react-router-dom';
