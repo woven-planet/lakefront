@@ -123,6 +123,9 @@ export * from './components/Toggle';
 export { default as TypeaheadSearch } from './components/TypeaheadSearch';
 export * from './components/TypeaheadSearch';
 
+export { default as TextField } from './material-components/TextField';
+export * from './material-components/TextField';
+
 // Theme
 export { default as colors } from './styles/lakefrontColors';
 export { default as theme } from './styles/theme';
