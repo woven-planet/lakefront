@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import { SelectProps } from './Select';
-import Select, { ValueType } from 'react-select';
+import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
 const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, ...rest }) => {
@@ -33,6 +33,7 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
             theme={(defaultTheme) => ({
                 ...defaultTheme,
                 colors: {
+                    ...defaultTheme.colors,
                     ...theme.colors,
                     primary: theme.colors.white,
                     primary25: disabled ? theme.colors.white : theme.colors.mercury

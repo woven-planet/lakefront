@@ -1,5 +1,4 @@
-import { act, render } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, render, renderHook } from '@testing-library/react';
 import useDebounce from '../useDebounce';
 
 jest.useFakeTimers();
@@ -14,7 +13,7 @@ describe('useDebounce', () => {
     it('should initialize with the provided value', () => {
         const { result } = renderHook(() => useDebounce('a', 150));
     
-        expect(result.current).toBe('a')
+        expect(result.current).toBe('a');
     });
 
     it('should return first provided value if delay has not been exceeded', () => {
@@ -28,7 +27,7 @@ describe('useDebounce', () => {
         
         act(() => {
             jest.advanceTimersByTime(100);
-        })
+        });
 
         rerender(
             <TestComponent value='b' />
@@ -51,7 +50,7 @@ describe('useDebounce', () => {
 
         rerender(
             <TestComponent value='b' />
-        )
+        );
 
         // still renders with initial value due to debounce delay
         expect(queryByText('a')).toBeInTheDocument();
@@ -59,7 +58,7 @@ describe('useDebounce', () => {
         
         act(() => {
             jest.advanceTimersByTime(150);
-        })
+        });
 
         // new value takes effect after delay exceeded
         expect(queryByText('a')).not.toBeInTheDocument();

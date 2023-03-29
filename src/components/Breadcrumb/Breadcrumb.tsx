@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { FC, RefAttributes } from 'react';
+import { LinkProps, Link as ReactRouterDomLink } from 'react-router-dom';
 
 import { BreadCrumbStyle, Current, Divider } from './breadcrumbStyles';
 import { ThemeProvider } from '@emotion/react';
@@ -22,13 +22,18 @@ export interface BreadcrumbProps {
      *  You can also set the url for the breadcrumb to navigate to the appropriate link.
      */
     routes: RouteProp[];
+    /**
+     * This allows you to pass your own Link connected to your application router.
+     * This is most useful for applications using React-router v6 and above.
+     */
+    Link?: FC<LinkProps & RefAttributes<HTMLAnchorElement>>;
 }
 
 /**
  *  The Breadcrumb Component is used to render the breadcrumb. The Name of the Breadcrumb is displayed.
  *  The url can be used to link to the appropriate link.
  */
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ routes }) => {
+const Breadcrumb: FC<BreadcrumbProps> = ({ routes, Link = ReactRouterDomLink }) => {
 
     return (
         <ThemeProvider theme={theme}>

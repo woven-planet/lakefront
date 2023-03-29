@@ -1,9 +1,13 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledHeader } from './pageStyles';
 import theme from 'src/styles/theme';
 
 interface HeaderProps {
+    /**
+     * Children to display within header container.
+     */
+    children?: ReactNode;
     /**
      * The classes to pass to the header.
      */

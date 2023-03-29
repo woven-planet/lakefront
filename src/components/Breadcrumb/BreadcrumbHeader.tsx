@@ -1,7 +1,7 @@
-import React from 'react';
-
+import { FC, ReactNode, RefAttributes } from 'react';
 import Breadcrumb, { RouteProp } from './Breadcrumb';
 import { Container, Content } from './breadcrumbStyles';
+import { LinkProps } from 'react-router-dom';
 
 export interface BreadcrumbHeaderProps {
     /**
@@ -22,6 +22,15 @@ export interface BreadcrumbHeaderProps {
      * If set to true, this will not display any routes. 
      */
     hideRoutes?: boolean;
+    /**
+     * Children to display as the content.
+     */
+    children?: ReactNode;
+    /**
+     * This allows you to pass your own Link connected to your application router.
+     * This is most useful for applications using React-router v6 and above.
+     */
+    Link?: FC<LinkProps & RefAttributes<HTMLAnchorElement>>;
 }
 
 /**
@@ -31,11 +40,11 @@ export interface BreadcrumbHeaderProps {
  * prop or a wrapper). Set [standalone] to true to add full-width behavior with margins and
  * a bottom border (to function as a standalone header). Defaults to true.
  */
-const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ routes, className,
-    standalone = true, hideRoutes = false, children }) => {
+const BreadcrumbHeader: FC<BreadcrumbHeaderProps> = ({ routes, className,
+    standalone = true, hideRoutes = false, children, Link }) => {
     return (
         <Container className={className} standalone={standalone}>
-            <Breadcrumb routes={hideRoutes ? [] : routes} />
+            <Breadcrumb routes={hideRoutes ? [] : routes} Link={Link} />
             {children && <Content>{children}</Content>}
         </Container>
     );

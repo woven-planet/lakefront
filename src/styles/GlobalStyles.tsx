@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { css, Global } from '@emotion/react';
 
 const styles = css({
@@ -7,7 +7,11 @@ const styles = css({
     }
 });
 
-const GlobalStyles: FC = ({ children }) => {
+interface GlobalStyleProps {
+    children?: ReactNode;
+}
+
+const GlobalStyles: FC<GlobalStyleProps> = ({ children }) => {
     return (
         <>
             <Global styles={styles} />

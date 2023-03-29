@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Button from 'src/components/Button/Button';
 import RefreshToolbar from '../RefreshToolbar';
@@ -40,7 +40,7 @@ describe('<RefreshToolbar />', () => {
     });
 
     it('calls the refresh callback', () => {
-        const { container } = render((
+        const { getByRole } = render((
             <RefreshToolbar
                 handleRefresh={handleRefresh}
                 isRefreshing={refreshing}
@@ -49,7 +49,7 @@ describe('<RefreshToolbar />', () => {
             />
         ));
 
-        userEvent.click(screen.getByRole('button'));
+        fireEvent.click(getByRole('button'));
 
         expect(count).toBe(1);
         expect(refreshing).toBeTruthy();

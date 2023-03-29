@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { StatusTableStyle } from './statusTableStyles';
 import { ReactComponent as UnfoldMoreIcon } from './__assets__/UnfoldMoreIcon.svg';
 import { v4 as uuid } from 'uuid';
@@ -26,6 +26,10 @@ export interface StatusTableProps {
      *  set to true or false.
      */
     headers: StatusTableHeader[];
+    /**
+     * The children to render inside the table.
+     */
+    children?: ReactNode
     /**
      * This is an event that triggers whenever the sorting is clicked.
      */

@@ -59,7 +59,7 @@ describe('DoubleMultiSelect', () => {
     });
 
     it('should add a value to each multi select', () => {
-        const { container, getByText } = render(
+        const { container } = render(
             <DoubleMultiSelect value={defaultValues} onChange={onChange} options={defaultOptions} />
         );
 
@@ -71,13 +71,11 @@ describe('DoubleMultiSelect', () => {
 
         fireEvent.change(firstSelect, { target: { value: 'a' } });
         fireEvent.keyDown(wrapper, { key: 'Enter', code: 'Enter' });
-
         fireEvent.mouseDown(wrapper);
 
         fireEvent.change(secondSelect, { target: { value: 'b' } });
         fireEvent.keyDown(wrapper, { key: 'Enter', code: 'Enter' });
-
-        getByText('a');
-        getByText('b');
+        expect(firstSelect['value']).toBe('a');
+        expect(secondSelect['value']).toBe('b');
     });
 });

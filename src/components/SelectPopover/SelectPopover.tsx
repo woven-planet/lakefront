@@ -1,4 +1,4 @@
-import { FC, ReactElement, useMemo, useState } from 'react';
+import { FC, ReactElement, ReactNode, useMemo, useState } from 'react';
 import { SelectPopoverItem, StyledSelectPopover, StyledSelectPopoverWrapper } from './selectPopoverStyles';
 import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
@@ -16,6 +16,10 @@ export interface SelectPopoverProps {
      * Called on click with the value of the option that was clicked.
      */
     handleClick(value: unknown): void;
+    /**
+     * Children to render within popover wrapper.
+     */
+    children?: ReactNode;
     /**
      * Options to be mapped to items in the dropdown.
      */

@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import StatusTable from '../StatusTable';
 import StatusRow, { Status } from '../StatusRow';
 import StatusCellBadge from '../StatusCellBadge';
+import { render } from '@testing-library/react';
 
 const mockTableHeaders = [
     {
@@ -18,7 +18,7 @@ const mockTableHeaders = [
 
 describe('<StatusTable />', function () {
     it('should render properly', () => {
-        const { container } = render(
+      const { container } = render(
             <StatusTable headers={mockTableHeaders} handleSort={jest.fn()}>
                 <StatusRow status={Status.RUNNING}>
                     <td>First</td>
