@@ -28,6 +28,8 @@ import { theme } from '@toyota-research-institute/lakefront';
 ```
 
 ## Usage
+### ⚠️ <b>LakeFront requires the client application to use React 18. ⚠️ </b>
+
 
 Here is a quick example to get you started, **it's all you need**:
 
