@@ -11,6 +11,9 @@ export * from './components/Breadcrumb';
 export { default as Button } from './components/Button';
 export * from './components/Button';
 
+export { default as MaterialButton } from './material-components/Button';
+export * from './material-components/Button';
+
 export { default as Card } from './components/Card';
 export * from './components/Card';
 

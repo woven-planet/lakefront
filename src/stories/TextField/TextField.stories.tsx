@@ -1,5 +1,6 @@
+import DocBlock from '.storybook/DocBlock';
 import { Meta, storiesOf, Story } from '@storybook/react';
-import TextFieldComponent from 'src/material-components/TextField/TextField';
+import TextFieldComponent, { TextFieldProps } from 'src/material-components/TextField/TextField';
 
 // storiesOf('', module).add('', () => <TextFieldPage />, {
 //     design: {
@@ -10,9 +11,15 @@ import TextFieldComponent from 'src/material-components/TextField/TextField';
 
 export default {
     title: 'Lakefront-Material-io/TextField',
-    component: TextFieldComponent
+    component: TextFieldComponent,
+    parameters: {
+        docs: {
+            page: DocBlock
+        }
+    }
 } as Meta;
 
-const Template: Story = (args) => <TextFieldComponent />;
+const Template: Story<TextFieldProps> = (args) => <TextFieldComponent {...args} />;
 
 export const Text = Template.bind({});
+export const BasicText = Template.bind({});
