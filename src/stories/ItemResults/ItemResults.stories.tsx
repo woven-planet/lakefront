@@ -7,7 +7,6 @@ import Button from 'src/components/Button/Button';
 import ItemResultComponent, { ItemResultsProps } from 'src/components/ItemResults';
 import { emerald } from 'src/styles/lakefrontColors';
 import DocBlock from '.storybook/DocBlock';
-import { Primary } from '@storybook/addon-docs/blocks';
 
 export default {
     title: 'Lakefront/ItemResults',

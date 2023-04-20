@@ -24,12 +24,14 @@ export default {
     parameters: {
         docs: {
             page: DocBlock,
-            transformSource: (source: string) => {
-                return source
-                    .replace('onChange={function noRefCheck() {}}', '')
-                    .replace(/\n/g, '')
-                    .replace(/[ ]{2}/g, ' ');
-            },
+            source: {
+                transform: (source: string) => {
+                    return source
+                        .replace('onChange={function noRefCheck() {}}', '')
+                        .replace(/\n/g, '')
+                        .replace(/[ ]{2}/g, ' ');
+                }
+            }
         }
     }
 } as Meta;

@@ -1,5 +1,5 @@
 import { WorkFlowType } from 'src/components/StepFunctionGraph/StepFunctionUtil';
-import { StepFunctionAuthoringFormState } from 'src/components/StepFunctionAuthoring/index';
+import { StepFunctionAuthoringFormState } from '../types';
 import { StepFunctionJSON } from 'src/components/StepFunctionGraph/util/JSONBuilder.util';
 
 export const TYPE_OPTIONS = [

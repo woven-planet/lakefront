@@ -1,8 +1,8 @@
 import ts from 'rollup-plugin-ts';
 import del from 'rollup-plugin-delete';
 import pkg from './package.json';
+import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import url from 'rollup-plugin-url';
 import { terser } from 'rollup-plugin-terser';
 
 export default [
