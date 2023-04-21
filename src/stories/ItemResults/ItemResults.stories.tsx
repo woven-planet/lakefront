@@ -1,6 +1,6 @@
 
 import { ComponentPropsWithoutRef, useState, useEffect, useRef } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import Input from 'src/components/Input/Input';
 import Button from 'src/components/Button/Button';

@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import { StatusTable as StatusTableComponent, StatusRow, StatusCellBadge, StatusTableProps, Status } from 'src/components/StatusTable';
 import DocBlock from '.storybook/DocBlock';

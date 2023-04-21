@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import TextArea, { TextAreaProps } from 'src/components/TextArea/TextArea';
 import DocBlock from '.storybook/DocBlock';

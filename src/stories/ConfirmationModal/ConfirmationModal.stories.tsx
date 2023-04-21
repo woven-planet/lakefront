@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import ConfirmationModalComponent, { ConfirmationModalProps } from 'src/components/Modal/ConfirmationModal';
 import DocBlock from '.storybook/DocBlock';

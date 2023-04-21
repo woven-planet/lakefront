@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 import SnackbarComponent, { SnackbarProps } from 'src/components/Snackbar/index';
 import DocBlock from '.storybook/DocBlock';
 import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';

@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 import Button from 'src/components/Button/Button';
 import TableComponent, { TableProps } from 'src/components/Table';
 import DocBlock from '.storybook/DocBlock';

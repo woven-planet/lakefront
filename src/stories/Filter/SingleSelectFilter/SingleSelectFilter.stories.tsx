@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import FilterPage, { SINGLE_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
 import SingleSelectFilterDocs, { SingleSelectFilterArgs, SINGLE_SELECT_FILTER_SOURCE_CODE } from './SingleSelectFilterDocs';

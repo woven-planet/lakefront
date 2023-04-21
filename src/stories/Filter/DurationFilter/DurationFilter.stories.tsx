@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import FilterPage from '../components/FilterPage';
 import DurationFilterDocs, { DurationFilterArgs, DURATION_FILTER_SOURCE_CODE } from './DurationFilterDocs';

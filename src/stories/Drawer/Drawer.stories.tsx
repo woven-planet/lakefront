@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import DrawerComponent, { DrawerProps } from 'src/components/Drawer';
 import DocBlock from '.storybook/DocBlock';
