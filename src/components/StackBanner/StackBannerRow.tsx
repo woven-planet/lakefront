@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, MouseEvent, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, FC, MouseEvent, ReactNode } from 'react';
 import { StackBannerRowDiv } from './stackBannerStyles';
 import { StackBannerIcon, getStackBannerIcon } from './stackBannerUtil';
 
@@ -10,7 +10,7 @@ export interface StackBannerRowProps {
   /**
    * The main content to be displayed in the banner.
    */
-  content?: ReactElement<any>;
+  content?: ReactNode;
   /**
    * The svg icon to display. If a svg is provided, the svg will be used.
    * If explicitly true or left undefined, a default flag icon will be displayed.
@@ -39,7 +39,7 @@ export interface StackBannerRowProps {
  * designed to be used with a StackBanner component, but can be used as a standalone component.
  *
  */
-const StackBannerRow: FC<StackBannerRowProps & ComponentPropsWithoutRef<'div'>> = ({
+const StackBannerRow: FC<StackBannerRowProps & Omit<ComponentPropsWithoutRef<'div'>, 'content'>> = ({
   content = '',
   icon = true,
   severity = 'default',
