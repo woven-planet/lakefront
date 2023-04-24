@@ -1,5 +1,5 @@
 import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import CheckboxComponent, { CheckboxProps } from 'src/components/Checkbox/Checkbox';
 import DocBlock from '.storybook/DocBlock';
@@ -24,12 +24,14 @@ export default {
     parameters: {
         docs: {
             page: DocBlock,
-            transformSource: (source: string) => {
-                return source
-                    .replace('onChange={function noRefCheck() {}}', '')
-                    .replace(/\n/g, '')
-                    .replace(/[ ]{2}/g, ' ');
-            },
+            source: {
+                transform: (source: string) => {
+                    return source
+                        .replace('onChange={function noRefCheck() {}}', '')
+                        .replace(/\n/g, '')
+                        .replace(/[ ]{2}/g, ' ');
+                }
+            }
         }
     }
 } as Meta;

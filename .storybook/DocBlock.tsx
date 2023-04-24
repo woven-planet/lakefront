@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { ArgsTable, Description, Stories, Subtitle, Title } from "@storybook/addon-docs/blocks";
+import { FC } from 'react';
+import { ArgTypes, Description, Stories, Subtitle, Title } from "@storybook/blocks";
 
 const DocBlock: FC = () => {
     return (
@@ -8,7 +8,7 @@ const DocBlock: FC = () => {
             <Subtitle />
             <Description />
             <Stories includePrimary />
-            <ArgsTable />
+            <ArgTypes />
         </>
     )
 };

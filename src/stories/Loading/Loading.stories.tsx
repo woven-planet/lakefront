@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import LoadingComponent, { LoadingProps } from 'src/components/Loading/Loading';
 import DocBlock from '.storybook/DocBlock';

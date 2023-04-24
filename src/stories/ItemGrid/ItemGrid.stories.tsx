@@ -1,10 +1,9 @@
 
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import ItemGridComponent, { ItemGridProps } from 'src/components/ItemGrid';
 import DocBlock from '.storybook/DocBlock';
-import { ArgsTable } from '@storybook/components';
 
 export default {
     title: 'Lakefront/ItemGrid',

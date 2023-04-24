@@ -3,7 +3,7 @@ import { PageProps } from './Page';
 
 export const StyledPage = styled.div<PageProps>(() => ({
     justifyContent: 'center',
-    padding: '42px',
+    padding: '42px'
 }));
 
 export const StyledHeader = styled.div(({ theme }) => ({

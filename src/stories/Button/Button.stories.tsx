@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import Button from 'src/components/Button/Button';
 import { ButtonComponentProps, COLORS } from 'src/components/Button/buttonUtil';
@@ -13,12 +13,6 @@ export default {
             action: 'clicked',
             table: {
                 disable: true
-            }
-        },
-        as: {
-            control: {
-                type: 'select',
-                options: ['a', 'button', 'div', 'span']
             }
         },
         children: {

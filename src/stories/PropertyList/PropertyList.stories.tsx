@@ -1,6 +1,6 @@
 
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 import PropertyListComponent, { PropertyListProps, Property } from 'src/components/PropertyList';
 import DocBlock from '.storybook/DocBlock';
 export default {

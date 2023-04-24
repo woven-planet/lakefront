@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import FilterPage from '../components/FilterPage';
 import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';

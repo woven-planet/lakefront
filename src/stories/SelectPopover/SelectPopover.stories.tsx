@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import SelectPopover, { SelectPopoverProps } from 'src/components/SelectPopover/SelectPopover';
 import DocBlock from '.storybook/DocBlock';

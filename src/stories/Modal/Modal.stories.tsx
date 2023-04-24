@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import ModalComponent, { ModalProps } from 'src/components/Modal/Modal';
 import DocBlock from '.storybook/DocBlock';

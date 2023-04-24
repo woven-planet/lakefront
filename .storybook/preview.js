@@ -1,13 +1,7 @@
-import { addDecorator, addParameters } from '@storybook/react';
-import { withThemes as withThemesProvider } from '@react-theming/storybook-addon';
 import theme from 'src/styles/theme';
-import GlobalStyleStorybookDecorator from './GlobalStyleStorybookDecorator';
-import { ThemeProvider } from '@emotion/react';
 
 const themes = [theme];
 
-addDecorator(withThemesProvider(ThemeProvider, themes));
-addDecorator(GlobalStyleStorybookDecorator);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -32,6 +26,3 @@ export const parameters = {
   }
 };
 
-addParameters({
-  viewMode: 'docs',
-});

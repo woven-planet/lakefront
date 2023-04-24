@@ -1,5 +1,5 @@
 import DocBlock from '.storybook/DocBlock';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 import usePopover, { PopoverContent as PopoverContentComponent, PortalStyles } from 'src/lib/hooks/usePopover';
 import { useMemo, useState } from 'react';
 

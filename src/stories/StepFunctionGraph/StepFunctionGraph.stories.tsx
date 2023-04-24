@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import DocBlock from '.storybook/DocBlock';
 import StepFunctionGraph, { GraphProps } from 'src/components/StepFunctionGraph/Graph';

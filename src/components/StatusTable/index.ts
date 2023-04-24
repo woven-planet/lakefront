@@ -6,7 +6,7 @@ import { useStatusTable, StatusTableHooks, StatusTableOptions } from './useStatu
 import { filterData, getCompareFormat, mapTableFilters, sortData, SortOptions, sortByField } from './useStatusTableUtil';
 
 export {
-    StatusCard, StatusCardProps, StatusCellBadge, StatusCellBadgeProps, StatusRow, StatusRowProps, Status,
+    StatusCard, StatusTable, StatusCardProps, StatusCellBadge, StatusCellBadgeProps, StatusRow, StatusRowProps, Status,
     StatusTableProps, StatusTableHeader, useStatusTable, StatusTableHooks, StatusTableOptions, filterData,
     getCompareFormat, mapTableFilters, sortData, SortOptions, sortByField
 };

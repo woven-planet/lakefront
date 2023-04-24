@@ -1,5 +1,5 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import RadioGroup, { RadioGroupProps } from 'src/components/RadioGroup/RadioGroup';
 import DocBlock from '.storybook/DocBlock';

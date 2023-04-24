@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/components/BoundingBoxes';
 import DocBlock from '.storybook/DocBlock';

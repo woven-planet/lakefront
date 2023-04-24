@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import HeaderComponent from 'src/components/Page/Header';
 import DocBlock from '.storybook/DocBlock';

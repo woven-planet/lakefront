@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react';
 
 import AnchorCopyComponent, { AnchorCopyProps } from 'src/components/AnchorCopy';
 import Input from 'src/components/Input/Input';
