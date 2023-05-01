@@ -2,12 +2,14 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { FC, useMemo, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Moment } from 'moment-timezone';
+import moment, { Moment } from 'moment-timezone';
 import { TextFieldProps } from '@mui/material/TextField';
 import Input from '../Input';
 import { INPUT_HEIGHT } from '../Input/inputStyles';
 
 export interface DateRangeProps {
+    startDate: Moment | null;
+    endDate: Moment | null;
     labels?: {
         start: string; end: string;
     };
@@ -34,12 +36,14 @@ const DateInput = ({ inputProps, InputProps, inputRef, error, ...other }: TextFi
 const DateRange: FC<DateRangeProps> = ({
     labels: {
         start, end
-    } = DEFAULT_LABELS
+    } = DEFAULT_LABELS,
+    startDate,
+    endDate
 }) => {
     const [startWrapperElement, setStartWrapperElement] = useState<HTMLElement | null>(null);
     const [endWrapperElement, setEndWrapperElement] = useState<HTMLElement | null>(null);
-    const [range, setRange] = useState<{ startValue: Moment | null, endValue: Moment | null }>({
-        startValue: null, endValue: null
+    const [range, setRange] = useState<{ startValue: Moment, endValue: Moment }>({
+        startValue: moment(startDate), endValue: moment(endDate)
     });
 
     const [startPopperPosition, endPopperPosition] = useMemo(() => {
@@ -110,6 +114,7 @@ const DateRange: FC<DateRangeProps> = ({
                         }
                     }
                 }}
+                maxDate={range.endValue}
             />
         </div>
         <div ref={handleEndWrapperMount}>
@@ -130,6 +135,7 @@ const DateRange: FC<DateRangeProps> = ({
                         }
                     }
                 }}
+                minDate={range.startValue}
             />
         </div>
     </LocalizationProvider>;
