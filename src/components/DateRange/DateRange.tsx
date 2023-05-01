@@ -96,47 +96,50 @@ const DateRange: FC<DateRangeProps> = ({
         dateAdapter={AdapterMoment}
         localeText={{ start, end }}
     >
-        <div ref={handleStartWrapperMount}>
-            <DatePicker
-                label={start}
-                value={range.startValue}
-                onChange={(newValue) => {
-                    setValue('start', newValue);
-                }}
-                slots={{
-                    textField: DateInput
-                }}
-                slotProps={{
-                    popper: {
-                        style: {
-                            top: startPopperPosition.top,
-                            left: startPopperPosition.left
+        <div style={{ display: 'flex' }}>
+            <div ref={handleStartWrapperMount} style={{ marginRight: 16 }}>
+                <DatePicker
+                    label={start}
+                    value={range.startValue}
+                    onChange={(newValue) => {
+                        setValue('start', newValue);
+                    }}
+                    slots={{
+                        textField: DateInput
+                    }}
+                    slotProps={{
+                        popper: {
+                            style: {
+                                top: startPopperPosition.top,
+                                left: startPopperPosition.left
+                            }
                         }
-                    }
-                }}
-                maxDate={range.endValue}
-            />
-        </div>
-        <div ref={handleEndWrapperMount}>
-            <DatePicker
-                label={end}
-                value={range.endValue}
-                onChange={(newValue) => {
-                    setValue('end', newValue);
-                }}
-                slots={{
-                    textField: DateInput
-                }}
-                slotProps={{
-                    popper: {
-                        style: {
-                            top: endPopperPosition.top,
-                            left: endPopperPosition.left
+                    }}
+                    maxDate={range.endValue}
+                />
+            </div>
+            <div ref={handleEndWrapperMount}>
+                <DatePicker
+                    label={end}
+                    value={range.endValue}
+                    onChange={(newValue) => {
+                        setValue('end', newValue);
+                    }}
+                    slots={{
+                        textField: DateInput
+                    }}
+                    slotProps={{
+                        popper: {
+                            style: {
+                                top: endPopperPosition.top,
+                                left: endPopperPosition.left
+                            }
                         }
-                    }
-                }}
-                minDate={range.startValue}
-            />
+                    }}
+                    minDate={range.startValue}
+                    maxDate={moment()}
+                />
+            </div>
         </div>
     </LocalizationProvider>;
 };
