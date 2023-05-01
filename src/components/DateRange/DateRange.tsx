@@ -120,7 +120,7 @@ const DateRange: FC<DateRangeProps> = ({
         <div ref={handleEndWrapperMount}>
             <DatePicker
                 label={end}
-                value={range.startValue}
+                value={range.endValue}
                 onChange={(newValue) => {
                     setValue('end', newValue);
                 }}
