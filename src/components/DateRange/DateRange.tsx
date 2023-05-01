@@ -18,7 +18,6 @@ const DEFAULT_LABELS = {
 };
 
 const DateInput = ({ inputProps, InputProps, inputRef, error, ...other }: TextFieldProps) => {
-
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <Input
@@ -37,26 +36,38 @@ const DateRange: FC<DateRangeProps> = ({
         start, end
     } = DEFAULT_LABELS
 }) => {
-    const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(null);
+    const [startWrapperElement, setStartWrapperElement] = useState<HTMLElement | null>(null);
+    const [endWrapperElement, setEndWrapperElement] = useState<HTMLElement | null>(null);
     const [range, setRange] = useState<{ startValue: Moment | null, endValue: Moment | null }>({
         startValue: null, endValue: null
     });
-    const datePickerPosition = useMemo(() => {
-        if (wrapperElement) {
-            const inputElement = wrapperElement.getElementsByTagName('input')[0];
+
+    const [startPopperPosition, endPopperPosition] = useMemo(() => {
+        let startPosition = { top: 0, left: 0 };
+        let endPosition = { top: 0, left: 0 };
+
+        if (startWrapperElement) {
+            const inputElement = startWrapperElement.getElementsByTagName('input')[0];
             const { top, left } = inputElement.getBoundingClientRect();
 
-            return {
+            startPosition = {
                 top: top + INPUT_HEIGHT,
                 left
             }
         }
 
-        return {
-            top: 0,
-            left: 0
+        if (endWrapperElement) {
+            const inputElement = endWrapperElement.getElementsByTagName('input')[0];
+            const { top, left } = inputElement.getBoundingClientRect();
+
+            endPosition = {
+                top: top + INPUT_HEIGHT,
+                left
+            }
         }
-    }, [wrapperElement]);
+
+        return [startPosition, endPosition];
+    }, [startWrapperElement, endWrapperElement]);
 
     const setValue = (startOrEnd: 'start' | 'end', newValue: Moment | null) => {
         setRange(prev => ({
@@ -65,9 +76,15 @@ const DateRange: FC<DateRangeProps> = ({
         }));
     };
 
-    const handleWrapperMount = (node: HTMLElement | null) => {
+    const handleStartWrapperMount = (node: HTMLElement | null) => {
         if (node) {
-            setWrapperElement(node);
+            setStartWrapperElement(node);
+        }
+    };
+
+    const handleEndWrapperMount = (node: HTMLElement | null) => {
+        if (node) {
+            setEndWrapperElement(node);
         }
     };
 
@@ -75,9 +92,7 @@ const DateRange: FC<DateRangeProps> = ({
         dateAdapter={AdapterMoment}
         localeText={{ start, end }}
     >
-        <div
-            ref={handleWrapperMount}
-        >
+        <div ref={handleStartWrapperMount}>
             <DatePicker
                 label={start}
                 value={range.startValue}
@@ -90,17 +105,30 @@ const DateRange: FC<DateRangeProps> = ({
                 slotProps={{
                     popper: {
                         style: {
-                            top: datePickerPosition.top,
-                            left: datePickerPosition.left
+                            top: startPopperPosition.top,
+                            left: startPopperPosition.left
                         }
                     }
                 }}
             />
+        </div>
+        <div ref={handleEndWrapperMount}>
             <DatePicker
                 label={end}
                 value={range.startValue}
                 onChange={(newValue) => {
                     setValue('end', newValue);
+                }}
+                slots={{
+                    textField: DateInput
+                }}
+                slotProps={{
+                    popper: {
+                        style: {
+                            top: endPopperPosition.top,
+                            left: endPopperPosition.left
+                        }
+                    }
                 }}
             />
         </div>
