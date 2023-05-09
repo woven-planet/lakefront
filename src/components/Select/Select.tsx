@@ -45,6 +45,22 @@ export interface SelectProps {
      * If set to true, the user can type the value to search from the available options.
      */
     isSearchable?: boolean;
+    /**
+     * This is to specify if multiple options can be selected.
+     */
+    isMulti?: boolean;
+    /**
+     * This is to leave the select menu open upon selection.
+     */
+    closeMenuOnSelect?: boolean;
+    /**
+     * This is to overwrite defaulted styles
+     */
+    styles?: any;
+    /**
+     * This is the default text before an option is selected.
+     */
+    placeholder?: string;
 }
 
 /**
