@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import { SelectStyles, SelectStyledComponent } from './selectStyles';
 import SelectOverlay from './SelectOverlay';
+import { GetStyles, GroupBase } from 'react-select/dist/declarations/src/types';
 
 export interface SelectOption {
     value: string | number | undefined;
     label: string;
 }
 
-export interface SelectProps {
+export interface BaseSelectProps {
     /**
      * This is to set the options of the dropdown.
      */
@@ -16,10 +17,6 @@ export interface SelectProps {
      * This is called when an dropdown change event.
      */
     onChange(event: any): void;
-    /**
-     * The is to set the selected value of the dropdown.
-     */
-    value: string | number;
     /**
      * This is called on dropdown blur event.
      */
@@ -56,12 +53,33 @@ export interface SelectProps {
     /**
      * This is to overwrite defaulted styles
      */
-    styles?: any;
+    styles?: Partial<GetStyles<SelectOption, true, GroupBase<SelectOption>>>;
     /**
      * This is the default text before an option is selected.
      */
     placeholder?: string;
 }
+
+interface SingleSelectProps extends BaseSelectProps {
+    isMulti?: false;
+    /**
+     * The is to set the selected value of the dropdown.
+     * Note: this is usually a single value but when isMulti is true this can be an array of values.
+     */
+    value: string | number;
+}
+
+interface MultiSelectProps extends BaseSelectProps {
+    isMulti?: true;
+    /**
+     * The is to set the selected value of the dropdown.
+     * Note: this is usually a single value but when isMulti is true this can be an array of values.
+     */
+    value: string | number | any[];
+}
+
+export type SelectProps = SingleSelectProps | MultiSelectProps;
+
 
 /**
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
