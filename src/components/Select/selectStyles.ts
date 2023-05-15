@@ -21,7 +21,9 @@ interface SelectState {
     theme: Theme;
 }
 
-export const SELECT_OVERLAY_STYLES: Partial<GetStyles<SelectOption<any>, true, GroupBase<SelectOption<any>>>> = {
+export type SelectOverlayStyles = Partial<GetStyles<SelectOption<any>, true, GroupBase<SelectOption<any>>>>;
+
+export const SELECT_OVERLAY_STYLES: SelectOverlayStyles = {
     control: (defaultStyles: SelectState, state: SelectState) => ({
         ...defaultStyles,
         flexWrap: undefined,
