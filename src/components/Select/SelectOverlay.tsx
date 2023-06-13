@@ -9,13 +9,14 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
     const { currentValue, defaultValue, selectId } = useMemo(
         () => {
             return {
-                currentValue: !isMulti ? options.find((option) => option.value === value) : multiValues,
+                currentValue: !isMulti ? options.find((option: { value: any; }) => option.value === value) : multiValues,
                 defaultValue: options[0],
                 selectId: id ? `select-overlay-${id}` : undefined
             };
         },
         [options, value, multiValues]
     );
+
 
     const handleChange = (option: any) => {
         if (!isMulti) {

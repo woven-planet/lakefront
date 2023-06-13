@@ -38,7 +38,7 @@ export interface BaseSelectProps {
      */
     disabled?: boolean;
     /**
-     * This is to set the searchable property of the dropdown. 
+     * This is to set the searchable property of the dropdown.
      * If set to true, the user can type the value to search from the available options.
      */
     isSearchable?: boolean;
@@ -85,19 +85,19 @@ export type SelectProps = SingleSelectProps | MultiSelectProps;
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
  *  The isSearchable property allows user to find the value from the options available.
  */
-const Select: FC<SelectProps> = ({ options, className, ...rest }) => {
+const Select: FC<SelectProps> = ({ options, className, isMulti, ...rest }) => {
 
 
     return (
         <SelectStyles>
-            <SelectStyledComponent className={className} {...rest}>
+            <SelectStyledComponent className={className} multiple={isMulti} {...rest}>
                 {options.map((option) => (
                     <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
                     </option>
                 ))}
             </SelectStyledComponent>
-            <SelectOverlay {...rest} options={options} />
+            <SelectOverlay {...rest} options={options} isMulti={isMulti}/>
         </SelectStyles>
     );
 };
