@@ -58,6 +58,7 @@ export interface SelectProps {
      * This is the default text before an option is selected.
      */
     placeholder?: string;
+    value: any[] | string | number;
 }
 
 
