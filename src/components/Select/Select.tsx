@@ -8,7 +8,7 @@ export interface SelectOption {
     label: string;
 }
 
-export interface BaseSelectProps {
+export interface SelectProps {
     /**
      * This is to set the options of the dropdown.
      */
@@ -59,26 +59,6 @@ export interface BaseSelectProps {
      */
     placeholder?: string;
 }
-
-interface SingleSelectProps extends BaseSelectProps {
-    isMulti?: false;
-    /**
-     * The is to set the selected value of the dropdown.
-     * Note: this is usually a single value but when isMulti is true this can be an array of values.
-     */
-    value: string | number;
-}
-
-interface MultiSelectProps extends BaseSelectProps {
-    isMulti?: true;
-    /**
-     * The is to set the selected value of the dropdown.
-     * Note: this is usually a single value but when isMulti is true this can be an array of values.
-     */
-    value: string | number | any[];
-}
-
-export type SelectProps = SingleSelectProps | MultiSelectProps;
 
 
 /**
