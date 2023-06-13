@@ -1,24 +1,38 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { SelectProps } from './Select';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, ...rest }) => {
+const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, isMulti, ...rest }) => {
+    const [multiValues, setMultiValues] = useState([]);
+
     const { currentValue, defaultValue, selectId } = useMemo(
-        () => ({
-            currentValue: options.find((option) => option.value === value),
-            defaultValue: options[0],
-            selectId: id ? `select-overlay-${id}` : undefined
-        }),
-        [options, value]
+        () => {
+            return {
+                currentValue: !isMulti ? options.find((option) => option.value === value) : multiValues,
+                defaultValue: options[0],
+                selectId: id ? `select-overlay-${id}` : undefined
+            };
+        },
+        [options, value, multiValues]
     );
 
     const handleChange = (option: any) => {
-        const newValue = option?.value;
-        onChange({
-            target: { value: newValue },
-            currentTarget: { value: newValue }
-        });
+        if (!isMulti) {
+            const newValue = option?.value;
+            onChange({
+                target: { value: newValue },
+                currentTarget: { value: newValue }
+            });
+        }
+        else {
+            const eventTargetValues = option.map((o: { value: any; }) => o.value);
+            onChange({
+                target: {value: eventTargetValues},
+                currentTarget: {value: eventTargetValues}
+            });
+            setMultiValues(option);
+        }
     };
 
     return (
@@ -40,6 +54,7 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
                 }
             })}
             isSearchable={isSearchable}
+            isMulti={isMulti}
             {...rest}
         />
     );

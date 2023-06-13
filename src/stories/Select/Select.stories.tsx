@@ -19,24 +19,35 @@ const Template: Story<SelectProps & ComponentPropsWithoutRef<'div'>> = (args) =>
     const handleOnChange = (event) => {
         setValue(event.target.value);
     };
+
+    const areValuesSelected = () => {
+        if (!args.isMulti){
+            return value !== undefined;
+        }
+        else {
+            return value != undefined && value.length > 0;
+        }
+    };
+
     return (
         <>
             <div
                 style={{
                     minHeight: 20,
-                    backgroundColor: value && emerald,
+                    backgroundColor: areValuesSelected() && emerald,
                     padding: 8,
                     margin: '8px 0',
                     textAlign: 'center',
                     width: '100%'
                 }}
             >
-                {value && `The selected value is ${value}`}
+                {areValuesSelected() && !args.isMulti && `The selected value is ${value}`}
+                {areValuesSelected() && value.length > 0 && args.isMulti && `The selected values are: ${value.map(v => ` ${v}`)}`}
             </div>
             <section style={{ display: 'inline-flex', height: '150px' }}>
                 <SelectComponent options={args.options} value={value} onChange={handleOnChange} id={args.id}
                     isSearchable={args.isSearchable} disabled={args.disabled} className={args.className}
-                    autoFocus={args.autoFocus} />
+                    autoFocus={args.autoFocus} isMulti={args.isMulti} />
             </section>
         </>
     );
@@ -45,5 +56,13 @@ const Template: Story<SelectProps & ComponentPropsWithoutRef<'div'>> = (args) =>
 export const Select = Template.bind({});
 Select.args = {
     options: [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }],
-    value: 'imperial'
+    value: 'imperial',
+    isMulti: false
+};
+
+export const MultiSelect = Template.bind({});
+MultiSelect.args = {
+    options: [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }, {label: 'Made up system', value: 'made up'}],
+    value: '',
+    isMulti: true
 };
