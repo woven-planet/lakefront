@@ -1,15 +1,16 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, getAllByText, render } from '@testing-library/react';
 
 import Select from '../Select';
+import userEvent from '@testing-library/user-event';
 
-const options = [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }];
+const options = [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }, {label: 'Made up system', value: 'made up'}];
 const onChangeCallback = jest.fn();
 
 describe('<Select />', () => {
     it('renders default items and text', () => {
         const { container } = render(<Select onChange={onChangeCallback} value={'metric'} options={options} />);
-        expect(container.getElementsByTagName('Option')).toHaveLength(2);
+        expect(container.getElementsByTagName('Option')).toHaveLength(3);
 
         // test out options labels
         expect(container.getElementsByTagName('Option')[0]).toHaveTextContent('Km');
@@ -22,13 +23,22 @@ describe('<Select />', () => {
         expect(container.getElementsByTagName('Option')[1]).toHaveAttribute('value', 'imperial');
     });
 
-    it('triggers handler on select change', () => {
-        const { container } = render(<Select onChange={onChangeCallback} options={options} />);
-        fireEvent.change(container.getElementsByTagName('select')[0], {
-            target: { value: 'imperial' }
-        });
+    it('triggers handler on select change', async () => {
+        const { container } = render(<Select onChange={onChangeCallback} options={options} value={undefined}/>);
+        await userEvent.selectOptions(container.querySelector('select'), 'imperial');
         expect(onChangeCallback.mock.calls.length).toBe(1);
-        expect(onChangeCallback.mock.calls[0][0].target.value).toBe('imperial');
+        expect(container.querySelectorAll('option')[0].selected).toBe(false);
+        expect(container.querySelectorAll('option')[1].selected).toBe(true);
+        expect(container.querySelectorAll('option')[2].selected).toBe(false);
+    });
+
+    it('triggers handler on multi select change', async () => {
+        const { container } = render(<Select onChange={onChangeCallback} options={options} isMulti={true} value={undefined}/>);
+        await userEvent.selectOptions(container.querySelector('select'), ['metric', 'imperial']);
+        expect(onChangeCallback.mock.calls.length).toBe(2);
+        expect(container.querySelectorAll('option')[0].selected).toBe(true);
+        expect(container.querySelectorAll('option')[1].selected).toBe(true);
+        expect(container.querySelectorAll('option')[2].selected).toBe(false);
     });
 
     it('sets the dropdown to disabled', () => {

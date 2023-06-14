@@ -8,7 +8,7 @@ export interface SelectOption {
     label: string;
 }
 
-export interface BaseSelectProps {
+export interface SelectProps {
     /**
      * This is to set the options of the dropdown.
      */
@@ -38,7 +38,7 @@ export interface BaseSelectProps {
      */
     disabled?: boolean;
     /**
-     * This is to set the searchable property of the dropdown. 
+     * This is to set the searchable property of the dropdown.
      * If set to true, the user can type the value to search from the available options.
      */
     isSearchable?: boolean;
@@ -58,46 +58,27 @@ export interface BaseSelectProps {
      * This is the default text before an option is selected.
      */
     placeholder?: string;
+    value: any[] | string | number;
 }
-
-interface SingleSelectProps extends BaseSelectProps {
-    isMulti?: false;
-    /**
-     * The is to set the selected value of the dropdown.
-     * Note: this is usually a single value but when isMulti is true this can be an array of values.
-     */
-    value: string | number;
-}
-
-interface MultiSelectProps extends BaseSelectProps {
-    isMulti?: true;
-    /**
-     * The is to set the selected value of the dropdown.
-     * Note: this is usually a single value but when isMulti is true this can be an array of values.
-     */
-    value: string | number | any[];
-}
-
-export type SelectProps = SingleSelectProps | MultiSelectProps;
 
 
 /**
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
  *  The isSearchable property allows user to find the value from the options available.
  */
-const Select: FC<SelectProps> = ({ options, className, ...rest }) => {
+const Select: FC<SelectProps> = ({ options, className, isMulti, ...rest }) => {
 
 
     return (
         <SelectStyles>
-            <SelectStyledComponent className={className} {...rest}>
+            <SelectStyledComponent className={className} multiple={isMulti} {...rest}>
                 {options.map((option) => (
                     <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
                     </option>
                 ))}
             </SelectStyledComponent>
-            <SelectOverlay {...rest} options={options} />
+            <SelectOverlay {...rest} options={options} isMulti={isMulti}/>
         </SelectStyles>
     );
 };
