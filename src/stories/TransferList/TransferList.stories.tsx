@@ -1,6 +1,6 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import TransferListComponent from 'src/components/TransferList';
-import DocBlock from '../../../.storybook/DocBlock';
+import DocBlock from '.storybook/DocBlock';
 
 export default {
     title: 'LakeFront/TransferList',
@@ -12,7 +12,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story = () => {
+const Template: StoryFn = () => {
     return <TransferListComponent />;
 };
 

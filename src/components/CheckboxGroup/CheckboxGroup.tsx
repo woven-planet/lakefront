@@ -98,7 +98,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
         onHandleChange(newSelection);
     };
 
-    const isAllSelected = selected.size === options.length;
+    const isAllSelected = selected.size != 0 && selected.size === options.length;
 
     return (
         <CheckboxGroupWrapper className={className}>
