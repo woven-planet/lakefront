@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, DragEvent } from 'react';
 import styled from '@emotion/styled';
 import Checkbox from 'src/components/Checkbox/Checkbox';
 import colors from 'src/styles/lakefrontColors';
@@ -52,6 +52,7 @@ export interface CheckboxGroupProps {
      */
     allColor?: string;
     handleDragging?: (dragging: boolean) => void;
+    handleUpdateList?: () => void;
 }
 
 /**
@@ -69,7 +70,8 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
         onHandleChange,
         options,
         selected,
-        handleDragging
+        handleDragging,
+        handleUpdateList
     }) => {
     const isItemChecked = (value: string) => {
         return selected.has(value);

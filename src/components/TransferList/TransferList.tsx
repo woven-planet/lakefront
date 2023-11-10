@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { DragEvent, FC, useState } from 'react';
 import styled from '@emotion/styled';
 import { blue, white } from 'src/styles/lakefrontColors';
 import CheckboxGroupComponent from '../CheckboxGroup/CheckboxGroup';
@@ -84,6 +84,7 @@ const TransferList: FC = () => {
     };
 
     const handleMoveLeftToRight = () => {
+        console.log('handleMoveLeftToRight');
         const [updatedListOne, updatedListTwo] = moveItems(listOneOptions, listTwoOptions, listOneValue);
         setListOneOptions(updatedListOne);
         setListTwoOptions(updatedListTwo);
@@ -97,9 +98,21 @@ const TransferList: FC = () => {
         setListTwoValue(new Set<string>());
     };
 
+    const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+        console.log('handleDropping');
+        event.preventDefault();
+        handleMoveLeftToRight();
+        if (handleDragging !== undefined) handleDragging(false);
+    };
+
+    const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+        console.log('handleDragOver');
+        event.preventDefault();
+    };
+
     return (
         <GridContainer>
-            <PanelContainer>
+            <PanelContainer >
                 <CheckboxGroupComponent
                     options={listOneOptions}
                     allLabel={'All'}
@@ -107,20 +120,22 @@ const TransferList: FC = () => {
                     selected={listOneValue}
                     onHandleChange={handleListOneClick}
                     handleDragging={handleDragging}
-                    className={isDragging ? 'layout-cards layout-dragging' : undefined}
+                    handleUpdateList={handleMoveLeftToRight}
                 />
             </PanelContainer>
             <ButtonColumnContainer>
                 <StyledButton color='secondary' disabled={listOneValue.size === 0} onClick={handleMoveLeftToRight}>Shift Right</StyledButton>
                 <StyledButton color='secondary' disabled={listTwoValue.size === 0} onClick={handleMoveRightToLeft}>Shift Left</StyledButton>
             </ButtonColumnContainer>
-            <PanelContainer>
+            <PanelContainer onDrop={handleDrop} onDragOver={handleDragOver}>
                 <CheckboxGroupComponent
                     options={listTwoOptions}
                     allLabel={'All'}
                     name={'listTwo'}
                     selected={listTwoValue}
                     onHandleChange={handleListTwoClick}
+                    handleDragging={handleDragging}
+                    handleUpdateList={handleMoveRightToLeft}
                 />
             </PanelContainer>
         </GridContainer>

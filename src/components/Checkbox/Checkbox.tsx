@@ -76,6 +76,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   };
 
   const handleDragStart = (event: DragEvent<HTMLLabelElement>) => {
+    console.log(`${label}`);
     event.dataTransfer.setData('text', `${label}`);
   };
 
