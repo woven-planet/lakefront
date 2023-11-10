@@ -133,6 +133,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                         checked={isSelected}
                         color={option.color}
                         handleDragging={handleDragging}
+                        numSelected={selected.size}
                     />
                 );
             })}

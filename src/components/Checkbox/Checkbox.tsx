@@ -2,7 +2,7 @@ import {
   ChangeEvent,
   ComponentPropsWithoutRef, DragEvent,
   FC,
-  ReactElement
+  ReactElement, useState
 } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledCheckbox, StyledLabel } from './checkboxStyles';
@@ -45,6 +45,7 @@ export interface CheckboxProps {
   labelClassName?: string;
 
   handleDragging?: (dragging: boolean) => void;
+  numSelected?: number;
 }
 
 /**
@@ -64,10 +65,12 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   onChange = () => null,
   labelClassName,
     handleDragging,
+                                                                           numSelected,
   ...props
 }) => {
   const showIcon = indeterminate || checked;
   const icon = indeterminate ? <Indeterminate /> : checkedIcon || <Check />;
+  const [showNumSelected, setShowNumSelected] = useState<boolean>(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!disabled) {
@@ -76,11 +79,14 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   };
 
   const handleDragStart = (event: DragEvent<HTMLLabelElement>) => {
-    console.log(`${label}`);
-    event.dataTransfer.setData('text', `${label}`);
+    console.log(event.target);
+    setShowNumSelected(true);
+    //console.log(`${label}`);
+    //event.dataTransfer.setData('text', `${label}, Finished`);
   };
 
   const handleDragEnd = () => {
+    setShowNumSelected(false);
     if (handleDragging !== undefined){
       handleDragging(false);
     }
@@ -101,6 +107,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
         />
         {showIcon && icon}
         {label && <span>{label}</span>}
+        {showNumSelected && <span>{numSelected}</span>}
       </StyledLabel>
     </ThemeProvider>
   );
