@@ -1,6 +1,6 @@
 import {
   ChangeEvent,
-  ComponentPropsWithoutRef,
+  ComponentPropsWithoutRef, DragEvent,
   FC,
   ReactElement
 } from 'react';
@@ -43,6 +43,8 @@ export interface CheckboxProps {
    * The classes to pass to the checkbox label.
    */
   labelClassName?: string;
+
+  handleDragging?: (dragging: boolean) => void;
 }
 
 /**
@@ -61,6 +63,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   disabled = false,
   onChange = () => null,
   labelClassName,
+    handleDragging,
   ...props
 }) => {
   const showIcon = indeterminate || checked;
@@ -72,9 +75,21 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
     }
   };
 
+  const handleDragStart = (event: DragEvent<HTMLLabelElement>) => {
+    event.dataTransfer.setData('text', `${label}`);
+  };
+
+  const handleDragEnd = () => {
+    if (handleDragging !== undefined){
+      handleDragging(false);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <StyledLabel disabled={disabled} indeterminate={indeterminate} className={labelClassName}>
+      <StyledLabel disabled={disabled} indeterminate={indeterminate} className={labelClassName}
+                   draggable={handleDragging !== undefined} onDragStart={handleDragStart}
+                   onDragEnd={handleDragEnd}>
         <StyledCheckbox
           {...props}
           indeterminate={indeterminate}

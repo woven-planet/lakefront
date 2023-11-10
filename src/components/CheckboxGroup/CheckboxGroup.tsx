@@ -51,6 +51,7 @@ export interface CheckboxGroupProps {
      * This option is used to set the select all checkbox color.
      */
     allColor?: string;
+    handleDragging?: (dragging: boolean) => void;
 }
 
 /**
@@ -67,7 +68,8 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
         name,
         onHandleChange,
         options,
-        selected
+        selected,
+        handleDragging
     }) => {
     const isItemChecked = (value: string) => {
         return selected.has(value);
@@ -128,6 +130,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                         onChange={(evt) => onItemChange(evt.target.value)}
                         checked={isSelected}
                         color={option.color}
+                        handleDragging={handleDragging}
                     />
                 );
             })}

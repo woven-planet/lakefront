@@ -58,6 +58,9 @@ const TransferList: FC = () => {
     const [listTwoValue, setListTwoValue] = useState(new Set<string>());
     const [listOneOptions, setListOneOptions] = useState(JOB_TYPES_1);
     const [listTwoOptions, setListTwoOptions] = useState(JOB_TYPES_2);
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
     const handleListOneClick = (option: any) => {
         setListOneValue(option);
@@ -103,6 +106,8 @@ const TransferList: FC = () => {
                     name={'listOne'}
                     selected={listOneValue}
                     onHandleChange={handleListOneClick}
+                    handleDragging={handleDragging}
+                    className={isDragging ? 'layout-cards layout-dragging' : undefined}
                 />
             </PanelContainer>
             <ButtonColumnContainer>
