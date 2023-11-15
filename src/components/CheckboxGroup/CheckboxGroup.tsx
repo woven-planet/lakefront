@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, DragEvent } from 'react';
+import React, { FC, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import Checkbox from 'src/components/Checkbox/Checkbox';
 import colors from 'src/styles/lakefrontColors';
@@ -19,6 +19,7 @@ export interface CheckboxGroupOption {
     value: string;
     label: string | ReactElement;
     color?: string;
+    description?: string;
 }
 
 export interface CheckboxGroupProps {
@@ -43,7 +44,7 @@ export interface CheckboxGroupProps {
      */
     selected: Set<string>;
     /**
-     * This option is to select or unselect all the checkboxes. 
+     * This option is to select or unselect all the checkboxes.
      * Specify the name of the label to be displayed for checkbox.
      */
     allLabel?: string;
@@ -51,7 +52,6 @@ export interface CheckboxGroupProps {
      * This option is used to set the select all checkbox color.
      */
     allColor?: string;
-    handleDragging?: (dragging: boolean) => void;
     handleUpdateList?: () => void;
 }
 
@@ -61,18 +61,16 @@ export interface CheckboxGroupProps {
  * The CheckboxGroup component can be used to provide multiple checkbox options. The user can set default selection on
  * the checkbox group render. The All option is provided to check or uncheck all the options.
  */
-const CheckboxGroup: FC<CheckboxGroupProps> = (
-    {
-        allColor,
-        allLabel,
-        className,
-        name,
-        onHandleChange,
-        options,
-        selected,
-        handleDragging,
-        handleUpdateList
-    }) => {
+const CheckboxGroup: FC<CheckboxGroupProps> = ({
+    allColor,
+    allLabel,
+    className,
+    name,
+    onHandleChange,
+    options,
+    selected,
+    handleUpdateList
+}) => {
     const isItemChecked = (value: string) => {
         return selected.has(value);
     };
@@ -97,7 +95,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
             newSelection = new Set([]);
         } else {
             // add all items
-            newSelection = new Set(options.map(item => item.value));
+            newSelection = new Set(options.map((item) => item.value));
         }
         onHandleChange(newSelection);
     };
@@ -120,7 +118,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                 </>
             )}
 
-            {options.map(option => {
+            {options.map((option) => {
                 const isSelected = isItemChecked(option.value);
                 const checkBoxId = `checkbox-${name}-${option.value}`;
                 return (
@@ -128,12 +126,11 @@ const CheckboxGroup: FC<CheckboxGroupProps> = (
                         key={option.value}
                         value={option.value}
                         label={option.label}
+                        description={option.description}
                         id={checkBoxId}
                         onChange={(evt) => onItemChange(evt.target.value)}
                         checked={isSelected}
                         color={option.color}
-                        handleDragging={handleDragging}
-                        numSelected={selected.size}
                     />
                 );
             })}

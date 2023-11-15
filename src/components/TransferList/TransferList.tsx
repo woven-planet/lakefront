@@ -1,66 +1,44 @@
-import { DragEvent, FC, useState } from 'react';
-import styled from '@emotion/styled';
-import { blue, white } from 'src/styles/lakefrontColors';
+import { FC, useState } from 'react';
 import CheckboxGroupComponent from '../CheckboxGroup/CheckboxGroup';
-import Button from '../Button/Button';
-
-// Define your Emotion styled components
-const Panel = styled.div({
-    width: '20%',
-    padding: 20,
-    boxSizing: 'border-box',
-    display: 'flex',
-    flexFlow: 'column',
-    alignItems: 'center',
-    borderBottom: '1px solid #222222',
-    boxShadow: '2px 0 10px -5px rgba(0, 0, 0, 0.5), -2px 0 10px -5px rgba(0, 0, 0, 0.5)',
-    overflowY: 'auto',
-    height: 350
-});
-
-const GridContainer = styled.div({
-    display: 'flex',
-    justifyContent: 'space-evenly'
-});
-
-const PanelContainer = styled(Panel)({
-    backgroundColor: white
-});
-
-const ButtonColumnContainer = styled.div({
-    display: 'flex',
-    flexFlow: 'column',
-    justifyContent: 'center'
-});
-
-const StyledButton = styled(Button)({
-   marginBottom: 5
-});
+import {
+    ButtonColumnContainer,
+    CheckBoxContainer,
+    GridContainer,
+    PanelContainer,
+    StyledButton,
+    StyledH4
+} from './transferListStyles';
 
 interface ListItem {
     label: string;
+    description: string;
     value: string;
 }
 
 const JOB_TYPES_1: ListItem[] = [
-    { label: 'Finished', value: 'finished' },
-    { label: 'Cancelled', value: 'canceled' },
-    { label: 'Failed', value: 'failed' },
-    { label: 'Running', value: 'running' }
+    // { label: 'Finished', value: 'finished' },
+    // { label: 'Cancelled', value: 'canceled' },
+    // { label: 'Failed', value: 'failed' },
+    // { label: 'Running', value: 'running' },
+    {
+        label: 'oad-guardian-virtual',
+        description: 'virtual (generated) Guardian Dual Cockpit',
+        value: 'oad-guardian-virtual virtual (generated) Guardian Dual Cockpit'
+    },
+    {
+        label: 'oad-ollr',
+        description: 'virtual (generated) p4a',
+        value: 'oad-ollr virtual (generated) p4a'
+    }
 ];
 
-const JOB_TYPES_2: ListItem[] = [
-    { label: 'Pending', value: 'enqueued' }
-];
+const JOB_TYPES_2: ListItem[] = [{ label: 'Pending', description: 'pending', value: 'enqueued' }];
 
 const TransferList: FC = () => {
     const [listOneValue, setListOneValue] = useState(new Set<string>());
     const [listTwoValue, setListTwoValue] = useState(new Set<string>());
     const [listOneOptions, setListOneOptions] = useState(JOB_TYPES_1);
     const [listTwoOptions, setListTwoOptions] = useState(JOB_TYPES_2);
-    const [isDragging, setIsDragging] = useState(false);
-
-    const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
     const handleListOneClick = (option: any) => {
         setListOneValue(option);
@@ -71,20 +49,13 @@ const TransferList: FC = () => {
     };
 
     const moveItems = (sourceList: ListItem[], targetList: ListItem[], selected: Set<string>) => {
-        const itemsToMove = sourceList.filter(item => selected.has(item.value));
-        console.log('Items To Move', itemsToMove);
-
-        const updatedSourceList = sourceList.filter(item => !selected.has(item.value));
-        console.log('Update Source List', updatedSourceList);
-
+        const itemsToMove = sourceList.filter((item) => selected.has(item.value));
+        const updatedSourceList = sourceList.filter((item) => !selected.has(item.value));
         targetList.push(...itemsToMove);
-        console.log('Target List', targetList);
-
         return [updatedSourceList, [...targetList]];
     };
 
     const handleMoveLeftToRight = () => {
-        console.log('handleMoveLeftToRight');
         const [updatedListOne, updatedListTwo] = moveItems(listOneOptions, listTwoOptions, listOneValue);
         setListOneOptions(updatedListOne);
         setListTwoOptions(updatedListTwo);
@@ -98,45 +69,57 @@ const TransferList: FC = () => {
         setListTwoValue(new Set<string>());
     };
 
-    const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-        console.log('handleDropping');
-        event.preventDefault();
-        handleMoveLeftToRight();
-        if (handleDragging !== undefined) handleDragging(false);
+    const handleAllRight = () => {
+        setListTwoOptions(listOneOptions.concat(listTwoOptions));
+        setListOneOptions([]);
+        setListOneValue(new Set<string>());
     };
 
-    const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-        console.log('handleDragOver');
-        event.preventDefault();
+    const handleAllLeft = () => {
+        setListOneOptions(listTwoOptions.concat(listOneOptions));
+        setListTwoOptions([]);
+        setListTwoValue(new Set<string>());
     };
 
     return (
         <GridContainer>
-            <PanelContainer >
-                <CheckboxGroupComponent
-                    options={listOneOptions}
-                    allLabel={'All'}
-                    name={'listOne'}
-                    selected={listOneValue}
-                    onHandleChange={handleListOneClick}
-                    handleDragging={handleDragging}
-                    handleUpdateList={handleMoveLeftToRight}
-                />
+            <PanelContainer>
+                <StyledH4>Title Column One</StyledH4>
+                <CheckBoxContainer>
+                    <CheckboxGroupComponent
+                        options={listOneOptions}
+                        name={'listOne'}
+                        selected={listOneValue}
+                        onHandleChange={handleListOneClick}
+                        handleUpdateList={handleMoveLeftToRight}
+                    />
+                </CheckBoxContainer>
             </PanelContainer>
             <ButtonColumnContainer>
-                <StyledButton color='secondary' disabled={listOneValue.size === 0} onClick={handleMoveLeftToRight}>Shift Right</StyledButton>
-                <StyledButton color='secondary' disabled={listTwoValue.size === 0} onClick={handleMoveRightToLeft}>Shift Left</StyledButton>
+                <StyledButton color="secondary" disabled={listOneOptions.length === 0} onClick={handleAllRight}>
+                    ≫
+                </StyledButton>
+                <StyledButton color="secondary" disabled={listOneValue.size === 0} onClick={handleMoveLeftToRight}>
+                    &gt;
+                </StyledButton>
+                <StyledButton color="secondary" disabled={listTwoValue.size === 0} onClick={handleMoveRightToLeft}>
+                    &lt;
+                </StyledButton>
+                <StyledButton color="secondary" disabled={listTwoOptions.length === 0} onClick={handleAllLeft}>
+                    ≪
+                </StyledButton>
             </ButtonColumnContainer>
-            <PanelContainer onDrop={handleDrop} onDragOver={handleDragOver}>
-                <CheckboxGroupComponent
-                    options={listTwoOptions}
-                    allLabel={'All'}
-                    name={'listTwo'}
-                    selected={listTwoValue}
-                    onHandleChange={handleListTwoClick}
-                    handleDragging={handleDragging}
-                    handleUpdateList={handleMoveRightToLeft}
-                />
+            <PanelContainer>
+                <StyledH4>Title Column Two</StyledH4>
+                <CheckBoxContainer>
+                    <CheckboxGroupComponent
+                        options={listTwoOptions}
+                        name={'listTwo'}
+                        selected={listTwoValue}
+                        onHandleChange={handleListTwoClick}
+                        handleUpdateList={handleMoveRightToLeft}
+                    />
+                </CheckBoxContainer>
             </PanelContainer>
         </GridContainer>
     );
