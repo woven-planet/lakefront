@@ -1,8 +1,10 @@
 import {
   ChangeEvent,
   ComponentPropsWithoutRef,
+  DragEvent,
   FC,
-  ReactElement
+  ReactElement,
+  useState
 } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { StyledCheckbox, StyledLabel } from './checkboxStyles';
@@ -43,6 +45,7 @@ export interface CheckboxProps {
    * The classes to pass to the checkbox label.
    */
   labelClassName?: string;
+  description?: string;
 }
 
 /**
@@ -61,6 +64,7 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
   disabled = false,
   onChange = () => null,
   labelClassName,
+  description,
   ...props
 }) => {
   const showIcon = indeterminate || checked;
@@ -74,7 +78,11 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledLabel disabled={disabled} indeterminate={indeterminate} className={labelClassName}>
+      <StyledLabel
+        disabled={disabled}
+        indeterminate={indeterminate}
+        className={labelClassName}
+      >
         <StyledCheckbox
           {...props}
           indeterminate={indeterminate}
@@ -84,7 +92,9 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
           type="checkbox"
         />
         {showIcon && icon}
-        {label && <span>{label}</span>}
+        {!description && label && <span>{label}</span>}
+        {description && label && <div>{label}</div>}
+        {description && <div>{description}</div>}
       </StyledLabel>
     </ThemeProvider>
   );
