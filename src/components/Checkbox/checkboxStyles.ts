@@ -21,7 +21,12 @@ export const StyledLabel = styled.label<StyledLabelProps>(({ theme, disabled, in
             gridColumn: '2 / span 1',
             gridRow: '1 / span 1'
         },
-        div: {
+        'div:first-of-type': {
+            gridColumn: '2 / span 1',
+            gridRow: '1 / span 1',
+            fontWeight: 'bold'
+        },
+        'div:nth-of-type(2)': {
             gridColumn: '2 / div 1',
             gridRow: '2 / div 1',
             fontSize: 13

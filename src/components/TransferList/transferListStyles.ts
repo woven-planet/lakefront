@@ -37,7 +37,8 @@ export const ButtonColumnContainer = styled.div({
 });
 
 export const StyledButton = styled(Button)({
-    marginBottom: 5
+    marginBottom: 5,
+    minWidth: 40
 });
 
 export const StyledH4 = styled.h4({

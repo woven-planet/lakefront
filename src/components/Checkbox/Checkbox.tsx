@@ -81,7 +81,8 @@ const Checkbox: FC<CheckboxProps & ComponentPropsWithoutRef<'input'>> = ({
                     type="checkbox"
                 />
                 {showIcon && icon}
-                {label && <span>{label}</span>}
+                {!description && label && <span>{label}</span>}
+                {description && label && <div>{label}</div>}
                 {description && <div>{description}</div>}
             </StyledLabel>
         </ThemeProvider>

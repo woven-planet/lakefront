@@ -9,36 +9,31 @@ import {
     StyledH4
 } from './transferListStyles';
 
-interface ListItem {
+export interface ListItem {
     label: string;
     description: string;
     value: string;
 }
 
-const JOB_TYPES_1: ListItem[] = [
-    // { label: 'Finished', value: 'finished' },
-    // { label: 'Cancelled', value: 'canceled' },
-    // { label: 'Failed', value: 'failed' },
-    // { label: 'Running', value: 'running' },
-    {
-        label: 'oad-guardian-virtual',
-        description: 'virtual (generated) Guardian Dual Cockpit',
-        value: 'oad-guardian-virtual virtual (generated) Guardian Dual Cockpit'
-    },
-    {
-        label: 'oad-ollr',
-        description: 'virtual (generated) p4a',
-        value: 'oad-ollr virtual (generated) p4a'
-    }
-];
+export interface TransferListProps {
+    leftListData: ListItem[];
+    leftListName: string;
+    rightListData: ListItem[];
+    rightListName: string;
+    onListChange: (leftList: ListItem[], rightList: ListItem[]) => void;
+    sort: boolean;
+}
 
-const JOB_TYPES_2: ListItem[] = [{ label: 'Pending', description: 'pending', value: 'enqueued' }];
-
-const TransferList: FC = () => {
+const TransferList: FC<TransferListProps> = ({
+    leftListData,
+    leftListName,
+    rightListData,
+    rightListName,
+    onListChange,
+    sort = true
+}) => {
     const [listOneValue, setListOneValue] = useState(new Set<string>());
     const [listTwoValue, setListTwoValue] = useState(new Set<string>());
-    const [listOneOptions, setListOneOptions] = useState(JOB_TYPES_1);
-    const [listTwoOptions, setListTwoOptions] = useState(JOB_TYPES_2);
 
     const handleListOneClick = (option: any) => {
         setListOneValue(option);
@@ -48,55 +43,65 @@ const TransferList: FC = () => {
         setListTwoValue(option);
     };
 
+    const sortList = (listToSort: ListItem[]) => {
+        listToSort.sort((item1, item2) => item1.label.toLowerCase().localeCompare(item2.label.toLowerCase()));
+    };
+
     const moveItems = (sourceList: ListItem[], targetList: ListItem[], selected: Set<string>) => {
         const itemsToMove = sourceList.filter((item) => selected.has(item.value));
         const updatedSourceList = sourceList.filter((item) => !selected.has(item.value));
         targetList.push(...itemsToMove);
-        return [updatedSourceList, [...targetList]];
+        const updatedDestinationList = [...targetList];
+        if (sort) {
+            sortList(updatedSourceList);
+            sortList(updatedDestinationList);
+        }
+        return [updatedSourceList, updatedDestinationList];
     };
 
     const handleMoveLeftToRight = () => {
-        const [updatedListOne, updatedListTwo] = moveItems(listOneOptions, listTwoOptions, listOneValue);
-        setListOneOptions(updatedListOne);
-        setListTwoOptions(updatedListTwo);
+        const [updatedListOne, updatedListTwo] = moveItems(leftListData, rightListData, listOneValue);
+        onListChange(updatedListOne, updatedListTwo);
         setListOneValue(new Set<string>());
     };
 
     const handleMoveRightToLeft = () => {
-        const [updatedListTwo, updatedListOne] = moveItems(listTwoOptions, listOneOptions, listTwoValue);
-        setListTwoOptions(updatedListTwo);
-        setListOneOptions(updatedListOne);
+        const [updatedListTwo, updatedListOne] = moveItems(rightListData, leftListData, listTwoValue);
+        onListChange(updatedListOne, updatedListTwo);
         setListTwoValue(new Set<string>());
     };
 
     const handleAllRight = () => {
-        setListTwoOptions(listOneOptions.concat(listTwoOptions));
-        setListOneOptions([]);
-        setListOneValue(new Set<string>());
+        if (sort) {
+            sortList(leftListData);
+            sortList(rightListData);
+        }
+        onListChange([], [...leftListData, ...rightListData]);
     };
 
     const handleAllLeft = () => {
-        setListOneOptions(listTwoOptions.concat(listOneOptions));
-        setListTwoOptions([]);
-        setListTwoValue(new Set<string>());
+        if (sort) {
+            sortList(leftListData);
+            sortList(rightListData);
+        }
+        onListChange([...rightListData, ...leftListData], []);
     };
 
     return (
         <GridContainer>
             <PanelContainer>
-                <StyledH4>Title Column One</StyledH4>
+                <StyledH4>{leftListName}</StyledH4>
                 <CheckBoxContainer>
                     <CheckboxGroupComponent
-                        options={listOneOptions}
+                        options={leftListData}
                         name={'listOne'}
                         selected={listOneValue}
                         onHandleChange={handleListOneClick}
-                        handleUpdateList={handleMoveLeftToRight}
                     />
                 </CheckBoxContainer>
             </PanelContainer>
             <ButtonColumnContainer>
-                <StyledButton color="secondary" disabled={listOneOptions.length === 0} onClick={handleAllRight}>
+                <StyledButton color="secondary" disabled={leftListData.length === 0} onClick={handleAllRight}>
                     ≫
                 </StyledButton>
                 <StyledButton color="secondary" disabled={listOneValue.size === 0} onClick={handleMoveLeftToRight}>
@@ -105,19 +110,18 @@ const TransferList: FC = () => {
                 <StyledButton color="secondary" disabled={listTwoValue.size === 0} onClick={handleMoveRightToLeft}>
                     &lt;
                 </StyledButton>
-                <StyledButton color="secondary" disabled={listTwoOptions.length === 0} onClick={handleAllLeft}>
+                <StyledButton color="secondary" disabled={rightListData.length === 0} onClick={handleAllLeft}>
                     ≪
                 </StyledButton>
             </ButtonColumnContainer>
             <PanelContainer>
-                <StyledH4>Title Column Two</StyledH4>
+                <StyledH4>{rightListName}</StyledH4>
                 <CheckBoxContainer>
                     <CheckboxGroupComponent
-                        options={listTwoOptions}
+                        options={rightListData}
                         name={'listTwo'}
                         selected={listTwoValue}
                         onHandleChange={handleListTwoClick}
-                        handleUpdateList={handleMoveRightToLeft}
                     />
                 </CheckBoxContainer>
             </PanelContainer>

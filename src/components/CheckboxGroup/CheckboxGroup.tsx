@@ -52,7 +52,6 @@ export interface CheckboxGroupProps {
      * This option is used to set the select all checkbox color.
      */
     allColor?: string;
-    handleUpdateList?: () => void;
 }
 
 /**
@@ -68,8 +67,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
     name,
     onHandleChange,
     options,
-    selected,
-    handleUpdateList
+    selected
 }) => {
     const isItemChecked = (value: string) => {
         return selected.has(value);
