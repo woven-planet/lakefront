@@ -4,20 +4,10 @@ import DocBlock from '.storybook/DocBlock';
 import { useState } from 'react';
 
 const JOB_TYPES_1: ListItem[] = [
-    // { label: 'Finished', value: 'finished' },
-    // { label: 'Cancelled', value: 'canceled' },
-    // { label: 'Failed', value: 'failed' },
-    // { label: 'Running', value: 'running' },
-    {
-        label: 'oad-guardian-virtual',
-        description: 'virtual (generated) Guardian Dual Cockpit',
-        value: 'oad-guardian-virtual virtual (generated) Guardian Dual Cockpit'
-    },
-    {
-        label: 'oad-ollr',
-        description: 'virtual (generated) p4a',
-        value: 'oad-ollr virtual (generated) p4a'
-    }
+    { label: 'Finished', description: 'finished', value: 'finished' },
+    { label: 'Cancelled', description: 'cancelled', value: 'canceled' },
+    { label: 'Failed', description: 'failed', value: 'failed' },
+    { label: 'Running', description: 'running', value: 'running' }
 ];
 
 const JOB_TYPES_2: ListItem[] = [{ label: 'Pending', description: 'pending', value: 'enqueued' }];
