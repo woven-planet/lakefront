@@ -126,6 +126,7 @@ const TransferList: FC<TransferListProps> = ({
             color="secondary"
             disabled={leftListData.length === 0}
             onClick={handleAllRight}
+            type={'button'}
           >
             ≫
           </StyledButton>
@@ -133,6 +134,7 @@ const TransferList: FC<TransferListProps> = ({
             color="secondary"
             disabled={listOneValue.size === 0}
             onClick={handleMoveLeftToRight}
+            type={'button'}
           >
             &gt;
           </StyledButton>
@@ -140,6 +142,7 @@ const TransferList: FC<TransferListProps> = ({
             color="secondary"
             disabled={listTwoValue.size === 0}
             onClick={handleMoveRightToLeft}
+            type={'button'}
           >
             &lt;
           </StyledButton>
@@ -147,6 +150,7 @@ const TransferList: FC<TransferListProps> = ({
             color="secondary"
             disabled={rightListData.length === 0}
             onClick={handleAllLeft}
+            type={'button'}
           >
             ≪
           </StyledButton>
