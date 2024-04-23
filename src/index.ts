@@ -98,15 +98,8 @@ export * from './components/StackBanner';
 export { default as StatusTable } from './components/StatusTable';
 export * from './components/StatusTable';
 
-export { default as StepFunctionAuthoring } from './components/StepFunctionAuthoring/StepFunctionAuthoring';
-export * from './components/StepFunctionAuthoring/util';
-export * from './components/StepFunctionAuthoring/types';
-
 export { default as StepFunctionGraph } from './components/StepFunctionGraph';
 export * from './components/StepFunctionGraph';
-
-export { default as StepFunctionRenderer } from './components/StepFunctionRenderer';
-export * from './components/StepFunctionRenderer';
 
 export { default as Table } from './components/Table';
 export * from './components/Table';
