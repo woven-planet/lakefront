@@ -38,8 +38,8 @@ export interface CopyButtonProps {
 /**
  * CopyButton Component
  *
- * The CopyButton component is an implementation of the [Button Component](https://toyotaresearchinstitute.github.io/lakefront/?path=/docs/lakefront-button--all-buttons)
- * used specifically for copying provided text to the clipboard. While the default usage should suffice, various aspects can be overriden
+ * The CopyButton component is an implementation of the [Button Component](https://woven-planet.github.io/lakefront/?path=/docs/lakefront-button--all-buttons)
+ * used specifically for copying provided text to the clipboard. While the default usage should suffice, various aspects can be overridden
  * due to the inheritance of many `ButtonComponentProps`.
  */
 const CopyButton: FC<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = ({

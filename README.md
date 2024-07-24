@@ -1,25 +1,25 @@
-![main workflow](https://github.com/ToyotaResearchInstitute/lakefront/actions/workflows/main.yml/badge.svg)
-[![npm version](https://badge.fury.io/js/%40toyota-research-institute%2Flakefront.svg)](https://badge.fury.io/js/%40toyota-research-institute%2Flakefront)
+![main workflow](https://github.com/woven-planet/lakefront/actions/workflows/main.yml/badge.svg)
+[![npm version](https://badge.fury.io/js/%40woven-planet%2Flakefront.svg)](https://badge.fury.io/js/%40woven-planet%2Flakefront)
 
 # lakefront
 Lakefront is a simple React component library.
 
 ## Installation
 
-Lakefront is available as an [npm package](https://www.npmjs.com/package/@toyota-research-institute/lakefront).
+Lakefront is available as an [npm package](https://www.npmjs.com/package/@woven-planet/lakefront).
 
 ```sh
 // with npm
-npm install @toyota-research-institute/lakefront
+npm install @woven-planet/lakefront
 
 // with yarn
-yarn add @toyota-research-institute/lakefront
+yarn add @woven-planet/lakefront
 ```
 
 Emotion's `ThemeProvider` must wrap your application for the components to style correctly.
 ```
 import { ThemeProvider } from '@emotion/react';
-import { theme } from '@toyota-research-institute/lakefront';
+import { theme } from '@woven-planet/lakefront';
 
 <ThemeProvider theme={theme}>
     ...
@@ -34,7 +34,7 @@ Here is a quick example to get you started, **it's all you need**:
 
 ```jsx
 import { createRoot } from 'react-dom/client';
-import { Button } from '@toyota-research-institute/lakefront';
+import { Button } from '@woven-planet/lakefront';
 
 function App() {
     return <Button>Hello World</Button>;
