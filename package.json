@@ -1,7 +1,7 @@
 {
   "name": "@woven-planet/lakefront",
   "description": "React UI Components",
-  "version": "5.5.0",
+  "version": "5.5.3",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "homepage": "https://github.com/woven-planet/lakefront",
@@ -120,6 +120,6 @@
     "library"
   ],
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   }
 }
