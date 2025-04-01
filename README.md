@@ -27,7 +27,7 @@ import { theme } from '@woven-planet/lakefront';
 ```
 
 ## Usage
-### ⚠️ <b>LakeFront requires the client application to use React 18 as well as Node 18.x. ⚠️ </b>
+### ⚠️ <b>LakeFront requires the client application to use React 18 and the Node version in the [package.json](./package.json) ⚠️ </b>
 
 
 Here is a quick example to get you started, **it's all you need**:
