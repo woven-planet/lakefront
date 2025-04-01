@@ -23,6 +23,9 @@ export * from './components/CheckboxGroup';
 export { default as Collapsible } from './components/Collapsible';
 export * from './components/Collapsible';
 
+export { default as ContentPlaceholder } from './components/ContentPlaceholder';
+export * from './components/ContentPlaceholder';
+
 export { default as CopyButton } from './components/CopyButton';
 export * from './components/CopyButton';
 
