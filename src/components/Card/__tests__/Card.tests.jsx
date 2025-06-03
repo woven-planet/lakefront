@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import Card from '../Card'
-import { Button } from '@storybook/components';
 
 describe('<Card />', () => {
     it('renders CardProps', () => {
@@ -56,7 +55,7 @@ describe('<Card />', () => {
     });
 
     it('renders topRightComponent to override original Button.', () => {
-        const { container, getByText } = render(
+        const { getByText } = render(
             <Card
                 title='My Card'
                 description='This is a card description.'
@@ -65,8 +64,6 @@ describe('<Card />', () => {
                 topRightComponent={<button>Override button</button>}
                 onClick={() => undefined}
             />);
-
-        const button = container.querySelector('button');
 
         getByText('Override button');
     });
