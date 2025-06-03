@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import ModalComponent, { ModalProps } from 'src/components/Modal/Modal';
 import DocBlock from '.storybook/DocBlock';
@@ -42,7 +42,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ModalProps & ComponentPropsWithoutRef<'div'> & { additionalText?: string }> = (args) => {
+const Template: StoryFn<ModalProps & ComponentPropsWithoutRef<'div'> & { additionalText?: string }> = (args) => {
     const [visible, setVisible] = useState(false);
 
     const updateModalVisibility = () => {

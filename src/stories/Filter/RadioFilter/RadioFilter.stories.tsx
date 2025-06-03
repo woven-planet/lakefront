@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import RadioFilterDocs, { RadioFilterArgs, RADIO_FILTER_SOURCE_CODE } from './RadioFilterDocs';
@@ -51,7 +51,7 @@ const RADIO_FILTER_OPTIONS = [
 ];
 
 // Radio Filter
-const RadioFilterTemplate: Story = (args: RadioFilterArgs) => {
+const RadioFilterTemplate: StoryFn = (args: RadioFilterArgs) => {
     const pageFilters = {
         radioFilter: RadioFilterFunction(args.radioFilterProps, {})
     };

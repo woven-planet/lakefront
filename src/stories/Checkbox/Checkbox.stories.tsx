@@ -1,9 +1,9 @@
-import { ChangeEvent, ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import CheckboxComponent, { CheckboxProps } from 'src/components/Checkbox/Checkbox';
 import DocBlock from '.storybook/DocBlock';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
     title: 'Lakefront/Checkbox',
@@ -36,7 +36,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => {
+const Template: StoryFn<CheckboxProps & ComponentPropsWithoutRef<'input'>> = (args) => {
     const [isChecked, setIsChecked] = useState(false);
 
     const handleClick = (event: ChangeEvent<HTMLInputElement>) => {

@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import CollapsibleComponent, { CollapsibleProps } from 'src/components/Collapsible/Collapsible';
 import DocBlock from '.storybook/DocBlock';
@@ -37,7 +37,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CollapsibleProps & ComponentPropsWithoutRef<'div'>> = (
+const Template: StoryFn<CollapsibleProps & ComponentPropsWithoutRef<'div'>> = (
   args
 ) => (
   <CollapsibleComponent {...args}>

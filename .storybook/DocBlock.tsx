@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ArgTypes, Description, Stories, Subtitle, Title } from "@storybook/blocks";
+import { ArgTypes, Description, Stories, Subtitle, Title } from "@storybook/addon-docs/blocks";
 
 const DocBlock: FC = () => {
     return (

@@ -1,5 +1,5 @@
 import DocBlock from '.storybook/DocBlock';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import usePopover, { PopoverContent as PopoverContentComponent, PortalStyles } from 'src/lib/hooks/usePopover';
 import { useMemo, useState } from 'react';
 
@@ -32,7 +32,7 @@ interface TemplateProps {
     renderInPortal: boolean;
 }
 
-const Template: Story<TemplateProps> = ({ content, renderInPortal }) => {
+const Template: StoryFn<TemplateProps> = ({ content, renderInPortal }) => {
     const [popoverContainer, setPopoverContainer] = useState<HTMLElement | null>(null);
     const portalStyles: PortalStyles = useMemo(() => {
         const className = 'select-popover-portal';

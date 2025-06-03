@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import { StatusTable as StatusTableComponent, StatusRow, StatusCellBadge, StatusTableProps, Status } from 'src/components/StatusTable';
 import DocBlock from '.storybook/DocBlock';
@@ -24,7 +24,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<StatusTableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<StatusTableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
 
     return (
         <StatusTableComponent headers={args.headers} cards={args.cards}>

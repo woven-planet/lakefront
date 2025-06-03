@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useEffect, useState, useRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import RefreshToolbarComponent, { RefreshToolbarProps } from 'src/components/RefreshToolbar';
 import Button from 'src/components/Button/Button';
 import DocBlock from '.storybook/DocBlock';
@@ -15,7 +15,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<RefreshToolbarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<RefreshToolbarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [count, setCount] = useState(0);
     const [showBanner, setShowBanner] = useState(false);
     const refreshToolbarRef = useRef(null);

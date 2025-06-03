@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import DocBlock from '.storybook/DocBlock';
@@ -38,7 +38,7 @@ export default {
 } as Meta;
 
 // Min Max Filter
-const MinMaxFilterTemplate: Story = (args: MinMaxFilterArgs) => {
+const MinMaxFilterTemplate: StoryFn = (args: MinMaxFilterArgs) => {
   const pageFilters = {
     minMaxFilter: MinMaxFilterFunction({ ...args })
   };

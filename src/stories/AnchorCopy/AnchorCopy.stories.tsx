@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import AnchorCopyComponent, { AnchorCopyProps } from 'src/components/AnchorCopy';
 import Input from 'src/components/Input/Input';
@@ -28,7 +28,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<AnchorCopyProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [title, setTitle] = useState('anchor-copy');
     const [copied, setCopied] = useState('');
 

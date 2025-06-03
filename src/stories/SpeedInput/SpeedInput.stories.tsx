@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import SpeedInputComponent, { Mode, SpeedInputProps, SPEED_UNITS, VehicleSpeed } from 'src/components/SpeedInput/SpeedInput';
 import { emerald } from 'src/styles/lakefrontColors';
 
@@ -45,7 +45,7 @@ export default {
     },
 } as Meta;
 
-const Template: Story<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<SpeedInputProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [speedRange, setSpeedrange] = useState<VehicleSpeed | null>(null);
     const [showBanner, setShowBanner] = useState(false);
 

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 
 import DocBlock from '.storybook/DocBlock';
@@ -21,7 +21,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<PreviewProps> = ({ sortBy }) => <Preview sortBy={sortBy} />;
+const Template: StoryFn<PreviewProps> = ({ sortBy }) => <Preview sortBy={sortBy} />;
 
 export const SortedByColor = Template.bind({});
 SortedByColor.args = {

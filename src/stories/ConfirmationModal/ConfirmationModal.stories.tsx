@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import ConfirmationModalComponent, { ConfirmationModalProps } from 'src/components/Modal/ConfirmationModal';
 import DocBlock from '.storybook/DocBlock';
@@ -52,7 +52,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ConfirmationModalProps & ComponentPropsWithoutRef<'div'> & { buttonLabel: string }> = (args) => {
+const Template: StoryFn<ConfirmationModalProps & ComponentPropsWithoutRef<'div'> & { buttonLabel: string }> = (args) => {
     const [visible, setVisible] = useState(false);
 
     const updateConfirmationModalVisibility = () => {

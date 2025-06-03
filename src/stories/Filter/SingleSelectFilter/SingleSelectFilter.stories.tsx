@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage, { SINGLE_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
 import SingleSelectFilterDocs, { SingleSelectFilterArgs, SINGLE_SELECT_FILTER_SOURCE_CODE } from './SingleSelectFilterDocs';
@@ -32,7 +32,7 @@ export default {
 } as Meta;
 
 // Single Select Filter
-const SingleSelectFilterTemplate: Story = (args: SingleSelectFilterArgs) => {
+const SingleSelectFilterTemplate: StoryFn = (args: SingleSelectFilterArgs) => {
     const pageFilters = {
         singleSelectFilter: SingleSelectFilterFunction(args.singleSelectFilterProps, {})
     };

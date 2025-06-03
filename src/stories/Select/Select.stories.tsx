@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import SelectComponent, { SelectProps } from 'src/components/Select';
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
@@ -14,7 +14,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<SelectProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<SelectProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [value, setValue] = useState(args.value);
     const handleOnChange = (event) => {
         setValue(event.target.value);

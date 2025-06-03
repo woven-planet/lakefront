@@ -3,12 +3,15 @@ module.exports = {
         '../src/**/*.stories.mdx',
         '../src/**/*.stories.@(js|jsx|ts|tsx)'
     ],
+
     // @storybook/addon-mdx-gfm addon is a migration assistant for storybook v7.
     // Read more for MDX: https://storybook.js.org/docs/react/writing-docs/mdx#lack-of-github-flavored-markdown-gfm
     addons: [
         '@storybook/addon-links',
-        '@storybook/addon-essentials'
+        '@storybook/addon-docs',
+        '@storybook/addon-webpack5-compiler-babel'
     ],
+
     webpackFinal: async config => {
         config.resolve.modules.push(process.cwd() + '/node_modules');
         config.resolve.modules.push(process.cwd() + '/');
@@ -39,11 +42,9 @@ module.exports = {
 
         return config;
     },
+
     framework: {
         name: '@storybook/react-webpack5',
         options: {}
-    },
-    docs: {
-        autodocs: true
     }
 };

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import SnackbarComponent, { SnackbarProps } from 'src/components/Snackbar/index';
 import DocBlock from '.storybook/DocBlock';
 import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';
@@ -25,7 +25,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<SnackbarProps> = (args) => {
+const Template: StoryFn<SnackbarProps> = (args) => {
     const [showMsg, setShowMsg] = useState<boolean>(false);
 
     const showMessage = (value: boolean) => {

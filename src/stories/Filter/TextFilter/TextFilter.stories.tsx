@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import TextFilterDocs, { TextFilterArgs, TEXT_FILTER_SOURCE_CODE } from './TextFilterDocs';
@@ -32,7 +32,7 @@ export default {
 } as Meta;
 
 // Text Filter
-const TextFilterTemplate: Story = (args: TextFilterArgs) => {
+const TextFilterTemplate: StoryFn = (args: TextFilterArgs) => {
     const pageFilters = {
         textFilter: TextFilterFunction(args.label, args.description, {}),
         numberFilter: TextFilterFunction(

@@ -1,6 +1,6 @@
 
-import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { ComponentPropsWithoutRef } from 'react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import ItemGridComponent, { ItemGridProps } from 'src/components/ItemGrid';
 import DocBlock from '.storybook/DocBlock';
@@ -15,7 +15,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ItemGridProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<ItemGridProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const showColumns = columns => {
         let content = [];
         for (let i = 0; i < columns; i++) {

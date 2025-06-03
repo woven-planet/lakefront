@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import Button from 'src/components/Button/Button';
 import TableComponent, { TableProps } from 'src/components/Table';
 import DocBlock from '.storybook/DocBlock';
@@ -206,7 +206,7 @@ const StyledTableComponent = styled(TableComponent)({
     }
 });
 
-const Template: Story<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<TableProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [data, setData] = useState(args.data);
     const [dataToggle, setDataToggle] = useState(false);
     const [sortMsg, setSortMsg] = useState('');

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import LoadingComponent, { LoadingProps } from 'src/components/Loading/Loading';
 import DocBlock from '.storybook/DocBlock';
@@ -22,7 +22,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<LoadingProps> = (args) => (
+const Template: StoryFn<LoadingProps> = (args) => (
     <div style={{ display: 'flex' }}>
         <LoadingComponent {...args} />
     </div>

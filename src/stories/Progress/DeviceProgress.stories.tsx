@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import DeviceProgressBarComponent, { DeviceProgressProps } from 'src/components/Progress/DeviceProgressBar';
 import DocBlock from '.storybook/DocBlock';
 import colors from 'src/styles/lakefrontColors';
@@ -14,7 +14,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<DeviceProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<DeviceProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <section style={{ display: 'inline-flex' }}>
             <DeviceProgressBarComponent {...args} />

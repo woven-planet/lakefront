@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import DrawerComponent, { DrawerProps } from 'src/components/Drawer';
 import DocBlock from '.storybook/DocBlock';
@@ -16,7 +16,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<DrawerProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<DrawerProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showBanner, setShowBanner] = useState(false);
     const drawerContainRef = useRef(null);

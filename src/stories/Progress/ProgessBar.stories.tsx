@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import ProgressBarComponent, { ProgressBarProps } from 'src/components/Progress/ProgressBar';
 import DocBlock from '.storybook/DocBlock';
 import { PROGRESS_COLOR_SCHEME } from 'src/stories/Progress/progressColors';
@@ -37,7 +37,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ProgressBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<ProgressBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <section style={{ display: 'inline-flex' }}>
             <ProgressBarComponent width={args.width} data={args.data} theme={args.theme} total={args.total}>

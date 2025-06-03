@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import DocBlock from '.storybook/DocBlock';
 import ToggleComponent, { ToggleProps } from 'src/components/Toggle/Toggle';
@@ -36,7 +36,7 @@ const toggleOptions: SelectOption<string>[] = [
 
 
 
-const Template: Story<ToggleProps<string>> = (args) => {
+const Template: StoryFn<ToggleProps<string>> = (args) => {
     const [selected, setSelected] = useState(toggleOptions[0].value);
     const handleChange = (value: string) => {
         setSelected(value);

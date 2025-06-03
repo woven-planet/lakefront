@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import DurationFilterDocs, { DurationFilterArgs, DURATION_FILTER_SOURCE_CODE } from './DurationFilterDocs';
@@ -29,7 +29,7 @@ export default {
 } as Meta;
 
 // Duration Filter
-const DurationFilterTemplate: Story = (args: DurationFilterArgs) => {
+const DurationFilterTemplate: StoryFn = (args: DurationFilterArgs) => {
     console.log("args:", args);
     const pageFilters = {
         durationFilter: DurationFilterFunction({ ...args })

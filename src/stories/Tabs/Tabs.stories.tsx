@@ -1,6 +1,6 @@
 
-import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { ComponentPropsWithoutRef, useState } from 'react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import TabComponent, { TabProps } from 'src/components/Tabs';
 import DocBlock from '.storybook/DocBlock';
@@ -15,7 +15,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<TabProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<TabProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [keyValue, setKeyValue] = useState('Key1');
 
     const handleChange = (value: string) => {

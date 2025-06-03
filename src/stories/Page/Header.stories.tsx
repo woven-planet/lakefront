@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import HeaderComponent from 'src/components/Page/Header';
 import DocBlock from '.storybook/DocBlock';
@@ -21,7 +21,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<ComponentPropsWithoutRef<'div'>> = (args) => {
     return(
         <HeaderComponent>
             {args.children}
