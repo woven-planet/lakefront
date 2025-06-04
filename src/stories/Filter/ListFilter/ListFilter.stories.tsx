@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import DocBlock from '.storybook/DocBlock';
@@ -33,7 +33,7 @@ export default {
 } as Meta;
 
 // ListFilter
-const ListFilterTemplate: Story = (args: ListFilterArgs) => {
+const ListFilterTemplate: StoryFn = (args: ListFilterArgs) => {
     const pageFilters = {
         listFilter: ListFilterFunction(args.options, args.label, args.description, args.listFilterOptions)
     };

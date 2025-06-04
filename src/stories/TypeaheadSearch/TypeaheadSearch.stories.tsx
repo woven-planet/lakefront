@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import TypeaheadSearch, { TypeaheadSearchProps } from 'src/components/TypeaheadSearch';
 import DocBlock from '.storybook/DocBlock';
@@ -38,7 +38,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<TypeaheadSearchProps> = (args) => {
+const Template: StoryFn<TypeaheadSearchProps> = (args) => {
     const [result, setResult] = useState<string>('');
 
     const submitSearch = (searchText: string) => {

@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef, useState, useEffect, useRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { ComponentPropsWithoutRef, useState } from 'react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import MaskableImageComponent, { MaskableImageProps } from 'src/components/MaskableImage'
 import DocBlock from '.storybook/DocBlock';
 import { emerald } from 'src/styles/lakefrontColors';
@@ -15,7 +15,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<MaskableImageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<MaskableImageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [showMessage, setShowMessage] = useState<boolean>(false);
     const onHandleImageClick = () => {
         setShowMessage(showMessage => !showMessage);

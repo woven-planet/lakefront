@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import BoundingBoxesComponent, { BoundingBoxesProps } from 'src/components/BoundingBoxes';
 import DocBlock from '.storybook/DocBlock';
@@ -112,7 +112,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<BoundingBoxesProps> = (args) => {
+const Template: StoryFn<BoundingBoxesProps> = (args) => {
     const [boundingBoxDimensions, setBoundingBoxDimensions] = useState({ width: 1920, height: 1280 });
     const [imageLoaded, setImageLoaded] = useState(false);
     const [observedElement, setObservedElement] = useState(null);

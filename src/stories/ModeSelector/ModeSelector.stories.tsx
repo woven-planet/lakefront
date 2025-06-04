@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import DocBlock from '.storybook/DocBlock';
 import ModeSelectorComponent, { ModeSelectorProps } from 'src/components/ModeSelector/ModeSelector';
@@ -65,7 +65,7 @@ const LEGEND = [
     { label: 'Seventh Mode', color: lakefrontColors.havelockBlue },
 ];
 
-const Template: Story<ModeSelectorProps & { height: number }> = (args) => {
+const Template: StoryFn<ModeSelectorProps & { height: number }> = (args) => {
     const [selected, setSelected] = useState(MODES[0].value);
     const handleChange = (value: string) => {
         setSelected(value);

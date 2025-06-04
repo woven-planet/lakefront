@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import {
   NORMAL_SEVERITY,
   WARNING_SEVERITY,
@@ -30,7 +30,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<StackBannerRowProps & ComponentPropsWithoutRef<'div'>> = (
+const Template: StoryFn<StackBannerRowProps & ComponentPropsWithoutRef<'div'>> = (
   args
 ) => <StackBannerRowComponent {...args} />;
 

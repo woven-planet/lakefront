@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import CardComponent, { CardProps } from 'src/components/Card/Card';
 import Snackbar from 'src/components/Snackbar';
 import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';
@@ -10,7 +10,7 @@ export default {
     component: CardComponent
 } as Meta;
 
-const Template: Story<CardProps> = () => {
+const Template: StoryFn<CardProps> = () => {
     const [showMsg, setShowMsg] = useState<boolean>(false);
 
     const showMessage = (_value: boolean) => {
@@ -36,7 +36,7 @@ const Template: Story<CardProps> = () => {
     );
 };
 
-const MultiTemplateCard: Story<CardProps> = () => {
+const MultiTemplateCard: StoryFn<CardProps> = () => {
     const [showMsg, setShowMsg] = useState<boolean>(false);
 
     const showMessage = (_value: boolean) => {

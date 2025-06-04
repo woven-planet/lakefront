@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage, { MULTI_SELECT_FILTER_OPTIONS } from '../components/FilterPage';
 import MultiSelectFilterDocs, { MultiSelectFilterArgs, MULTI_SELECT_FILTER_SOURCE_CODE } from './MultiSelectFilterDocs';
@@ -32,7 +32,7 @@ export default {
 } as Meta;
 
 // Multi Select Filter
-const MultiSelectFilterTemplate: Story = (args: MultiSelectFilterArgs) => {
+const MultiSelectFilterTemplate: StoryFn = (args: MultiSelectFilterArgs) => {
     const pageFilters = {
         multiSelectFilter: MultiSelectFilterFunction(args.multiSelectFilterProps, {})
     };

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from './components/FilterPage';
 import FilterComponent from 'src/components/Filter/Filter';
@@ -64,7 +64,7 @@ export default {
 } as Meta;
 
 // All Filters
-const AllTemplate: Story = (args) => <FilterPage {...args} />;
+const AllTemplate: StoryFn = (args) => <FilterPage {...args} />;
 
 export const NoFilterBar = AllTemplate.bind({});
 export const WithFilterBar = AllTemplate.bind({});

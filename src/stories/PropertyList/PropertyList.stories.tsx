@@ -1,6 +1,6 @@
 
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import PropertyListComponent, { PropertyListProps, Property } from 'src/components/PropertyList';
 import DocBlock from '.storybook/DocBlock';
 export default {
@@ -24,7 +24,7 @@ const data = {
 };
 
 
-const Template: Story<PropertyListProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<PropertyListProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <PropertyListComponent {...args} />
     );

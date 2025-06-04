@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import Button from 'src/components/Button/Button';
 import { ButtonComponentProps, COLORS } from 'src/components/Button/buttonUtil';
@@ -47,13 +47,13 @@ export default {
 } as Meta;
 
 // All Buttons
-const AllTemplate: Story = (args) => <ButtonsPage />;
+const AllTemplate: StoryFn = (args) => <ButtonsPage />;
 
 export const AllButtons = AllTemplate.bind({});
 
 AllButtons.args = {};
 
-const Template: Story<ButtonComponentProps> = (args) => <Button {...args} />;
+const Template: StoryFn<ButtonComponentProps> = (args) => <Button {...args} />;
 
 // Individual Buttons (No Icon)
 export const Primary = Template.bind({});

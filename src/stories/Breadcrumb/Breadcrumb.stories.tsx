@@ -1,6 +1,6 @@
 
-import { Children, ComponentPropsWithoutRef, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { ComponentPropsWithoutRef } from 'react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import BreadcrumbHeaderComponent, { BreadcrumbHeaderProps } from 'src/components/Breadcrumb';
 import DocBlock from '.storybook/DocBlock';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +15,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<BreadcrumbHeaderProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<BreadcrumbHeaderProps & ComponentPropsWithoutRef<'div'>> = (args) => {
 
     return (
         <MemoryRouter>

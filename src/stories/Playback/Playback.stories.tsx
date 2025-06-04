@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useState, useRef, useEffect } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import PlaybackBarComponent, { PlaybackBarProps } from 'src/components/PlaybackBar';
 import DocBlock from '.storybook/DocBlock';
@@ -25,7 +25,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<PlaybackBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<PlaybackBarProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [index, setIndex] = useState(0);
     const [showBanner, setShowBanner] = useState(false);
     const playBackRef = useRef(null);

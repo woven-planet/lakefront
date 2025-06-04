@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import Input, { InputProps } from 'src/components/Input/Input';
 import DocBlock from '.storybook/DocBlock';
@@ -35,7 +35,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<InputProps & ComponentPropsWithoutRef<'input'>> = (args) => <Input {...args} />;
+const Template: StoryFn<InputProps & ComponentPropsWithoutRef<'input'>> = (args) => <Input {...args} />;
 
 export const Placeholder = Template.bind({});
 Placeholder.args = {

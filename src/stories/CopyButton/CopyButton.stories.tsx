@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import CopyButtonComponent, { CopyButtonProps } from 'src/components/CopyButton';
 import { ButtonComponentProps, COLORS } from 'src/components/Button/buttonUtil';
@@ -53,7 +53,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (args) => {
+const Template: StoryFn<CopyButtonProps & Omit<ButtonComponentProps, 'onCopy'>> = (args) => {
     const [copyText, setCopyText] = useState('Text to copy');
     const [copied, setCopied] = useState('');
 

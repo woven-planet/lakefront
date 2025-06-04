@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import SelectPopover, { SelectPopoverProps } from 'src/components/SelectPopover/SelectPopover';
 import DocBlock from '.storybook/DocBlock';
@@ -25,7 +25,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<SelectPopoverProps> = (args) => (
+const Template: StoryFn<SelectPopoverProps> = (args) => (
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 200 }}>
         <SelectPopover {...args}>
             <Button icon={true} />

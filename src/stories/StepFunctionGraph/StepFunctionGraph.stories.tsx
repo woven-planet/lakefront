@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import DocBlock from '.storybook/DocBlock';
 import StepFunctionGraph, { GraphProps } from 'src/components/StepFunctionGraph/Graph';
@@ -20,7 +20,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<GraphProps> = (args) => {
+const Template: StoryFn<GraphProps> = (args) => {
     const [highlighted, setHighlighted] = useState<string | null>(null);
 
     const handleSelectedNode = (node: any) => {

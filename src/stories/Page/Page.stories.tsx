@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import PageComponent, { PageProps } from 'src/components/Page/Page';
 import HeaderComponent from 'src/components/Page/Header';
@@ -46,7 +46,7 @@ const RADIO_FILTER_OPTIONS = [
     }
 ];
 
-const Template: Story<PageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<PageProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const pageFilters = {
         radioFilter: RadioFilterFunction({
             label: 'Radio Filter',

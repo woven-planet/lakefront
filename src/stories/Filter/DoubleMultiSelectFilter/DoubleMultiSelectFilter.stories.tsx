@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import DoubleMultiSelectFilterDocs, { DoubleMultiSelectFilterArgs, DOUBLE_MULTI_SELECT_FILTER_SOURCE_CODE } from './DoubleMultiSelectFilterDocs';
@@ -32,7 +32,7 @@ export default {
 } as Meta;
 
 // Double Multi Select Filter
-const DoubleMultiSelectFilterTemplate: Story = (args: DoubleMultiSelectFilterArgs) => {
+const DoubleMultiSelectFilterTemplate: StoryFn = (args: DoubleMultiSelectFilterArgs) => {
     const pageFilters = {
         doubleMultiSelectFilter: DoubleMultiSelectFilterFunction(args.doubleMultiSelectFilterProps, args.doubleMultiSelectFilterOptions)
     };

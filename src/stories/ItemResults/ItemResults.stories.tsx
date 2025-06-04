@@ -1,6 +1,6 @@
 
 import { ComponentPropsWithoutRef, useState, useEffect, useRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import Input from 'src/components/Input/Input';
 import Button from 'src/components/Button/Button';
@@ -18,7 +18,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<ItemResultsProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<ItemResultsProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     const [dataLengthValue, setDataLength] = useState(args.dataLength);
     const [totalItemsValue, setTotalItems] = useState(args.totalItems);
     const [showBanner, setShowBanner] = useState(false);

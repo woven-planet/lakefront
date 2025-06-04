@@ -1,6 +1,6 @@
 
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import CircularProgressComponent, { CircularProgressProps } from 'src/components/Progress/CircularProgress';
 import DocBlock from '.storybook/DocBlock';
 import { PROGRESS_COLOR_SCHEME } from 'src/stories/Progress/progressColors';
@@ -38,7 +38,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<CircularProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
+const Template: StoryFn<CircularProgressProps & ComponentPropsWithoutRef<'div'>> = (args) => {
     return (
         <section style={{ display: 'inline-flex' }}>
             <CircularProgressComponent width={args.width} data={args.data} theme={args.theme} text={args.text}>

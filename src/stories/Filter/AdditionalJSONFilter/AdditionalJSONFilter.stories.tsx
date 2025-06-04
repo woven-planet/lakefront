@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import FilterPage from '../components/FilterPage';
 import AdditionalJSONFilterDocs, { AdditionalJSONFilterArgs, ADDITIONAL_JSON_SELECT_FILTER_SOURCE_CODE } from './AdditionalJSONFilterDocs';
@@ -26,7 +26,7 @@ export default {
 } as Meta;
 
 // Additional JSON Filter
-const AdditionalJSONFilterTemplate: Story = (args: AdditionalJSONFilterArgs) => {
+const AdditionalJSONFilterTemplate: StoryFn = (args: AdditionalJSONFilterArgs) => {
     const pageFilters = {
         additionalJSONFilter: AdditionalJSONFilterFunction(args.additionalJSONFilterOptions)
     };

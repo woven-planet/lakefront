@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 
 import TextArea, { TextAreaProps } from 'src/components/TextArea/TextArea';
 import DocBlock from '.storybook/DocBlock';
@@ -35,7 +35,7 @@ export default {
     }
 } as Meta;
 
-const Template: Story<TextAreaProps & ComponentPropsWithoutRef<'textarea'>> = (args) => <TextArea {...args} />;
+const Template: StoryFn<TextAreaProps & ComponentPropsWithoutRef<'textarea'>> = (args) => <TextArea {...args} />;
 
 export const Placeholder = Template.bind({});
 Placeholder.args = {

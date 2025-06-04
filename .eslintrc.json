@@ -16,7 +16,16 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "single"]
-    }
+        "semi": [
+            "error",
+            "always"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ]
+    },
+    "extends": [
+        "plugin:storybook/recommended"
+    ]
 }
