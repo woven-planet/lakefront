@@ -19,7 +19,7 @@ import ComponentName, { ComponentNameProps } from './ComponentName';
 export { ComponentNameProps };
 export default ComponentName;
 ```
-See the [next section](#Use minimum component file structure) on what the `ComponentName.tsx` should contain.
+See the [next section](#Use-minimum-component-file-structure) on what the `ComponentName.tsx` should contain.
 
 ### Use minimum component file structure
 The (`ComponentName.tsx`) file should resemble:
@@ -67,8 +67,8 @@ export { default as ComponentName } from './components/ComponentName';
 export * from './components/ComponentName';
 ```
 
-### Add entries in [README => Storybook Components Table](README.md#How to add components to this table)
-Update the [README.md Storybook components table](README.md#How to add components to this table).
+### Add entries in [README => Storybook Components Table](README.md#How-to-add-components-to-this-table)
+Update the [README.md Storybook components table](README.md#How-to-add-components-to-this-table).
 
 ## Using SVGs
 Although the project supports absolute paths, SVGs need to be imported with a relative path, e.g., <br />`import { ReactComponent as MySVG } from ../assets/MySVG.svg`
