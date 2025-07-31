@@ -70,7 +70,7 @@ export const StyledSnackbarContent = styled.div(() => ({
 }));
 
 export const StyledSnackbarMessage = styled.div(() => ({
-    color: 'rgb(255, 255, 255)',
+    color: 'rgb(254, 255, 255)',
     alignSelf: 'center'
 }));
 
