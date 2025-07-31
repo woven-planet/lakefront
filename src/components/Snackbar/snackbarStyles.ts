@@ -59,18 +59,23 @@ export const StyledSnackbarButton = styled.span(() => ({
     padding: 5
 }));
 
-export const StyledSnackbarContent = styled.div(() => ({
+interface StyledSnackbarProps {
+    alt?: boolean
+}
+
+export const StyledSnackbarContent = styled.div<StyledSnackbarProps>(({alt}) => ({
     display: 'flex',
     alignItems: 'center',
     minWidth: 80,
-    borderRadius: 4,
-    backgroundColor: 'rgb(44, 44, 53)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+    border: `3px solid ${alt ? '#35C65B' : '#E6F6EA'}`,
+    backgroundColor: alt ? '#2D2F32' : '#F9FAFB',
     padding: '4px 16px',
     justifyContent: 'space-between'
 }));
 
-export const StyledSnackbarMessage = styled.div(() => ({
-    color: 'rgb(254, 255, 255)',
+export const StyledSnackbarMessage = styled.div<StyledSnackbarProps>(({alt}) => ({
+    color: alt ? '#7DDE9C' : '#35C65B',
     alignSelf: 'center'
 }));
 

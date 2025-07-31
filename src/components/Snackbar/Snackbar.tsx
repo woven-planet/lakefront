@@ -59,6 +59,8 @@ export interface SnackbarProps {
     * The classes to pass to the snackbar.
     */
     className?: string;
+
+    alt?: boolean;
 }
 
 /**
@@ -80,7 +82,8 @@ const Snackbar: FC<SnackbarProps> = ({
     type = MESSAGE_TYPES.INFO,
     portalId,
     renderInPortal = false,
-    action = createDefaultAction(() => onClose ? onClose('timeout') : undefined)
+    action = createDefaultAction(() => onClose ? onClose('timeout') : undefined),
+    alt
 }) => {
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);
     const snackbarContentRef = useRef<HTMLDivElement | null>(null);
@@ -159,6 +162,7 @@ const Snackbar: FC<SnackbarProps> = ({
                                 action={action}
                                 message={message}
                                 type={type}
+                                alt={alt}
                             />
                         </div>
                     )}

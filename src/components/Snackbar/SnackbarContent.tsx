@@ -17,17 +17,19 @@ export interface SnackbarContentProps {
      * Message types used to determine icon color and icon to render.
      */
     type: MESSAGE_TYPES;
+
+    alt?: boolean;
 }
 
 const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(
-    ({ action, message, type, ...props }, ref) => {
+    ({ action, message, type, alt, ...props }, ref) => {
         const icon = getIcon(type);
 
         return (
             <ThemeProvider theme={theme}>
                 <div { ...props}>
-                    <StyledSnackbarContent className="snackbarContent" ref={ref}>
-                        <StyledSnackbarMessage className="snackbarMessage">{message}</StyledSnackbarMessage>
+                    <StyledSnackbarContent className="snackbarContent" ref={ref} alt={alt}>
+                        <StyledSnackbarMessage className="snackbarMessage" alt={alt}>{message}</StyledSnackbarMessage>
                         <StyledMessageTypeIcons className="snackbarIcon">{icon}</StyledMessageTypeIcons>
                         {action}
                     </StyledSnackbarContent>
