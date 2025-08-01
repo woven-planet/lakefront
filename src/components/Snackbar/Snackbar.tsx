@@ -5,6 +5,7 @@ import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarClose
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
 import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
+import { darkTheme } from '../../index';
 
 export interface SnackbarProps {
     /**
@@ -83,7 +84,6 @@ const Snackbar: FC<SnackbarProps> = ({
     portalId,
     renderInPortal = false,
     action = createDefaultAction(() => onClose ? onClose('timeout') : undefined),
-    alt
 }) => {
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);
     const snackbarContentRef = useRef<HTMLDivElement | null>(null);
@@ -151,7 +151,6 @@ const Snackbar: FC<SnackbarProps> = ({
     };
 
     return (
-        <ThemeProvider theme={theme}>
             <SnackbarWrapper className={className} ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
                 <PopoverContent portal={portal} deps={[open]}>
                     {open && (
@@ -162,13 +161,11 @@ const Snackbar: FC<SnackbarProps> = ({
                                 action={action}
                                 message={message}
                                 type={type}
-                                alt={alt}
                             />
                         </div>
                     )}
                 </PopoverContent>
             </SnackbarWrapper>
-        </ThemeProvider>
     );
 };
 

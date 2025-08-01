@@ -121,7 +121,8 @@ export * from './components/TypeaheadSearch';
 
 // Theme
 export { default as colors } from './styles/lakefrontColors';
-export { default as theme } from './styles/theme';
+export { default as theme, DARK_THEME as darkTheme } from './styles/theme';
+
 
 // Global Types
 export { SelectOption, TabDef } from './types/global';

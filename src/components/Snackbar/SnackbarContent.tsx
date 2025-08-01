@@ -3,6 +3,7 @@ import theme from 'src/styles/theme';
 import { ThemeProvider } from '@emotion/react';
 import { getIcon, MESSAGE_TYPES } from './Snackbar.util';
 import { StyledSnackbarContent, StyledSnackbarMessage, StyledMessageTypeIcons } from './snackbarStyles';
+import { darkTheme } from '../../index';
 
 export interface SnackbarContentProps {
     /**
@@ -18,23 +19,20 @@ export interface SnackbarContentProps {
      */
     type: MESSAGE_TYPES;
 
-    alt?: boolean;
 }
 
 const SnackbarContent: FC<SnackbarContentProps & ComponentPropsWithRef<'div'>> = forwardRef(
-    ({ action, message, type, alt, ...props }, ref) => {
+    ({ action, message, type,  ...props }, ref) => {
         const icon = getIcon(type);
 
         return (
-            <ThemeProvider theme={theme}>
                 <div { ...props}>
-                    <StyledSnackbarContent className="snackbarContent" ref={ref} alt={alt}>
-                        <StyledSnackbarMessage className="snackbarMessage" alt={alt}>{message}</StyledSnackbarMessage>
+                    <StyledSnackbarContent className="snackbarContent" ref={ref}>
+                        <StyledSnackbarMessage className="snackbarMessage">{message}</StyledSnackbarMessage>
                         <StyledMessageTypeIcons className="snackbarIcon">{icon}</StyledMessageTypeIcons>
                         {action}
                     </StyledSnackbarContent>
                 </div>
-            </ThemeProvider>
         );
     }
 );

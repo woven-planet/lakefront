@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import colors from 'src/styles/lakefrontColors';
 import Button from 'src/components/Button/Button';
-import theme from 'src/styles/theme';
+import lightTheme from 'src/styles/theme';
 import { generateAnchorOrigin, SnackbarOrigin } from './Snackbar.util';
 
 export const TRANSITION_CLOSE_TIME = 0;
@@ -10,7 +10,7 @@ export interface SnackbarPropsStyles {
     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] };
 }
 
-export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin }) => {
+export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin, theme = lightTheme }) => {
     const portal = { style: { left: '', bottom: '', right: '', top: '' } };
     // set horizontal properties
     generateAnchorOrigin(anchorOrigin, portal);
@@ -59,23 +59,19 @@ export const StyledSnackbarButton = styled.span(() => ({
     padding: 5
 }));
 
-interface StyledSnackbarProps {
-    alt?: boolean
-}
-
-export const StyledSnackbarContent = styled.div<StyledSnackbarProps>(({alt}) => ({
+export const StyledSnackbarContent = styled.div(({theme = lightTheme}) => ({
     display: 'flex',
     alignItems: 'center',
     minWidth: 80,
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-    border: `3px solid ${alt ? '#35C65B' : '#E6F6EA'}`,
-    backgroundColor: alt ? '#2D2F32' : '#F9FAFB',
+    border: `3px solid ${theme.borderColors.primary}`,
+    backgroundColor: theme.backgrounds.primary,
     padding: '4px 16px',
     justifyContent: 'space-between'
 }));
 
-export const StyledSnackbarMessage = styled.div<StyledSnackbarProps>(({alt}) => ({
-    color: alt ? '#7DDE9C' : '#35C65B',
+export const StyledSnackbarMessage = styled.div(({theme = lightTheme}) => ({
+    color: theme.foregrounds.primary,
     alignSelf: 'center'
 }));
 
