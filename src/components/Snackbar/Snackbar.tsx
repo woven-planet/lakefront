@@ -1,11 +1,8 @@
-import { ThemeProvider } from '@emotion/react';
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
-import theme from 'src/styles/theme';
 import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
 import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
-import { darkTheme } from '../../index';
 
 export interface SnackbarProps {
     /**
@@ -60,8 +57,6 @@ export interface SnackbarProps {
     * The classes to pass to the snackbar.
     */
     className?: string;
-
-    alt?: boolean;
 }
 
 /**

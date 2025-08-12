@@ -1,9 +1,6 @@
 import { ComponentPropsWithRef, FC, forwardRef, ReactNode } from 'react';
-import theme from 'src/styles/theme';
-import { ThemeProvider } from '@emotion/react';
 import { getIcon, MESSAGE_TYPES } from './Snackbar.util';
 import { StyledSnackbarContent, StyledSnackbarMessage, StyledMessageTypeIcons } from './snackbarStyles';
-import { darkTheme } from '../../index';
 
 export interface SnackbarContentProps {
     /**

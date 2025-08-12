@@ -65,13 +65,3 @@ PortalSnackbar.args = {
     message: 'File transfer initiated.',
     type: MESSAGE_TYPES.SUCCESS
 };
-
-export const DarkmodeSnackbar = Template.bind({});
-
-DarkmodeSnackbar.args = {
-    anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
-    renderInPortal: true,
-    message: 'File transfer initiated.',
-    type: MESSAGE_TYPES.SUCCESS,
-    alt: true
-}

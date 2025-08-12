@@ -62,7 +62,7 @@ export const StyledSnackbarButton = styled.span(() => ({
     padding: 5
 }));
 
-export const StyledSnackbarContent = styled.div(({theme = lightTheme}) => ({
+export const StyledSnackbarContent = styled.div(({theme }) => ({
     display: 'flex',
     alignItems: 'center',
     minWidth: 80,
@@ -73,7 +73,7 @@ export const StyledSnackbarContent = styled.div(({theme = lightTheme}) => ({
     justifyContent: 'space-between'
 }));
 
-export const StyledSnackbarMessage = styled.div(({theme = lightTheme}) => ({
+export const StyledSnackbarMessage = styled.div(({theme }) => ({
     color: theme.foregrounds.inverted,
     alignSelf: 'center'
 }));
