@@ -35,6 +35,7 @@ declare module '@emotion/react' {
             primary: string;
             secondary: string;
             disabled: string;
+            inverted: string;
         };
         buttonColors: {
             primary: string;
@@ -49,6 +50,7 @@ declare module '@emotion/react' {
             tertiary: string;
             widget: string;
             disabled: string;
+            inverted: string;
         };
         foregrounds: {
             primary: string;
@@ -57,6 +59,7 @@ declare module '@emotion/react' {
             disabled: string;
             info: string;
             warning: string;
+            inverted: string;
         };
         lettering: {
             primary: {

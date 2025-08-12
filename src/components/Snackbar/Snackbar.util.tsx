@@ -26,7 +26,7 @@ export const createDefaultAction = (onClose: (reason: SnackbarCloseReason) => vo
             key='close'
             aria-label='Close'
             onClick={() => onClose ? onClose('timeout') : undefined}
-            icon={<CloseIcon />}
+            icon={<CloseIcon/>}
         />
     );
 };

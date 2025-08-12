@@ -46,10 +46,13 @@ export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin, 
     };
 });
 
-export const StyledSnackbarCloseButton = styled(Button)({
+export const StyledSnackbarCloseButton = styled(Button)(({theme}) => ({
     alignSelf: 'center',
-    transform: 'scale(0.8)'
-});
+    transform: 'scale(0.8)',
+    svg: {
+        fill: theme.foregrounds.inverted
+    }
+}));
 
 export const StyledSnackbarButton = styled.span(() => ({
     display: 'inline-flex',
@@ -64,14 +67,14 @@ export const StyledSnackbarContent = styled.div(({theme = lightTheme}) => ({
     alignItems: 'center',
     minWidth: 80,
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-    border: `3px solid ${theme.borderColors.primary}`,
-    backgroundColor: theme.backgrounds.primary,
+    border: `3px solid ${theme.borderColors.inverted}`,
+    backgroundColor: theme.backgrounds.inverted,
     padding: '4px 16px',
     justifyContent: 'space-between'
 }));
 
 export const StyledSnackbarMessage = styled.div(({theme = lightTheme}) => ({
-    color: theme.foregrounds.primary,
+    color: theme.foregrounds.inverted,
     alignSelf: 'center'
 }));
 

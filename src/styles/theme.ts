@@ -35,6 +35,7 @@ const THEME: Theme = {
         primary: colors.selago,
         secondary: colors.storm,
         disabled: colors.akoya,
+        inverted: colors.dolphin
     },
     shadowColors: {
         boxShadow: colors.pavement,
@@ -45,6 +46,7 @@ const THEME: Theme = {
         tertiary: colors.akoya,
         widget: colors.gunpowder,
         disabled: colors.grey30,
+        inverted: colors.storm,
     },
     foregrounds: {
         primary: colors.storm,
@@ -53,6 +55,7 @@ const THEME: Theme = {
         disabled: colors.mercury,
         info: colors.akoya,
         warning: colors.saturatedOrange,
+        inverted: colors.akoya
     },
     lettering: {
         primary: {
@@ -105,6 +108,7 @@ export const DARK_THEME: Theme = {
         primary: colors.dolphin,
         secondary: colors.mercury,
         disabled: lightenDarkenColor(colors.white, -40),
+        inverted: colors.selago
     },
     shadowColors: {
         boxShadow: "",
@@ -115,6 +119,7 @@ export const DARK_THEME: Theme = {
         tertiary: colors.dolphin,
         widget: colors.white,
         disabled: lightenDarkenColor(colors.white, -40),
+        inverted: colors.white
     },
     foregrounds: {
         primary: colors.akoya,
@@ -123,6 +128,7 @@ export const DARK_THEME: Theme = {
         disabled: colors.mercury,
         info: colors.akoya,
         warning: colors.saturatedOrange,
+        inverted: colors.storm
     },
     lettering: {
         primary: {
