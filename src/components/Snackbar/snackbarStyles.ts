@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import colors from 'src/styles/lakefrontColors';
 import Button from 'src/components/Button/Button';
-import lightTheme from 'src/styles/theme';
 import { generateAnchorOrigin, SnackbarOrigin } from './Snackbar.util';
 
 export const TRANSITION_CLOSE_TIME = 0;
@@ -10,7 +9,7 @@ export interface SnackbarPropsStyles {
     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] };
 }
 
-export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin, theme = lightTheme }) => {
+export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin, theme  }) => {
     const portal = { style: { left: '', bottom: '', right: '', top: '' } };
     // set horizontal properties
     generateAnchorOrigin(anchorOrigin, portal);
