@@ -1,6 +1,4 @@
-import { ThemeProvider } from '@emotion/react';
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
-import theme from 'src/styles/theme';
 import { createDefaultAction, generateAnchorOrigin, MESSAGE_TYPES, SnackbarCloseReason, SnackbarOrigin } from './Snackbar.util';
 import SnackbarContent from './SnackbarContent';
 import { SnackbarWrapper, TRANSITION_CLOSE_TIME } from './snackbarStyles';
@@ -80,7 +78,7 @@ const Snackbar: FC<SnackbarProps> = ({
     type = MESSAGE_TYPES.INFO,
     portalId,
     renderInPortal = false,
-    action = createDefaultAction(() => onClose ? onClose('timeout') : undefined)
+    action = createDefaultAction(() => onClose ? onClose('timeout') : undefined),
 }) => {
     const [snackbarWrapperElement, setSnackbarWrapperElement] = useState<HTMLElement | null>(null);
     const snackbarContentRef = useRef<HTMLDivElement | null>(null);
@@ -148,7 +146,6 @@ const Snackbar: FC<SnackbarProps> = ({
     };
 
     return (
-        <ThemeProvider theme={theme}>
             <SnackbarWrapper className={className} ref={popoverNodeMounted} anchorOrigin={anchorOrigin}>
                 <PopoverContent portal={portal} deps={[open]}>
                     {open && (
@@ -164,7 +161,6 @@ const Snackbar: FC<SnackbarProps> = ({
                     )}
                 </PopoverContent>
             </SnackbarWrapper>
-        </ThemeProvider>
     );
 };
 

@@ -4,6 +4,8 @@ import DocBlock from '.storybook/DocBlock';
 import { MESSAGE_TYPES } from 'src/components/Snackbar/Snackbar.util';
 import { StyledSnackbarButton } from 'src/components/Snackbar/snackbarStyles';
 import { useState } from 'react';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from '../../index';
 
 export default {
     title: 'Lakefront/Snackbar',
@@ -35,7 +37,6 @@ const Template: StoryFn<SnackbarProps> = (args) => {
     const handleClose = () => {
         showMessage(false);
     };
-
     return (
         <>
             <StyledSnackbarButton onClick={() => showMessage(true)}>

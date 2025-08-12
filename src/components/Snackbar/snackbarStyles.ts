@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import colors from 'src/styles/lakefrontColors';
 import Button from 'src/components/Button/Button';
-import theme from 'src/styles/theme';
 import { generateAnchorOrigin, SnackbarOrigin } from './Snackbar.util';
 
 export const TRANSITION_CLOSE_TIME = 0;
@@ -10,7 +9,7 @@ export interface SnackbarPropsStyles {
     anchorOrigin: { horizontal: SnackbarOrigin['horizontal']; vertical: SnackbarOrigin['vertical'] };
 }
 
-export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin }) => {
+export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin, theme  }) => {
     const portal = { style: { left: '', bottom: '', right: '', top: '' } };
     // set horizontal properties
     generateAnchorOrigin(anchorOrigin, portal);
@@ -46,10 +45,13 @@ export const SnackbarWrapper = styled.div<SnackbarPropsStyles>(({ anchorOrigin }
     };
 });
 
-export const StyledSnackbarCloseButton = styled(Button)({
+export const StyledSnackbarCloseButton = styled(Button)(({theme}) => ({
     alignSelf: 'center',
-    transform: 'scale(0.8)'
-});
+    transform: 'scale(0.8)',
+    svg: {
+        fill: theme.foregrounds.inverted
+    }
+}));
 
 export const StyledSnackbarButton = styled.span(() => ({
     display: 'inline-flex',
@@ -59,18 +61,19 @@ export const StyledSnackbarButton = styled.span(() => ({
     padding: 5
 }));
 
-export const StyledSnackbarContent = styled.div(() => ({
+export const StyledSnackbarContent = styled.div(({theme }) => ({
     display: 'flex',
     alignItems: 'center',
     minWidth: 80,
-    borderRadius: 4,
-    backgroundColor: 'rgb(44, 44, 53)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+    border: `3px solid ${theme.borderColors.inverted}`,
+    backgroundColor: theme.backgrounds.inverted,
     padding: '4px 16px',
     justifyContent: 'space-between'
 }));
 
-export const StyledSnackbarMessage = styled.div(() => ({
-    color: 'rgb(255, 255, 255)',
+export const StyledSnackbarMessage = styled.div(({theme }) => ({
+    color: theme.foregrounds.inverted,
     alignSelf: 'center'
 }));
 

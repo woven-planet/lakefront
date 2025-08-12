@@ -1,6 +1,11 @@
 import theme from 'src/styles/theme';
+import { darkTheme } from '../src';
+import { ThemeProvider } from '@emotion/react';
 
-const themes = [theme];
+const themes = {
+  light: {theme, background: theme.backgrounds.primary},
+  dark: {theme: darkTheme, background: darkTheme.backgrounds.primary},
+};
 
 
 export const parameters = {
@@ -25,6 +30,40 @@ export const parameters = {
     }
   }
 };
+
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Global theme for components',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'mirror',
+      items: ['light', 'dark'],
+      showName: true,
+    },
+  },
+};
+
+export const decorators = [
+  (Story, context) => {
+    const mode = context.globals.theme || 'light';
+    const current = themes[mode];
+
+    return (
+        <ThemeProvider theme={current.theme}>
+          <div style={{
+            backgroundColor: current.background,
+            padding: '1rem',
+            minHeight: '100vh',
+            color: current.theme.foregrounds.primary || '#000',
+          }}>
+            <Story />
+          </div>
+        </ThemeProvider>
+    );
+  },
+];
+
 
 export const tags = ['autodocs'];
 

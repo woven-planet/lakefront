@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
 import SnackbarContent from '../SnackbarContent';
 import { MESSAGE_TYPES } from '../Snackbar.util';
+import { renderWithTheme } from '../../../lib/testing';
 
 const SnackbarContentPropsMock = {
     action: <button />,
@@ -10,7 +10,7 @@ const SnackbarContentPropsMock = {
 
 describe('SnackbarContent', () => {
     it('should render component as expected', () => {
-        const { container, getByText } = render(<SnackbarContent {...SnackbarContentPropsMock} />);
+        const { container, getByText } = renderWithTheme(<SnackbarContent {...SnackbarContentPropsMock} />);
         expect(container).toBeDefined();
         getByText('File transfer initiated.');
         expect(container.querySelector('svg')).toContainHTML('style="fill: #378fee;"');
