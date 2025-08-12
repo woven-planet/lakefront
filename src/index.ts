@@ -123,6 +123,10 @@ export * from './components/TypeaheadSearch';
 export { default as colors } from './styles/lakefrontColors';
 export { default as theme, DARK_THEME as darkTheme } from './styles/theme';
 
+//export { LakefrontTheme } from 'src/emotion';
+
+//export type Theme = EmotionTheme;
+
 
 // Global Types
-export { SelectOption, TabDef } from './types/global';
+export { SelectOption, TabDef, LakefrontTheme } from './types/global';
