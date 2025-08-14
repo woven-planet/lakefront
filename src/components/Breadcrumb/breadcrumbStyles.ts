@@ -2,22 +2,21 @@ import styled from '@emotion/styled';
 
 export const BreadCrumbStyle = styled.div(({ theme }) => ({
     display: 'grid',
-    backgroundcolor: theme?.colors?.white,
     'nav': {
         alignSelf: 'center',
         display: 'flex',
     },
     'a': {
-        color: theme?.colors?.pavement,
+        color: theme.foregrounds.secondary,
         textDecoration: 'none',
         '&:hover': {
-            color: theme?.colors?.storm,
+            color: theme.foregrounds.primary,
         }
     }
 }));
 
 export const Current = styled.span(({ theme }) => ({
-    color: theme?.colors?.storm,
+    color: theme.foregrounds.primary,
     fontWeight: 500
 }));
 
@@ -32,8 +31,8 @@ export const Container = styled.div<any>(({ theme, standalone }) => ({
     ...((standalone) && {
         padding: '0 3.5rem',
         borderBottom: '1px solid',
-        borderBottomColor: theme?.colors?.mercury,
-        backgroundColor: theme?.colors?.white
+        borderBottomColor: theme.borderColors.primary,
+        backgroundColor: theme.backgrounds.primary
     })
 }));
 
