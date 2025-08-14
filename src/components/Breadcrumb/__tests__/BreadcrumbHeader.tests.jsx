@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import BreadcrumbHeader from '../BreadcrumbHeader';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithTheme } from '../../../lib/testing';
 
 describe('<BreadcrumbHeader />', () => {
     it('renders a single route just fine', () => {
@@ -12,7 +12,7 @@ describe('<BreadcrumbHeader />', () => {
             }
         ];
 
-        const { container } = render(<BrowserRouter><BreadcrumbHeader routes={routes}
+        const { container } = renderWithTheme(<BrowserRouter><BreadcrumbHeader routes={routes}
             standalone={true} /></BrowserRouter>);
         expect(container.querySelectorAll('nav')[0]).toHaveTextContent('Page');
         expect(container.querySelectorAll('div')[0]).toHaveStyle('border-bottom: 1px solid');
@@ -27,7 +27,7 @@ describe('<BreadcrumbHeader />', () => {
             }
         ];
 
-        const { container } = render(<BrowserRouter><BreadcrumbHeader routes={routes}
+        const { container } = renderWithTheme(<BrowserRouter><BreadcrumbHeader routes={routes}
             standalone={true} hideRoutes={true} /></BrowserRouter>);
         expect(container.querySelectorAll('nav')[0]).not.toHaveTextContent('Page');
     });
@@ -40,7 +40,7 @@ describe('<BreadcrumbHeader />', () => {
             }
         ];
 
-        const { container } = render(<BrowserRouter><BreadcrumbHeader routes={routes}
+        const { container } = renderWithTheme(<BrowserRouter><BreadcrumbHeader routes={routes}
             standalone={true} hideRoutes={true} ><h2>Test Header</h2></BreadcrumbHeader></BrowserRouter>);
         expect(container).toHaveTextContent('Test Header');
     });
