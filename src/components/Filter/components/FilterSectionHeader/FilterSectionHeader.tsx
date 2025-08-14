@@ -9,8 +9,6 @@ import {
     FilterDetails,
     FilterSectionHeaderContainer
 } from './filterSectionHeaderStyles';
-import { ThemeProvider } from '@emotion/react';
-import theme from 'src/styles/theme';
 import FilterValueChips from './FilterValueChips';
 import { getFilterCount } from './filterSectionHeaderUtil';
 import { FilterChipsContainer } from 'src/components/Filter/filterStyles';
@@ -35,7 +33,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
     const showChips = filterCount < badgeThreshold;
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <FilterSectionHeaderContainer onClick={onClick}>
                 <FilterDetails>
                     {filter.label}
@@ -57,7 +55,7 @@ const FilterSectionHeader: FC<FilterSectionHeaderProps> = ({
                     </FilterChipsContainer>
                 )
             }
-        </ThemeProvider>
+        </>
     );
 };
 

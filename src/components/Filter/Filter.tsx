@@ -58,7 +58,7 @@ export const Filter: FC<FilterComponentProps> = ({
     const urlParams = queryString.parse(location.search) as UrlParameters;
     const [isCollapsedState, setIsCollapsedState] = useState(false);
     const [activeSection, setActiveSection] = useState(initialActiveSection);
-    const [jsonQueryParams, setJsonQueryParams] = useState(        
+    const [jsonQueryParams, setJsonQueryParams] = useState(
         isJSONInputAllowed ? { jsonView: getDefaultJsonViewValue(urlParams) } : {}
     );
     const [isJSONInputModified, setIsJSONInputModified] = useState(false);
@@ -139,7 +139,6 @@ export const Filter: FC<FilterComponentProps> = ({
     const panelVisible = Object.entries(filters).filter(([, f]) => !f.inputHidden);
 
         return (
-        <ThemeProvider theme={theme}>
             <FilterContainer
                 showJSONInput={Boolean(isJSONInputAllowed && jsonQueryParams.jsonView)}
                 isCollapsed={isCollapsed}
@@ -270,7 +269,6 @@ export const Filter: FC<FilterComponentProps> = ({
 
                 {children}
             </FilterContainer>
-        </ThemeProvider>
     );
 };
 

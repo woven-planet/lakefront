@@ -5,8 +5,6 @@ import {
 } from './refreshToolbarStyles';
 import { ReactComponent as RefreshIcon } from './assets/refreshIcon.svg';
 import Button from 'src/components/Button/Button';
-import { ThemeProvider } from '@emotion/react';
-import theme from 'src/styles/theme';
 
 export interface RefreshToolbarProps {
     /**
@@ -46,7 +44,7 @@ export interface RefreshToolbarProps {
      */
     rightSideText?: string;
     /**
-     * This is to render a custom refresh button. 
+     * This is to render a custom refresh button.
      */
     refreshButton?: ReactNode;
 }
@@ -72,7 +70,6 @@ const RefreshToolbar: FC<RefreshToolbarProps> = props => {
         refreshButton
     } = props;
     return (
-        <ThemeProvider theme={theme}>
             <ToolbarContainer className={className} standalone={standalone}>
                 <div>
                     {isRefreshing && (
@@ -99,7 +96,6 @@ const RefreshToolbar: FC<RefreshToolbarProps> = props => {
                     </RightSideContainer>
                 </ToolbarAdditionalContent>
             </ToolbarContainer>
-        </ThemeProvider>
     );
 };
 
