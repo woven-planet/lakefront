@@ -36,7 +36,6 @@ export interface BreadcrumbProps {
 const Breadcrumb: FC<BreadcrumbProps> = ({ routes, Link = ReactRouterDomLink }) => {
 
     return (
-        <ThemeProvider theme={theme}>
             <BreadCrumbStyle>
                 <nav>
                     {routes.map((route, index) => {
@@ -58,7 +57,6 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ routes, Link = ReactRouterDomLink }) 
                     })}
                 </nav>
             </BreadCrumbStyle>
-        </ThemeProvider>
     );
 };
 
