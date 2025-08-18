@@ -1,10 +1,9 @@
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 interface MenuContainerProps {
     top: number;
     left: number;
-    theme: Theme;
 }
 
 const fadeIn = css`
@@ -20,10 +19,6 @@ const fadeIn = css`
   }
 `;
 
-/**
- * The main container for the context menu list.
- * It's positioned absolutely based on the user's click.
- */
 export const MenuContainer = styled.ul<MenuContainerProps>(({theme, top, left}) => ({
   position: 'fixed',
   top: top,
@@ -40,27 +35,26 @@ export const MenuContainer = styled.ul<MenuContainerProps>(({theme, top, left}) 
   animation: `${fadeIn} 0.1s ease-out`,
 }));
 
-/**
- * An individual item within the context menu.
- */
-export const MenuItemElement = styled.li(({theme}) => ({
+interface MenuItemElementProps {
+  disabled: boolean
+}
+
+export const MenuItemElement = styled.li<MenuItemElementProps>(({theme, disabled}) => ({
   padding: '8px 12px',
   fontSize: 14,
   color: theme.foregrounds.primary,
   borderRadius: 6,
-  cursor: 'pointer',
+  cursor: disabled ? 'not-allowed' : 'pointer',
   display: 'flex',
   alignItems: 'center',
   gap: 10,
   transition: 'background-color 0.15s ease-in-out',
   '&:hover': {
     backgroundColor: theme.foregrounds.secondary
-  }
+  },
+  opacity: disabled ? 0.5 : 1,
 }));
 
-/**
- * A visual separator to group related menu items.
- */
 export const Separator = styled.div(({ theme }) => ({
   height: '1px',
   backgroundColor: theme.borderColors.primary,
