@@ -1,4 +1,4 @@
-import { FC, ReactNode, useRef, useState, useEffect, MouseEvent } from 'react';
+import { FC, ReactNode, useRef, useState, useEffect, MouseEvent, ElementType } from 'react';
 import { MenuContainer, MenuItemElement, Separator } from './contextMenuStyles';
 
 type ClickableMenuItem = {
@@ -24,13 +24,15 @@ export interface ContextMenuProps {
     children: ReactNode;
     /** An array of menu item objects to be displayed. */
     menuItems: MenuItem[];
+
+    wrapper?: ElementType;
 }
 
 /**
  * A component that attaches a customizable context menu to its children.
  * The menu is triggered by a right-click event.
  */
-export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems }) => {
+export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems, wrapper: Wrapper = 'div' }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const contextMenuRef = useRef<HTMLDivElement>(null);
@@ -41,8 +43,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems }) => {
      */
     const handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
-
-        // Set position based on click coordinates
+        event.stopPropagation();
         setPosition({ x: event.clientX, y: event.clientY });
         setIsVisible(true);
     };
@@ -73,7 +74,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems }) => {
     }, [isVisible]);
 
     return (
-        <div onContextMenu={handleContextMenu}>
+        <Wrapper onContextMenu={handleContextMenu}>
             {children}
             {isVisible && (
                 <div ref={contextMenuRef}>
@@ -84,8 +85,8 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems }) => {
                             ) : (
                                 <MenuItemElement
                                     key={item.label}
+                                    disabled={item.disabled ?? false}
                                     onClick={() => !item.disabled && handleMenuItemClick(item.onClick)}
-                                    style={{ opacity: item.disabled ? 0.5 : 1, cursor: item.disabled ? 'not-allowed' : 'pointer' }}
                                 >
                                     {item.icon && <span>{item.icon}</span>}
                                     {item.label}
@@ -95,7 +96,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems }) => {
                     </MenuContainer>
                 </div>
             )}
-        </div>
+        </Wrapper>
     );
 };
 

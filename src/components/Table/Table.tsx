@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { ComponentProps, useEffect, useMemo } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggleProps } from 'react-table';
 import { HideableTHead, StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
 import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
+import { MenuItem } from '../ContextMenu';
+import { ContextMenu } from '../../index';
 
 export interface TableSortByOptions {
     id: string;
@@ -20,14 +22,14 @@ export interface TableProps {
      */
     columns: Array<Column>;
     /**
-     * This is to set the additional properties on the table like disableSortRemove, 
+     * This is to set the additional properties on the table like disableSortRemove,
      * autoResetSortBy, disableMultiSort, etc.
      */
     options?: any;
     /**
      * This is to set the row properties.
      */
-    rowProps?: object;
+    rowProps?: ComponentProps<'tr'>;
     /**
      * This is to set the display message when there is no data.
      */
@@ -45,7 +47,7 @@ export interface TableProps {
     * When an array of items is provided, the order dictates the priority of sorting. Example: value --> title --> percentage.
     */
     initialSortBy?: { id: string, desc: boolean}[] | { id: string, desc: boolean};
-    
+
     /**
      * This event is triggered when the sorting is changed on the table.
      * The first argument is the sorted column and the second argument is the sortBy array
@@ -61,6 +63,8 @@ export interface TableProps {
      * This is defaulted to false.
      */
     hideHeaders?: boolean;
+
+    getRowMenuItems?(row: any): MenuItem[];
 }
 
 type CustomTableOptions = TableState<object> & { sortBy: TableSortByOptions[] }
@@ -81,7 +85,8 @@ const Table: React.FC<TableProps> = ({ className,
     initialSortBy,
     rowProps,
     renderRowSubComponent,
-    hideHeaders = false
+    hideHeaders = false,
+    getRowMenuItems
 }) => {
         /** initalSortBy must be memoized
          * https://react-table-v7.tanstack.com/docs/api/useSortBy#table-options
@@ -148,6 +153,25 @@ const Table: React.FC<TableProps> = ({ className,
                     <tbody {...getTableBodyProps()}>
                         {rows.map((row: any) => {
                             prepareRow(row);
+                            // Get the menu items for this specific row
+                            const menuItems = getRowMenuItems ? getRowMenuItems(row) : [];
+
+                            // If there are menu items, wrap the row in the ContextMenu
+                            if (menuItems.length > 0) {
+                                console.log('Context Menu here');
+                                return (
+                                    <React.Fragment key={row.id}>
+                                        <ContextMenu key={row.id} menuItems={menuItems} wrapper="tr" {...row.getRowProps(rowProps)}>
+                                            {/* The original cells are now children of the ContextMenu */}
+                                            {row.cells.map((cell: any) => {
+                                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                            })}
+                                        </ContextMenu>
+                                        {row.isExpanded && renderRowSubComponent ? renderRowSubComponent({ row }) : null}
+                                    </React.Fragment>
+                                );
+                            }
+                            console.log('No context menu');
                             return (
                                 <React.Fragment key={row.id}>
                                     <tr {...row.getRowProps(rowProps)}>
