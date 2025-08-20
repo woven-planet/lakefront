@@ -1,6 +1,5 @@
 import {
     FC,
-    ReactNode,
     useState,
     useEffect,
     MouseEvent,
@@ -14,7 +13,6 @@ import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 type ClickableMenuItem = {
     label: string;
     onClick: () => void;
-    icon?: ReactNode;
     isSeparator?: false;
     disabled?: boolean;
 };
@@ -23,7 +21,6 @@ type SeparatorMenuItem = {
     isSeparator: true;
     label?: never;
     onClick?: never;
-    icon?: never;
     disabled?: never;
 };
 
