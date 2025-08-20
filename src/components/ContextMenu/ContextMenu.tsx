@@ -36,9 +36,16 @@ export interface ContextMenuProps {
     menuItems: MenuItem[];
     /** The component or HTML tag to use as the wrapper. Defaults to 'div'. */
     wrapper?: ElementType;
+    /**
+     * When true, the component will mount a div to the body and render the dialog through it.
+     * This is useful when the dialog would be inside a scrollable container or one with "overflow: hidden"
+     * so it doesn't get cut off. Uses IntersectionObserver and needs a polyfill if IE compatibility is needed. This
+     * defaults to `false`.
+     */
+    renderInPortal?: boolean;
 }
 
-export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wrapper: Wrapper = 'div', ...props }) => {
+export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wrapper: Wrapper = 'div', renderInPortal = false, ...props }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [triggerElement, setTriggerElement] = useState<HTMLElement | null>(null);
@@ -46,7 +53,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wr
 
     const { portal } = usePopover({
         popoverContainer: triggerElement,
-        renderInPortal: false
+        renderInPortal: renderInPortal
     });
 
     const handleContextMenu = (event: MouseEvent) => {
