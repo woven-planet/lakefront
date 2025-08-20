@@ -72,6 +72,7 @@ export interface LakefrontTheme {
         widget: string;
         disabled: string;
         inverted: string;
+        hover: string;
     };
     foregrounds: {
         primary: string;

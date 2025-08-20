@@ -5,11 +5,15 @@ import { ThemeProvider } from '@emotion/react';
 import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
-import { ContextMenu } from '../../index';
+import TableRow from './TableRow';
 
 export interface TableSortByOptions {
     id: string;
     desc: boolean;
+}
+
+export interface ContextMenuConfig {
+    getRowMenuItems: (row: any) => MenuItem[];
 }
 
 export interface TableProps {
@@ -64,7 +68,11 @@ export interface TableProps {
      */
     hideHeaders?: boolean;
 
-    getRowMenuItems?(row: any): MenuItem[];
+    /**
+     * Configuration for the row-level context menu.
+     * If provided, a context menu will be enabled for each row.
+     */
+    contextMenuConfig?: ContextMenuConfig;
 }
 
 type CustomTableOptions = TableState<object> & { sortBy: TableSortByOptions[] }
@@ -86,7 +94,7 @@ const Table: React.FC<TableProps> = ({ className,
     rowProps,
     renderRowSubComponent,
     hideHeaders = false,
-    getRowMenuItems
+    contextMenuConfig
 }) => {
         /** initalSortBy must be memoized
          * https://react-table-v7.tanstack.com/docs/api/useSortBy#table-options
@@ -153,34 +161,14 @@ const Table: React.FC<TableProps> = ({ className,
                     <tbody {...getTableBodyProps()}>
                         {rows.map((row: any) => {
                             prepareRow(row);
-                            // Get the menu items for this specific row
-                            const menuItems = getRowMenuItems ? getRowMenuItems(row) : [];
-
-                            // If there are menu items, wrap the row in the ContextMenu
-                            if (menuItems.length > 0) {
-                                console.log('Context Menu here');
-                                return (
-                                    <React.Fragment key={row.id}>
-                                        <ContextMenu key={row.id} menuItems={menuItems} wrapper="tr" {...row.getRowProps(rowProps)}>
-                                            {/* The original cells are now children of the ContextMenu */}
-                                            {row.cells.map((cell: any) => {
-                                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                            })}
-                                        </ContextMenu>
-                                        {row.isExpanded && renderRowSubComponent ? renderRowSubComponent({ row }) : null}
-                                    </React.Fragment>
-                                );
-                            }
-                            console.log('No context menu');
                             return (
-                                <React.Fragment key={row.id}>
-                                    <tr {...row.getRowProps(rowProps)}>
-                                        {row.cells.map((cell: any) => {
-                                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                        })}
-                                    </tr>
-                                    {row.isExpanded && renderRowSubComponent ? renderRowSubComponent({ row }) : null}
-                                </React.Fragment>
+                                <TableRow
+                                    key={row.id}
+                                    row={row}
+                                    rowProps={rowProps}
+                                    renderRowSubComponent={renderRowSubComponent}
+                                    contextMenuConfig={contextMenuConfig}
+                                />
                             );
                         })}
                         {rows.length === 0 && (

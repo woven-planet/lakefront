@@ -1,5 +1,15 @@
-import { FC, ReactNode, useRef, useState, useEffect, MouseEvent, ElementType } from 'react';
-import { MenuContainer, MenuItemElement, Separator } from './contextMenuStyles';
+import {
+    FC,
+    ReactNode,
+    useState,
+    useEffect,
+    MouseEvent,
+    ElementType,
+    ReactElement,
+    useRef
+} from 'react';
+import { StyledContextMenu, MenuItem, StyledSeparator } from './contextMenuStyles';
+import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 
 type ClickableMenuItem = {
     label: string;
@@ -21,26 +31,24 @@ export type MenuItem = ClickableMenuItem | SeparatorMenuItem;
 
 export interface ContextMenuProps {
     /** The content that will trigger the context menu on right-click. */
-    children: ReactNode;
+    children: ReactElement;
     /** An array of menu item objects to be displayed. */
     menuItems: MenuItem[];
-
+    /** The component or HTML tag to use as the wrapper. Defaults to 'div'. */
     wrapper?: ElementType;
 }
 
-/**
- * A component that attaches a customizable context menu to its children.
- * The menu is triggered by a right-click event.
- */
-export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems, wrapper: Wrapper = 'div' }) => {
+export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wrapper: Wrapper = 'div', ...props }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const contextMenuRef = useRef<HTMLDivElement>(null);
+    const [triggerElement, setTriggerElement] = useState<HTMLElement | null>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
 
-    /**
-     * Handles the right-click event on the children wrapper.
-     * It prevents the default browser menu and shows the custom one.
-     */
+    const { portal } = usePopover({
+        popoverContainer: triggerElement,
+        renderInPortal: false
+    });
+
     const handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
         event.stopPropagation();
@@ -48,55 +56,54 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems, wrapper
         setIsVisible(true);
     };
 
-    const handleCloseMenu = () => {
+    const handleClose = () => {
         setIsVisible(false);
     };
 
-    const handleMenuItemClick = (itemOnClick: () => void) => {
-        itemOnClick();
-        handleCloseMenu();
+    const handleClick = (onClickFunc: () => void) => {
+        onClickFunc();
+        handleClose();
     };
 
     useEffect(() => {
-        const handleClickOutside = (event: globalThis.MouseEvent) => {
-            if (contextMenuRef.current && !contextMenuRef.current.contains(event.target as Node)) {
-                handleCloseMenu();
+        const handleOutsideClick = (event: globalThis.MouseEvent) => {
+            if (isVisible && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                handleClose();
             }
         };
 
-        if (isVisible) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
+        document.addEventListener('mousedown', handleOutsideClick);
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, [isVisible]);
 
     return (
-        <Wrapper onContextMenu={handleContextMenu}>
-            {children}
-            {isVisible && (
-                <div ref={contextMenuRef}>
-                    <MenuContainer top={position.y} left={position.x}>
-                        {menuItems.map((item, index) =>
-                            item.isSeparator ? (
-                                <Separator key={`separator-${index}`} />
-                            ) : (
-                                <MenuItemElement
+        <>
+            <Wrapper ref={setTriggerElement} onContextMenu={handleContextMenu} {...props}>
+                {children}
+            </Wrapper>
+            <PopoverContent portal={portal} deps={[menuItems, isVisible, position]}>
+                {isVisible && (
+                    <StyledContextMenu top={position.y} left={position.x} ref={menuRef} onContextMenu={(e) => e.stopPropagation()}>
+                        {menuItems.map((item, index) => {
+                            if (item.isSeparator) {
+                                return <StyledSeparator key={`separator-${index}`}/>;
+                            }
+                            return (
+                                <MenuItem
                                     key={item.label}
-                                    disabled={item.disabled ?? false}
-                                    onClick={() => !item.disabled && handleMenuItemClick(item.onClick)}
+                                    onClick={() => !item.disabled && handleClick(item.onClick)}
+                                    disabled={item.disabled}
                                 >
-                                    {item.icon && <span>{item.icon}</span>}
                                     {item.label}
-                                </MenuItemElement>
-                            )
-                        )}
-                    </MenuContainer>
-                </div>
-            )}
-        </Wrapper>
+                                </MenuItem>
+                            );
+                        })}
+                    </StyledContextMenu>
+                )}
+            </PopoverContent>
+        </>
     );
 };
 
