@@ -47,6 +47,7 @@ const THEME: Theme = {
         widget: colors.gunpowder,
         disabled: colors.grey30,
         inverted: colors.storm,
+        hover: colors.mercury,
     },
     foregrounds: {
         primary: colors.storm,
@@ -119,7 +120,8 @@ export const DARK_THEME: Theme = {
         tertiary: colors.dolphin,
         widget: colors.white,
         disabled: lightenDarkenColor(colors.white, -40),
-        inverted: colors.white
+        inverted: colors.white,
+        hover: lightenDarkenColor(colors.dolphin, 5),
     },
     foregrounds: {
         primary: colors.akoya,

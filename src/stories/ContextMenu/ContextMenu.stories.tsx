@@ -1,0 +1,67 @@
+import ContextMenu, { ContextMenuProps, MenuItem } from 'src/components/ContextMenu/ContextMenu';
+import DocBlock from '.storybook/DocBlock';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
+
+export default {
+    title: 'Lakefront/ContextMenu',
+    component: ContextMenu,
+    argTypes: {
+        children: {
+            control: false,
+            table: { disable: true },
+        },
+        menuItems: {
+            control: 'object',
+        }
+    },
+    parameters: {
+        docs: {
+            page: DocBlock,
+            source: {
+                transform: (source: string) => {
+                    return source
+                        .replace(/function noRefCheck\(\)\s\{\}/g, '() => {}')
+                        .replace(/\n/g, '')
+                        .replace(/[ ]{2,}/g, ' ');
+                }
+            }
+        }
+    }
+} as Meta;
+
+const MENU_ITEMS: MenuItem[] = [
+    { label: 'Edit', onClick: () => alert('Edit clicked') },
+    { label: 'Copy', onClick: () => alert('Copy clicked') },
+    { isSeparator: true },
+    { label: 'Paste', onClick: () => alert('Paste clicked'), disabled: true },
+    { isSeparator: true },
+    { label: 'Delete', onClick: () => alert('Delete clicked') },
+];
+
+const Template: StoryFn<ContextMenuProps> = (args) => {
+    return (
+            <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+                <p>Right-click on the area below to trigger the context menu.</p>
+                <ContextMenu {...args}>
+                    <div
+                        style={{
+                            width: '10%',
+                            border: `2px dashed`,
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            userSelect: 'none',
+                        }}
+                    >
+                        Right-Click Here
+                    </div>
+                </ContextMenu>
+            </div>
+    );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+    menuItems: MENU_ITEMS
+};
