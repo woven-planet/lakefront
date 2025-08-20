@@ -5,13 +5,14 @@ import {
     MouseEvent,
     ElementType,
     ReactElement,
-    useRef
+    useRef, ReactNode
 } from 'react';
 import { StyledContextMenu, MenuItem, StyledSeparator } from './contextMenuStyles';
 import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 
 type ClickableMenuItem = {
-    label: string;
+    key: string;
+    label: ReactNode;
     onClick: () => void;
     isSeparator?: false;
     disabled?: boolean;
@@ -19,9 +20,6 @@ type ClickableMenuItem = {
 
 type SeparatorMenuItem = {
     isSeparator: true;
-    label?: never;
-    onClick?: never;
-    disabled?: never;
 };
 
 export type MenuItem = ClickableMenuItem | SeparatorMenuItem;
@@ -96,7 +94,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wr
                             }
                             return (
                                 <MenuItem
-                                    key={item.label}
+                                    key={item.key}
                                     onClick={() => !item.disabled && handleClick(item.onClick)}
                                     disabled={item.disabled}
                                 >
