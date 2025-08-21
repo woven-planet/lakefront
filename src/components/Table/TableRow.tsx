@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode } from 'react';
+import { FC, Fragment, ReactNode, useState } from 'react';
 import ContextMenu from '../ContextMenu';
 import { ContextMenuConfig, MoreActionsConfig } from './Table';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
@@ -12,6 +12,7 @@ export interface TableRowProps {
 }
 
 const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, contextMenuConfig, moreActionsConfig }) => {
+    const [isHovered, setIsHovered] = useState(false);
     // Get the menu items for this specific row
     const menuItems = contextMenuConfig?.getRowMenuItems(row) ?? [];
     const actionItems = moreActionsConfig?.getRowActionItems(row) ?? [];
@@ -24,7 +25,12 @@ const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, con
     const wrapperProps = {
         ...(menuItems.length > 0 && { menuItems, wrapper: 'tr' }),
         ...row.getRowProps(rowProps),
+        onMouseEnter: () => setIsHovered(true),
+        onMouseLeave: () => setIsHovered(false),
     };
+
+    // More Actions Button is visible if the feature is turned off, OR if the feature is on AND the row is hovered.
+    const isButtonVisible = !moreActionsConfig?.visibleOnHover || isHovered;
 
     return (
         <Fragment key={row.id}>
@@ -34,7 +40,7 @@ const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, con
                 ))}
                 {actionItems.length > 0 && (
                     <td>
-                        <MoreActionsButton items={actionItems} />
+                        {isButtonVisible && <MoreActionsButton items={actionItems} />}
                     </td>
                 )}
             </RowWrapper>

@@ -19,6 +19,7 @@ export interface ContextMenuConfig {
 
 export interface MoreActionsConfig {
     getRowActionItems: (row: any) => ActionMenuItem[];
+    visibleOnHover?: boolean;
 }
 
 export interface TableProps {
