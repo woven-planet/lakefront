@@ -31,7 +31,7 @@ const MoreActionsButton: FC<MoreActionsButtonProps> = ({ items }) => {
             // Position the menu below the button, aligned to the right edge
             setPosition({
                 top: rect.bottom + window.scrollY + 4,
-                left: rect.right + window.scrollX - 180, // Assuming 180px is the menu width
+                left: rect.right + window.scrollX - 180,
             });
         }
         setIsVisible(!isVisible);
@@ -67,7 +67,7 @@ const MoreActionsButton: FC<MoreActionsButtonProps> = ({ items }) => {
             </div>
             <PopoverContent portal={portal} deps={[items, isVisible, position]}>
                 {isVisible && (
-                    <ActionsMenuContainer ref={menuRef} style={{ top: `${position.top}px`, left: `${position.left}px` }}>
+                    <ActionsMenuContainer ref={menuRef} top={position.top} left={position.left}>
                         {items.map(item => (
                             <ActionsMenuItem
                                 key={typeof item.name === 'string' ? item.name : undefined}
