@@ -6,6 +6,7 @@ import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
 import TableRow from './TableRow';
+import { ActionMenuItem } from '../MoreActionsButton/MoreActionsButton';
 
 export interface TableSortByOptions {
     id: string;
@@ -14,6 +15,10 @@ export interface TableSortByOptions {
 
 export interface ContextMenuConfig {
     getRowMenuItems: (row: any) => MenuItem[];
+}
+
+export interface MoreActionsConfig {
+    getRowActionItems: (row: any) => ActionMenuItem[];
 }
 
 export interface TableProps {
@@ -73,6 +78,8 @@ export interface TableProps {
      * If provided, a context menu will be enabled for each row.
      */
     contextMenuConfig?: ContextMenuConfig;
+
+    moreActionsConfig?: MoreActionsConfig;
 }
 
 type CustomTableOptions = TableState<object> & { sortBy: TableSortByOptions[] }
@@ -94,7 +101,8 @@ const Table: React.FC<TableProps> = ({ className,
     rowProps,
     renderRowSubComponent,
     hideHeaders = false,
-    contextMenuConfig
+    contextMenuConfig,
+    moreActionsConfig
 }) => {
         /** initalSortBy must be memoized
          * https://react-table-v7.tanstack.com/docs/api/useSortBy#table-options
@@ -168,6 +176,7 @@ const Table: React.FC<TableProps> = ({ className,
                                     rowProps={rowProps}
                                     renderRowSubComponent={renderRowSubComponent}
                                     contextMenuConfig={contextMenuConfig}
+                                    moreActionsConfig={moreActionsConfig}
                                 />
                             );
                         })}
