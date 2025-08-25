@@ -1,21 +1,20 @@
 import { FC, Fragment, ReactNode, useState } from 'react';
 import ContextMenu from '../ContextMenu';
-import { ContextMenuConfig, MoreActionsConfig } from './Table';
-import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
+import { RowHoverContext } from './RowHoverContext';
+import { ContextMenuConfig } from './Table';
 
 export interface TableRowProps {
     row: any;
     rowProps?: object;
     renderRowSubComponent?: ({ row }: { row: any }) => ReactNode;
     contextMenuConfig?: ContextMenuConfig;
-    moreActionsConfig?: MoreActionsConfig;
 }
 
-const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, contextMenuConfig, moreActionsConfig }) => {
+const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, contextMenuConfig }) => {
     const [isHovered, setIsHovered] = useState(false);
+
     // Get the menu items for this specific row
     const menuItems = contextMenuConfig?.getRowMenuItems(row) ?? [];
-    const actionItems = moreActionsConfig?.getRowActionItems(row) ?? [];
 
     // Determine the correct wrapper component for the row
     const RowWrapper = menuItems.length > 0 ? ContextMenu : 'tr';
@@ -29,23 +28,17 @@ const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, con
         onMouseLeave: () => setIsHovered(false),
     };
 
-    // More Actions Button is visible if the feature is turned off, OR if the feature is on AND the row is hovered.
-    const isButtonVisible = !moreActionsConfig?.visibleOnHover || isHovered;
-
     return (
-        <Fragment key={row.id}>
-            <RowWrapper {...wrapperProps}>
-                {row.cells.map((cell: any) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-                {actionItems.length > 0 && (
-                    <td>
-                        {isButtonVisible && <MoreActionsButton items={actionItems} />}
-                    </td>
-                )}
-            </RowWrapper>
-            {row.isExpanded && renderRowSubComponent ? renderRowSubComponent({ row }) : null}
-        </Fragment>
+        <RowHoverContext.Provider value={isHovered}>
+            <Fragment key={row.id}>
+                <RowWrapper {...wrapperProps}>
+                    {row.cells.map((cell: any) => (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    ))}
+                </RowWrapper>
+                {row.isExpanded && renderRowSubComponent ? renderRowSubComponent({ row }) : null}
+            </Fragment>
+        </RowHoverContext.Provider>
     );
 };
 

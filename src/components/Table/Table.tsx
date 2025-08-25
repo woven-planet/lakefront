@@ -7,6 +7,8 @@ import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
 import TableRow from './TableRow';
 import { ActionMenuItem } from '../MoreActionsButton/MoreActionsButton';
+import { MoreActionsButton } from '../../index';
+import { useRowHover } from './RowHoverContext';
 
 export interface TableSortByOptions {
     id: string;
@@ -116,10 +118,35 @@ const Table: React.FC<TableProps> = ({ className,
             [initialSortBy]
         );
 
+    const memoizedColumns = useMemo(() => {
+        if (moreActionsConfig) {
+            return [
+                ...columns,
+                {
+                    id: 'more-actions',
+                    Header: '',
+                    disableSortBy: true,
+                    Cell: ({ row }: { row: any }) => {
+                        // hook to get the hover state for this specific row
+                        const isHovered = useRowHover();
+                        // Determine if the button should be visible
+                        const isButtonVisible = !moreActionsConfig?.visibleOnHover || isHovered;
+                        const actionItems = moreActionsConfig.getRowActionItems(row);
+                        if (!actionItems || actionItems.length === 0) {
+                            return null;
+                        }
+                        return isButtonVisible ? <MoreActionsButton items={actionItems} /> : null;
+                    },
+                },
+            ];
+        }
+        return columns;
+    }, [columns, moreActionsConfig]);
+
         // Use the state and functions returned from useTable to build your UI
         const tableHookOptions = {
             ...options,
-            columns,
+            columns: memoizedColumns,
             data,
             ...initialSortByData
         };
@@ -177,13 +204,12 @@ const Table: React.FC<TableProps> = ({ className,
                                     rowProps={rowProps}
                                     renderRowSubComponent={renderRowSubComponent}
                                     contextMenuConfig={contextMenuConfig}
-                                    moreActionsConfig={moreActionsConfig}
                                 />
                             );
                         })}
                         {rows.length === 0 && (
                             <tr>
-                                <td colSpan={columns.length}>{noDataMessage}</td>
+                                <td colSpan={memoizedColumns.length}>{noDataMessage}</td>
                             </tr>
                         )}
                     </tbody>
