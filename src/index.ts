@@ -62,6 +62,9 @@ export * from './components/Modal';
 export { default as ModeSelector } from './components/ModeSelector';
 export * from './components/ModeSelector';
 
+export { default as MoreActionsButton} from './components/MoreActionsButton';
+export * from './components/MoreActionsButton';
+
 export { default as Page } from './components/Page';
 export * from './components/Page';
 

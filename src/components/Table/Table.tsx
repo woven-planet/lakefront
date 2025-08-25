@@ -6,6 +6,8 @@ import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
 import TableRow from './TableRow';
+import { MoreActionsButton } from '../../index';
+import { useRowHover } from './RowHoverContext';
 
 export interface TableSortByOptions {
     id: string;
@@ -14,6 +16,12 @@ export interface TableSortByOptions {
 
 export interface ContextMenuConfig {
     getRowMenuItems: (row: any) => MenuItem[];
+}
+
+export interface MoreActionsConfig {
+    getRowActionItems: (row: any) => MenuItem[];
+    visibleOnHover?: boolean;
+    width?: number;
 }
 
 export interface TableProps {
@@ -73,6 +81,8 @@ export interface TableProps {
      * If provided, a context menu will be enabled for each row.
      */
     contextMenuConfig?: ContextMenuConfig;
+
+    moreActionsConfig?: MoreActionsConfig;
 }
 
 type CustomTableOptions = TableState<object> & { sortBy: TableSortByOptions[] }
@@ -94,7 +104,8 @@ const Table: React.FC<TableProps> = ({ className,
     rowProps,
     renderRowSubComponent,
     hideHeaders = false,
-    contextMenuConfig
+    contextMenuConfig,
+    moreActionsConfig
 }) => {
         /** initalSortBy must be memoized
          * https://react-table-v7.tanstack.com/docs/api/useSortBy#table-options
@@ -107,10 +118,36 @@ const Table: React.FC<TableProps> = ({ className,
             [initialSortBy]
         );
 
+    const memoizedColumns = useMemo(() => {
+        if (moreActionsConfig) {
+            return [
+                ...columns,
+                {
+                    id: 'more-actions',
+                    Header: '',
+                    disableSortBy: true,
+                    Cell: ({ row }: { row: any }) => {
+                        // hook to get the hover state for this specific row
+                        const isHovered = useRowHover();
+                        // Determine if the button should be visible
+                        const isButtonVisible = !moreActionsConfig?.visibleOnHover || isHovered;
+                        const actionItems = moreActionsConfig.getRowActionItems(row);
+                        if (!actionItems || actionItems.length === 0) {
+                            return null;
+                        }
+                        return isButtonVisible ? <MoreActionsButton items={actionItems} /> : <div style={{width: 75}}/>;
+                    },
+                    width: moreActionsConfig?.width
+                },
+            ];
+        }
+        return columns;
+    }, [columns, moreActionsConfig]);
+
         // Use the state and functions returned from useTable to build your UI
         const tableHookOptions = {
             ...options,
-            columns,
+            columns: memoizedColumns,
             data,
             ...initialSortByData
         };
@@ -168,12 +205,13 @@ const Table: React.FC<TableProps> = ({ className,
                                     rowProps={rowProps}
                                     renderRowSubComponent={renderRowSubComponent}
                                     contextMenuConfig={contextMenuConfig}
+                                    moreActionsConfig={moreActionsConfig}
                                 />
                             );
                         })}
                         {rows.length === 0 && (
                             <tr>
-                                <td colSpan={columns.length}>{noDataMessage}</td>
+                                <td colSpan={memoizedColumns.length}>{noDataMessage}</td>
                             </tr>
                         )}
                     </tbody>

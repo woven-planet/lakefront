@@ -7,7 +7,7 @@ import {
     ReactElement,
     useRef, ReactNode
 } from 'react';
-import { StyledContextMenu, MenuItem, StyledSeparator } from './contextMenuStyles';
+import { StyledContextMenu, StyledSeparator, StyledMenuItem } from './contextMenuStyles';
 import usePopover, { PopoverContent } from 'src/lib/hooks/usePopover';
 
 type ClickableMenuItem = {
@@ -93,13 +93,13 @@ export const ContextMenu: FC<ContextMenuProps> = ({ children, menuItems = [], wr
                                 return <StyledSeparator key={`separator-${index}`}/>;
                             }
                             return (
-                                <MenuItem
+                                <StyledMenuItem
                                     key={item.key}
                                     onClick={() => !item.disabled && handleClick(item.onClick)}
                                     disabled={item.disabled}
                                 >
                                     {item.label}
-                                </MenuItem>
+                                </StyledMenuItem>
                             );
                         })}
                     </StyledContextMenu>

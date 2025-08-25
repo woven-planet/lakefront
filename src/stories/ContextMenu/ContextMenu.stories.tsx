@@ -30,12 +30,12 @@ export default {
 } as Meta;
 
 const MENU_ITEMS: MenuItem[] = [
-    { label: 'Edit', onClick: () => alert('Edit clicked') },
-    { label: 'Copy', onClick: () => alert('Copy clicked') },
+    { key: 'edit-item', label: 'Edit', onClick: () => alert('Edit clicked') },
+    { key: 'copy-item', label: 'Copy', onClick: () => alert('Copy clicked') },
     { isSeparator: true },
-    { label: 'Paste', onClick: () => alert('Paste clicked'), disabled: true },
+    { key: 'paste-item', label: 'Paste', onClick: () => alert('Paste clicked'), disabled: true },
     { isSeparator: true },
-    { label: 'Delete', onClick: () => alert('Delete clicked') },
+    { key: 'delete-item', label: 'Delete', onClick: () => alert('Delete clicked') },
 ];
 
 const Template: StoryFn<ContextMenuProps> = (args) => {
