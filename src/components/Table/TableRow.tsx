@@ -1,16 +1,17 @@
 import { FC, Fragment, ReactNode, useState } from 'react';
 import ContextMenu from '../ContextMenu';
 import { RowHoverContext } from './RowHoverContext';
-import { ContextMenuConfig } from './Table';
+import { ContextMenuConfig, MoreActionsConfig } from './Table';
 
 export interface TableRowProps {
     row: any;
     rowProps?: object;
     renderRowSubComponent?: ({ row }: { row: any }) => ReactNode;
     contextMenuConfig?: ContextMenuConfig;
+    moreActionsConfig?: MoreActionsConfig
 }
 
-const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, contextMenuConfig }) => {
+const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, contextMenuConfig, moreActionsConfig }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     // Get the menu items for this specific row
@@ -19,11 +20,19 @@ const TableRow: FC<TableRowProps> = ({ row, rowProps, renderRowSubComponent, con
     // Determine the correct wrapper component for the row
     const RowWrapper = menuItems.length > 0 ? ContextMenu : 'tr';
 
+    const hoverActionStyle = moreActionsConfig?.visibleOnHover
+        ? { height: '75px', width: '75px' }
+        : {};
+
     // Define the props for the wrapper. If it's the ContextMenu,
     // we need to pass the 'wrapper' prop to it.
     const wrapperProps = {
         ...(menuItems.length > 0 && { menuItems, wrapper: 'tr' }),
         ...row.getRowProps(rowProps),
+        style: {
+            ...(rowProps as any)?.style,
+            ...hoverActionStyle,
+        },
         onMouseEnter: () => setIsHovered(true),
         onMouseLeave: () => setIsHovered(false),
     };

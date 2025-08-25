@@ -21,6 +21,7 @@ export interface ContextMenuConfig {
 export interface MoreActionsConfig {
     getRowActionItems: (row: any) => MenuItem[];
     visibleOnHover?: boolean;
+    width?: number;
 }
 
 export interface TableProps {
@@ -134,8 +135,9 @@ const Table: React.FC<TableProps> = ({ className,
                         if (!actionItems || actionItems.length === 0) {
                             return null;
                         }
-                        return isButtonVisible ? <MoreActionsButton items={actionItems} /> : null;
+                        return isButtonVisible ? <MoreActionsButton items={actionItems} /> : <div style={{width: 75}}/>;
                     },
+                    width: moreActionsConfig?.width
                 },
             ];
         }
@@ -203,6 +205,7 @@ const Table: React.FC<TableProps> = ({ className,
                                     rowProps={rowProps}
                                     renderRowSubComponent={renderRowSubComponent}
                                     contextMenuConfig={contextMenuConfig}
+                                    moreActionsConfig={moreActionsConfig}
                                 />
                             );
                         })}
