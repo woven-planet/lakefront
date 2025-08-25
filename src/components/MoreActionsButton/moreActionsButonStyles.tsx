@@ -15,17 +15,3 @@ export const ActionsMenuContainer = styled.div<ActionsMenuContainer>(({theme, to
     top,
     left
 }));
-
-interface ActionsMenuItem {
-    disabled: boolean,
-}
-
-export const ActionsMenuItem = styled.div<ActionsMenuItem>(({ disabled, theme}) => ({
-    padding: '8px 12px',
-    fontSize: 14,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    color: disabled ? theme.foregrounds.disabled : theme.foregrounds.primary,
-    '&:hover': {
-        backgroundColor: disabled ? 'transparent' : theme.backgrounds.hover
-    },
-}));
