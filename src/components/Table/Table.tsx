@@ -41,7 +41,7 @@ export interface TableProps {
     /**
      * This is to set the row properties.
      */
-    rowProps?: ComponentProps<'tr'>;
+    rowProps?: any;
     /**
      * This is to set the display message when there is no data.
      */
