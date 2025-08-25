@@ -27,7 +27,7 @@ export const StyledSeparator = styled.hr(({theme}) => ({
   borderTop: `1px solid ${theme.borderColors.primary}`
 }));
 
-export const MenuItem = styled.div<{ disabled?: boolean }>(({ theme, disabled }) => ({
+export const StyledMenuItem = styled.div<{ disabled?: boolean }>(({ theme, disabled }) => ({
   alignItems: 'center',
   backgroundColor: 'transparent',
   color: disabled ? theme.foregrounds.disabled : theme.foregrounds.primary,

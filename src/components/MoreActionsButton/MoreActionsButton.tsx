@@ -1,17 +1,12 @@
-import { FC, ReactElement, useEffect, useRef, useState } from 'react';
-import { PopoverContent, usePopover } from '../../index';
+import { FC, useEffect, useRef, useState } from 'react';
+import { MenuItem, PopoverContent, usePopover } from '../../index';
 import Button from '../Button';
-import { ActionsMenuContainer, ActionsMenuItem } from './moreActionsButonStyles';
+import { ActionsMenuContainer } from './moreActionsButonStyles';
 import { ReactComponent as MoreIcon } from './assets/more_horiz.svg';
-
-export interface ActionMenuItem {
-    name: ReactElement | string;
-    onClick: () => void;
-    disabled?: boolean;
-}
+import { StyledMenuItem, StyledSeparator } from '../ContextMenu/contextMenuStyles';
 
 export interface MoreActionsButtonProps {
-    items: ActionMenuItem[];
+    items: MenuItem[];
 }
 
 const MoreActionsButton: FC<MoreActionsButtonProps> = ({ items }) => {
@@ -68,15 +63,20 @@ const MoreActionsButton: FC<MoreActionsButtonProps> = ({ items }) => {
             <PopoverContent portal={portal} deps={[items, isVisible, position]}>
                 {isVisible && (
                     <ActionsMenuContainer ref={menuRef} top={position.top} left={position.left}>
-                        {items.map(item => (
-                            <ActionsMenuItem
-                                key={typeof item.name === 'string' ? item.name : undefined}
-                                disabled={item.disabled ?? false}
-                                onClick={() => !item.disabled && handleItemClick(item.onClick)}
-                            >
-                                {item.name}
-                            </ActionsMenuItem>
-                        ))}
+                        {items.map(((item, index) => {
+                            if (item.isSeparator) {
+                                return <StyledSeparator key={`separator-${index}`} />;
+                            }
+                            return (
+                                <StyledMenuItem
+                                    key={item.key}
+                                    disabled={item.disabled ?? false}
+                                    onClick={() => !item.disabled && handleItemClick(item.onClick)}
+                                >
+                                    {item.label}
+                                </StyledMenuItem>
+                            )
+                        }))}
                     </ActionsMenuContainer>
                 )}
             </PopoverContent>

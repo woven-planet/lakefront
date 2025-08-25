@@ -6,7 +6,6 @@ import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
 import TableRow from './TableRow';
-import { ActionMenuItem } from '../MoreActionsButton/MoreActionsButton';
 import { MoreActionsButton } from '../../index';
 import { useRowHover } from './RowHoverContext';
 
@@ -20,7 +19,7 @@ export interface ContextMenuConfig {
 }
 
 export interface MoreActionsConfig {
-    getRowActionItems: (row: any) => ActionMenuItem[];
+    getRowActionItems: (row: any) => MenuItem[];
     visibleOnHover?: boolean;
 }
 

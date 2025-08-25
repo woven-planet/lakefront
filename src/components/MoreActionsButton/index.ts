@@ -1,4 +1,3 @@
-import MoreActionsButton, {ActionMenuItem} from './MoreActionsButton';
+import MoreActionsButton from './MoreActionsButton';
 
-export {ActionMenuItem}
 export default MoreActionsButton;
