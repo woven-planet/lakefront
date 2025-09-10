@@ -1,8 +1,6 @@
-import React, { ComponentProps, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTable, useSortBy, useExpanded, TableState, Column, TableSortByToggleProps } from 'react-table';
 import { HideableTHead, StyledHeader, StyledHeaderContent, TableStyle } from './tableStyles';
-import { ThemeProvider } from '@emotion/react';
-import theme from 'src/styles/theme';
 import { getSortBySVG, getTitleForMultiSort } from './tableUtil';
 import { MenuItem } from '../ContextMenu';
 import TableRow from './TableRow';
@@ -24,11 +22,11 @@ export interface MoreActionsConfig {
     width?: number;
 }
 
-export interface TableProps {
+export interface TableProps <T = any> {
     /**
      * This is to set the data for the table.
      */
-    data: Array<any> | null | undefined;
+    data: Array<T> | null | undefined;
     /**
      * This is to set the columns of the table.
      */
@@ -167,56 +165,54 @@ const Table: React.FC<TableProps> = ({ className,
 
         // Render the UI for your table
         return (
-            <ThemeProvider theme={theme}>
-                <TableStyle {...getTableProps()} className={className} style={style}>
-                    <HideableTHead hide={hideHeaders}>
-                        {headerGroups.map((headerGroup: any) => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map((column: any) => (
-                                    <th
-                                        {...column.getHeaderProps(
-                                            column.getSortByToggleProps((props: TableSortByToggleProps) => ({
-                                                ...props,
-                                                title: getTitleForMultiSort(
-                                                    tableHookOptions.disableMultiSort,
-                                                    props.title,
-                                                    column.disableSortBy
-                                                ),
-                                                width: column.width
-                                            }))
-                                        )}
-                                    >
-                                        <StyledHeader>
-                                            <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
-                                            <StyledHeaderContent>{getSortBySVG(column)}</StyledHeaderContent>
-                                        </StyledHeader>
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </HideableTHead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map((row: any) => {
-                            prepareRow(row);
-                            return (
-                                <TableRow
-                                    key={row.id}
-                                    row={row}
-                                    rowProps={rowProps}
-                                    renderRowSubComponent={renderRowSubComponent}
-                                    contextMenuConfig={contextMenuConfig}
-                                    moreActionsConfig={moreActionsConfig}
-                                />
-                            );
-                        })}
-                        {rows.length === 0 && (
-                            <tr>
-                                <td colSpan={memoizedColumns.length}>{noDataMessage}</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </TableStyle>
-            </ThemeProvider>
+            <TableStyle {...getTableProps()} className={className} style={style}>
+                <HideableTHead hide={hideHeaders}>
+                    {headerGroups.map((headerGroup: any) => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map((column: any) => (
+                                <th
+                                    {...column.getHeaderProps(
+                                        column.getSortByToggleProps((props: TableSortByToggleProps) => ({
+                                            ...props,
+                                            title: getTitleForMultiSort(
+                                                tableHookOptions.disableMultiSort,
+                                                props.title,
+                                                column.disableSortBy
+                                            ),
+                                            width: column.width
+                                        }))
+                                    )}
+                                >
+                                    <StyledHeader>
+                                        <StyledHeaderContent>{column.render('Header')}</StyledHeaderContent>
+                                        <StyledHeaderContent>{getSortBySVG(column)}</StyledHeaderContent>
+                                    </StyledHeader>
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </HideableTHead>
+                <tbody {...getTableBodyProps()}>
+                    {rows.map((row: any) => {
+                        prepareRow(row);
+                        return (
+                            <TableRow
+                                key={row.id}
+                                row={row}
+                                rowProps={rowProps}
+                                renderRowSubComponent={renderRowSubComponent}
+                                contextMenuConfig={contextMenuConfig}
+                                moreActionsConfig={moreActionsConfig}
+                            />
+                        );
+                    })}
+                    {rows.length === 0 && (
+                        <tr>
+                            <td colSpan={memoizedColumns.length}>{noDataMessage}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </TableStyle>
         );
     };
 
