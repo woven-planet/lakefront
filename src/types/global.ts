@@ -82,6 +82,7 @@ export interface LakefrontTheme {
         info: string;
         warning: string;
         inverted: string;
+        success: string;
     };
     lettering: {
         primary: {
