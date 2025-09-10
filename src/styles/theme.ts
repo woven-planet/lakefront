@@ -56,7 +56,8 @@ const THEME: Theme = {
         disabled: colors.mercury,
         info: colors.akoya,
         warning: colors.saturatedOrange,
-        inverted: colors.akoya
+        inverted: colors.akoya,
+        success: colors.saturatedGreen
     },
     lettering: {
         primary: {
@@ -130,7 +131,8 @@ export const DARK_THEME: Theme = {
         disabled: colors.mercury,
         info: colors.akoya,
         warning: colors.saturatedOrange,
-        inverted: colors.storm
+        inverted: colors.storm,
+        success: colors.saturatedGreen
     },
     lettering: {
         primary: {
