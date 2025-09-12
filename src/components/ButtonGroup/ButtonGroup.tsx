@@ -1,12 +1,16 @@
 import { ComponentPropsWithRef, FC, forwardRef, ReactNode } from 'react';
 import { ButtonGroupContainer, SelectedStylesButton } from 'src/components/ButtonGroup/buttonGroupStyles';
-import Button, { ButtonProps } from 'src/components/Button';
+import ButtonComponent, { ButtonProps } from 'src/components/Button';
 import { identity } from 'ramda';
 import { addSelectedStyles } from 'src/components/ButtonGroup/buttonGroupUtil';
 
 export type ButtonConfig = (ButtonProps & { id: string, label: ReactNode });
 
 export interface ButtonGroupProps {
+  /**
+   * Optional Button component slot.
+   */
+  Button?: FC<ButtonProps>;
   /**
    * Whether to style buttons as a connected toggle group and maintain toggle state.
    */
@@ -33,6 +37,7 @@ export interface ButtonGroupProps {
  *
  */
 const ButtonGroup: FC<ButtonGroupProps & ComponentPropsWithRef<'div'>> = forwardRef(({
+  Button = ButtonComponent,
   className,
   mode,
   selectedId = '',

@@ -1,10 +1,12 @@
 import { ComponentPropsWithoutRef, useState, MouseEventHandler } from 'react';
 import { Meta, StoryFn } from '@storybook/react-webpack5';
 import ButtonGroupComponent, { ButtonGroupProps } from 'src/components/ButtonGroup';
+import Button, { ButtonProps } from 'src/components/Button';
+import colors from 'src/styles/lakefrontColors';
 
 export default {
   title: 'Lakefront/ButtonGroup',
-  component: ButtonGroupComponent,
+  component: ButtonGroupComponent
 } as Meta;
 
 const Template: StoryFn<ButtonGroupProps & ComponentPropsWithoutRef<'div'>> = (args) => {
@@ -12,11 +14,11 @@ const Template: StoryFn<ButtonGroupProps & ComponentPropsWithoutRef<'div'>> = (a
 
   const handleSelected: MouseEventHandler<HTMLButtonElement> = (event) => {
     setSelected(event.currentTarget.id);
-  }
+  };
 
   const buttonConfigs = args.buttonConfigs.map(config => ({
     ...config,
-    onClick: selected ? handleSelected : undefined,
+    onClick: selected ? handleSelected : undefined
   }));
 
   return (
@@ -30,7 +32,7 @@ ButtonGroup.args = {
   selectedId: 'left',
   buttonConfigs: [
     { id: 'left', label: 'Left' },
-    { id: 'right', label: 'Right' },
+    { id: 'right', label: 'Right' }
   ]
 };
 
@@ -53,7 +55,7 @@ FourButtonGroup.args = {
     { id: 'left', label: 'Left' },
     { id: 'left-middle', label: 'Middle-Left' },
     { id: 'right-middle', label: 'Middle-Right' },
-    { id: 'right', label: 'Right' },
+    { id: 'right', label: 'Right' }
   ]
 };
 
@@ -69,6 +71,36 @@ NoneSelectedGroup.args = {
 
 export const GroupMode = Template.bind({});
 GroupMode.args = {
+  mode: 'group',
+  buttonConfigs: [
+    { id: 'left', label: 'Left' },
+    { id: 'middle', label: 'Middle' },
+    { id: 'right', label: 'Right' }
+  ]
+};
+
+export const WithCustomButton = Template.bind({});
+WithCustomButton.args = {
+  Button: (props: ButtonProps) => {
+    const colorMap = {
+      left: colors.saturatedRed,
+      middle: colors.black,
+      right: colors.pavement
+    };
+
+    return (
+      <Button
+        {...props}
+        style={{
+          width: 100,
+          height: 100,
+          borderRadius: '50%',
+          backgroundColor: colorMap[props.id]
+        }}>
+        {props.children}
+      </Button>
+    );
+  },
   mode: 'group',
   buttonConfigs: [
     { id: 'left', label: 'Left' },

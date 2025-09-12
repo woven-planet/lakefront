@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import ButtonGroup from '../ButtonGroup';
 import { renderWithTheme } from 'src/lib/testing';
+import Button, { ButtonProps } from 'src/components/Button';
 
 const buttonConfigs = [
   { id: '1', label: 'Button 1' },
@@ -63,5 +64,14 @@ describe('ButtonGroup Component', () => {
     fireEvent.click(button1);
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses custom button when passed', () => {
+    const ariaLabel = 'custom-button';
+    const CustomButton = (props: ButtonProps) => <Button {...props} aria-label={`${props.id}-${ariaLabel}`} />;
+
+    const { getByLabelText } = renderWithTheme(<ButtonGroup mode="group" buttonConfigs={buttonConfigs} Button={CustomButton} />);
+
+    getByLabelText(`${buttonConfigs[0].id}-${ariaLabel}`);
   });
 });
