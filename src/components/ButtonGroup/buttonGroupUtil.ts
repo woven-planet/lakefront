@@ -1,7 +1,6 @@
 import { ButtonConfig } from 'src/components/ButtonGroup/ButtonGroup';
 import { CSSProperties } from 'react';
-
-const HOVER_OFFSET = -2;
+import { HOVER_OFFSET } from 'src/components/ButtonGroup/buttonGroupStyles';
 
 const isFirstButton = (idx: number) => idx === 0;
 const isMiddleButton = (idx: number, length: number) => idx > 0 && idx < length - 1;

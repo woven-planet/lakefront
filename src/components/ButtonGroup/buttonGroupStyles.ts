@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 import { CSSProperties } from 'react';
 import Button from '../Button';
 
+export const HOVER_OFFSET = -2;
+const REVERSE_OFFSET = HOVER_OFFSET * -1;
+
 export const ButtonGroupContainer = styled('div')<{ mode: 'toggle' | 'group' }>(({ theme, mode }) => ({
   display: 'inline-block',
   ...(mode === 'group' && {
@@ -10,6 +13,7 @@ export const ButtonGroupContainer = styled('div')<{ mode: 'toggle' | 'group' }>(
     gap: 2,
   }),
   borderRadius: 8,
+  marginLeft: REVERSE_OFFSET,
   boxSizing: 'border-box',
   position: 'relative',
   '.primary': {
