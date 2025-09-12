@@ -44,11 +44,9 @@ export interface ComponentNameProps {
  */
 const ComponentName: FC<ComponentNameProps> = ({ className }) => {
   return (
-    <ThemeProvider theme={theme}>
       <div className={className}>
           content here
       </div>
-    </ThemeProvider>
   );
 };
 
