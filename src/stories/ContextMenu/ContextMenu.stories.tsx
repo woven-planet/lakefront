@@ -63,5 +63,6 @@ const Template: StoryFn<ContextMenuProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-    menuItems: MENU_ITEMS
+    menuItems: MENU_ITEMS,
+    renderInPortal: true,
 };

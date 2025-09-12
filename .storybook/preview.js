@@ -54,7 +54,6 @@ export const decorators = [
           <div style={{
             backgroundColor: current.background,
             padding: '1rem',
-            minHeight: '100vh',
             color: current.theme.foregrounds.primary || '#000',
           }}>
             <Story />
