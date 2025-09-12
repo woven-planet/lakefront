@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, FC, forwardRef, ReactNode } from 'react';
 import { ButtonGroupContainer, SelectedStylesButton } from 'src/components/ButtonGroup/buttonGroupStyles';
-import { ButtonProps } from 'src/components/Button';
+import Button, { ButtonProps } from 'src/components/Button';
 import { identity } from 'ramda';
 import { addSelectedStyles } from 'src/components/ButtonGroup/buttonGroupUtil';
 
@@ -39,8 +39,30 @@ const ButtonGroup: FC<ButtonGroupProps & ComponentPropsWithRef<'div'>> = forward
   buttonConfigs,
   ...props
 }, ref) => {
+  if (mode === 'group') {
+    return (
+      <ButtonGroupContainer mode={mode} className={className} ref={ref} {...props}>
+        {buttonConfigs.map(({
+          id,
+          label,
+          ...buttonProps
+        }) => {
+          return (
+            <Button
+              id={id}
+              key={id}
+              {...buttonProps}
+            >
+              {label}
+            </Button>
+          );
+        })}
+      </ButtonGroupContainer>
+    );
+  }
+
   return (
-    <ButtonGroupContainer className={className} ref={ref} {...props}>
+    <ButtonGroupContainer mode={mode} className={className} ref={ref} {...props}>
       {addSelectedStyles(buttonConfigs, selectedId).map(({
         id,
         label,

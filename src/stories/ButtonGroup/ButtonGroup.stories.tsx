@@ -66,3 +66,13 @@ NoneSelectedGroup.args = {
     { id: 'right', label: 'Right' }
   ]
 };
+
+export const GroupMode = Template.bind({});
+GroupMode.args = {
+  mode: 'group',
+  buttonConfigs: [
+    { id: 'left', label: 'Left' },
+    { id: 'middle', label: 'Middle' },
+    { id: 'right', label: 'Right' }
+  ]
+};
