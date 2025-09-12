@@ -1,6 +1,10 @@
 import { ComponentPropsWithRef, FC, forwardRef, ReactNode } from 'react';
-import { ButtonGroupContainer } from 'src/components/ButtonGroup/buttonGroupStyles';
-import Button, { ButtonProps } from 'src/components/Button';
+import { ButtonGroupContainer, SelectedStylesButton } from 'src/components/ButtonGroup/buttonGroupStyles';
+import { ButtonProps } from 'src/components/Button';
+import { identity } from 'ramda';
+import { addSelectedStyles } from 'src/components/ButtonGroup/buttonGroupUtil';
+
+export type ButtonConfig = (ButtonProps & { id: string, label: ReactNode });
 
 export interface ButtonGroupProps {
   /**
@@ -10,11 +14,11 @@ export interface ButtonGroupProps {
   /**
    * Which button (id) should be selected/active.
    */
-  selected?: string;
+  selectedId?: string;
   /**
    * Props for each button.
    */
-  buttonConfigs: (ButtonProps & { id: string, label: ReactNode })[];
+  buttonConfigs: ButtonConfig[];
   /**
    * The classes to pass to the component.
    */
@@ -31,17 +35,36 @@ export interface ButtonGroupProps {
 const ButtonGroup: FC<ButtonGroupProps & ComponentPropsWithRef<'div'>> = forwardRef(({
   className,
   mode,
-  selected,
+  selectedId = '',
   buttonConfigs,
   ...props
 }, ref) => {
   return (
     <ButtonGroupContainer className={className} ref={ref} {...props}>
-      {buttonConfigs.map(({ id, label, ...buttonProps }) => (
-        <Button id={id} key={id} {...buttonProps}>
-          {label}
-        </Button>
-      ))}
+      {addSelectedStyles(buttonConfigs, selectedId).map(({
+        id,
+        label,
+        className: _className,
+        selectedStyles,
+        ...buttonProps
+      }) => {
+        const selected = selectedId === id;
+        const color = selected ? 'primary' : 'secondary';
+        const className = [color, _className].filter(identity).join(' ');
+
+        return (
+          <SelectedStylesButton
+            id={id}
+            key={id}
+            color={color}
+            className={className}
+            selectedStyles={selectedStyles}
+            {...buttonProps}
+          >
+            {label}
+          </SelectedStylesButton>
+        );
+      })}
     </ButtonGroupContainer>
   );
 });
