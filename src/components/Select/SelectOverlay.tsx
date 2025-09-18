@@ -3,8 +3,8 @@ import { SelectProps } from './Select';
 import Select from 'react-select';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, isMulti, ...rest }) => {
-    const [multiValues, setMultiValues] = useState([]);
+const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, isMulti, multiDefaultValue = [], ...rest }) => {
+    const [multiValues, setMultiValues] = useState(multiDefaultValue);
 
     const { currentValue, defaultValue, selectId } = useMemo(
         () => {

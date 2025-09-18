@@ -58,7 +58,14 @@ export interface SelectProps {
      * This is the default text before an option is selected.
      */
     placeholder?: string;
-    value: any[] | string | number;
+    /**
+     * The value of the select component (if you want to control externally).
+     */
+    value?: any[] | string | number;
+    /**
+     * A value to initially set the multi-select component to.
+     */
+    multiDefaultValue?: SelectOption[];
 }
 
 
