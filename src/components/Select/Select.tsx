@@ -58,7 +58,14 @@ export interface SelectProps {
      * This is the default text before an option is selected.
      */
     placeholder?: string;
-    value: any[] | string | number;
+    /**
+     * The value of the select component (if you want to control externally).
+     */
+    value?: any[] | string | number;
+    /**
+     * A value to initially set the multi-select component to.
+     */
+    multiDefaultValue?: SelectOption[];
 }
 
 
@@ -66,19 +73,19 @@ export interface SelectProps {
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
  *  The isSearchable property allows user to find the value from the options available.
  */
-const Select: FC<SelectProps> = ({ options, className, isMulti, ...rest }) => {
+const Select: FC<SelectProps> = ({ options, className, isMulti, value = '', ...rest }) => {
 
 
     return (
         <SelectStyles>
-            <SelectStyledComponent className={className} multiple={isMulti} {...rest}>
+            <SelectStyledComponent className={className} multiple={isMulti} value={value} {...rest}>
                 {options.map((option) => (
                     <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
                     </option>
                 ))}
             </SelectStyledComponent>
-            <SelectOverlay {...rest} options={options} isMulti={isMulti}/>
+            <SelectOverlay {...rest} value={value} options={options} isMulti={isMulti}/>
         </SelectStyles>
     );
 };

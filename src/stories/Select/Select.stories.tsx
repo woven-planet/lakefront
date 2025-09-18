@@ -47,7 +47,7 @@ const Template: StoryFn<SelectProps & ComponentPropsWithoutRef<'div'>> = (args) 
             <section style={{ display: 'inline-flex', height: '150px' }}>
                 <SelectComponent options={args.options} value={value} onChange={handleOnChange} id={args.id}
                     isSearchable={args.isSearchable} disabled={args.disabled} className={args.className}
-                    autoFocus={args.autoFocus} isMulti={args.isMulti} />
+                    autoFocus={args.autoFocus} isMulti={args.isMulti} multiDefaultValue={args.multiDefaultValue} />
             </section>
         </>
     );
@@ -65,4 +65,11 @@ MultiSelect.args = {
     options: [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }, {label: 'Made up system', value: 'made up'}],
     value: '',
     isMulti: true
+};
+
+export const MultiSelectWithDefaultValues = Template.bind({});
+MultiSelectWithDefaultValues.args = {
+  options: [{ label: 'Km', value: 'metric' }, { label: 'Mi', value: 'imperial' }, {label: 'Made up system', value: 'made up'}],
+  multiDefaultValue: [{ label: 'Mi', value: 'imperial' }, {label: 'Made up system', value: 'made up'}],
+  isMulti: true
 };
