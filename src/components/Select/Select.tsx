@@ -73,19 +73,19 @@ export interface SelectProps {
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
  *  The isSearchable property allows user to find the value from the options available.
  */
-const Select: FC<SelectProps> = ({ options, className, isMulti, value = '', ...rest }) => {
+const Select: FC<SelectProps> = ({ options, className, isMulti, ...rest }) => {
 
 
     return (
         <SelectStyles>
-            <SelectStyledComponent className={className} multiple={isMulti} value={value} {...rest}>
+            <SelectStyledComponent className={className} multiple={isMulti} {...rest}>
                 {options.map((option) => (
                     <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
                     </option>
                 ))}
             </SelectStyledComponent>
-            <SelectOverlay {...rest} value={value} options={options} isMulti={isMulti}/>
+            <SelectOverlay {...rest} options={options} isMulti={isMulti}/>
         </SelectStyles>
     );
 };
