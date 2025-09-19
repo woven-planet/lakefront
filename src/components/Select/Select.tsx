@@ -72,7 +72,7 @@ export interface SelectProps extends ReactSelectProps {
     /**
      * Enable async select component
      */
-    asyncConfig?: ReactAsyncSelectProps<SelectOption, boolean, GroupBase<SelectOption>>;
+    asyncConfig?: Partial<ReactAsyncSelectProps<SelectOption, boolean, GroupBase<SelectOption>>>;
 }
 
 
