@@ -2,19 +2,22 @@ import { FC } from 'react';
 import { SelectStyles, SelectStyledComponent } from './selectStyles';
 import SelectOverlay from './SelectOverlay';
 import { GetStyles, GroupBase } from 'react-select/dist/declarations/src/types';
+import { AsyncProps as ReactAsyncSelectProps } from 'react-select/async';
+import { Props as ReactSelectProps } from 'react-select';
+import { extractNativeSelectProps } from 'src/components/Select/selectUtil';
 
 export interface SelectOption {
     value: string | number | undefined;
     label: string;
 }
 
-export interface SelectProps {
+export interface SelectProps extends ReactSelectProps {
     /**
      * This is to set the options of the dropdown.
      */
     options: SelectOption[];
     /**
-     * This is called when an dropdown change event.
+     * This is called on a dropdown change event.
      */
     onChange(event: any): void;
     /**
@@ -66,6 +69,10 @@ export interface SelectProps {
      * A value to initially set the multi-select component to.
      */
     multiDefaultValue?: SelectOption[];
+    /**
+     * Enable async select component
+     */
+    asyncConfig?: ReactAsyncSelectProps<SelectOption, boolean, GroupBase<SelectOption>>;
 }
 
 
@@ -73,12 +80,13 @@ export interface SelectProps {
  *  The select component is used to render a dropdown with options. The user can set a selected option by default.
  *  The isSearchable property allows user to find the value from the options available.
  */
-const Select: FC<SelectProps> = ({ options, className, isMulti, ...rest }) => {
-
+const Select: FC<SelectProps> = (props) => {
+    const { options, className, isMulti, ...rest }  = props;
+    const nativeSelectProps = extractNativeSelectProps(props);
 
     return (
         <SelectStyles>
-            <SelectStyledComponent className={className} multiple={isMulti} {...rest}>
+            <SelectStyledComponent {...nativeSelectProps}>
                 {options.map((option) => (
                     <option key={`${option.label}${option.value ?? ''}`} value={option.value}>
                         {option.label}
