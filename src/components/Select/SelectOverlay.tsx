@@ -5,7 +5,19 @@ import AsyncSelect from 'react-select/async';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
 
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, isMulti, multiDefaultValue = [], asyncConfig, ...rest }) => {
+const SelectOverlay: FC<SelectProps> = ({
+    isSearchable = false,
+    disabled,
+    id,
+    options,
+    onChange,
+    value,
+    isMulti,
+    multiDefaultValue = [],
+    asyncConfig,
+    styles,
+    ...rest
+}) => {
     const [multiValues, setMultiValues] = useState(multiDefaultValue);
 
     const { currentValue, defaultValue, selectId } = useMemo(
@@ -45,7 +57,7 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
         value: currentValue,
         options: options,
         onChange: handleChange,
-        styles: SELECT_OVERLAY_STYLES,
+        styles: { ...SELECT_OVERLAY_STYLES, ...styles },
         theme: (defaultTheme: any) => ({
             ...defaultTheme,
             colors: {
