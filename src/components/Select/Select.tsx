@@ -70,7 +70,9 @@ export interface SelectProps extends ReactSelectProps {
      */
     multiDefaultValue?: SelectOption[];
     /**
-     * Enable async select component
+     * Enable async select component.
+     * Note: Some optional props that are applicable to both normal and async Select variants may
+     * need to be explicitly defined in asyncConfig to work properly (e.g. noOptionsMessage, placeholder).
      */
     asyncConfig?: Partial<ReactAsyncSelectProps<SelectOption, boolean, GroupBase<SelectOption>>>;
 }
