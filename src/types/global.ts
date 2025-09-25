@@ -83,6 +83,7 @@ export interface LakefrontTheme {
         warning: string;
         inverted: string;
         success: string;
+        hyperlink: string;
     };
     lettering: {
         primary: {
