@@ -1,9 +1,23 @@
 import { FC, useMemo, useState } from 'react';
 import { SelectProps } from './Select';
 import Select from 'react-select';
+import AsyncSelect from 'react-select/async';
 import { SELECT_OVERLAY_STYLES } from './selectStyles';
 import theme from 'src/styles/theme';
-const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, options, onChange, value, isMulti, multiDefaultValue = [], ...rest }) => {
+
+const SelectOverlay: FC<SelectProps> = ({
+    isSearchable = false,
+    disabled,
+    id,
+    options,
+    onChange,
+    value,
+    isMulti,
+    multiDefaultValue = [],
+    asyncConfig,
+    styles,
+    ...rest
+}) => {
     const [multiValues, setMultiValues] = useState(multiDefaultValue);
 
     const { currentValue, defaultValue, selectId } = useMemo(
@@ -36,27 +50,40 @@ const SelectOverlay: FC<SelectProps> = ({ isSearchable = false, disabled, id, op
         }
     };
 
+    const commonProps = {
+        isDisabled: disabled,
+        id: selectId,
+        defaultValue: defaultValue,
+        value: currentValue,
+        options: options,
+        onChange: handleChange,
+        styles: { ...SELECT_OVERLAY_STYLES, ...styles },
+        theme: (defaultTheme: any) => ({
+            ...defaultTheme,
+            colors: {
+                ...defaultTheme.colors,
+                ...theme.colors,
+                primary: theme.colors.white,
+                primary25: disabled ? theme.colors.white : theme.colors.mercury
+            }
+        }),
+        isSearchable: isSearchable,
+        isMulti: isMulti
+    };
+
+    if (asyncConfig) {
+        return (
+            <AsyncSelect
+              {...commonProps}
+              {...asyncConfig}
+            />
+        );
+    }
+
     return (
         <Select
-            isDisabled={disabled}
-            id={selectId}
-            defaultValue={defaultValue}
-            value={currentValue}
-            options={options}
-            onChange={handleChange}
-            styles={SELECT_OVERLAY_STYLES}
-            theme={(defaultTheme) => ({
-                ...defaultTheme,
-                colors: {
-                    ...defaultTheme.colors,
-                    ...theme.colors,
-                    primary: theme.colors.white,
-                    primary25: disabled ? theme.colors.white : theme.colors.mercury
-                }
-            })}
-            isSearchable={isSearchable}
-            isMulti={isMulti}
-            {...rest}
+          {...commonProps}
+          {...rest}
         />
     );
 };
