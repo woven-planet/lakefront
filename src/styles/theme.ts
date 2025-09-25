@@ -57,7 +57,8 @@ const THEME: Theme = {
         info: colors.akoya,
         warning: colors.saturatedOrange,
         inverted: colors.akoya,
-        success: colors.saturatedGreen
+        success: colors.saturatedGreen,
+        hyperlink: colors.saturatedBlue
     },
     lettering: {
         primary: {
@@ -132,7 +133,8 @@ export const DARK_THEME: Theme = {
         info: colors.akoya,
         warning: colors.saturatedOrange,
         inverted: colors.storm,
-        success: colors.saturatedGreen
+        success: colors.saturatedGreen,
+        hyperlink: colors.saturatedBlue
     },
     lettering: {
         primary: {
